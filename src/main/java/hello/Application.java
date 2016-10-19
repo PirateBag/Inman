@@ -11,7 +11,7 @@ public class Application {
     public static void main( String[] args ) {
 	ApplicationContext ctx = SpringApplication.run( Application.class, args );
 
-	System.out.println( "Let's inspect the beans provided by spring boot: " );
+	System.out.println( "Let us inspect the beans provided by spring boot: " );
 
 	String[] beanNames = ctx.getBeanDefinitionNames();
 	Arrays.sort( beanNames );
