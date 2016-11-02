@@ -11,13 +11,7 @@ public class Application {
     public static void main( String[] args ) {
 	ApplicationContext ctx = SpringApplication.run( Application.class, args );
 
-	System.out.println( "Let us inspect the beans provided by spring boot: " );
-
-	String[] beanNames = ctx.getBeanDefinitionNames();
-	Arrays.sort( beanNames );
-	for ( String beanName : beanNames ) {
-	    System.out.println( beanName );
-	}
+	System.out.println( "Spring Boot is like, engaged. " );
     }
 }
 
