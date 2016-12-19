@@ -8,10 +8,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.inman.model.User;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import com.inman.model.User;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
@@ -48,7 +49,7 @@ public class Application implements CommandLineRunner {
 
         log.info("Querying for customer records where first_name = 'Josh':");
         jdbcTemplate.query(
-                "SELECT id, userName, password FROM user WHERE first_name = ?", new Object[] { "Josh" },
+                "SELECT id, userName, password FROM user WHERE userName = ?", new Object[] { "Josh" },
                 (rs, rowNum) -> new User(rs.getLong("id"), rs.getString("userName"), rs.getString("password"))
         ).forEach(user -> log.info(user.toString()));
     }
