@@ -13,6 +13,8 @@ public class Item {
 	
 	private String summaryId;
 	private String description;
+	private double unitCost;
+	
 	public String getSummaryId() {
 		return summaryId;
 	}
@@ -25,4 +27,12 @@ public class Item {
 	public void setDescription( String description ) {
 		this.description = description;
 	}
+	
+	public double getUnitCost() {
+		return unitCost;
+	}
+	public void setUnitCost( double unitCost ) {
+		
+	}
+
 }
