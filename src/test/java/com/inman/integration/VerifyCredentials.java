@@ -1,5 +1,7 @@
 package com.inman.integration;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,11 +32,11 @@ public class VerifyCredentials {
 		badCredentials.setUsername("donald");
 		badCredentials.setPassword("trumped");
 		
-		ResponseEntity<VerifyCredentialsResponse> entity = this.restTemplate.putForEntity(
-				"http://localhost:" + this.port + VerifyCredentialsRequest.rootUrl, VerifyCredentialsResponse.class );
-
+		ResponseEntity<VerifyCredentialsResponse> entity = this.restTemplate.postForEntity(
+				"http://localhost:" + this.port + VerifyCredentialsRequest.rootUrl, badCredentials, VerifyCredentialsResponse.class );
+		
 		then(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
-		then(entity.getBody().getStatus().equals( StatusResponse.INMAN_OK ));
+		assertEquals(entity.getBody().getStatus(), StatusResponse.INMAN_FAIL );
 	}
 
 }

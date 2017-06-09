@@ -27,11 +27,11 @@ public class Dispatcher {
     	VerifyCredentialsResponse verifyCredentialsResponse = new VerifyCredentialsResponse();
     	
     	if ( request.getUsername().equals("fred") && request.getPassword().equals("dilban") ) {
-    		verifyCredentialsResponse.setStatus( "ok" );
+    		verifyCredentialsResponse.setStatus( StatusResponse.INMAN_OK );
     		verifyCredentialsResponse.setMessage( "logged in");
     		verifyCredentialsResponse.setToken( "78UIjk");
     	} else {
-    		verifyCredentialsResponse.setStatus( "fail" );
+    		verifyCredentialsResponse.setStatus( StatusResponse.INMAN_OK );
     		verifyCredentialsResponse.setMessage( "Credentials not valid");
     		verifyCredentialsResponse.setToken( "none");
     	}
