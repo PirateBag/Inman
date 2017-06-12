@@ -1,11 +1,16 @@
 package com.inman.model.rest;
 
 public class VerifyCredentialsResponse {
+
+	public static final String NO_TOKEN = "No Token";
+	public static final String DEFAULT_TOKEN = "78UIjk";
+
 	private String token;
 	private String status;
 	
-	public final static String CREDENTIALS_NOT_VALID = "Credentials not valid";
-	public final static String CREDENTIALS_VALID = "Credentials valid";
+	public static final String CREDENTIALS_NOT_VALID = "Credentials not valid";
+	public static final String CREDENTIALS_VALID = "Credentials valid";
+	
 	private String message;
 	
 	

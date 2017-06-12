@@ -22,18 +22,18 @@ public class Dispatcher {
     	return statusResponse;
     }
     
-    @RequestMapping( value = VerifyCredentialsRequest.rootUrl,method = RequestMethod.POST  )
+    @RequestMapping( value = VerifyCredentialsRequest.rootUrl,method = RequestMethod.POST )
     public VerifyCredentialsResponse verifyCredentials( @RequestBody VerifyCredentialsRequest request) {
     	VerifyCredentialsResponse verifyCredentialsResponse = new VerifyCredentialsResponse();
     	
     	if ( request.getUsername().equals("fred") && request.getPassword().equals("dilban") ) {
     		verifyCredentialsResponse.setStatus( StatusResponse.INMAN_OK );
-    		verifyCredentialsResponse.setMessage( "logged in");
-    		verifyCredentialsResponse.setToken( "78UIjk");
+    		verifyCredentialsResponse.setMessage( VerifyCredentialsResponse.CREDENTIALS_VALID );
+    		verifyCredentialsResponse.setToken( VerifyCredentialsResponse.DEFAULT_TOKEN );
     	} else {
-    		verifyCredentialsResponse.setStatus( StatusResponse.INMAN_OK );
-    		verifyCredentialsResponse.setMessage( "Credentials not valid");
-    		verifyCredentialsResponse.setToken( "none");
+    		verifyCredentialsResponse.setStatus( StatusResponse.INMAN_FAIL );
+    		verifyCredentialsResponse.setMessage(  VerifyCredentialsResponse.CREDENTIALS_NOT_VALID );
+    		verifyCredentialsResponse.setToken( VerifyCredentialsResponse.NO_TOKEN );
     	}
     	
     	return verifyCredentialsResponse;
