@@ -48,7 +48,7 @@ public class VerifyCredentials {
 				"http://localhost:" + this.port + VerifyCredentialsRequest.rootUrl, badCredentials, VerifyCredentialsResponse.class );
 		
 		assertEquals(entity.getBody().getStatus(), StatusResponse.INMAN_OK );
-		assertEquals( entity.getBody().getMessage(), VerifyCredentialsResponse.CREDENTIALS_VALID );
+		assertEquals( entity.getBody().getMessage(), VerifyCredentialsResponse.CREDENTIALS_VALID + badCredentials.getUsername() );
 		assertEquals( entity.getBody().getToken(), VerifyCredentialsResponse.DEFAULT_TOKEN );
 	}
 

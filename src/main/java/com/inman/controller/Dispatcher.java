@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-@CrossOrigin
+
 @RestController
 public class Dispatcher {
 
+	@CrossOrigin
     @RequestMapping( StatusResponse.rootUrl )
     public StatusResponse status() {
     	StatusResponse statusResponse = new StatusResponse();
@@ -22,13 +24,16 @@ public class Dispatcher {
     	return statusResponse;
     }
     
-    @RequestMapping( value = VerifyCredentialsRequest.rootUrl,method = RequestMethod.POST )
+    @CrossOrigin
+    @RequestMapping( value = VerifyCredentialsRequest.rootUrl,method = RequestMethod.POST,
+    		consumes = "application/json",
+    		produces = "application/json" )
     public VerifyCredentialsResponse verifyCredentials( @RequestBody VerifyCredentialsRequest request) {
     	VerifyCredentialsResponse verifyCredentialsResponse = new VerifyCredentialsResponse();
     	
     	if ( request.getUsername().equals("fred") && request.getPassword().equals("dilban") ) {
     		verifyCredentialsResponse.setStatus( StatusResponse.INMAN_OK );
-    		verifyCredentialsResponse.setMessage( VerifyCredentialsResponse.CREDENTIALS_VALID );
+    		verifyCredentialsResponse.setMessage( VerifyCredentialsResponse.CREDENTIALS_VALID + request.getUsername());
     		verifyCredentialsResponse.setToken( VerifyCredentialsResponse.DEFAULT_TOKEN );
     	} else {
     		verifyCredentialsResponse.setStatus( StatusResponse.INMAN_FAIL );

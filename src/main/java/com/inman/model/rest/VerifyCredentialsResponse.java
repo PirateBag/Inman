@@ -9,7 +9,7 @@ public class VerifyCredentialsResponse {
 	private String status;
 	
 	public static final String CREDENTIALS_NOT_VALID = "Credentials not valid";
-	public static final String CREDENTIALS_VALID = "Credentials valid";
+	public static final String CREDENTIALS_VALID = "You are logged in as ";
 	
 	private String message;
 	
