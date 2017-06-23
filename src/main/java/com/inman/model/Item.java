@@ -4,8 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+
 
 @Entity
+@Table( name = "Item" )
 public class Item {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO )
@@ -14,6 +17,10 @@ public class Item {
 	private String summaryId;
 	private String description;
 	private double unitCost;
+	
+	public long getId() {
+		return this.id;
+	}
 	
 	public String getSummaryId() {
 		return summaryId;
@@ -32,7 +39,7 @@ public class Item {
 		return unitCost;
 	}
 	public void setUnitCost( double unitCost ) {
-		
+		this.unitCost = unitCost;
 	}
 
 }

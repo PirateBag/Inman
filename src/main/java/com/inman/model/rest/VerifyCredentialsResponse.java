@@ -16,6 +16,7 @@ public class VerifyCredentialsResponse {
 	
 	
 	public String getToken() {
+		
 		return token;
 	}
 	public void setToken(String token) {
