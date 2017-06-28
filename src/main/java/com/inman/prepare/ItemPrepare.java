@@ -32,7 +32,19 @@ public class ItemPrepare {
 		item.setUnitCost( 5.0 );
 		itemRepository.save( item );
 		
-		return new PrepareResponse( "Item", 3 );
+		item = new Item();
+		item.setDescription( "Unpainted Wagon Body");
+		item.setSummaryId( "W-018");
+		item.setUnitCost( 2.0 );
+		itemRepository.save( item );
+		
+		item = new Item();
+		item.setDescription( "Red Paint");
+		item.setSummaryId( "W-019");
+		item.setUnitCost( 0.25 );
+		itemRepository.save( item );
+
+		return new PrepareResponse( "Item", 5 );
 		
 	}
 	

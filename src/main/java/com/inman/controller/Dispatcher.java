@@ -4,7 +4,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.inman.business.VerifyCredentialsLogic;
 import com.inman.business.ItemSearchLogic;
+import com.inman.model.rest.ErrorLine;
 import com.inman.model.rest.PrepareResponse;
+import com.inman.model.rest.ResponsePackage;
+import com.inman.model.rest.ItemResponse;
 import com.inman.model.rest.SearchItemRequest;
 import com.inman.model.Item;
 import com.inman.model.rest.StatusResponse;
@@ -17,6 +20,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -72,7 +77,7 @@ public class Dispatcher {
     }
     
     @CrossOrigin
-    @RequestMapping( value = SearchItemRequest.rootUrl, method=RequestMethod.GET )
+    @RequestMapping( value = SearchItemRequest.singleUrl, method=RequestMethod.GET )
     public @ResponseBody Item[] searchItem(@PathVariable long itemId ) {
     	
     	if ( !Application.isPrepared() ) {
@@ -87,8 +92,8 @@ public class Dispatcher {
     
 
     @CrossOrigin
-    @RequestMapping( value = SearchItemRequest.rootUrl, method=RequestMethod.GET )
-    public @ResponseBody Item[] searchItemGeneric( @RequestParam("id") long id,
+    @RequestMapping( value = SearchItemRequest.queryUrl, method=RequestMethod.GET )
+    public @ResponseBody Item[] searchItemGeneric( @RequestParam("id") String id,
     		@RequestParam("summaryId") String summaryId,
     		@RequestParam( "description") String description ) {
     	
@@ -98,10 +103,41 @@ public class Dispatcher {
         	Application.setIsPrepared( true );
     	}
     	
+    	SearchItemRequest searchItemRequest = new SearchItemRequest(
+    			id, summaryId, description );
     	ItemSearchLogic itemSearch = new ItemSearchLogic();
-    	return itemSearch.findById( itemRepository, itemId );
+    	return itemSearch.bySearchItemRequest( itemRepository, searchItemRequest );
     }
 
+    @CrossOrigin
+    @RequestMapping( value = "item/exp", method=RequestMethod.GET )
+    public ResponseEntity<?> searchItemExpGeneric( @RequestParam("id") String id,
+    		@RequestParam("summaryId") String summaryId,
+    		@RequestParam( "description") String description ) {
+    	
+
+    	
+    	if ( !Application.isPrepared() ) {
+        	ItemPrepare itemPrepare = new ItemPrepare();
+        	itemPrepare.go( itemRepository );
+        	Application.setIsPrepared( true );
+    	}
+    	
+    	ItemResponse responsePackage = new ItemResponse();
+    	
+    	SearchItemRequest searchItemRequest = null;
+    	try {
+    		searchItemRequest = new SearchItemRequest( id, summaryId, description );
+    		ItemSearchLogic itemSearch = new ItemSearchLogic();
+    		Item[] items = itemSearch.bySearchItemRequest( itemRepository, searchItemRequest );
+    		responsePackage.setData( items );
+    	} catch ( Exception e ) {
+    		responsePackage.addError( new ErrorLine( ErrorLine.NO_KEY, "0", e.getMessage() ));
+    		responsePackage.setData( new Item[0] );
+    	}
+    	
+    	return ResponseEntity.ok().body(responsePackage);
+    }
 
 
 }

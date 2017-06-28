@@ -1,29 +1,28 @@
 package com.inman.model.rest;
 
-import org.springframework.http.HttpStatus;
+import java.util.ArrayList;
 
 public class ResponsePackage<T> {
-	HttpStatus httpStatus;
-	Errors[] errors;
+	ArrayList<ErrorLine> errors = new ArrayList<ErrorLine>();
 	T[] data; 
 
-	public ResponsePackage<T>( HttpStatus httpStatus, Errors[] error, T data) {
-		this.httpStatus = httpStatus;
+	public ResponsePackage(  ArrayList<ErrorLine> errors, T[] data) {
 		this.errors = errors;
 		this.data = data;
 	}
 	
 	
-	public HttpStatus getHttpStatus() {
-		return httpStatus;
+	public ResponsePackage() {
 	}
-	public void setHttpStatus(HttpStatus httpStatus) {
-		this.httpStatus = httpStatus;
+	
+	public void addError( ErrorLine error ) {
+		errors.add( error );
 	}
-	public Errors[] getErrors() {
+
+	public ArrayList<ErrorLine> getErrors() {
 		return errors;
 	}
-	public void setErrors(Errors[] errors) {
+	public void setErrors( ArrayList<ErrorLine> errors) {
 		this.errors = errors;
 	}
 	public T[] getData() {
