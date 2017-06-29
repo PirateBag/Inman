@@ -16,6 +16,9 @@ public class ResponsePackage<T> {
 	}
 	
 	public void addError( ErrorLine error ) {
+		if ( error.getKey() == 0 ) {
+			error.setKey( this.errors.size() + 1 );
+		}
 		errors.add( error );
 	}
 

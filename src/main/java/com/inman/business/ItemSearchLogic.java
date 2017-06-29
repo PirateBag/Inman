@@ -1,7 +1,7 @@
 package com.inman.business;
 
+import java.util.List;
 import com.inman.model.Item;
-import com.inman.model.rest.ResponsePackage;
 import com.inman.model.rest.SearchItemRequest;
 import com.inman.repository.ItemRepository;
 
@@ -39,7 +39,14 @@ public class ItemSearchLogic {
 		if ( searchItemRequest.getSummaryId() != null ) {
 			return itemRepository.byleadingSummaryId( searchItemRequest.getSummaryId() );
 		}
-
-		return null;
+		
+		if ( searchItemRequest.getDescription() != null ) {
+			return itemRepository.byDescription( searchItemRequest.getDescription() );
+		}
+		
+		List<Item> items = itemRepository.findAll();
+		
+		Item[] returnValue = items.toArray( new Item[ items.size()]); 
+		return returnValue;
 	}
 }

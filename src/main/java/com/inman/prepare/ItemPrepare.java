@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.inman.model.Item;
 import com.inman.model.rest.PrepareResponse;
+import com.inman.model.rest.SearchItemRequest;
 import com.inman.repository.ItemRepository;
 
 public class ItemPrepare {
@@ -33,6 +34,18 @@ public class ItemPrepare {
 		itemRepository.save( item );
 		
 		item = new Item();
+		item.setDescription( "Painted Black Handle");
+		item.setSummaryId( "W-004");
+		item.setUnitCost( 1.0 );
+		itemRepository.save( item );
+		
+		item = new Item();
+		item.setDescription( "Steering Assembly");
+		item.setSummaryId( "W-005");
+		item.setUnitCost( 1.0 );
+		itemRepository.save( item );
+		
+		item = new Item();
 		item.setDescription( "Unpainted Wagon Body");
 		item.setSummaryId( "W-018");
 		item.setUnitCost( 2.0 );
@@ -44,7 +57,7 @@ public class ItemPrepare {
 		item.setUnitCost( 0.25 );
 		itemRepository.save( item );
 
-		return new PrepareResponse( "Item", 5 );
+		return new PrepareResponse( "Item", 7 );
 		
 	}
 	

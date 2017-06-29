@@ -1,15 +1,17 @@
 package com.inman.model.rest;
 
+import com.inman.business.Message;
+import com.inman.business.QueryParameterException;
+
 public class SearchItemRequest {
 	public static final String singleUrl = "item/search/{itemId}";
 	public static final String queryUrl = "item/query";
-	public static final String expUrl = "item/exp";
 	
 	long itemId;
 	String summaryId;
 	String description;
 	
-	public SearchItemRequest( String itemId, String summaryId, String description ) {
+	public SearchItemRequest( String itemId, String summaryId, String description ) throws QueryParameterException {
 		int numberOfParameters = 0;
 		if ( itemId == null || itemId.length() == 0 ) {
 			this.itemId = 0;
@@ -28,12 +30,12 @@ public class SearchItemRequest {
 		if ( description == null || description.trim().length() == 0 ) {
 			this.description = null;
 		} else {
-			this.description = description.trim();
+			this.description = "%" + description.trim() + "%";
 			numberOfParameters++;
 		}
 		
-		if ( numberOfParameters != 1 ) {
-			throw new RuntimeException( "Must provide exactly one search parameter");
+		if ( numberOfParameters > 1 ) {
+			throw new QueryParameterException( Message.ITEM_SEARCH_PARAMETERS );
 		}
 	}
 	

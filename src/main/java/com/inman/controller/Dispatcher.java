@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.inman.business.VerifyCredentialsLogic;
 import com.inman.business.ItemSearchLogic;
+import com.inman.business.Message;
+import com.inman.business.QueryParameterException;
 import com.inman.model.rest.ErrorLine;
 import com.inman.model.rest.PrepareResponse;
 import com.inman.model.rest.ResponsePackage;
@@ -93,29 +95,10 @@ public class Dispatcher {
 
     @CrossOrigin
     @RequestMapping( value = SearchItemRequest.queryUrl, method=RequestMethod.GET )
-    public @ResponseBody Item[] searchItemGeneric( @RequestParam("id") String id,
-    		@RequestParam("summaryId") String summaryId,
+    public ResponseEntity<?> searchItemExpGeneric(
+    		@RequestParam( "id") String id,
+    		@RequestParam( "summaryId") String summaryId,
     		@RequestParam( "description") String description ) {
-    	
-    	if ( !Application.isPrepared() ) {
-        	ItemPrepare itemPrepare = new ItemPrepare();
-        	itemPrepare.go( itemRepository );
-        	Application.setIsPrepared( true );
-    	}
-    	
-    	SearchItemRequest searchItemRequest = new SearchItemRequest(
-    			id, summaryId, description );
-    	ItemSearchLogic itemSearch = new ItemSearchLogic();
-    	return itemSearch.bySearchItemRequest( itemRepository, searchItemRequest );
-    }
-
-    @CrossOrigin
-    @RequestMapping( value = "item/exp", method=RequestMethod.GET )
-    public ResponseEntity<?> searchItemExpGeneric( @RequestParam("id") String id,
-    		@RequestParam("summaryId") String summaryId,
-    		@RequestParam( "description") String description ) {
-    	
-
     	
     	if ( !Application.isPrepared() ) {
         	ItemPrepare itemPrepare = new ItemPrepare();
@@ -130,9 +113,12 @@ public class Dispatcher {
     		searchItemRequest = new SearchItemRequest( id, summaryId, description );
     		ItemSearchLogic itemSearch = new ItemSearchLogic();
     		Item[] items = itemSearch.bySearchItemRequest( itemRepository, searchItemRequest );
+    		if ( items.length == 0 ) {
+    			responsePackage.addError( new ErrorLine( 0, "0", Message.NO_DATA_FOR_PARAMETERS ));
+    		}
     		responsePackage.setData( items );
-    	} catch ( Exception e ) {
-    		responsePackage.addError( new ErrorLine( ErrorLine.NO_KEY, "0", e.getMessage() ));
+    	} catch ( QueryParameterException e ) {
+    		responsePackage.addError( new ErrorLine( 0, "0", e.getMessage() ));
     		responsePackage.setData( new Item[0] );
     	}
     	

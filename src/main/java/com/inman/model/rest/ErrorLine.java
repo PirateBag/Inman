@@ -1,12 +1,11 @@
 package com.inman.model.rest;
 
 public class ErrorLine {
-	public final static String NO_KEY="NoKey";
-	private String key;
+	private int key;
 	private String code;
 	private String message;
 	
-	public ErrorLine( String key, String code, String message ) {
+	public ErrorLine( int key, String code, String message ) {
 		this.key = key;
 		this.code = code;
 		this.message = message;
@@ -15,10 +14,10 @@ public class ErrorLine {
 		
 	}
 	
-	public String getKey() {
+	public int  getKey() {
 		return key;
 	}
-	public void setKey(String key) {
+	public void setKey(int key) {
 		this.key = key;
 	}
 	public String getCode() {

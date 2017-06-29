@@ -9,10 +9,15 @@ import com.inman.model.Item;
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
+
 	Item findById( Long id  );
 	Item findBySummaryId( String SummaryId );
 	
 	@Query( "select i from Item i where summaryId like :summaryId")
 	Item[] byleadingSummaryId(
 		@Param( "summaryId" ) String xSummaryId );
+	
+	@Query( "select i from Item i where description like :description")
+	Item[] byDescription(
+			@Param( "description" ) String description);
 }
