@@ -14,12 +14,14 @@ import com.inman.business.Message;
 import com.inman.model.Item;
 import com.inman.model.rest.ItemResponse;
 import com.inman.model.rest.SearchItemRequest;
+import com.inman.model.rest.AddItemRequest;
+
 
 
 
 @RunWith( SpringRunner.class)
-@SpringBootTest(classes = VerifySearchItem.class )
-public class VerifySearchItem {
+@SpringBootTest(classes = AddItem.class )
+public class AddItem {
 
 	private int port= 8080;
 
@@ -164,7 +166,7 @@ public class VerifySearchItem {
 	public void addItem() throws Exception {
 		
 
-		String url = "http://localhost:" + this.port + "/"+ SearchItemRequest.queryUrl + "?id=&summaryId=&description=Wagon";
+		String url = "http://localhost:" + this.port + "/"+ AddItemRequest.addUrl + "?summaryId=W-666&description=Devils_Wagon&unitCost=6.66";
 		
 		ResponseEntity<ItemResponse> entity 
 		   = this.restTemplate.getForEntity( url, ItemResponse.class );

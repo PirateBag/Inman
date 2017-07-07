@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.inman.model.Item;
 import com.inman.model.rest.PrepareResponse;
-import com.inman.model.rest.SearchItemRequest;
 import com.inman.repository.ItemRepository;
 
 public class ItemPrepare {
