@@ -5,6 +5,7 @@ import com.inman.business.QueryParameterException;
 
 public class AddItemRequest {
 	public static final String addUrl = "item/add";
+	private static int numberOfExpectedParameters = 2;
 	
 	String summaryId;
 	String description;
@@ -28,8 +29,11 @@ public class AddItemRequest {
 			numberOfParameters++;
 		}
 		
-		if ( numberOfParameters != 2 ) {
-			throw new QueryParameterException( Message.ITEM_SEARCH_PARAMETERS );
+		this.unitCost = cost;
+
+		
+		if ( numberOfParameters != numberOfExpectedParameters ) {
+			throw new QueryParameterException( String.format( Message.WRONG_NUMBER_OF_PARAMETERS, 2, numberOfExpectedParameters ) );
 		}
 	}
 	

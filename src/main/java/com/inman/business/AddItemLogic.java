@@ -7,7 +7,7 @@ import com.inman.model.rest.AddItemRequest;
 import com.inman.model.rest.PrepareResponse;
 import com.inman.repository.ItemRepository;
 
-public class AddItem {
+public class AddItemLogic {
 	
 	@Transactional
 	public PrepareResponse go(ItemRepository itemRepository, AddItemRequest addItemRequest ) {

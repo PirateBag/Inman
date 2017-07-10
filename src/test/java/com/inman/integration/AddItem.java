@@ -27,166 +27,31 @@ public class AddItem {
 
 	private RestTemplate restTemplate = new RestTemplate();
 
-	@Test
-	public void singleItemSuccessfulSearch() throws Exception {
-		
-		String url = "http://localhost:" + this.port + "/"+ SearchItemRequest.singleUrl;
-		url = url.replace( "{itemId}", "2");
-				
-		assertEquals( "http://localhost:8080/item/search/2", url );
-		
-		ResponseEntity<Item[]> entity = this.restTemplate.getForEntity( url, Item[].class );				
-				
-		assertEquals( entity.getBody().length, 1 );
-		assertEquals( entity.getBody()[0].getId(), 2 );
-		assertEquals( entity.getBody()[0].getSummaryId(), "W-002");
-		assertEquals( entity.getBody()[0].getDescription(), "Painted Wagon Body");
-	}
-	
-	
-	@Test
-	public void singleItemFailedSearch() throws Exception {
-		
-		String url = "http://localhost:" + this.port + "/"+ SearchItemRequest.singleUrl;
-		url = url.replace( "{itemId}", "9999");
-				
-		assertEquals( "http://localhost:8080/item/search/9999", url );
-		
-		ResponseEntity<Item[]> entity = this.restTemplate.getForEntity( url, Item[].class );				
-				
-		assertEquals( entity.getBody().length, 0 );
-	}
-
-
-	@Test
-	public void singleSearchParam() throws Exception {
-		
-		String url = "http://localhost:" + this.port + "/"+ SearchItemRequest.queryUrl + "?id=2&summaryId=&description=";
-
-		ResponseEntity<ItemResponse> entity 
-		   = this.restTemplate.getForEntity( url, ItemResponse.class );
-				
-		assertEquals(entity.getStatusCode(), HttpStatus.OK );
-		assertEquals( entity.getBody().getErrors().size(), 0 );
-		
-		assertEquals( entity.getBody().getData().length, 1 );
-		assertEquals( entity.getBody().getData()[0].getId(), 2 );
-		assertEquals( entity.getBody().getData()[0].getSummaryId(), "W-002");
-		assertEquals( entity.getBody().getData()[0].getDescription(), "Painted Wagon Body");
-	}
-	
-	@Test
-	public void searchBySummaryIdgetOneResult() throws Exception {
-		
-		String url = "http://localhost:" + this.port + "/"+ SearchItemRequest.queryUrl + "?id=&summaryId=W-002&description=";
-		
-		ResponseEntity<ItemResponse> entity 
-		   = this.restTemplate.getForEntity( url, ItemResponse.class );
-				
-
-		assertEquals(entity.getStatusCode(), HttpStatus.OK );
-		assertEquals( entity.getBody().getErrors().size(), 0 );
-		
-		assertEquals( entity.getBody().getData().length, 1 );
-		assertEquals( entity.getBody().getData()[0].getId(), 2 );
-		assertEquals( entity.getBody().getData()[0].getSummaryId(), "W-002");
-		assertEquals( entity.getBody().getData()[0].getDescription(), "Painted Wagon Body");
-	}
-	
-	@Test
-	public void searchBySummaryIdgetTwoResults() throws Exception {
-		
-
-		String url = "http://localhost:" + this.port + "/"+ SearchItemRequest.queryUrl + "?id=&summaryId=W-01&description=";
-		
-		ResponseEntity<ItemResponse> entity 
-		   = this.restTemplate.getForEntity( url, ItemResponse.class );
-		
-		assertEquals(entity.getStatusCode(), HttpStatus.OK );
-		assertEquals( entity.getBody().getErrors().size(), 0 );
-		
-		assertEquals( entity.getBody().getData().length, 2 );
-		assertEquals( entity.getBody().getData()[0].getId(), 6 );
-		assertEquals( entity.getBody().getData()[0].getSummaryId(), "W-018");
-		assertEquals( entity.getBody().getData()[0].getDescription(), "Unpainted Wagon Body");
-		assertEquals( entity.getBody().getData()[1].getId(), 7 );
-		assertEquals( entity.getBody().getData()[1].getSummaryId(), "W-019");
-		assertEquals( entity.getBody().getData()[1].getDescription(), "Red Paint");
-	}
-	
-
-	@Test
-	public void searchForAll() throws Exception {
-		String url = "http://localhost:" + this.port + "/"+ SearchItemRequest.queryUrl + "?id=&summaryId=&description=";
-		
-		ResponseEntity<ItemResponse> entity 
-		   = this.restTemplate.getForEntity( url, ItemResponse.class );
-		
-		assertEquals(entity.getStatusCode(), HttpStatus.OK );
-		assertEquals( entity.getBody().getErrors().size(), 0 );
-		assertEquals( entity.getBody().getData().length, 7 );
-		
-		assertEquals( entity.getBody().getData()[0].getSummaryId(), "W-001");
-		assertEquals( entity.getBody().getData()[1].getSummaryId(), "W-002");
-		assertEquals( entity.getBody().getData()[2].getSummaryId(), "W-003");
-		assertEquals( entity.getBody().getData()[3].getSummaryId(), "W-004");
-		assertEquals( entity.getBody().getData()[4].getSummaryId(), "W-005");
-		assertEquals( entity.getBody().getData()[5].getSummaryId(), "W-018");
-		assertEquals( entity.getBody().getData()[6].getSummaryId(), "W-019");
-	}
-	
-	@Test
-	public void searchByDescription() throws Exception {
-		
-
-		String url = "http://localhost:" + this.port + "/"+ SearchItemRequest.queryUrl + "?id=&summaryId=&description=Wagon";
-		
-		ResponseEntity<ItemResponse> entity 
-		   = this.restTemplate.getForEntity( url, ItemResponse.class );
-		
-		assertEquals(entity.getStatusCode(), HttpStatus.OK );
-		assertEquals( entity.getBody().getErrors().size(), 0 );
-		
-		assertEquals( entity.getBody().getData().length, 3 );
-		
-		assertEquals( entity.getBody().getData()[0].getId(), 1 );
-		assertEquals( entity.getBody().getData()[0].getSummaryId(), "W-001");
-		assertEquals( entity.getBody().getData()[0].getDescription(), "36 In Red Wagon" );
-
-		assertEquals( entity.getBody().getData()[1].getId(), 2 );
-		assertEquals( entity.getBody().getData()[1].getSummaryId(), "W-002");
-		assertEquals( entity.getBody().getData()[1].getDescription(), "Painted Wagon Body");
-
-		assertEquals( entity.getBody().getData()[2].getId(), 6 );
-		assertEquals( entity.getBody().getData()[2].getSummaryId(), "W-018");
-		assertEquals( entity.getBody().getData()[2].getDescription(), "Unpainted Wagon Body");
-	}
 	
 	@Test
 	public void addItem() throws Exception {
 		
 
-		String url = "http://localhost:" + this.port + "/"+ AddItemRequest.addUrl + "?summaryId=W-666&description=Devils_Wagon&unitCost=6.66";
+		String url = "http://localhost:" + this.port + "/"+ AddItemRequest.addUrl + "?summaryId=W-666&description=Devils_Hearse&unitCost=6.66";
 		
-		ResponseEntity<ItemResponse> entity 
-		   = this.restTemplate.getForEntity( url, ItemResponse.class );
+		ResponseEntity<String> addEntity 
+		   = this.restTemplate.getForEntity( url, String.class );
+		
+		assertEquals( addEntity.getStatusCode(), HttpStatus.OK );
+		assertEquals( addEntity.getBody(), "OK" );
+		
+		
+		url = "http://localhost:" + this.port + "/"+ SearchItemRequest.queryUrl + "?id=&summaryId=W-666&description=";
+		
+		ResponseEntity<ItemResponse>entity = this.restTemplate.getForEntity( url, ItemResponse.class );
 		
 		assertEquals(entity.getStatusCode(), HttpStatus.OK );
 		assertEquals( entity.getBody().getErrors().size(), 0 );
 		
-		assertEquals( entity.getBody().getData().length, 3 );
-		
-		assertEquals( entity.getBody().getData()[0].getId(), 1 );
-		assertEquals( entity.getBody().getData()[0].getSummaryId(), "W-001");
-		assertEquals( entity.getBody().getData()[0].getDescription(), "36 In Red Wagon" );
-
-		assertEquals( entity.getBody().getData()[1].getId(), 2 );
-		assertEquals( entity.getBody().getData()[1].getSummaryId(), "W-002");
-		assertEquals( entity.getBody().getData()[1].getDescription(), "Painted Wagon Body");
-
-		assertEquals( entity.getBody().getData()[2].getId(), 6 );
-		assertEquals( entity.getBody().getData()[2].getSummaryId(), "W-018");
-		assertEquals( entity.getBody().getData()[2].getDescription(), "Unpainted Wagon Body");
+		assertEquals( entity.getBody().getData().length, 1 );
+		assertEquals( entity.getBody().getData()[0].getSummaryId(), "W-666");
+		assertEquals( entity.getBody().getData()[0].getDescription(), "Devils_Hearse");
+		assertEquals( entity.getBody().getData()[0].getUnitCost(), 6.66, 0.1 );
 	}
 
 	

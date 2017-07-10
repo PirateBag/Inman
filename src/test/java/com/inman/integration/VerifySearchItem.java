@@ -122,7 +122,7 @@ public class VerifySearchItem {
 		
 		assertEquals(entity.getStatusCode(), HttpStatus.OK );
 		assertEquals( entity.getBody().getErrors().size(), 0 );
-		assertEquals( entity.getBody().getData().length, 7 );
+		assertEquals( entity.getBody().getData().length, 8 );
 		
 		assertEquals( entity.getBody().getData()[0].getSummaryId(), "W-001");
 		assertEquals( entity.getBody().getData()[1].getSummaryId(), "W-002");
@@ -131,6 +131,7 @@ public class VerifySearchItem {
 		assertEquals( entity.getBody().getData()[4].getSummaryId(), "W-005");
 		assertEquals( entity.getBody().getData()[5].getSummaryId(), "W-018");
 		assertEquals( entity.getBody().getData()[6].getSummaryId(), "W-019");
+		assertEquals( entity.getBody().getData()[7].getSummaryId(), "W-666");
 	}
 	
 	@Test

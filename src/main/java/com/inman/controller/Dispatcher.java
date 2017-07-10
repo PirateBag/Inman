@@ -3,6 +3,7 @@ package com.inman.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.inman.business.VerifyCredentialsLogic;
+import com.inman.business.AddItemLogic;
 import com.inman.business.ItemSearchLogic;
 import com.inman.business.Message;
 import com.inman.business.QueryParameterException;
@@ -15,6 +16,7 @@ import com.inman.model.Item;
 import com.inman.model.rest.StatusResponse;
 import com.inman.model.rest.VerifyCredentialsRequest;
 import com.inman.model.rest.VerifyCredentialsResponse;
+import com.inman.model.rest.AddItemRequest;
 import com.inman.prepare.ItemPrepare;
 import com.inman.repository.ItemRepository;
 
@@ -124,6 +126,33 @@ public class Dispatcher {
     	
     	return ResponseEntity.ok().body(responsePackage);
     }
+    
+    @CrossOrigin
+    @RequestMapping( value = AddItemRequest.addUrl, method=RequestMethod.GET )
+    public ResponseEntity<?> itemAdd(
+    		@RequestParam( "summaryId") String summaryId,
+    		@RequestParam( "description") String description,
+    		@RequestParam( "unitCost") double unitCost ) {
+    	
+    	if ( !Application.isPrepared() ) {
+        	ItemPrepare itemPrepare = new ItemPrepare();
+        	itemPrepare.go( itemRepository );
+        	Application.setIsPrepared( true );
+    	}
+    	
+    	
+    	
+    	AddItemRequest addItemRequest = null;
+    	try {
+    		addItemRequest = new AddItemRequest( summaryId, description, unitCost );
+    		AddItemLogic addItemLogic = new AddItemLogic();
+    		addItemLogic.go( itemRepository, addItemRequest );
+    	} catch ( QueryParameterException e ) {
+    	}
+    	
+    	return ResponseEntity.ok().body("OK" );
+    }
+
 
 
 }
