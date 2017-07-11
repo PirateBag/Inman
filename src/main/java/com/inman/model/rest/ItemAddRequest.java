@@ -3,7 +3,7 @@ package com.inman.model.rest;
 import com.inman.business.Message;
 import com.inman.business.QueryParameterException;
 
-public class AddItemRequest {
+public class ItemAddRequest {
 	public static final String addUrl = "item/add";
 	private static int numberOfExpectedParameters = 2;
 	
@@ -12,7 +12,7 @@ public class AddItemRequest {
 	double unitCost;
 	
 	
-	public AddItemRequest( String summaryId, String description, double cost ) throws QueryParameterException {
+	public ItemAddRequest( String summaryId, String description, double cost ) throws QueryParameterException {
 		int numberOfParameters = 0;
 
 		if ( summaryId == null || summaryId.trim().length() == 0 ) {

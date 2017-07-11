@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.inman.model.rest.AddItemRequest;
+import com.inman.model.rest.ItemAddRequest;
 
 
 @Entity
@@ -20,7 +20,7 @@ public class Item {
 	private String description;
 	private double unitCost;
 	
-	public Item(AddItemRequest addItemRequest) {
+	public Item(ItemAddRequest addItemRequest) {
 		this.summaryId = addItemRequest.getSummaryId();
 		this.description = addItemRequest.getDescription();
 		this.unitCost = addItemRequest.getUnitCost();

@@ -12,6 +12,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
 	Item findById( Long id  );
 	Item findBySummaryId( String SummaryId );
+	void deleteById( Long id );
 	
 	@Query( "select i from Item i where summaryId like :summaryId")
 	Item[] byleadingSummaryId(
