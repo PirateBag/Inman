@@ -13,7 +13,7 @@ public class ItemAddLogic {
 
 		Item item = new Item( addItemRequest );
 		Item newItem = itemRepository.saveAndFlush( item );
-		Item [] items = new Item[ 0 ];
+		Item [] items = new Item[ 1 ];
 		items[ 0 ] = item;
 		return items;
 	}

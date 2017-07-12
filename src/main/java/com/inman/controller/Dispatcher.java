@@ -182,8 +182,9 @@ public class Dispatcher {
     		itemDeleteRequest = new ItemDeleteRequest( id );
     		ItemDeleteLogic itemDeleteLogic = new ItemDeleteLogic();
     		Item [] items = itemDeleteLogic.go( itemRepository, itemDeleteRequest );
-    		if ( items.length == 0 ) {
-    			responsePackage.addError( new ErrorLine( 0, "0", Message.NO_DATA_FOR_PARAMETERS ));
+    		if ( items.length != 0 ) {
+    			responsePackage.addError( new ErrorLine( 0, "0", 
+    					String.format( Message.WRONG_NUMBER_OF_PARAMETERS, 0, items.length )) );
     		}
     		responsePackage.setData( items );
     		

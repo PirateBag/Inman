@@ -15,13 +15,14 @@ import com.inman.model.Item;
 import com.inman.model.rest.ItemResponse;
 import com.inman.model.rest.SearchItemRequest;
 import com.inman.model.rest.ItemAddRequest;
+import com.inman.model.rest.ItemDeleteRequest;
 
 
 
 
 @RunWith( SpringRunner.class)
-@SpringBootTest(classes = AddItem.class )
-public class AddItem {
+@SpringBootTest(classes = ItemAddAndDelete.class )
+public class ItemAddAndDelete {
 
 	private int port= 8080;
 
@@ -32,26 +33,26 @@ public class AddItem {
 	public void addItem() throws Exception {
 		
 
+		//  First insert the item and verify correct insertion.
 		String url = "http://localhost:" + this.port + "/"+ ItemAddRequest.addUrl + "?summaryId=W-666&description=Devils_Hearse&unitCost=6.66";
+		ResponseEntity<ItemResponse> entity 
+		   = this.restTemplate.getForEntity( url, ItemResponse.class );
 		
-		ResponseEntity<String> addEntity 
-		   = this.restTemplate.getForEntity( url, String.class );
+		assertEquals( entity.getStatusCode(), HttpStatus.OK );
 		
-		assertEquals( addEntity.getStatusCode(), HttpStatus.OK );
-		//  assertEquals( addEntity.getBody(), "OK" );
-		
-		
-		url = "http://localhost:" + this.port + "/"+ SearchItemRequest.queryUrl + "?id=&summaryId=W-666&description=";
-		
-		ResponseEntity<ItemResponse>entity = this.restTemplate.getForEntity( url, ItemResponse.class );
-		
-		assertEquals(entity.getStatusCode(), HttpStatus.OK );
-		assertEquals( entity.getBody().getErrors().size(), 0 );
-		
-		assertEquals( entity.getBody().getData().length, 1 );
+		assertEquals( 1, entity.getBody().getData().length );
+		//  Need the insert to provide the ID of the inserted record back...
+		assertNotEquals( entity.getBody().getData()[0].getId(),  0 );
 		assertEquals( entity.getBody().getData()[0].getSummaryId(), "W-666");
 		assertEquals( entity.getBody().getData()[0].getDescription(), "Devils_Hearse");
 		assertEquals( entity.getBody().getData()[0].getUnitCost(), 6.66, 0.1 );
+
+		//  Now delete the inserted item.
+		url = "http://localhost:" + this.port + "/"+ ItemDeleteRequest.deleteUrl + "?id=" + entity.getBody().getData()[ 0 ].getId();
+		entity = this.restTemplate.getForEntity( url, ItemResponse.class );
+		
+		assertEquals(entity.getStatusCode(), HttpStatus.OK );
+		assertEquals( entity.getBody().getErrors().size(), 0 );
 	}
 
 	
