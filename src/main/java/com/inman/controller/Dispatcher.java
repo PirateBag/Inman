@@ -14,6 +14,7 @@ import com.inman.model.rest.ResponsePackage;
 import com.inman.model.rest.ItemResponse;
 import com.inman.model.rest.SearchItemRequest;
 import com.inman.model.Item;
+import com.inman.model.MetaData;
 import com.inman.model.rest.StatusResponse;
 import com.inman.model.rest.VerifyCredentialsRequest;
 import com.inman.model.rest.VerifyCredentialsResponse;
@@ -174,8 +175,7 @@ public class Dispatcher {
         	itemPrepare.go( itemRepository );
         	Application.setIsPrepared( true );
     	}
-    	
-    	
+   	
     	ItemResponse responsePackage = new ItemResponse();
     	ItemDeleteRequest itemDeleteRequest = null;
     	try {
@@ -197,6 +197,15 @@ public class Dispatcher {
     		responsePackage.setData( new Item[0] );
     	}
     	return ResponseEntity.ok().body( responsePackage );
+    }
+    
+    @CrossOrigin
+    @RequestMapping( value = StatusResponse.metaDataUrl,
+    				method=RequestMethod.GET )
+    public StatusResponse metaData() throws ClassNotFoundException {
+    	StatusResponse statusResponse = new StatusResponse();
+    	statusResponse.setStatus( MetaData.show( Item.class.getCanonicalName() ) );
+    	return statusResponse;
     }
 }
 

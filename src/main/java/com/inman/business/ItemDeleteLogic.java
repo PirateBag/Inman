@@ -16,6 +16,8 @@ public class ItemDeleteLogic {
 		itemRepository.flush();
 		
 		Item [] items = new Item[ 0 ];
+		
+		System.out.println( "Deleted item " + itemDeleteRequest.getId() );
 		return items;
 	}
 }
