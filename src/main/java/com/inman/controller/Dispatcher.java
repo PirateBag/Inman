@@ -6,12 +6,14 @@ import com.inman.business.VerifyCredentialsLogic;
 import com.inman.business.ItemAddLogic;
 import com.inman.business.ItemDeleteLogic;
 import com.inman.business.ItemSearchLogic;
+import com.inman.business.ItemUpdateLogic;
 import com.inman.business.Message;
 import com.inman.business.QueryParameterException;
 import com.inman.model.rest.ErrorLine;
 import com.inman.model.rest.PrepareResponse;
 import com.inman.model.rest.ResponsePackage;
 import com.inman.model.rest.ItemResponse;
+import com.inman.model.rest.ItemUpdateRequest;
 import com.inman.model.rest.SearchItemRequest;
 import com.inman.model.Item;
 import com.inman.model.MetaData;
@@ -206,6 +208,42 @@ public class Dispatcher {
     	StatusResponse statusResponse = new StatusResponse();
     	statusResponse.setStatus( MetaData.show( Item.class.getCanonicalName() ) );
     	return statusResponse;
+    }
+    
+    @CrossOrigin
+    @RequestMapping( value = ItemUpdateRequest.updateUrl, method=RequestMethod.GET )
+    public ResponseEntity<?> itemUpdate(
+    		@RequestParam( "id") long id,
+    		@RequestParam( "summaryId") String summaryId,
+    		@RequestParam( "description") String description,
+    		@RequestParam( "unitCost") double unitCost) {
+    	
+    	if ( !Application.isPrepared() ) {
+        	ItemPrepare itemPrepare = new ItemPrepare();
+        	itemPrepare.go( itemRepository );
+        	Application.setIsPrepared( true );
+    	}
+   	
+    	ItemResponse responsePackage = new ItemResponse();
+    	ItemUpdateRequest itemUpdateRequest = null;
+    	try {
+    		itemUpdateRequest = new ItemUpdateRequest( id, summaryId, description, unitCost );
+    		ItemUpdateLogic itemUpdateLogic = new ItemUpdateLogic();
+    		Item [] items = itemUpdateLogic.go( itemRepository, itemUpdateRequest );
+    		if ( items.length != 0 ) {
+    			responsePackage.addError( new ErrorLine( 0, "0", 
+    					String.format( Message.WRONG_NUMBER_OF_PARAMETERS, 0, items.length )) );
+    		}
+    		responsePackage.setData( items );
+    	} catch ( QueryParameterException e ) {
+    		responsePackage.addError( new ErrorLine( 0, "0", e.getMessage() ));
+    		responsePackage.setData( new Item[0] );
+   		
+    	} catch ( Exception e ) {
+    		responsePackage.addError( new ErrorLine( 0, "0", e.getMessage() ));
+    		responsePackage.setData( new Item[0] );
+    	}
+    	return ResponseEntity.ok().body( responsePackage );
     }
 }
 
