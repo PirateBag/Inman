@@ -12,6 +12,10 @@ public class ItemUpdateRequest {
 	String description;
 	double unitCost;
 	
+	public ItemUpdateRequest() {
+		
+	}
+	
 	
 	public ItemUpdateRequest( long id, String summaryId, String description, double cost ) throws QueryParameterException {
 		int numberOfParameters = 0;
@@ -60,5 +64,8 @@ public class ItemUpdateRequest {
 	}
 	public void setUnitCost( double cost) {
 		this.unitCost = cost;
+	}
+	public void setId(long id ) {
+		this.id = id;
 	}
 }

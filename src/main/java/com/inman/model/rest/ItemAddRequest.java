@@ -11,6 +11,10 @@ public class ItemAddRequest {
 	String description;
 	double unitCost;
 	
+	public ItemAddRequest() {
+		
+	}
+	
 	
 	public ItemAddRequest( String summaryId, String description, double cost ) throws QueryParameterException {
 		int numberOfParameters = 0;

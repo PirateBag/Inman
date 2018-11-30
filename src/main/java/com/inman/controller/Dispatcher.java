@@ -11,7 +11,6 @@ import com.inman.business.Message;
 import com.inman.business.QueryParameterException;
 import com.inman.model.rest.ErrorLine;
 import com.inman.model.rest.PrepareResponse;
-import com.inman.model.rest.ResponsePackage;
 import com.inman.model.rest.ItemResponse;
 import com.inman.model.rest.ItemUpdateRequest;
 import com.inman.model.rest.SearchItemRequest;
@@ -31,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +46,12 @@ public class Dispatcher {
 	
 	@Autowired
 	private ItemRepository itemRepository;
+	
+	@Autowired
+	private ItemUpdateLogic itemUpdateLogic;
+	
+	@Autowired
+	private ItemAddLogic itemAddLogic;
 
 
 	@CrossOrigin
@@ -134,10 +140,8 @@ public class Dispatcher {
     @CrossOrigin
     @RequestMapping( value = ItemAddRequest.addUrl, method=RequestMethod.GET )
     public ResponseEntity<?> itemAdd(
-    		@RequestParam( "summaryId") String summaryId,
-    		@RequestParam( "description") String description,
-    		@RequestParam( "unitCost") double unitCost ) {
-    	
+    		@ModelAttribute ItemAddRequest itemAddRequest ) 
+    {
     	if ( !Application.isPrepared() ) {
         	ItemPrepare itemPrepare = new ItemPrepare();
         	itemPrepare.go( itemRepository );
@@ -146,24 +150,12 @@ public class Dispatcher {
     	
     	
     	ItemResponse responsePackage = new ItemResponse();
-    	ItemAddRequest addItemRequest = null;
-    	try {
-    		addItemRequest = new ItemAddRequest( summaryId, description, unitCost );
-    		ItemAddLogic addItemLogic = new ItemAddLogic();
-    		Item [] items = addItemLogic.go( itemRepository, addItemRequest );
-    		if ( items.length == 0 ) {
-    			responsePackage.addError( new ErrorLine( 0, "0", Message.NO_DATA_FOR_PARAMETERS ));
-    		}
-    		responsePackage.setData( items );
+    	Item [] items = itemAddLogic.go( itemRepository, itemAddRequest );
+    	if ( items.length == 0 ) {
+    		responsePackage.addError( new ErrorLine( 0, "0", Message.NO_DATA_FOR_PARAMETERS ));
+		}
+    	responsePackage.setData( items );
     		
-    	} catch ( QueryParameterException e ) {
-    		responsePackage.addError( new ErrorLine( 0, "0", e.getMessage() ));
-    		responsePackage.setData( new Item[0] );
-   		
-    	} catch ( Exception e ) {
-    		responsePackage.addError( new ErrorLine( 0, "0", e.getMessage() ));
-    		responsePackage.setData( new Item[0] );
-    	}
     	return ResponseEntity.ok().body( responsePackage );
     }
     
@@ -213,36 +205,16 @@ public class Dispatcher {
     @CrossOrigin
     @RequestMapping( value = ItemUpdateRequest.updateUrl, method=RequestMethod.GET )
     public ResponseEntity<?> itemUpdate(
-    		@RequestParam( "id") long id,
-    		@RequestParam( "summaryId") String summaryId,
-    		@RequestParam( "description") String description,
-    		@RequestParam( "unitCost") double unitCost) {
-    	
+    		@ModelAttribute ItemUpdateRequest itemUpdateRequest )
+    {
     	if ( !Application.isPrepared() ) {
         	ItemPrepare itemPrepare = new ItemPrepare();
         	itemPrepare.go( itemRepository );
         	Application.setIsPrepared( true );
     	}
-   	
-    	ItemResponse responsePackage = new ItemResponse();
-    	ItemUpdateRequest itemUpdateRequest = null;
-    	try {
-    		itemUpdateRequest = new ItemUpdateRequest( id, summaryId, description, unitCost );
-    		ItemUpdateLogic itemUpdateLogic = new ItemUpdateLogic();
-    		Item [] items = itemUpdateLogic.go( itemRepository, itemUpdateRequest );
-    		if ( items.length != 0 ) {
-    			responsePackage.addError( new ErrorLine( 0, "0", 
-    					String.format( Message.WRONG_NUMBER_OF_PARAMETERS, 0, items.length )) );
-    		}
-    		responsePackage.setData( items );
-    	} catch ( QueryParameterException e ) {
-    		responsePackage.addError( new ErrorLine( 0, "0", e.getMessage() ));
-    		responsePackage.setData( new Item[0] );
-   		
-    	} catch ( Exception e ) {
-    		responsePackage.addError( new ErrorLine( 0, "0", e.getMessage() ));
-    		responsePackage.setData( new Item[0] );
-    	}
+	
+   		ItemResponse responsePackage = itemUpdateLogic.go( itemRepository, itemUpdateRequest );
+ 
     	return ResponseEntity.ok().body( responsePackage );
     }
 }
