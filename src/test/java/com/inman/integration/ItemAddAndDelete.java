@@ -11,13 +11,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
 import com.inman.business.Message;
-import com.inman.model.Item;
 import com.inman.model.rest.ItemResponse;
 import com.inman.model.rest.SearchItemRequest;
 import com.inman.model.rest.ItemAddRequest;
 import com.inman.model.rest.ItemDeleteRequest;
-
-
 
 
 @RunWith( SpringRunner.class)

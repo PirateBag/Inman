@@ -12,7 +12,7 @@ public class ItemDeleteLogic {
 	public Item[] go(ItemRepository itemRepository, ItemDeleteRequest itemDeleteRequest ) {
 
 		//  Item item = itemRepository.findById( itemDeleteRequest.getId() );
-		itemRepository.delete( itemDeleteRequest.getId() );
+		//  itemRepository.delete( itemDeleteRequest.getId() );
 		itemRepository.flush();
 		
 		Item [] items = new Item[ 0 ];

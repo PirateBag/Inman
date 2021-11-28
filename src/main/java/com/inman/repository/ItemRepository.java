@@ -20,4 +20,4 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 	@Query( "select i from Item i where description like :description")
 	Item[] byDescription(
 			@Param( "description" ) String description);
-}
+	}

@@ -1,7 +1,5 @@
 package com.inman.integration;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +9,9 @@ import org.springframework.web.client.RestTemplate;
 import com.inman.model.rest.StatusResponse;
 
 import static org.assertj.core.api.BDDAssertions.then;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 @RunWith( SpringRunner.class)
 @SpringBootTest(classes = BasicStatusTests2.class )

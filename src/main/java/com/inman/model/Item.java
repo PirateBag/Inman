@@ -5,11 +5,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import com.inman.model.rest.ItemAddRequest;
 
 
@@ -20,16 +15,10 @@ public class Item {
 	@GeneratedValue(strategy=GenerationType.AUTO )
 	private long id;
 	
-	@Size(min=1,max=10)
-	@NotNull
 	private String summaryId;
 	
-	@Size(min=1,max=30)
-	@NotNull
 	private String description;
 	
-	@Digits(integer=6,fraction=2)
-	@Min(0)
 	private double unitCost;
 	
 	public Item(ItemAddRequest addItemRequest) {
