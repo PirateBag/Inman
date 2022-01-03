@@ -7,14 +7,17 @@ public class SearchItemRequest {
 	public static final String singleUrl = "item/search/{itemId}";
 	public static final String queryUrl = "item/query";
 	
-	long itemId;
+	Long itemId;
 	String summaryId;
 	String description;
+	
+	public SearchItemRequest() {
+	}
 	
 	public SearchItemRequest( String itemId, String summaryId, String description ) throws QueryParameterException {
 		int numberOfParameters = 0;
 		if ( itemId == null || itemId.length() == 0 ) {
-			this.itemId = 0;
+			this.itemId = (long) 0;
 		} else {
 			this.itemId = Long.valueOf( itemId );
 			numberOfParameters++;

@@ -13,8 +13,6 @@ public class VerifyCredentialsResponse {
 	
 	private String message;
 	
-	
-	
 	public String getToken() {
 		
 		return token;

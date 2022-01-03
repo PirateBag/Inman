@@ -106,11 +106,10 @@ public class Dispatcher {
     
 
     @CrossOrigin
-    @RequestMapping( value = SearchItemRequest.queryUrl, method=RequestMethod.GET )
-    public ResponseEntity<?> searchItemExpGeneric(
-    		@RequestParam( "id") String id,
-    		@RequestParam( "summaryId") String summaryId,
-    		@RequestParam( "description") String description ) {
+    @RequestMapping( value = SearchItemRequest.queryUrl, method=RequestMethod.POST,
+    		consumes = "application/json",
+    		produces = "application/json ")
+    public ResponseEntity<?> searchItemExpGeneric( @RequestBody SearchItemRequest request ) {
     	
     	if ( !Application.isPrepared() ) {
         	ItemPrepare itemPrepare = new ItemPrepare();
@@ -120,16 +119,14 @@ public class Dispatcher {
     	
     	ItemResponse responsePackage = new ItemResponse();
     	
-    	SearchItemRequest searchItemRequest = null;
     	try {
-    		searchItemRequest = new SearchItemRequest( id, summaryId, description );
     		ItemSearchLogic itemSearch = new ItemSearchLogic();
-    		Item[] items = itemSearch.bySearchItemRequest( itemRepository, searchItemRequest );
+    		Item[] items = itemSearch.bySearchItemRequest( itemRepository, request );
     		if ( items.length == 0 ) {
     			responsePackage.addError( new ErrorLine( 0, "0", Message.NO_DATA_FOR_PARAMETERS ));
     		}
     		responsePackage.setData( items );
-    	} catch ( QueryParameterException e ) {
+    	} catch ( Exception e ) {
     		responsePackage.addError( new ErrorLine( 0, "0", e.getMessage() ));
     		responsePackage.setData( new Item[0] );
     	}

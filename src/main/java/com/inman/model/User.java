@@ -12,6 +12,9 @@ public class User {
 		this.password = password;
 	}
 	
+	public User() {
+	}
+
 	@Override
 	public String toString() {
 		return String.format( "User[ id = %d, userName = %s, password = %s ]", 

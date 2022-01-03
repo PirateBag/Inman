@@ -7,8 +7,13 @@ public class VerifyCredentialsRequest {
 
 	private String username;
 	private String password;
-
 	
+	public VerifyCredentialsRequest() { };
+
+	public VerifyCredentialsRequest( String xUsername, String xPassword ) {
+		username = xUsername;
+		password = xPassword; 
+	}
 	public String getPassword() {
 		return password;
 	}
