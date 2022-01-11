@@ -1,7 +1,6 @@
 package com.inman.controller;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -11,7 +10,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @Configuration
-@EnableAutoConfiguration
 @EnableConfigurationProperties
 @ComponentScan( "com.inman")
 @EnableJpaRepositories( {"com.inman.repository" } )
@@ -21,7 +19,6 @@ public class Application {
 	public static  boolean isPrepared = false;
 	
     public static void main( String[] args ) {
-    	
         	SpringApplication.run( Application.class, args);
     }
     
