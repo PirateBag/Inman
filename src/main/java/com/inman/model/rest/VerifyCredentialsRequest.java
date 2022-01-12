@@ -1,9 +1,10 @@
 package com.inman.model.rest;
 
-public class VerifyCredentialsRequest {
+import java.io.Serializable;
+
+public class VerifyCredentialsRequest  implements Serializable {
 	
 	public static final String rootUrl = "verifyCredentials";
-
 
 	private String username;
 	private String password;

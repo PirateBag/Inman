@@ -1,6 +1,8 @@
 package com.inman.model.rest;
 
-public class VerifyCredentialsResponse {
+import java.io.Serializable;
+
+public class VerifyCredentialsResponse implements Serializable {
 
 	public static final String NO_TOKEN = "No Token";
 	public static final String DEFAULT_TOKEN = "78UIjk";
