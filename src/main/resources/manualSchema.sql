@@ -1,0 +1,39 @@
+DROP view bomPresent;
+DROP TABLE Item;
+DROP tABLE BOM;
+
+create table Item  (
+                       id identity,
+                       summary_id varchar(10),
+                       description varchar(30),
+                       unit_cost double,
+                       UNIQUE( summary_id )
+);
+
+create table Bom (
+                     id identity,
+                     parent_id integer(10),
+                     child_id integer(10),
+                     quantity_per double,
+                     UNIQUE( parent_id, child_id )
+);
+
+create view bomPresent as select bom.QUANTITY_PER, item.summary_id from item, bom where item.id=parent_id;
+
+delete from item;
+insert into Item ( summary_id, description, unit_cost ) values  ('W-001', '36 in red wagon', '0.0' );
+insert into Item ( summary_id, description, unit_cost ) values  ('W-002', 'red painted wagon body', '0.0' );
+insert into Item ( summary_id, description, unit_cost ) values  ('W-003', 'Front Wheel assembly', '0.0' );
+insert into Item ( summary_id, description, unit_cost ) values  ('W-004', '24 in handle', '0.4' );
+insert into Item ( summary_id, description, unit_cost ) values  ('W-005', '8 in wheel', '0.5' );
+insert into Item ( summary_id, description, unit_cost ) values  ('W-006', 'Rear Wheel assembly', '0.0' );
+insert into Item ( summary_id, description, unit_cost ) values  ('W-007', 'Rear wheel brakent', '0.7' );
+
+delete from bom;
+insert into Bom ( parent_Id, child_id, quantity_per ) values ( 1,2,1.0 );
+insert into Bom ( parent_Id, child_id, quantity_per ) values ( 1,3,1.0 );
+insert into Bom ( parent_Id, child_id, quantity_per ) values ( 3,4,1.0 );
+insert into Bom ( parent_Id, child_id, quantity_per ) values ( 3,5,1.0 );
+insert into Bom ( parent_Id, child_id, quantity_per ) values ( 1,6,1.0 );
+insert into Bom ( parent_Id, child_id, quantity_per ) values ( 6,7,1.0 );
+

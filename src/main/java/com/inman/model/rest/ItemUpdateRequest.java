@@ -1,8 +1,5 @@
 package com.inman.model.rest;
 
-import com.inman.business.Message;
-import com.inman.business.QueryParameterException;
-
 public class ItemUpdateRequest {
 	public static final String updateUrl = "item/update";
 	private static int numberOfExpectedParameters = 2;
@@ -17,31 +14,11 @@ public class ItemUpdateRequest {
 	}
 	
 	
-	public ItemUpdateRequest( long id, String summaryId, String description, double cost ) throws QueryParameterException {
-		int numberOfParameters = 0;
-		
+	public ItemUpdateRequest( long id, String summaryId, String description, double cost ) {
 		this.id = id;
-
-		if ( summaryId == null || summaryId.trim().length() == 0 ) {
-			this.summaryId = null;
-		} else {
-			this.summaryId = summaryId.trim();
-			numberOfParameters++;
-		}
-		
-		if ( description == null || description.trim().length() == 0 ) {
-			this.description = null;
-		} else {
-			this.description = description.trim();
-			numberOfParameters++;
-		}
-		
+		this.summaryId = summaryId.trim();
+		this.description = description.trim();
 		this.unitCost = cost;
-
-		
-		if ( numberOfParameters != numberOfExpectedParameters ) {
-			throw new QueryParameterException( String.format( Message.WRONG_NUMBER_OF_PARAMETERS, 2, numberOfExpectedParameters ) );
-		}
 	}
 	
 	public long getId() {

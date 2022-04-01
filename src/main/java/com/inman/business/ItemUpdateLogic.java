@@ -1,12 +1,11 @@
 package com.inman.business;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.inman.model.Item;
+import com.inman.entity.Item;
 import com.inman.model.rest.ItemResponse;
 import com.inman.model.rest.ItemUpdateRequest;
 import com.inman.repository.ItemRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ItemUpdateLogic {
@@ -26,8 +25,6 @@ public class ItemUpdateLogic {
 		item.setUnitCost( updateItemRequest.getUnitCost() );
 		itemRepository.save( item );
 		
-		System.out.println( "Updated item " + updateItemRequest.getId() );
-
 		Item [] items = new Item[ 1 ];
 		items[ 0 ] = item;
 		

@@ -5,40 +5,19 @@ import com.inman.business.QueryParameterException;
 
 public class ItemAddRequest {
 	public static final String addUrl = "item/add";
-	private static int numberOfExpectedParameters = 2;
-	
+
 	String summaryId;
 	String description;
 	double unitCost;
-	
+
 	public ItemAddRequest() {
-		
 	}
 	
 	
-	public ItemAddRequest( String summaryId, String description, double cost ) throws QueryParameterException {
-		int numberOfParameters = 0;
-
-		if ( summaryId == null || summaryId.trim().length() == 0 ) {
-			this.summaryId = null;
-		} else {
-			this.summaryId = summaryId.trim();
-			numberOfParameters++;
-		}
-		
-		if ( description == null || description.trim().length() == 0 ) {
-			this.description = null;
-		} else {
-			this.description = description.trim();
-			numberOfParameters++;
-		}
-		
+	public ItemAddRequest( String summaryId, String description, double cost )  {
+		this.summaryId = summaryId.trim();
+		this.description = description.trim();
 		this.unitCost = cost;
-
-		
-		if ( numberOfParameters != numberOfExpectedParameters ) {
-			throw new QueryParameterException( String.format( Message.WRONG_NUMBER_OF_PARAMETERS, 2, numberOfExpectedParameters ) );
-		}
 	}
 	
 	public String getSummaryId() {

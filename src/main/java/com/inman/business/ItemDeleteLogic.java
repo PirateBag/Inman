@@ -2,7 +2,7 @@ package com.inman.business;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.inman.model.Item;
+import com.inman.entity.Item;
 import com.inman.model.rest.ItemDeleteRequest;
 import com.inman.repository.ItemRepository;
 

@@ -1,26 +1,14 @@
 package com.inman.controller;
 
-import org.springframework.web.bind.annotation.RestController;
+import com.inman.business.*;
+import com.inman.entity.Bom;
+import com.inman.model.rest.*;
+import com.inman.prepare.BomPrepare;
+import com.inman.repository.BomRepository;
+import org.springframework.web.bind.annotation.*;
 
-import com.inman.business.VerifyCredentialsLogic;
-import com.inman.business.ItemAddLogic;
-import com.inman.business.ItemDeleteLogic;
-import com.inman.business.ItemSearchLogic;
-import com.inman.business.ItemUpdateLogic;
-import com.inman.business.Message;
-import com.inman.business.QueryParameterException;
-import com.inman.model.rest.ErrorLine;
-import com.inman.model.rest.PrepareResponse;
-import com.inman.model.rest.ItemResponse;
-import com.inman.model.rest.ItemUpdateRequest;
-import com.inman.model.rest.SearchItemRequest;
-import com.inman.model.Item;
+import com.inman.entity.Item;
 import com.inman.model.MetaData;
-import com.inman.model.rest.StatusResponse;
-import com.inman.model.rest.VerifyCredentialsRequest;
-import com.inman.model.rest.VerifyCredentialsResponse;
-import com.inman.model.rest.ItemAddRequest;
-import com.inman.model.rest.ItemDeleteRequest;
 import com.inman.prepare.ItemPrepare;
 import com.inman.repository.ItemRepository;
 
@@ -29,15 +17,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 
 
 @Configuration
@@ -53,6 +32,11 @@ public class Dispatcher {
 	@Autowired
 	private ItemAddLogic itemAddLogic;
 
+	@Autowired
+	private BomRepository bomRepository;
+
+	@Autowired
+	private BomSearchLogic bomSearchLogic;
 
 	@CrossOrigin
     @RequestMapping( StatusResponse.rootUrl )
@@ -93,30 +77,21 @@ public class Dispatcher {
     @CrossOrigin
     @RequestMapping( value = SearchItemRequest.singleUrl, method=RequestMethod.GET )
     public @ResponseBody Item[] searchItem(@PathVariable long itemId ) {
-    	
-    	if ( !Application.isPrepared() ) {
-        	ItemPrepare itemPrepare = new ItemPrepare();
-        	itemPrepare.go( itemRepository );
-        	Application.setIsPrepared( true );
-    	}
-    	
-    	ItemSearchLogic itemSearch = new ItemSearchLogic();
+
+		makeSureBasicContentIsReady();
+
+		ItemSearchLogic itemSearch = new ItemSearchLogic();
     	return itemSearch.findById( itemRepository, itemId );
     }
-    
 
-    @CrossOrigin
+	@CrossOrigin
     @RequestMapping( value = SearchItemRequest.queryUrl, method=RequestMethod.POST,
     		consumes = "application/json",
     		produces = "application/json ")
     public ResponseEntity<?> searchItemExpGeneric( @RequestBody SearchItemRequest request ) {
-    	
-    	if ( !Application.isPrepared() ) {
-        	ItemPrepare itemPrepare = new ItemPrepare();
-        	itemPrepare.go( itemRepository );
-        	Application.setIsPrepared( true );
-    	}
-    	
+
+		makeSureBasicContentIsReady();
+
     	ItemResponse responsePackage = new ItemResponse();
     	
     	try {
@@ -135,24 +110,14 @@ public class Dispatcher {
     }
     
     @CrossOrigin
-    @RequestMapping( value = ItemAddRequest.addUrl, method=RequestMethod.GET )
+    @RequestMapping( value = ItemAddRequest.addUrl, method=RequestMethod.POST )
     public ResponseEntity<?> itemAdd(
-    		@ModelAttribute ItemAddRequest itemAddRequest ) 
+    		@RequestBody ItemAddRequest itemAddRequest )
     {
-    	if ( !Application.isPrepared() ) {
-        	ItemPrepare itemPrepare = new ItemPrepare();
-        	itemPrepare.go( itemRepository );
-        	Application.setIsPrepared( true );
-    	}
-    	
-    	
-    	ItemResponse responsePackage = new ItemResponse();
-    	Item [] items = itemAddLogic.go( itemRepository, itemAddRequest );
-    	if ( items.length == 0 ) {
-    		responsePackage.addError( new ErrorLine( 0, "0", Message.NO_DATA_FOR_PARAMETERS ));
-		}
-    	responsePackage.setData( items );
-    		
+		makeSureBasicContentIsReady();
+
+		var responsePackage = itemAddLogic.persistItem( itemRepository, itemAddRequest );
+
     	return ResponseEntity.ok().body( responsePackage );
     }
     
@@ -160,13 +125,9 @@ public class Dispatcher {
     @RequestMapping( value = ItemDeleteRequest.deleteUrl, method=RequestMethod.GET )
     public ResponseEntity<?> itemDelete(
     		@RequestParam( "id") String id ) {
-    	
-    	if ( !Application.isPrepared() ) {
-        	ItemPrepare itemPrepare = new ItemPrepare();
-        	itemPrepare.go( itemRepository );
-        	Application.setIsPrepared( true );
-    	}
-   	
+
+		makeSureBasicContentIsReady();
+
     	ItemResponse responsePackage = new ItemResponse();
     	ItemDeleteRequest itemDeleteRequest = null;
     	try {
@@ -200,19 +161,66 @@ public class Dispatcher {
     }
     
     @CrossOrigin
-    @RequestMapping( value = ItemUpdateRequest.updateUrl, method=RequestMethod.GET )
+    @RequestMapping( value = ItemUpdateRequest.updateUrl, method=RequestMethod.POST )
     public ResponseEntity<?> itemUpdate(
-    		@ModelAttribute ItemUpdateRequest itemUpdateRequest )
+			@RequestBody ItemUpdateRequest itemUpdateRequest )
     {
-    	if ( !Application.isPrepared() ) {
-        	ItemPrepare itemPrepare = new ItemPrepare();
-        	itemPrepare.go( itemRepository );
-        	Application.setIsPrepared( true );
-    	}
-	
-   		ItemResponse responsePackage = itemUpdateLogic.go( itemRepository, itemUpdateRequest );
+		makeSureBasicContentIsReady();
+
+		ItemResponse responsePackage = itemUpdateLogic.go( itemRepository, itemUpdateRequest );
  
     	return ResponseEntity.ok().body( responsePackage );
     }
+
+
+	@CrossOrigin
+	@RequestMapping( value = BomSearchRequest.all, method=RequestMethod.POST )
+	public ResponseEntity<?> bomFindAll( )
+	{
+		makeSureBasicContentIsReady();
+		BomSearchLogic bomSearchLogic = new BomSearchLogic();
+		Bom[] boms = bomSearchLogic.byAll( bomRepository  );
+		BomResponse responsePackage = new BomResponse();
+		responsePackage.setData( boms );
+
+		return ResponseEntity.ok().body( responsePackage );
+	}
+
+	@CrossOrigin
+	@RequestMapping( value = BomSearchRequest.FIND_BY_PARENT, method=RequestMethod.POST )
+	public ResponseEntity<?> bomFindByParent(		@RequestBody BomSearchRequest xBomSearchRequest	)
+	{
+		makeSureBasicContentIsReady();
+		Bom[] boms = bomSearchLogic.findByParentId( bomRepository, xBomSearchRequest.getIdToSearchFor()  );
+		BomResponse responsePackage = new BomResponse();
+		responsePackage.setData( boms );
+
+		return ResponseEntity.ok().body( responsePackage );
+	}
+
+
+	@CrossOrigin
+	@RequestMapping( value = BomSearchRequest.findById, method=RequestMethod.POST )
+	public ResponseEntity<?> bomFindById( @RequestBody BomSearchRequest xBomSearchRequest )
+	//  public ResponseEntity<?> bomFindById( @RequestBody String xBomSearchRequestString )
+	{
+
+		makeSureBasicContentIsReady();
+		Bom[] boms = bomSearchLogic.byId( bomRepository, xBomSearchRequest.getIdToSearchFor()  );
+		BomResponse responsePackage = new BomResponse();
+		responsePackage.setData( boms );
+
+		return ResponseEntity.ok().body( responsePackage );
+	}
+
+
+	private void makeSureBasicContentIsReady() {
+		if ( !Application.isPrepared() ) {
+			new ItemPrepare().go( itemRepository );
+			new BomPrepare().go( bomRepository );
+			Application.setIsPrepared( true );
+		}
+	}
+
 }
 

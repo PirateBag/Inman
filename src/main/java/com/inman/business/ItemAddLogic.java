@@ -1,22 +1,42 @@
 package com.inman.business;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.inman.model.Item;
+import com.inman.model.rest.ErrorLine;
+import com.inman.model.rest.ItemResponse;
+import com.inman.entity.Item;
 import com.inman.model.rest.ItemAddRequest;
 import com.inman.repository.ItemRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ItemAddLogic {
 	
 	@Transactional
 	public Item[] go(ItemRepository itemRepository, ItemAddRequest addItemRequest ) {
+		Item item = null;
+		Item newItem = null;
 
-		Item item = new Item( addItemRequest );
-		Item newItem = itemRepository.saveAndFlush( item );
+		item = new Item(addItemRequest);
+		newItem = itemRepository.saveAndFlush(item);
 		Item [] items = new Item[ 1 ];
 		items[ 0 ] = newItem;
 		return items;
+	}
+
+	public ItemResponse persistItem( ItemRepository xItemRepository, ItemAddRequest xAddItemRequest )
+	{
+		ItemResponse responsePackage = new ItemResponse();
+		Item [] items = null;
+
+		try {
+			items = go( xItemRepository, xAddItemRequest );
+			responsePackage.setData( items );
+		} catch ( Exception e ) {
+			if ( e.getMessage().contains( "PUBLIC.ITEM(SUMMARY_ID)")) {
+				responsePackage.addError( new ErrorLine( 0, "0", "Duplicate Summary Id, provide a unqiue value.") );
+
+			}
+		}
+		return responsePackage;
 	}
 }

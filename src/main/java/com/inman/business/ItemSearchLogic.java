@@ -1,7 +1,7 @@
 package com.inman.business;
 
 import java.util.List;
-import com.inman.model.Item;
+import com.inman.entity.Item;
 import com.inman.model.rest.SearchItemRequest;
 import com.inman.repository.ItemRepository;
 
