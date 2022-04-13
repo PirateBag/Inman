@@ -1,8 +1,8 @@
 package com.inman.business;
 
 import com.inman.entity.Item;
-import com.inman.model.rest.ItemResponse;
 import com.inman.model.rest.ItemUpdateRequest;
+import com.inman.model.response.ResponsePackage;
 import com.inman.repository.ItemRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class ItemUpdateLogic {
 	
 	@Transactional
-	public ItemResponse go(ItemRepository itemRepository, ItemUpdateRequest updateItemRequest ) {
-		
-		ItemResponse itemResponse = new ItemResponse();
+	public ResponsePackage go(ItemRepository itemRepository, ItemUpdateRequest updateItemRequest ) {
+
+		ResponsePackage itemResponse = new ResponsePackage();
 
 		Item item = itemRepository.findById( updateItemRequest.getId() );
 		

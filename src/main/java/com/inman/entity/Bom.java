@@ -3,17 +3,9 @@ package com.inman.entity;
 import javax.persistence.*;
 @Entity
 @Table( name = "Bom"  )
-public class Bom {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY )
-	protected long id;
-	public void setId(Long id) {
-		this.id = id;
-	}
-
+public class Bom extends EntityMaster {
 	protected Long parentId;
 	protected Long childId;
-
 	protected double quantityPer;
 
 	public Bom() {
@@ -23,11 +15,6 @@ public class Bom {
 		this.parentId = xParent;
 		this.childId = xChild;
 		this.quantityPer = xQuantityPer;
-	}
-
-
-	public long getId() {
-		return this.id;
 	}
 
 	public Long getParentId() {

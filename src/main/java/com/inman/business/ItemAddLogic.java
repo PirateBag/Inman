@@ -1,9 +1,9 @@
 package com.inman.business;
 
-import com.inman.model.rest.ErrorLine;
-import com.inman.model.rest.ItemResponse;
 import com.inman.entity.Item;
+import com.inman.model.rest.ErrorLine;
 import com.inman.model.rest.ItemAddRequest;
+import com.inman.model.response.ResponsePackage;
 import com.inman.repository.ItemRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,9 +23,9 @@ public class ItemAddLogic {
 		return items;
 	}
 
-	public ItemResponse persistItem( ItemRepository xItemRepository, ItemAddRequest xAddItemRequest )
+	public ResponsePackage persistItem(ItemRepository xItemRepository, ItemAddRequest xAddItemRequest )
 	{
-		ItemResponse responsePackage = new ItemResponse();
+		ResponsePackage responsePackage = new ResponsePackage();
 		Item [] items = null;
 
 		try {

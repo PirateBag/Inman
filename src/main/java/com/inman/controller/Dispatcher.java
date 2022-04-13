@@ -2,21 +2,22 @@ package com.inman.controller;
 
 import com.inman.business.*;
 import com.inman.entity.Bom;
-import com.inman.model.rest.*;
-import com.inman.prepare.BomPrepare;
-import com.inman.repository.BomRepository;
-import org.springframework.web.bind.annotation.*;
-
 import com.inman.entity.Item;
 import com.inman.model.MetaData;
+import com.inman.model.response.ItemResponse;
+import com.inman.model.response.ResponsePackage;
+import com.inman.model.response.ResponseType;
+import com.inman.model.rest.*;
+import com.inman.prepare.BomPrepare;
 import com.inman.prepare.ItemPrepare;
+import com.inman.repository.BomRepository;
 import com.inman.repository.ItemRepository;
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @Configuration
@@ -87,12 +88,12 @@ public class Dispatcher {
 	@CrossOrigin
     @RequestMapping( value = SearchItemRequest.queryUrl, method=RequestMethod.POST,
     		consumes = "application/json",
-    		produces = "application/json ")
+    		produces = "application/json")
     public ResponseEntity<?> searchItemExpGeneric( @RequestBody SearchItemRequest request ) {
 
 		makeSureBasicContentIsReady();
 
-    	ItemResponse responsePackage = new ItemResponse();
+		ResponsePackage responsePackage = new ItemResponse( ResponseType.QUERY );
     	
     	try {
     		ItemSearchLogic itemSearch = new ItemSearchLogic();
@@ -128,7 +129,7 @@ public class Dispatcher {
 
 		makeSureBasicContentIsReady();
 
-    	ItemResponse responsePackage = new ItemResponse();
+		ResponsePackage responsePackage = new ResponsePackage();
     	ItemDeleteRequest itemDeleteRequest = null;
     	try {
     		itemDeleteRequest = new ItemDeleteRequest( id );
@@ -162,14 +163,14 @@ public class Dispatcher {
     
     @CrossOrigin
     @RequestMapping( value = ItemUpdateRequest.updateUrl, method=RequestMethod.POST )
-    public ResponseEntity<?> itemUpdate(
+    public ResponsePackage itemUpdate(
 			@RequestBody ItemUpdateRequest itemUpdateRequest )
     {
 		makeSureBasicContentIsReady();
 
-		ItemResponse responsePackage = itemUpdateLogic.go( itemRepository, itemUpdateRequest );
+		ResponsePackage responsePackage = itemUpdateLogic.go( itemRepository, itemUpdateRequest );
  
-    	return ResponseEntity.ok().body( responsePackage );
+    	return responsePackage;
     }
 
 
@@ -180,8 +181,7 @@ public class Dispatcher {
 		makeSureBasicContentIsReady();
 		BomSearchLogic bomSearchLogic = new BomSearchLogic();
 		Bom[] boms = bomSearchLogic.byAll( bomRepository  );
-		BomResponse responsePackage = new BomResponse();
-		responsePackage.setData( boms );
+		ResponsePackage responsePackage = new ResponsePackage( boms, ResponseType.QUERY );
 
 		return ResponseEntity.ok().body( responsePackage );
 	}
@@ -192,9 +192,7 @@ public class Dispatcher {
 	{
 		makeSureBasicContentIsReady();
 		Bom[] boms = bomSearchLogic.findByParentId( bomRepository, xBomSearchRequest.getIdToSearchFor()  );
-		BomResponse responsePackage = new BomResponse();
-		responsePackage.setData( boms );
-
+		ResponsePackage responsePackage = new ResponsePackage( boms, ResponseType.QUERY );
 		return ResponseEntity.ok().body( responsePackage );
 	}
 
@@ -207,8 +205,8 @@ public class Dispatcher {
 
 		makeSureBasicContentIsReady();
 		Bom[] boms = bomSearchLogic.byId( bomRepository, xBomSearchRequest.getIdToSearchFor()  );
-		BomResponse responsePackage = new BomResponse();
-		responsePackage.setData( boms );
+
+		ResponsePackage responsePackage = new ResponsePackage( boms, ResponseType.QUERY );
 
 		return ResponseEntity.ok().body( responsePackage );
 	}

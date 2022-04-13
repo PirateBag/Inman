@@ -1,16 +1,13 @@
 package com.inman.entity;
 
-import javax.persistence.*;
-
 import com.inman.model.rest.ItemAddRequest;
+
+import javax.persistence.*;
 
 
 @Entity
 @Table( name = "Item" )
-public class Item {
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO )
-	private long id;
+public class  Item extends EntityMaster {
 
 	@Column( unique = true )
 	private String summaryId;
