@@ -22,11 +22,11 @@ public class ResponsePackageTest {
         return result;
     }
 
-    static boolean areItemArraysEqual(Object[] actual, Item[] exepcted ) {
-        if (actual.length != exepcted.length ) { return false; };
+    static boolean areItemArraysEqual(Object[] actual, Item[] expected ) {
+        if (actual.length != expected.length ) { return false; };
 
         for ( int i = 0 ; i < actual.length ; i++ ) {
-            if ( actual[ i ] != exepcted[ i ]) { return false; }
+            if ( actual[ i ] != expected[ i ]) { return false; }
         }
         return true;
     }

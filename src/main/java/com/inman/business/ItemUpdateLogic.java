@@ -1,6 +1,8 @@
 package com.inman.business;
 
 import com.inman.entity.Item;
+import com.inman.model.response.ItemResponse;
+import com.inman.model.response.ResponseType;
 import com.inman.model.rest.ItemUpdateRequest;
 import com.inman.model.response.ResponsePackage;
 import com.inman.repository.ItemRepository;
@@ -13,7 +15,7 @@ public class ItemUpdateLogic {
 	@Transactional
 	public ResponsePackage go(ItemRepository itemRepository, ItemUpdateRequest updateItemRequest ) {
 
-		ResponsePackage itemResponse = new ResponsePackage();
+		ItemResponse itemResponse = new ItemResponse(ResponseType.CHANGE );
 
 		Item item = itemRepository.findById( updateItemRequest.getId() );
 		
@@ -25,9 +27,8 @@ public class ItemUpdateLogic {
 		item.setUnitCost( updateItemRequest.getUnitCost() );
 		itemRepository.save( item );
 		
-		Item [] items = new Item[ 1 ];
-		items[ 0 ] = item;
-		
+		Item [] items = new Item[ ] { item };
+
 		itemResponse.setData( items );
 		return itemResponse;
 	}

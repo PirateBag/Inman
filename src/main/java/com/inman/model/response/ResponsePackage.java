@@ -36,8 +36,8 @@ public class ResponsePackage<T> {
         errors.add(error);
     }
 
-    public ResponsePackage mergeAnotherResponse(ResponsePackage xIncrementalChanges) {
-        ResponsePackage rValue;
+    public ResponsePackage<T> mergeAnotherResponse(ResponsePackage xIncrementalChanges) {
+        ResponsePackage<T> rValue;
         EntityMaster[] newData = null;
         var originalNumberOfRows = this.getData().length;
         var numberOfIncrementalRows = xIncrementalChanges.getData().length;
@@ -97,7 +97,7 @@ public class ResponsePackage<T> {
 
         rValue = new ResponsePackage<T>( );
         rValue.setErrors( this.errors );
-        rValue.setData( newData );
+        rValue.setData((T[]) newData);
         rValue.setResponseType( this.responseType );
         return rValue;
 

@@ -101,6 +101,7 @@ public class Dispatcher {
     		if ( items.length == 0 ) {
     			responsePackage.addError( new ErrorLine( 0, "0", Message.NO_DATA_FOR_PARAMETERS ));
     		}
+
     		responsePackage.setData( items );
     	} catch ( Exception e ) {
     		responsePackage.addError( new ErrorLine( 0, "0", e.getMessage() ));
@@ -117,6 +118,7 @@ public class Dispatcher {
     {
 		makeSureBasicContentIsReady();
 
+
 		var responsePackage = itemAddLogic.persistItem( itemRepository, itemAddRequest );
 
     	return ResponseEntity.ok().body( responsePackage );
@@ -129,7 +131,7 @@ public class Dispatcher {
 
 		makeSureBasicContentIsReady();
 
-		ResponsePackage responsePackage = new ResponsePackage();
+		ItemResponse responsePackage = new ItemResponse( ResponseType.DELETE );
     	ItemDeleteRequest itemDeleteRequest = null;
     	try {
     		itemDeleteRequest = new ItemDeleteRequest( id );
