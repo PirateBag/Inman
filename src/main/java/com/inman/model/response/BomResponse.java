@@ -1,21 +1,20 @@
 package com.inman.model.response;
 
-import com.inman.entity.Item;
+import com.inman.entity.Bom;
 
-public class ItemResponse extends ResponsePackage<Item> {
-    public ItemResponse() {};
+public class BomResponse extends ResponsePackage<Bom> {
+    public BomResponse() {};
 
-    public ItemResponse( ResponseType xResponseType ) {
+    public BomResponse( ResponseType xResponseType ) {
         responseType = xResponseType;
     }
 
-    public ItemResponse( ResponsePackage xResponsePackage ) {
-
+    public BomResponse( ResponsePackage xResponsePackage ) {
         //   this.setData((Item[]) xResponsePackage.getData());
-        Item[] newData = new Item[ xResponsePackage.getData().length ];
+        Bom[] newData = new Bom[ xResponsePackage.getData().length ];
         int newDataIndex = 0;
         for( Object  item : xResponsePackage.getData() ) {
-            newData[ newDataIndex++ ] = (Item) item;
+            newData[ newDataIndex++ ] = (Bom) item;
         }
         this.setData( newData );
 

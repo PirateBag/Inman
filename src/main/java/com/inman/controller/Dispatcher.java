@@ -4,6 +4,7 @@ import com.inman.business.*;
 import com.inman.entity.Bom;
 import com.inman.entity.Item;
 import com.inman.model.MetaData;
+import com.inman.model.request.BomSearchRequest;
 import com.inman.model.response.ItemResponse;
 import com.inman.model.response.ResponsePackage;
 import com.inman.model.response.ResponseType;
@@ -189,8 +190,8 @@ public class Dispatcher {
 	}
 
 	@CrossOrigin
-	@RequestMapping( value = BomSearchRequest.FIND_BY_PARENT, method=RequestMethod.POST )
-	public ResponseEntity<?> bomFindByParent(		@RequestBody BomSearchRequest xBomSearchRequest	)
+	@RequestMapping( value = BomSearchRequest.findByParent, method=RequestMethod.POST )
+	public ResponseEntity<?> bomFindByParent( @RequestBody BomSearchRequest xBomSearchRequest	)
 	{
 		makeSureBasicContentIsReady();
 		Bom[] boms = bomSearchLogic.findByParentId( bomRepository, xBomSearchRequest.getIdToSearchFor()  );

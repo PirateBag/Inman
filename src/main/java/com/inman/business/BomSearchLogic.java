@@ -20,15 +20,13 @@ public class BomSearchLogic {
 		return boms.toArray(new Bom[boms.size() ]);
 	}
 
-
 	public Bom[]  byId(BomRepository xBomRepository, Long xId  ) {
 		Optional<Bom> bom = xBomRepository.findById( xId );
 
 		if ( bom.isEmpty() ) {
 			return new Bom[0];
 		}
-		Bom[] boms = new Bom[1];
-		boms[ 0 ] = bom.get();
+		Bom[] boms = new Bom[] { bom.get() };
 		return boms;
 	}
 

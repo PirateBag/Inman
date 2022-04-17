@@ -28,7 +28,7 @@ public class Bom extends EntityMaster {
 		return this.childId;
 	}
 	public void setChildId( Long xChild ) {
-		this.parentId = xChild;
+		this.childId = xChild;
 	}
 
 	public double getQuantityPer() {
