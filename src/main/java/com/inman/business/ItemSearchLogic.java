@@ -18,7 +18,6 @@ public class ItemSearchLogic {
 		return items;
 		
 	}
-
 	public Item[] bySearchItemRequest(ItemRepository itemRepository, SearchItemRequest searchItemRequest) {
 		
 		if ( searchItemRequest.getItemId() != 0 ) {

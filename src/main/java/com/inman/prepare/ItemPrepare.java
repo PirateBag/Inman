@@ -5,8 +5,6 @@ import com.inman.model.rest.PrepareResponse;
 import com.inman.repository.ItemRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 public class ItemPrepare {
 
 	public static Item w001;
@@ -81,12 +79,5 @@ public class ItemPrepare {
 		itemRepository.save( w007 );
 
 		return new PrepareResponse( "Item", 7 );
-		
 	}
-	
-	public List<Item> show( ItemRepository itemRepository ) {
-		return itemRepository.findAll();
-	}
-
-
 }

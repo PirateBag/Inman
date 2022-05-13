@@ -18,8 +18,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 
 @Configuration
 @RestController
@@ -69,14 +67,6 @@ public class Dispatcher {
     }
     
     @CrossOrigin
-    @RequestMapping( "/show" )
-    public @ResponseBody List<Item> show( ) {
-    	
-    	ItemPrepare itemPrepare = new ItemPrepare();
-    	return itemPrepare.show( itemRepository );
-    }
-    
-    @CrossOrigin
     @RequestMapping( value = SearchItemRequest.singleUrl, method=RequestMethod.GET )
     public @ResponseBody Item[] searchItem(@PathVariable long itemId ) {
 
@@ -111,6 +101,30 @@ public class Dispatcher {
     	
     	return ResponseEntity.ok().body(responsePackage);
     }
+
+	@CrossOrigin
+	@RequestMapping( value = SearchItemRequest.allUrl, method=RequestMethod.POST,
+			produces = "application/json")
+	public ResponseEntity<?> searchItemFindAll( ) {
+
+		makeSureBasicContentIsReady();
+
+		ResponsePackage responsePackage = new ItemResponse( ResponseType.QUERY );
+
+		try {
+			Item[] items = itemRepository.findAll().toArray(new Item[0]);
+			if ( items.length == 0 ) {
+				responsePackage.addError( new ErrorLine( 0, "0", Message.NO_DATA_FOR_PARAMETERS ));
+			}
+
+			responsePackage.setData( items );
+		} catch ( Exception e ) {
+			responsePackage.addError( new ErrorLine( 0, "0", e.getMessage() ));
+			responsePackage.setData( new Item[0] );
+		}
+
+		return ResponseEntity.ok().body(responsePackage);
+	}
     
     @CrossOrigin
     @RequestMapping( value = ItemAddRequest.addUrl, method=RequestMethod.POST )
@@ -188,18 +202,19 @@ public class Dispatcher {
 
 		return ResponseEntity.ok().body( responsePackage );
 	}
-
+/*
 	@CrossOrigin
 	@RequestMapping( value = BomSearchRequest.findByParent, method=RequestMethod.POST )
-	public ResponseEntity<?> bomFindByParent( @RequestBody BomSearchRequest xBomSearchRequest	)
-	{
+	public ResponseEntity<?> bomFindByParent( @RequestBody BomSearchRequest xBomSearchRequest	) {
 		makeSureBasicContentIsReady();
-		Bom[] boms = bomSearchLogic.findByParentId( bomRepository, xBomSearchRequest.getIdToSearchFor()  );
-		ResponsePackage responsePackage = new ResponsePackage( boms, ResponseType.QUERY );
-		return ResponseEntity.ok().body( responsePackage );
+		Bom[] boms = bomSearchLogic.findByParentId(bomRepository, xBomSearchRequest.getIdToSearchFor());
+		ResponsePackage responsePackage = new ResponsePackage(boms, ResponseType.QUERY);
+		return ResponseEntity.ok().body(responsePackage);
+
 	}
 
 
+/*
 	@CrossOrigin
 	@RequestMapping( value = BomSearchRequest.findById, method=RequestMethod.POST )
 	public ResponseEntity<?> bomFindById( @RequestBody BomSearchRequest xBomSearchRequest )
@@ -214,6 +229,8 @@ public class Dispatcher {
 		return ResponseEntity.ok().body( responsePackage );
 	}
 
+
+ */
 
 	private void makeSureBasicContentIsReady() {
 		if ( !Application.isPrepared() ) {

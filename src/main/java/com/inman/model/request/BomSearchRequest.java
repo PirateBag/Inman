@@ -4,7 +4,7 @@ public class BomSearchRequest {
 	public static final String FIND_BY_PARENT = "bom/findByParent";
 	public static final String findByParent = "bom/findByParent";
 	public static final String findById = "bom/findById";
-	public static final String all = "bom/findAll";
+	public static final String all = "bom/all";
 
 	Long idToSearchFor;
 

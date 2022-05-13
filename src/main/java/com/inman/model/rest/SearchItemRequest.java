@@ -6,6 +6,7 @@ import com.inman.business.QueryParameterException;
 public class SearchItemRequest {
 	public static final String singleUrl = "item/search/{itemId}";
 	public static final String queryUrl = "item/query";
+	public static final String allUrl = "item/all";
 	
 	Long itemId;
 	String summaryId;

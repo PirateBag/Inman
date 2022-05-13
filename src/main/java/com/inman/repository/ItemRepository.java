@@ -12,7 +12,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
 	Item findById( long id  );
 	Item findBySummaryId( String SummaryId );
-	
+
 	@Query( "select i from Item i where summaryId like :summaryId")
 	Item[] byleadingSummaryId(
 		@Param( "summaryId" ) String xSummaryId );
