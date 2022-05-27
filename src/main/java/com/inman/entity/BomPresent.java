@@ -1,6 +1,14 @@
 package com.inman.entity;
 
-public class BomPresent extends Bom {
+import javax.persistence.Entity;
+
+@Entity
+public class BomPresent extends EntityMaster {
+
+    protected long parentId;
+    protected long childId;
+    protected double quantityPer;
+
     protected String parentSummary;
     protected String childSummary;
 

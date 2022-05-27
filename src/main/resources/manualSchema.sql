@@ -1,4 +1,4 @@
-DROP view bomPresent;
+DROP view bom_Present;
 DROP TABLE Item;
 DROP tABLE BOM;
 
@@ -18,7 +18,7 @@ create table Bom (
                      UNIQUE( parent_id, child_id )
 );
 
-create view bomPresent as select bom.QUANTITY_PER, item.summary_id from item, bom where item.id=parent_id;
+create view bom_Present as select b.id, b.QUANTITY_PER, b.parent_id, p.summary_id parent_summary, b.child_id, c.summary_id child_summary  from item p, item c, bom b where b.parent_id = p.id and b.child_id = c.id;
 
 delete from item;
 insert into Item ( summary_id, description, unit_cost ) values  ('W-001', '36 in red wagon', '0.0' );
