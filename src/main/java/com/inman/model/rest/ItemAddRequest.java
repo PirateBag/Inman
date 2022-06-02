@@ -1,23 +1,22 @@
 package com.inman.model.rest;
 
-import com.inman.business.Message;
-import com.inman.business.QueryParameterException;
-
 public class ItemAddRequest {
 	public static final String addUrl = "item/add";
 
 	String summaryId;
 	String description;
 	double unitCost;
+	String sourcing;
 
 	public ItemAddRequest() {
 	}
 	
 	
-	public ItemAddRequest( String summaryId, String description, double cost )  {
+	public ItemAddRequest( String summaryId, String description, double cost, String xSourcing )  {
 		this.summaryId = summaryId.trim();
 		this.description = description.trim();
 		this.unitCost = cost;
+		this.sourcing = xSourcing;
 	}
 	
 	public String getSummaryId() {
@@ -38,4 +37,7 @@ public class ItemAddRequest {
 	public void setUnitCost( double cost) {
 		this.unitCost = cost;
 	}
+
+    public String getSourcing() { return this.sourcing; }
+    public void setSourcing( String xSourcing ) { this.sourcing = xSourcing; }
 }

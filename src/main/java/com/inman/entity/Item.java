@@ -15,11 +15,16 @@ public class  Item extends EntityMaster {
 	private String description;
 	
 	private double unitCost;
+
+	public static final String SOURCE_PUR = "PUR";
+	public static final String SOURCE_MAN = "MAN";
+	private String sourcing;
 	
 	public Item(ItemAddRequest addItemRequest) {
 		this.summaryId = addItemRequest.getSummaryId();
 		this.description = addItemRequest.getDescription();
 		this.unitCost = addItemRequest.getUnitCost();
+		this.sourcing = addItemRequest.getSourcing();
 	}
 
 	public Item() {
@@ -48,5 +53,13 @@ public class  Item extends EntityMaster {
 	public void setUnitCost( double unitCost ) {
 		this.unitCost = unitCost;
 	}
+
+	public String getSourcing() {
+		return sourcing;
+	}
+	public void setSourcing( String xSourcing ) {
+		this.sourcing = xSourcing;
+	}
+
 
 }

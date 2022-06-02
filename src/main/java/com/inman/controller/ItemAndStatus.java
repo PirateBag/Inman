@@ -1,17 +1,13 @@
 package com.inman.controller;
 
 import com.inman.business.*;
-import com.inman.entity.Bom;
 import com.inman.entity.Item;
 import com.inman.model.MetaData;
-import com.inman.model.request.BomSearchRequest;
 import com.inman.model.response.ItemResponse;
 import com.inman.model.response.ResponsePackage;
 import com.inman.model.response.ResponseType;
 import com.inman.model.rest.*;
-import com.inman.prepare.BomPrepare;
 import com.inman.prepare.ItemPrepare;
-import com.inman.repository.BomRepository;
 import com.inman.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Configuration
 @RestController
-public class Dispatcher {
+public class ItemAndStatus {
 	
 	@Autowired
 	private ItemRepository itemRepository;
@@ -31,12 +27,6 @@ public class Dispatcher {
 	
 	@Autowired
 	private ItemAddLogic itemAddLogic;
-
-	@Autowired
-	private BomRepository bomRepository;
-
-	@Autowired
-	private BomSearchLogic bomSearchLogic;
 
 	@CrossOrigin
     @RequestMapping( StatusResponse.rootUrl )
@@ -107,7 +97,7 @@ public class Dispatcher {
 			produces = "application/json")
 	public ResponseEntity<?> searchItemFindAll( ) {
 
-		makeSureBasicContentIsReady();
+		//		makeSureBasicContentIsReady();
 
 		ResponsePackage responsePackage = new ItemResponse( ResponseType.QUERY );
 
@@ -183,63 +173,17 @@ public class Dispatcher {
     public ResponsePackage itemUpdate(
 			@RequestBody ItemUpdateRequest itemUpdateRequest )
     {
-		makeSureBasicContentIsReady();
-
 		ResponsePackage responsePackage = itemUpdateLogic.go( itemRepository, itemUpdateRequest );
  
     	return responsePackage;
     }
-
-
-	@CrossOrigin
-	@RequestMapping( value = BomSearchRequest.all, method=RequestMethod.POST )
-	public ResponseEntity<?> bomFindAll( )
-	{
-		makeSureBasicContentIsReady();
-		BomSearchLogic bomSearchLogic = new BomSearchLogic();
-		Bom[] boms = bomSearchLogic.byAll( bomRepository  );
-		ResponsePackage responsePackage = new ResponsePackage( boms, ResponseType.QUERY );
-
-		return ResponseEntity.ok().body( responsePackage );
-	}
-
-/*
-	@CrossOrigin
-	@RequestMapping( value = BomSearchRequest.findByParent, method=RequestMethod.POST )
-	public ResponseEntity<?> bomFindByParent( @RequestBody BomSearchRequest xBomSearchRequest	) {
-		makeSureBasicContentIsReady();
-		Bom[] boms = bomSearchLogic.findByParentId(bomRepository, xBomSearchRequest.getIdToSearchFor());
-		ResponsePackage responsePackage = new ResponsePackage(boms, ResponseType.QUERY);
-		return ResponseEntity.ok().body(responsePackage);
-
-	}
-
-
-/*
-	@CrossOrigin
-	@RequestMapping( value = BomSearchRequest.findById, method=RequestMethod.POST )
-	public ResponseEntity<?> bomFindById( @RequestBody BomSearchRequest xBomSearchRequest )
-	//  public ResponseEntity<?> bomFindById( @RequestBody String xBomSearchRequestString )
-	{
-
-		makeSureBasicContentIsReady();
-		Bom[] boms = bomSearchLogic.byId( bomRepository, xBomSearchRequest.getIdToSearchFor()  );
-
-		ResponsePackage responsePackage = new ResponsePackage( boms, ResponseType.QUERY );
-
-		return ResponseEntity.ok().body( responsePackage );
-	}
-
-
- */
-
 	private void makeSureBasicContentIsReady() {
 		if ( !Application.isPrepared() ) {
+			/*
 			new ItemPrepare().go( itemRepository );
-			new BomPrepare().go( bomRepository );
+			new BomPrepare().go( bomRepository ); */
 			Application.setIsPrepared( true );
 		}
 	}
-
 }
 

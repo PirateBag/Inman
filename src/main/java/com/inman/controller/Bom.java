@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Configuration
 @RestController
-public class DispatcherBomPresent {
+public class Bom {
 
 	@Autowired
 	BomPresentRepository bomPresentRepository;
@@ -39,11 +39,8 @@ public class DispatcherBomPresent {
 	@RequestMapping( value = BomSearchRequest.findByParent, method=RequestMethod.POST )
 	public ResponseEntity<?> bomFindByParent( @RequestBody BomSearchRequest xBomSearchRequest	) {
 
-		BomPresent[] boms = bomPresentRepository.byParentId( 1L );
-
-		//  BomPresent[] bomPresents = bomPresentSearchLogic.byAll( bomPresentRepository  );
+		BomPresent[] boms = bomPresentRepository.byParentId(  xBomSearchRequest.getIdToSearchFor() );
 		ResponsePackage responsePackage = new ResponsePackage( boms, ResponseType.QUERY );
-
 		return ResponseEntity.ok().body( responsePackage );
 	}
 
