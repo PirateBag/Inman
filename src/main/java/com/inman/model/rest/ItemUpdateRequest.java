@@ -8,17 +8,20 @@ public class ItemUpdateRequest {
 	String summaryId;
 	String description;
 	double unitCost;
+	String sourcing;
 	
 	public ItemUpdateRequest() {
 		
 	}
 	
 	
-	public ItemUpdateRequest( long id, String summaryId, String description, double cost ) {
+	public ItemUpdateRequest( long id, String summaryId, String description, double cost,
+							  String xSourcing ) {
 		this.id = id;
 		this.summaryId = summaryId.trim();
 		this.description = description.trim();
 		this.unitCost = cost;
+		this.sourcing = xSourcing;
 	}
 	
 	public long getId() {
@@ -45,4 +48,7 @@ public class ItemUpdateRequest {
 	public void setId(long id ) {
 		this.id = id;
 	}
+
+	public void setSourcing( String xSourcing ) { this.sourcing = xSourcing; }
+	public String getSourcing() { return this.sourcing; }
 }
