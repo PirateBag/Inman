@@ -14,7 +14,8 @@ create table if not exists Bom (
     parent_Id int,
     child_Id int,
     quantity_per number (12, 2)
+
 );
 
 create view if not exists  bom_Present as select b.id, b.QUANTITY_PER, b.parent_id, p.summary_id parent_summary,
-    b.child_id, c.summary_id child_summary, c.description child_description  from item p, item c, bom b where b.parent_id = p.id and b.child_id = c.id;
+    b.child_id, c.summary_id child_summary, c.description child_description, c.unit_cost unit_cost, c.unit_cost * b.quantity_per extended_cost from item p, item c, bom b where b.parent_id = p.id and b.child_id = c.id;

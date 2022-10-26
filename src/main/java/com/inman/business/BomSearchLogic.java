@@ -5,6 +5,7 @@ import com.inman.repository.BomRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BomSearchLogic {
@@ -18,7 +19,7 @@ public class BomSearchLogic {
 		List<BomPresent> boms = xBomRepository.findByParent( Optional.of( xId ) );
 		return boms.toArray(new BomPresent[boms.size() ]);
 	}
-/*
+*/
 	public Bom[]  byId(BomRepository xBomRepository, Long xId  ) {
 		Optional<Bom> bom = xBomRepository.findById( xId );
 
@@ -28,6 +29,5 @@ public class BomSearchLogic {
 		Bom[] boms = new Bom[] { bom.get() };
 		return boms;
 	}
-*/
 
 }

@@ -12,13 +12,13 @@ public class Bom extends EntityMaster {
 	public Bom() {
 	}
 
-	public Bom( Long xParent, Long xChild, Double xQuantityPer ) {
+	public Bom(Long xParent, Long xChild, Double xQuantityPer ) {
 		this.parentId = xParent;
 		this.childId = xChild;
 		this.quantityPer = xQuantityPer;
 	}
 
-	public Bom( Long xParent, Long xChild, Double xQuantityPer, String xParentSummary ) {
+	public Bom(Long xParent, Long xChild, Double xQuantityPer, String xParentSummary ) {
 		this.parentId = xParent;
 		this.childId = xChild;
 		this.quantityPer = xQuantityPer;

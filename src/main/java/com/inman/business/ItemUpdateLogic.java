@@ -25,6 +25,7 @@ public class ItemUpdateLogic {
 		item.setSummaryId( updateItemRequest.getSummaryId() );
 		item.setDescription( updateItemRequest.getDescription() );
 		item.setUnitCost( updateItemRequest.getUnitCost() );
+		item.setSourcing( updateItemRequest.getSourcing() );
 		itemRepository.save( item );
 		
 		Item [] items = new Item[ ] { item };

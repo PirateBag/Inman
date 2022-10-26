@@ -1,10 +1,13 @@
 package com.inman.model.response;
 
+import com.inman.entity.ActivityState;
 import com.inman.entity.EntityMaster;
 import com.inman.model.rest.ErrorLine;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ResponsePackage<T> {
     public ResponseType getResponseType() {
@@ -130,4 +133,14 @@ public class ResponsePackage<T> {
         }
         return null;
     }
+
+    public List getListOfUpdatedComponents( ActivityState xStateToSearchFor ) {
+        var rValue = new LinkedList<EntityMaster>();
+        for( EntityMaster entity : data ) {
+            if ( entity.getActivityState() == xStateToSearchFor ) {
+                rValue.add( entity );
+            }
+        }
+    }
+
 }

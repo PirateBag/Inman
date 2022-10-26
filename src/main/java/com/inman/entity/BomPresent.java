@@ -13,6 +13,9 @@ public class BomPresent extends EntityMaster {
     protected String childSummary;
 
     protected String childDescription;
+    protected double unitCost;
+    transient protected double extendedCost;
+
 
     public BomPresent() {
         super();
@@ -35,4 +38,16 @@ public class BomPresent extends EntityMaster {
 
     public String getChildDescription() { return childDescription; }
 
+    public double getUnitCost( ) { return unitCost; };
+    public void setUnitCost( double xUnitCost ) { unitCost = xUnitCost; }
+
+    public double getExtendedCost( ) { return quantityPer * unitCost; }
+
+    public void setChildSummary(Object xDatum) {
+        this.childSummary = (String) xDatum;
+    }
+
+    public void setChildDescription(Object xDatum) {
+        this.childDescription = (String) xDatum;
+    }
 }

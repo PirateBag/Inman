@@ -15,7 +15,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories( {"com.inman.repository" } )
 @EntityScan( basePackages = { "com.inman" } )
 public class Application {
-	
 	public static  boolean isPrepared = false;
 	
     public static void main( String[] args ) {
