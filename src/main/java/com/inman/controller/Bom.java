@@ -1,14 +1,16 @@
 package com.inman.controller;
 
 import com.inman.business.BomSearchLogic;
+import com.inman.entity.ActivityState;
 import com.inman.entity.BomPresent;
 import com.inman.model.request.BomPresentSearchRequest;
 import com.inman.model.request.BomSearchRequest;
+import com.inman.model.request.BomUpdate;
 import com.inman.model.response.BomResponse;
 import com.inman.model.response.ResponsePackage;
 import com.inman.model.response.ResponseType;
+import com.inman.model.rest.ErrorLine;
 import com.inman.repository.BomPresentRepository;
-import com.inman.model.request.BomUpdateRequest;
 import com.inman.repository.BomRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 
@@ -32,28 +35,48 @@ public class Bom {
 	@Autowired
 	BomRepository bomRepository;
 
-	static Logger logger = LoggerFactory.getLogger( "conteroller: " + Bom.class );
+	static Logger logger = LoggerFactory.getLogger( "controller: " + Bom.class );
 
-	public BomResponse go( BomRepository xBomRepository, BomPresentRepository bomPresentRepository, BomUpdateRequest xUpdateBomRequest ) {
+	public BomResponse go( BomRepository xBomRepository, BomPresentRepository bomPresentRepository, BomUpdate xBomUpdate  ) {
+		var bomResponse = new BomResponse();
+		bomResponse.setResponseType( ResponseType.CHANGE );
+		String message = "";
+		int lineNumber = 0;
+		ArrayList<BomPresent> updatedBomsToReturn = new ArrayList<>();
 
-		Optional<com.inman.entity.Bom> bom = bomRepository.findById( xUpdateBomRequest.getId() );
+		for ( BomPresent updatedBom : xBomUpdate.getUpdatedRows() ) {
+			Optional<com.inman.entity.Bom> oldBom;
 
-		if ( bom.isEmpty() ) {
-			String message = "Unable to retrieve the raw Bom instance for id " + xUpdateBomRequest.getId();
-			logger.error ( message );
-			throw new RuntimeException( message );
+			if ( updatedBom.getActivityState() == ActivityState.CHANGE ) {
+				oldBom = bomRepository.findById(updatedBom.getId());
+				if (oldBom.isEmpty()) {
+					message = "Unable to retrieve the original Bom instance for id " + updatedBom.getId();
+					bomResponse.addError( new ErrorLine( lineNumber, "0001", message ));
+					logger.error(message);
+					throw new RuntimeException(message);
+				}
+
+				if (updatedBom.getQuantityPer() == oldBom.get().getQuantityPer()) {
+					message = "Bom " + updatedBom.getId() + " quantityPer field did not change.";
+					logger.warn( message );
+					bomResponse.addError( new ErrorLine( lineNumber, "0001", message ));
+				} else {
+					logger.info("Bom " + updatedBom.getId() + " quantityPer was updated from " + oldBom.get().getQuantityPer() + " to " + updatedBom.getQuantityPer());
+					oldBom.get().setQuantityPer(updatedBom.getQuantityPer());
+					bomRepository.save(oldBom.get());
+					var refreshedBom = bomPresentRepository.findById( updatedBom.getId() );
+					refreshedBom.setActivityState( ActivityState.CHANGE );
+					updatedBomsToReturn.add ( refreshedBom );
+				}
+			} else {
+				logger.info( "Bom " + updatedBom.getId() + " was ignored because ActivtyState was " + updatedBom.getActivityState() );
+			}
+			lineNumber++;
 		}
 
-		bom.get().setQuantityPer( xUpdateBomRequest.getQuantityPer() );
-		bomRepository.save( bom.get() );
-
-		BomPresent[] bomPresents = new BomPresent[1];
-		bomPresents[0] = bomPresentRepository.findById( ( bom.get().getId() ));
-
-		BomResponse bomResponse = new BomResponse( ResponseType.CHANGE, bomPresents );
-
+		bomResponse.setData( updatedBomsToReturn.toArray( new BomPresent[ updatedBomsToReturn.size() ] ) );
 		return bomResponse;
-}
+	}
 
 
 	@CrossOrigin
@@ -83,15 +106,12 @@ public class Bom {
 	}
 
 
+
 	@CrossOrigin
-	@RequestMapping( value = BomUpdateRequest.updateUrl, method=RequestMethod.POST )
-	public ResponseEntity<?> bomUpdateId( @RequestBody BomUpdateRequest xBomUpdateRequest  )
+	@RequestMapping( value = BomUpdate.updateUrl, method=RequestMethod.POST )
+	public ResponseEntity<?> bomUpdateArray( @RequestBody BomUpdate xBomUpdate  )
 	{
-		com.inman.entity.Bom[] boms = bomSearchLogic.byId( bomRepository, xBomUpdateRequest.getId()  );
-
-		ResponsePackage responsePackage =  go( bomRepository, bomPresentRepository, xBomUpdateRequest );
-				new ResponsePackage( boms, ResponseType.QUERY );
-
+		ResponsePackage responsePackage =  go( bomRepository, bomPresentRepository, xBomUpdate );
 		return ResponseEntity.ok().body( responsePackage );
 	}
 }

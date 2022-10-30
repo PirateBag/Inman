@@ -6,8 +6,6 @@ import com.inman.model.rest.ErrorLine;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 public class ResponsePackage<T> {
     public ResponseType getResponseType() {
@@ -106,7 +104,7 @@ public class ResponsePackage<T> {
 
     }
 
-    private void setResponseType(ResponseType xResponseType) {
+    public void setResponseType(ResponseType xResponseType) {
         responseType = xResponseType;
     }
 
@@ -134,13 +132,18 @@ public class ResponsePackage<T> {
         return null;
     }
 
-    public List getListOfUpdatedComponents( ActivityState xStateToSearchFor ) {
-        var rValue = new LinkedList<EntityMaster>();
-        for( EntityMaster entity : data ) {
-            if ( entity.getActivityState() == xStateToSearchFor ) {
-                rValue.add( entity );
+    public EntityMaster [] getArrayOfUpdatedComponents(ActivityState xStateToSearchFor ) {
+        var rValue = new ArrayList<T>();
+        for( T entity : data ) {
+            EntityMaster entityToSearch = (EntityMaster) entity;
+            if ( entityToSearch.getActivityState() == xStateToSearchFor ) {
+                rValue.add((T) entityToSearch);
             }
         }
+
+        EntityMaster[] temp = new EntityMaster[ rValue.size() ];
+        temp = rValue.toArray( temp );
+        return temp;
     }
 
 }
