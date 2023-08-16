@@ -37,14 +37,14 @@ public class Bom {
 
 	static Logger logger = LoggerFactory.getLogger( "controller: " + Bom.class );
 
-	public BomResponse go( BomRepository xBomRepository, BomPresentRepository bomPresentRepository, BomUpdate xBomUpdate  ) {
+	public BomResponse go( BomRepository xBomRepository, BomPresentRepository bomPresentRepository, BomPresent[] xBomPresentToUpdate  ) {
 		var bomResponse = new BomResponse();
 		bomResponse.setResponseType( ResponseType.CHANGE );
 		String message = "";
 		int lineNumber = 0;
 		ArrayList<BomPresent> updatedBomsToReturn = new ArrayList<>();
 
-		for ( BomPresent updatedBom : xBomUpdate.getUpdatedRows() ) {
+		for ( BomPresent updatedBom : xBomPresentToUpdate ) {
 			Optional<com.inman.entity.Bom> oldBom;
 
 			if ( updatedBom.getActivityState() == ActivityState.CHANGE ) {
@@ -109,9 +109,10 @@ public class Bom {
 
 	@CrossOrigin
 	@RequestMapping( value = BomUpdate.updateUrl, method=RequestMethod.POST )
-	public ResponseEntity<?> bomUpdateArray( @RequestBody BomUpdate xBomUpdate  )
+	public ResponseEntity<?> bomUpdateArray( @RequestBody BomPresent[] xComponents  )
 	{
-		ResponsePackage responsePackage =  go( bomRepository, bomPresentRepository, xBomUpdate );
+		ResponsePackage responsePackage = go( bomRepository, bomPresentRepository, xComponents );
+
 		return ResponseEntity.ok().body( responsePackage );
 	}
 }
