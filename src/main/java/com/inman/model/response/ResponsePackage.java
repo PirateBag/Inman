@@ -143,8 +143,21 @@ public class ResponsePackage<T> {
 
         EntityMaster[] temp = new EntityMaster[ rValue.size() ];
         temp = rValue.toArray( temp );
+        return temp;    }
+    public EntityMaster [] getArrayOfUpdatedComponents() {
+        var rValue = new ArrayList<T>();
+        for( T entity : data ) {
+            EntityMaster entityToSearch = (EntityMaster) entity;
+            if ( entityToSearch.getActivityState() != ActivityState.NONE ) {
+                rValue.add((T) entityToSearch);
+            }
+        }
+
+        EntityMaster[] temp = new EntityMaster[ rValue.size() ];
+        temp = rValue.toArray( temp );
         return temp;
     }
+
 
 
 

@@ -37,6 +37,7 @@ public class Bom {
 
 	static Logger logger = LoggerFactory.getLogger( "controller: " + Bom.class );
 
+
 	public BomResponse go( BomRepository xBomRepository, BomPresentRepository bomPresentRepository, BomPresent[] xBomPresentToUpdate  ) {
 		var bomResponse = new BomResponse();
 		bomResponse.setResponseType( ResponseType.CHANGE );
@@ -47,27 +48,40 @@ public class Bom {
 		for ( BomPresent updatedBom : xBomPresentToUpdate ) {
 			Optional<com.inman.entity.Bom> oldBom;
 
-			if ( updatedBom.getActivityState() == ActivityState.CHANGE ) {
+			if (updatedBom.getActivityState() == ActivityState.CHANGE) {
 				oldBom = bomRepository.findById(updatedBom.getId());
 				if (oldBom.isEmpty()) {
 					message = "Unable to retrieve the original Bom instance for id " + updatedBom.getId();
-					bomResponse.addError( new ErrorLine( lineNumber, "0001", message ));
+					bomResponse.addError(new ErrorLine(lineNumber, "0001", message));
 					logger.error(message);
 					throw new RuntimeException(message);
 				}
 
 				if (updatedBom.getQuantityPer() == oldBom.get().getQuantityPer()) {
 					message = "Bom " + updatedBom.getId() + " quantityPer field did not change.";
-					logger.warn( message );
-					bomResponse.addError( new ErrorLine( lineNumber, "0001", message ));
+					logger.warn(message);
+					bomResponse.addError(new ErrorLine(lineNumber, "0001", message));
 				} else {
 					logger.info("Bom " + updatedBom.getId() + " quantityPer was updated from " + oldBom.get().getQuantityPer() + " to " + updatedBom.getQuantityPer());
 					oldBom.get().setQuantityPer(updatedBom.getQuantityPer());
 					bomRepository.save(oldBom.get());
-					var refreshedBom = bomPresentRepository.findById( updatedBom.getId() );
-					refreshedBom.setActivityState( ActivityState.CHANGE );
-					updatedBomsToReturn.add ( refreshedBom );
+					var refreshedBom = bomPresentRepository.findById(updatedBom.getId());
+					refreshedBom.setActivityState(ActivityState.CHANGE);
+					updatedBomsToReturn.add(refreshedBom);
 				}
+			} else if (updatedBom.getActivityState() == ActivityState.INSERT) {
+				logger.info("Bom Insert  " + updatedBom.getParentId() + "," + updatedBom.getChildId() + ", " + updatedBom.getQuantityPer());
+				com.inman.entity.Bom newBom = new com.inman.entity.Bom(updatedBom.getParentId(), updatedBom.getChildId(), updatedBom.getQuantityPer());
+				com.inman.entity.Bom insertedBom = bomRepository.save(newBom);
+				var refreshedBom = bomPresentRepository.byParentIdChildId( newBom.getParentId(), newBom.getChildId() );
+				if ( refreshedBom == null ) {
+					message = "Bom " + insertedBom.getId() + " unable to re-retrieve inserted BOM ";
+					logger.error( message );
+					bomResponse.addError(new ErrorLine(lineNumber, "0001", message));
+					throw new RuntimeException( message );
+				}
+				refreshedBom.setActivityState(ActivityState.INSERT);
+				updatedBomsToReturn.add(refreshedBom);
 			} else {
 				logger.info( "Bom " + updatedBom.getId() + " was ignored because ActivtyState was " + updatedBom.getActivityState() );
 			}

@@ -25,6 +25,8 @@ public class BomPresent extends EntityMaster {
         this.id = oldValue.getId();
         this.parentId = oldValue.getParentId();
         this.childId = oldValue.getChildId();
+        this.quantityPer = oldValue.getQuantityPer();
+        this.activityState = oldValue.getActivityState();
     }
 
     public String getParentSummary( ) { return this.parentSummary; }

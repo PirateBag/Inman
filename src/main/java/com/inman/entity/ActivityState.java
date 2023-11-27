@@ -1,5 +1,5 @@
 package com.inman.entity;
 
 public enum ActivityState {
-    NONE, CHANGE
+    NONE, CHANGE, INSERT
 }
