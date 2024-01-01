@@ -1,5 +1,7 @@
 package com.inman.entity;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.persistence.Entity;
 
 @Entity
@@ -21,12 +23,20 @@ public class BomPresent extends EntityMaster {
         super();
     }
 
-    public BomPresent(BomPresent oldValue ) {
-        this.id = oldValue.getId();
-        this.parentId = oldValue.getParentId();
-        this.childId = oldValue.getChildId();
-        this.quantityPer = oldValue.getQuantityPer();
-        this.activityState = oldValue.getActivityState();
+
+    @Override
+    public EntityMaster copy(@NotNull EntityMaster oldValue ) {
+        BomPresent rValue = new BomPresent();
+        BomPresent bomPresent = (BomPresent) oldValue;
+        rValue.id = bomPresent.getId();
+        rValue.activityState = oldValue.getActivityState();
+        rValue.parentId = bomPresent.getParentId();
+        rValue.parentSummary = bomPresent.getParentSummary();;
+        rValue.childId = bomPresent.getChildId();
+        rValue.childSummary = bomPresent.getChildSummary();
+        rValue.quantityPer = bomPresent.getQuantityPer();
+        rValue.unitCost = bomPresent.getUnitCost();;
+        return rValue;
     }
 
     public String getParentSummary( ) { return this.parentSummary; }

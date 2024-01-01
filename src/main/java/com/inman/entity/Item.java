@@ -1,6 +1,7 @@
 package com.inman.entity;
 
 import com.inman.model.rest.ItemAddRequest;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 
@@ -28,6 +29,22 @@ public class  Item extends EntityMaster {
 	}
 
 	public Item() {
+	}
+
+
+
+	@Override
+
+	public EntityMaster copy( @NotNull EntityMaster entityMaster ) {
+		var rValue = new Item();
+		Item item = (Item) entityMaster;
+		rValue.id = item.getId();
+		rValue.activityState = item.getActivityState();
+		rValue.summaryId = item.getSummaryId();
+		rValue.description = item.getDescription();
+		rValue.unitCost = item.getUnitCost();
+		rValue.sourcing = item.getSourcing();
+		return rValue;
 	}
 
 	public long getId() {

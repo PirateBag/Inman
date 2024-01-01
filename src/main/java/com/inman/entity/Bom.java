@@ -1,5 +1,7 @@
 package com.inman.entity;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.persistence.*;
 @Entity
 @Table( name = "Bom"  )
@@ -24,6 +26,25 @@ public class Bom extends EntityMaster {
 		this.quantityPer = xQuantityPer;
 	}
 
+	public Bom( long id, long parentId, long childId, double quanittyPer, ActivityState activityState ) {
+		this.id = id;
+		this.parentId = parentId;
+		this.childId = childId;
+		this.quantityPer = quanittyPer;
+		this.activityState = activityState;
+	}
+
+	@Override
+	public EntityMaster copy(@NotNull EntityMaster source ) {
+		Bom rValue = new Bom();
+		Bom oldValue = (Bom) source;
+		rValue.id = oldValue.getId();
+		rValue.activityState = oldValue.activityState;
+		rValue.parentId = oldValue.getParentId();
+		rValue.childId = oldValue.getChildId();
+		rValue.quantityPer = oldValue.getQuantityPer();
+		return rValue;
+	}
 
 	public long getParentId() {
 		return this.parentId;
