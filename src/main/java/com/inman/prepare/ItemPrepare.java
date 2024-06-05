@@ -20,6 +20,7 @@ public class ItemPrepare {
 		w001.setId(1L);
 		w001.setDescription("36 In Red Wagon");
 		w001.setSummaryId("W-001");
+		w001.setSourcing( Item.SOURCE_MAN );
 		w001.setUnitCost(0.0);
 
 
@@ -27,13 +28,14 @@ public class ItemPrepare {
 		w002.setId(2L);
 		w002.setDescription("Painted Wagon Body");
 		w002.setSummaryId("W-002");
+		w002.setSourcing( Item.SOURCE_MAN );
 		w002.setUnitCost(2.0);
-
 
 		w003 = new Item();
 		w003.setId(3L);
 		w003.setDescription("Front Wheel Assembly");
 		w003.setSummaryId("W-003");
+		w003.setSourcing( Item.SOURCE_MAN );
 		w003.setUnitCost(5.0);
 
 
@@ -42,12 +44,14 @@ public class ItemPrepare {
 		w004.setDescription("Painted Black Handle");
 		w004.setSummaryId("W-004");
 		w004.setUnitCost(1.0);
+		w004.setSourcing( Item.SOURCE_PUR );
 
 
 		w005 = new Item();
 		w005.setId(5L);
 		w005.setDescription("Steering Assembly");
 		w005.setSummaryId("W-005");
+		w005.setSourcing( Item.SOURCE_PUR );
 		w005.setUnitCost(1.0);
 
 
@@ -55,6 +59,7 @@ public class ItemPrepare {
 		w006.setId(6L);
 		w006.setDescription("Unpainted Wagon Body");
 		w006.setSummaryId("W-018");
+		w006.setSourcing( Item.SOURCE_PUR );
 		w006.setUnitCost(2.0);
 
 
@@ -62,6 +67,7 @@ public class ItemPrepare {
 		w007.setId(7L);
 		w007.setDescription("Red Paint");
 		w007.setSummaryId("W-019");
+		w007.setSourcing( Item.SOURCE_PUR );
 		w007.setUnitCost(0.25);
 	}
 

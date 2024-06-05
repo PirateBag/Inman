@@ -3,6 +3,7 @@ package com.inman.controller;
 import com.inman.business.BomSearchLogic;
 import com.inman.entity.ActivityState;
 import com.inman.entity.BomPresent;
+import com.inman.entity.Item;
 import com.inman.model.request.BomPresentSearchRequest;
 import com.inman.model.request.BomSearchRequest;
 import com.inman.model.request.BomUpdate;
@@ -12,6 +13,7 @@ import com.inman.model.response.ResponseType;
 import com.inman.model.rest.ErrorLine;
 import com.inman.repository.BomPresentRepository;
 import com.inman.repository.BomRepository;
+import com.inman.repository.ItemRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,8 @@ public class Bom {
 	@Autowired
 	BomRepository bomRepository;
 
+	@Autowired
+	ItemRepository itemRepository;
 	static Logger logger = LoggerFactory.getLogger( "controller: " + Bom.class );
 
 
@@ -64,9 +68,11 @@ public class Bom {
 				} else {
 					logger.info("Bom " + updatedBom.getId() + " quantityPer was updated from " + oldBom.get().getQuantityPer() + " to " + updatedBom.getQuantityPer());
 					oldBom.get().setQuantityPer(updatedBom.getQuantityPer());
+					bomResponse = updateMaxDepthOf( updatedBom, bomResponse );
 					bomRepository.save(oldBom.get());
 					var refreshedBom = bomPresentRepository.findById(updatedBom.getId());
 					refreshedBom.setActivityState(ActivityState.CHANGE);
+
 					updatedBomsToReturn.add(refreshedBom);
 				}
 			} else if (updatedBom.getActivityState() == ActivityState.INSERT) {
@@ -89,6 +95,21 @@ public class Bom {
 		}
 
 		bomResponse.setData( updatedBomsToReturn.toArray( new BomPresent[ updatedBomsToReturn.size() ] ) );
+		return bomResponse;
+	}
+
+	private BomResponse updateMaxDepthOf( BomPresent updatedBom, BomResponse bomResponse) {
+		Item component = itemRepository.findById( updatedBom.getChildId() );
+		Item parent = itemRepository.findById( updatedBom.getParentId()  );
+
+		if ( component.getMaxDepth() <= parent.getMaxDepth() ) {
+			int newMaxDepth = parent.getMaxDepth() + 1;
+			logger.info( component.getId() + " depth changing from " + component.getMaxDepth() + " to " + parent.getMaxDepth() + 1 );
+			component.setMaxDepth( newMaxDepth );
+			itemRepository.save( component );
+			return bomResponse;
+		}
+		logger.info( component.getId() + " depth not changing " + component.getMaxDepth() + " to " + parent.getMaxDepth() + 1 );
 		return bomResponse;
 	}
 

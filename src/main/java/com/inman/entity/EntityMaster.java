@@ -1,8 +1,6 @@
 package com.inman.entity;
 
-import org.jetbrains.annotations.NotNull;
-
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @MappedSuperclass
 public abstract class EntityMaster {

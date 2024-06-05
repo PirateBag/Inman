@@ -7,7 +7,9 @@ import com.inman.model.response.ItemResponse;
 import com.inman.model.response.ResponsePackage;
 import com.inman.model.response.ResponseType;
 import com.inman.model.rest.*;
+import com.inman.prepare.BomPrepare;
 import com.inman.prepare.ItemPrepare;
+import com.inman.repository.BomRepository;
 import com.inman.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +23,7 @@ public class ItemAndStatus {
 	
 	@Autowired
 	private ItemRepository itemRepository;
+	private BomRepository bomRepository;
 	
 	@Autowired
 	private ItemUpdateLogic itemUpdateLogic;
@@ -179,9 +182,9 @@ public class ItemAndStatus {
     }
 	private void makeSureBasicContentIsReady() {
 		if ( !Application.isPrepared() ) {
-			/*
+
 			new ItemPrepare().go( itemRepository );
-			new BomPrepare().go( bomRepository ); */
+			new BomPrepare().go( bomRepository );
 			Application.setIsPrepared( true );
 		}
 	}

@@ -1,8 +1,8 @@
 package com.inman.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import org.jetbrains.annotations.NotNull;
-
-import javax.persistence.*;
 @Entity
 @Table( name = "Bom"  )
 public class Bom extends EntityMaster {

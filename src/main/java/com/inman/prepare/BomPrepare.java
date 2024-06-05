@@ -1,5 +1,6 @@
 package com.inman.prepare;
 
+import com.inman.entity.Bom;
 import com.inman.model.rest.PrepareResponse;
 import com.inman.repository.BomRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +20,7 @@ public class BomPrepare {
 		bom.setParentId(1L);
 		bom.setChildId(3L);
 		bom.setQuantityPer( 2.0 );
-		xBomRepository.save( bom );
-		*/
+		xBomRepository.save( bom );  */
 		return new PrepareResponse( "Bom", 2);
 	}
 

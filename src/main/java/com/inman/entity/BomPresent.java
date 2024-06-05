@@ -1,8 +1,7 @@
 package com.inman.entity;
 
+import jakarta.persistence.Entity;
 import org.jetbrains.annotations.NotNull;
-
-import javax.persistence.Entity;
 
 @Entity
 public class BomPresent extends EntityMaster {
@@ -12,8 +11,9 @@ public class BomPresent extends EntityMaster {
     protected double quantityPer;
 
     protected String parentSummary;
-    protected String childSummary;
+    protected String parentDescription;
 
+    protected String childSummary;
     protected String childDescription;
     protected double unitCost;
     transient protected double extendedCost;
@@ -31,7 +31,8 @@ public class BomPresent extends EntityMaster {
         rValue.id = bomPresent.getId();
         rValue.activityState = oldValue.getActivityState();
         rValue.parentId = bomPresent.getParentId();
-        rValue.parentSummary = bomPresent.getParentSummary();;
+        rValue.parentSummary = bomPresent.getParentSummary();
+        rValue.parentDescription = bomPresent.getParentDescription();
         rValue.childId = bomPresent.getChildId();
         rValue.childSummary = bomPresent.getChildSummary();
         rValue.quantityPer = bomPresent.getQuantityPer();
@@ -68,4 +69,7 @@ public class BomPresent extends EntityMaster {
     public void setChildDescription(Object xDatum) {
         this.childDescription = (String) xDatum;
     }
+
+    public String getParentDescription() { return this.parentDescription; }
+    public void setParentDescription( String parentDescription ) { this.parentDescription = parentDescription; }
 }
