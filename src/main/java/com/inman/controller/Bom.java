@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,7 @@ import java.util.Optional;
 @Configuration
 @RestController
 public class Bom {
+	public static final String UNIQUE_INDEX_OR_PRIMARY_KEY_VIOLATION = "Unique index or primary key violation";
 	@Autowired
 	BomPresentRepository bomPresentRepository;
 
@@ -77,17 +79,26 @@ public class Bom {
 				}
 			} else if (updatedBom.getActivityState() == ActivityState.INSERT) {
 				logger.info("Bom Insert  " + updatedBom.getParentId() + "," + updatedBom.getChildId() + ", " + updatedBom.getQuantityPer());
-				com.inman.entity.Bom newBom = new com.inman.entity.Bom(updatedBom.getParentId(), updatedBom.getChildId(), updatedBom.getQuantityPer());
-				com.inman.entity.Bom insertedBom = bomRepository.save(newBom);
-				var refreshedBom = bomPresentRepository.byParentIdChildId( newBom.getParentId(), newBom.getChildId() );
-				if ( refreshedBom == null ) {
-					message = "Bom " + insertedBom.getId() + " unable to re-retrieve inserted BOM ";
+				com.inman.entity.Bom bomToBeInserted = new com.inman.entity.Bom(updatedBom.getParentId(), updatedBom.getChildId(), updatedBom.getQuantityPer());
+				com.inman.entity.Bom insertedBom = null;
+				try {
+					 insertedBom = bomRepository.save(bomToBeInserted);
+					var refreshedBom = bomPresentRepository.byParentIdChildId(insertedBom.getParentId(), bomToBeInserted.getChildId());
+					if (refreshedBom == null) {
+						message = "Bom " + insertedBom.getId() + " unable to re-retrieve inserted BOM ";
+						logger.error(message);
+						bomResponse.addError(new ErrorLine(lineNumber, "0001", message));
+					}
+					refreshedBom.setActivityState(ActivityState.INSERT);
+					updatedBomsToReturn.add(refreshedBom);
+
+				} catch ( DataIntegrityViolationException dataIntegrityViolationException ) {
+					message = "Unable to insert " + bomToBeInserted.getParentId() + ":" +
+							bomToBeInserted.getChildId() + " due to " +
+							generateErrorMessageFrom(  dataIntegrityViolationException );
 					logger.error( message );
 					bomResponse.addError(new ErrorLine(lineNumber, "0001", message));
-					throw new RuntimeException( message );
 				}
-				refreshedBom.setActivityState(ActivityState.INSERT);
-				updatedBomsToReturn.add(refreshedBom);
 			} else {
 				logger.info( "Bom " + updatedBom.getId() + " was ignored because ActivtyState was " + updatedBom.getActivityState() );
 			}
@@ -96,6 +107,14 @@ public class Bom {
 
 		bomResponse.setData( updatedBomsToReturn.toArray( new BomPresent[ updatedBomsToReturn.size() ] ) );
 		return bomResponse;
+	}
+
+	private String generateErrorMessageFrom(DataIntegrityViolationException dataIntegrityViolationException) {
+		var detailedMessage = dataIntegrityViolationException.getMessage();
+		if ( detailedMessage.contains(UNIQUE_INDEX_OR_PRIMARY_KEY_VIOLATION) ) {
+			return UNIQUE_INDEX_OR_PRIMARY_KEY_VIOLATION;
+		}
+		return detailedMessage;
 	}
 
 	private BomResponse updateMaxDepthOf( BomPresent updatedBom, BomResponse bomResponse) {
@@ -135,7 +154,7 @@ public class Bom {
 	@RequestMapping( value = BomSearchRequest.findByParent, method=RequestMethod.POST )
 	public ResponseEntity<?> bomFindByParent( @RequestBody BomSearchRequest xBomSearchRequest	) {
 
-		BomPresent[] boms = bomPresentRepository.byParentId(  xBomSearchRequest.getIdToSearchFor() );
+		BomPresent[] boms = bomPresentRepository.findByParentId(  xBomSearchRequest.getIdToSearchFor().intValue() );
 		ResponsePackage responsePackage = new ResponsePackage( boms, ResponseType.QUERY );
 		return ResponseEntity.ok().body( responsePackage );
 	}

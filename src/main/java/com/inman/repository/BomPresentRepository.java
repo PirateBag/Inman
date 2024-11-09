@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface BomPresentRepository extends JpaRepository<BomPresent, Long> {
 
     @Query("select b from BomPresent b where b.parentId = :xParentId")
-    BomPresent[] byParentId(@Param("xParentId") long xParentId);
+    BomPresent[] findByParentId(  long  xParentId);
 
     BomPresent findById(long id);
 
