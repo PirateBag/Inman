@@ -2,6 +2,7 @@ package com.inman.entity;
 
 import jakarta.persistence.*;
 
+
 @MappedSuperclass
 public abstract class EntityMaster {
     @Id

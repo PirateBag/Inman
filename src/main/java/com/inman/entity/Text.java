@@ -3,6 +3,8 @@ package com.inman.entity;
 public class Text extends EntityMaster{
     private String message;
 
+    public Text() {};
+
     public Text(String message) {
         this.message = message;
     }

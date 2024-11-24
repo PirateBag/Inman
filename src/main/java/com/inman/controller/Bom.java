@@ -1,6 +1,7 @@
 package com.inman.controller;
 
 import com.inman.business.BomSearchLogic;
+import com.inman.business.BomNavigation;
 import com.inman.entity.ActivityState;
 import com.inman.entity.BomPresent;
 import com.inman.entity.Item;
@@ -41,8 +42,11 @@ public class Bom {
 
 	@Autowired
 	ItemRepository itemRepository;
-	static Logger logger = LoggerFactory.getLogger( "controller: " + Bom.class );
 
+	@Autowired
+	BomNavigation bomNavigation;
+
+	static Logger logger = LoggerFactory.getLogger( "controller: " + Bom.class );
 
 	public BomResponse go( BomRepository xBomRepository, BomPresentRepository bomPresentRepository, BomPresent[] xBomPresentToUpdate  ) {
 		var bomResponse = new BomResponse();
@@ -82,6 +86,8 @@ public class Bom {
 				com.inman.entity.Bom bomToBeInserted = new com.inman.entity.Bom(updatedBom.getParentId(), updatedBom.getChildId(), updatedBom.getQuantityPer());
 				com.inman.entity.Bom insertedBom = null;
 				try {
+					bomNavigation.isItemIdInWhereUsed( updatedBom.getParentId(),
+							bomToBeInserted.getChildId() );
 					 insertedBom = bomRepository.save(bomToBeInserted);
 					var refreshedBom = bomPresentRepository.byParentIdChildId(insertedBom.getParentId(), bomToBeInserted.getChildId());
 					if (refreshedBom == null) {
@@ -99,6 +105,8 @@ public class Bom {
 					logger.error( message );
 					bomResponse.addError(new ErrorLine(lineNumber, "0001", message));
 				}
+
+
 			} else {
 				logger.info( "Bom " + updatedBom.getId() + " was ignored because ActivtyState was " + updatedBom.getActivityState() );
 			}
@@ -108,6 +116,7 @@ public class Bom {
 		bomResponse.setData( updatedBomsToReturn.toArray( new BomPresent[ updatedBomsToReturn.size() ] ) );
 		return bomResponse;
 	}
+
 
 	private String generateErrorMessageFrom(DataIntegrityViolationException dataIntegrityViolationException) {
 		var detailedMessage = dataIntegrityViolationException.getMessage();
@@ -169,5 +178,7 @@ public class Bom {
 
 		return ResponseEntity.ok().body( responsePackage );
 	}
+
+
 }
 

@@ -14,6 +14,10 @@ public interface BomPresentRepository extends JpaRepository<BomPresent, Long> {
 
     BomPresent findById(long id);
 
+    @Query("select b from BomPresent b where b.childId = :childId")
+    BomPresent[] findByChildId(  long  childId);
+
+
     @Query("select b from BomPresent b where b.parentId = :xParentId and b.childId = :xChildId")
     BomPresent byParentIdChildId(
             @Param("xParentId") long xParentId,

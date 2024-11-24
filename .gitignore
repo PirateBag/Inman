@@ -3,3 +3,5 @@
 .settings
 target/*
 .idea/*
+src/test/curl/*actual
+
