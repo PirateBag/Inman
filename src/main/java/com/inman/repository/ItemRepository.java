@@ -14,6 +14,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
 	Item findById( long id  );
 	Item findBySummaryId( String SummaryId );
+	Item deleteBySummaryId( String SummaryId );
 
 	@Override
 	List<Item> findAll();

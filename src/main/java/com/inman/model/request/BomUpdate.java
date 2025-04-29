@@ -4,6 +4,7 @@ import com.inman.entity.BomPresent;
 
 public class BomUpdate {
 	public static final String updateUrl = "bomArray/update";
+	public static final String BOM_RECURSION_CHECK_URL = "bomRecursionCheck";
 
 	BomPresent[] updatedRows;
 

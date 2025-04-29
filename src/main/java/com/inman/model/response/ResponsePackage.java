@@ -1,6 +1,5 @@
 package com.inman.model.response;
 
-import com.inman.entity.ActivityState;
 import com.inman.entity.EntityMaster;
 import com.inman.model.rest.ErrorLine;
 
@@ -8,13 +7,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ResponsePackage<T> {
+    public ResponsePackage() {
+    }
+
     public ResponseType getResponseType() {
         return responseType;
     }
 
     protected ResponseType responseType;
     private ArrayList<ErrorLine> errors = new ArrayList<ErrorLine>();
-    private T[] data = (T[]) new EntityMaster[0];
+    private T[] data;
 
     public ResponsePackage(ArrayList<ErrorLine> errors, T[] data, ResponseType xResponseType) {
         this.errors = errors;
@@ -25,9 +27,6 @@ public class ResponsePackage<T> {
     public ResponsePackage( T[] data, ResponseType xResponseType) {
         this.data = data;
         this.responseType = xResponseType;
-    }
-
-    public ResponsePackage() {
     }
 
     public void addError(ErrorLine error) {
@@ -96,7 +95,7 @@ public class ResponsePackage<T> {
                 break;
         }
 
-        rValue = new ResponsePackage<T>( );
+        rValue = new ResponsePackage<T>();
         rValue.setErrors( this.errors );
         rValue.setData((T[]) newData);
         rValue.setResponseType( this.responseType );
@@ -131,34 +130,4 @@ public class ResponsePackage<T> {
         }
         return null;
     }
-
-    public EntityMaster [] getArrayOfUpdatedComponents(ActivityState xStateToSearchFor ) {
-        var rValue = new ArrayList<T>();
-        for( T entity : data ) {
-            EntityMaster entityToSearch = (EntityMaster) entity;
-            if ( entityToSearch.getActivityState() == xStateToSearchFor ) {
-                rValue.add((T) entityToSearch);
-            }
-        }
-
-        EntityMaster[] temp = new EntityMaster[ rValue.size() ];
-        temp = rValue.toArray( temp );
-        return temp;    }
-    public EntityMaster [] getArrayOfUpdatedComponents() {
-        var rValue = new ArrayList<T>();
-        for( T entity : data ) {
-            EntityMaster entityToSearch = (EntityMaster) entity;
-            if ( entityToSearch.getActivityState() != ActivityState.NONE ) {
-                rValue.add((T) entityToSearch);
-            }
-        }
-
-        EntityMaster[] temp = new EntityMaster[ rValue.size() ];
-        temp = rValue.toArray( temp );
-        return temp;
     }
-
-
-
-
-}

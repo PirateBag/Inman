@@ -1,6 +1,8 @@
 package com.inman.business;
 
+import com.inman.model.response.ResponsePackage;
 import com.inman.repository.BomPresentRepository;
+import com.inman.repository.BomRepository;
 import com.inman.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.inman.entity.BomPresent;
@@ -10,6 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
 @Service
 public class BomNavigation {
     static Logger logger = LoggerFactory.getLogger(BomNavigation.class + "findUltimateParent" );
@@ -40,5 +45,32 @@ public class BomNavigation {
         }
         return false;
 
+    }
+
+    public void ancestorsOf( long itemId, Set<BomPresent> listOfAncestors ) {
+        assert listOfAncestors != null;
+        assert itemId < 1;
+
+        logger.info( "Searching for ancestoers of " + itemId );
+
+        BomPresent[] parents = bomPresentRepository.findByChildId( itemId );
+
+        if (parents.length == 0) {
+            logger.info("No parents of " + itemId );
+            return;
+        }
+
+        for (BomPresent bom : parents) {
+
+            logger.info("Trying " + bom.getParentId());
+
+            if (!listOfAncestors.add(bom)) {
+                //  No need to continue if we have already encountered this ancesteor
+                logger.info("Encountered ancestor " + bom.getId());
+                return;
+            }
+
+            ancestorsOf(bom.getParentId(), listOfAncestors);
+        }
     }
 }

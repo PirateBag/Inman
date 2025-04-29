@@ -1,6 +1,6 @@
 #!/bin/bash
 
-declare -a tests=( "BomRecursionCheckPositive" "BomRecursionCheckNegative")
+declare -a tests=( "BomRecursionCheckPositive" "BomRecursionCheckNegative" "ItemExplosionReport" "ItemPickList" "ItemPickListForBom" "ItemPickListForOne")
 declare -i passed=0
 declare -i failed=0
 declare -i newBaseLines=0
@@ -27,6 +27,6 @@ done
 
 echo --------------------
 echo Summary of Test Results.
-  echo Passed $passed
-  echo Failed $failed
-  echo New Baselines $newBaseLines
+echo Passed $passed
+echo Failed $failed
+echo New Baselines $newBaseLines

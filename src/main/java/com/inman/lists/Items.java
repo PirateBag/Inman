@@ -3,15 +3,26 @@ package com.inman.lists;
 import com.inman.entity.Pick;
 import com.inman.model.request.ItemPickListRequest;
 import com.inman.model.response.ItemPickListResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Optional;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+
 public class Items {
+    static Logger logger = LoggerFactory.getLogger(Items.class );
     SortedMap<Long, Pick> byId;
     SortedMap<String, Pick> byExternal;
-    Pick picks[];
+    Pick[] picks;
+    String itemPickListUrlSuffix;
+    RestTemplate restTemplate = new RestTemplate();
+
+    public Items( String itemPickListUrlSuffix ) {
+        this.itemPickListUrlSuffix = itemPickListUrlSuffix;
+    }
 
     String findById(long idToFind) {
         Pick pick = byId.get(idToFind);
@@ -22,6 +33,16 @@ public class Items {
         Pick pick = byExternal.get(externalToFind);
         return pick.getId();
     }
+
+    public long findIdByArrayIndex(int indexToFind) {
+        assert indexToFind >= 0 && indexToFind < picks.length;
+        logger.info("indexToFind: {} out of {}", indexToFind, picks.length );
+        logger.info("object is: {}", picks[ indexToFind ]);
+        long l = picks[indexToFind].getId();
+        return l;
+    }
+
+
 
     public void refreshData(Pick[] refreshedPicks) {
         byId = new TreeMap<>();
@@ -34,14 +55,15 @@ public class Items {
         }
     }
 
-    public void refreshFromServer() {
-        String completeUrl = "http://localhost:8080/" + ItemPickListRequest.all;
-        RestTemplate restTemplate = new RestTemplate();
-        ItemPickListRequest itemPickListRequest = new ItemPickListRequest();
+    public void refreshFromServer(Optional<Long> idParameter ) {
+        String completeUrl = "http://localhost:8080/" + itemPickListUrlSuffix;
+        ItemPickListRequest itemPickListRequest;
+        itemPickListRequest = idParameter.map(ItemPickListRequest::new).orElseGet(ItemPickListRequest::new);
         ItemPickListResponse responsePackage = restTemplate.postForObject(completeUrl, itemPickListRequest, ItemPickListResponse.class);
         assert responsePackage != null;
         refreshData(responsePackage.getData());
     }
+
 
     public String [] toStringArray() {
         String [] rValue = new String[ byId.size() ];
@@ -59,5 +81,9 @@ public class Items {
             }
         }
         return -1;
+    }
+
+    public boolean isEmpty() {
+        return picks.length == 0;
     }
 }

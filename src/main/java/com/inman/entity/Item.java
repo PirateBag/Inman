@@ -30,6 +30,14 @@ public class  Item extends EntityMaster {
 		this.sourcing = addItemRequest.getSourcing();
 	}
 
+
+	public Item(String summaryId, String description, double unitCost, String sourcing) {
+		this.summaryId = summaryId;
+		this.description = description;
+		this.unitCost = unitCost;
+		this.sourcing = sourcing;
+	}
+
 	public Item() {
 	}
 

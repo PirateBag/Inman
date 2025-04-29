@@ -1,0 +1,18 @@
+{
+  "responseType" : "ADD",
+  "errors" : [ ],
+  "data" : [ {
+    "id" : 4,
+    "activityState" : "NONE",
+    "external" : "W-004, 24 in handle"
+  }, {
+    "id" : 5,
+    "activityState" : "NONE",
+    "external" : "W-005, 8 in wheel"
+  }, {
+    "id" : 7,
+    "activityState" : "NONE",
+    "external" : "W-007, Rear wheel bracket"
+  } ],
+  "arrayOfUpdatedComponents" : [ ]
+}

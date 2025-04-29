@@ -8,6 +8,7 @@ import com.inman.entity.Item;
 import com.inman.model.request.BomPresentSearchRequest;
 import com.inman.model.request.BomSearchRequest;
 import com.inman.model.request.BomUpdate;
+import com.inman.model.request.ItemReportRequest;
 import com.inman.model.response.BomResponse;
 import com.inman.model.response.ResponsePackage;
 import com.inman.model.response.ResponseType;
@@ -179,6 +180,16 @@ public class Bom {
 		return ResponseEntity.ok().body( responsePackage );
 	}
 
+	/*
+	@CrossOrigin
+	@RequestMapping( value = BomUpdate.INVALID_COMPONENTS_URL, method=RequestMethod.POST )
+	public ResponseEntity<?> bomFindInvalidComponents( @RequestBody BomPresent[] proposedComponents  )
+	{
+		ResponsePackage responsePackage = bomNavigation.isItemIdInWhereUsed( proposedComponents );
+
+		return ResponseEntity.ok().body( responsePackage );
+	}
+	*/
 
 }
 
