@@ -1,0 +1,34 @@
+{
+  "responseType" : "ADD",
+  "errors" : [ ],
+  "data" : [ {
+    "id" : 1,
+    "activityState" : "NONE",
+    "external" : "W-001, 36 in red wagon"
+  }, {
+    "id" : 2,
+    "activityState" : "NONE",
+    "external" : "W-002, red painted wagon body"
+  }, {
+    "id" : 3,
+    "activityState" : "NONE",
+    "external" : "W-003, Front Wheel assembly"
+  }, {
+    "id" : 4,
+    "activityState" : "NONE",
+    "external" : "W-004, 24 in handle"
+  }, {
+    "id" : 5,
+    "activityState" : "NONE",
+    "external" : "W-005, 8 in wheel"
+  }, {
+    "id" : 6,
+    "activityState" : "NONE",
+    "external" : "W-006, Rear Wheel assembly"
+  }, {
+    "id" : 7,
+    "activityState" : "NONE",
+    "external" : "W-007, Rear wheel bracket"
+  } ],
+  "arrayOfUpdatedComponents" : [ ]
+}

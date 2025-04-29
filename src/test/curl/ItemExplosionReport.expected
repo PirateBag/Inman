@@ -1,0 +1,38 @@
+{
+  "responseType" : "QUERY",
+  "errors" : [ ],
+  "data" : [ {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "Summary     Description                      Unit Cost  Sourcing       Depthd"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "W-001       36 in red wagon                       0.00  MAN           0"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "   W-002       red painted wagon body                0.00  MAN           0"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "   W-003       Front Wheel assembly                  0.00  MAN           0"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "       W-004       24 in handle                          0.40  PUR           0"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "       W-005       8 in wheel                            0.50  PUR           0"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "   W-006       Rear Wheel assembly                   0.00  MAN           0"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "       W-007       Rear wheel bracket                    0.70  MAN           0"
+  } ],
+  "arrayOfUpdatedComponents" : [ ]
+}

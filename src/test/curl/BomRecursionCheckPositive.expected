@@ -1,0 +1,10 @@
+{
+  "responseType" : "QUERY",
+  "errors" : [ {
+    "key" : 1,
+    "code" : "Ancestor matches child",
+    "message" : "Parent and proposed child are same item.  1"
+  } ],
+  "data" : [ ],
+  "arrayOfUpdatedComponents" : [ ]
+}
