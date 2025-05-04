@@ -2,7 +2,6 @@ package com.inman.integration;
 
 import com.inman.entity.Item;
 import com.inman.model.response.ItemResponse;
-import com.inman.model.response.ResponsePackage;
 import com.inman.model.response.ResponseType;
 import com.inman.prepare.ItemPrepare;
 import org.junit.Before;

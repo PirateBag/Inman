@@ -1,18 +1,13 @@
 package com.inman.business;
 
-import com.inman.model.response.ResponsePackage;
 import com.inman.repository.BomPresentRepository;
-import com.inman.repository.BomRepository;
 import com.inman.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.inman.entity.BomPresent;
-import com.inman.entity.Item;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 @Service

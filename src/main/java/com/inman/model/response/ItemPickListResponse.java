@@ -2,6 +2,8 @@ package com.inman.model.response;
 
 import com.inman.entity.Pick;
 
+import java.util.List;
+
 public class ItemPickListResponse extends ResponsePackage<Pick> {
     public ItemPickListResponse() {};
 
@@ -9,6 +11,7 @@ public class ItemPickListResponse extends ResponsePackage<Pick> {
         responseType = xResponseType;
     }
 
+    /*
     public ItemPickListResponse(ResponsePackage xResponsePackage ) {
 
         //   this.setData((Item[]) xResponsePackage.getData());
@@ -21,5 +24,5 @@ public class ItemPickListResponse extends ResponsePackage<Pick> {
 
         this.setErrors( xResponsePackage.getErrors() );
         this.responseType = xResponsePackage.getResponseType();
-    }
+    } */
 };

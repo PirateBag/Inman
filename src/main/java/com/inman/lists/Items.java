@@ -54,7 +54,7 @@ public class Items {
             byExternal.put(pick.getExternal(), pick);
         }
     }
-
+/*
     public void refreshFromServer(Optional<Long> idParameter ) {
         String completeUrl = "http://localhost:8080/" + itemPickListUrlSuffix;
         ItemPickListRequest itemPickListRequest;
@@ -63,7 +63,7 @@ public class Items {
         assert responsePackage != null;
         refreshData(responsePackage.getData());
     }
-
+*/
 
     public String [] toStringArray() {
         String [] rValue = new String[ byId.size() ];

@@ -27,7 +27,7 @@ public class ItemAddLogic {
 		ItemResponse responsePackage = new ItemResponse( ResponseType.ADD );
 		try {
 			var items = go( xItemRepository, xAddItemRequest );
-			responsePackage.setData( items );
+			responsePackage.getData().add( items[ 0 ]);
 		} catch ( Exception e ) {
 			if ( e.getMessage().contains( "PUBLIC.ITEM(SUMMARY_ID)")) {
 				responsePackage.addError( new ErrorLine( 0, "0", "Duplicate Summary Id, provide a unqiue value.") );

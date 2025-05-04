@@ -5,11 +5,11 @@ import com.inman.entity.EntityMaster;
 
 import java.util.Objects;
 
-public final class ItemCrudSingle extends EntityMaster {
-    private final String summaryId;
-    private final String description;
-    private final double unitCost;
-    private final String sourcing;
+public class ItemCrudSingle extends EntityMaster {
+    private String summaryId;
+    private String description;
+    private double unitCost;
+    private String sourcing;
 
     public ItemCrudSingle(
             String summaryId,

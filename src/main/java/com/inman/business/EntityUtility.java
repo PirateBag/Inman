@@ -27,7 +27,7 @@ public class EntityUtility {
             // Copy all baseline entries without corresponding changes.
             var correspondingChange = mappedChanges.get(baselineEntity.getId());
             if (correspondingChange == null) {
-                logger.info( "No changes to baseline entity:  " + baselineEntity.getId() );
+                logger.info("No changes to baseline entity:  {}", baselineEntity.getId());
                 listOfMergedEntities.add( baselineEntity.copy( baselineEntity ) );
                 continue;
             }
@@ -41,7 +41,7 @@ public class EntityUtility {
                 case NONE:
                     break;
                 case CHANGE:
-                    logger.info( "Changing existing entity: " + baselineEntity.getId() );
+                    logger.info("Changing existing entity: {}", baselineEntity.getId());
                     listOfMergedEntities.add(correspondingChange);
                     break;
                 case INSERT:
@@ -60,13 +60,13 @@ public class EntityUtility {
         for ( var change : changes ) {
             var copy = change.copy( change );
             if ( change.getActivityState() == ActivityState.INSERT ) {
-                logger.info( "Inserting :" + copy.getId() );
+                logger.info("Inserting :{}", copy.getId());
                 listOfMergedEntities.add( change.copy( change ) );
             }
         }
 
 
-        var rValue = listOfMergedEntities.toArray(new EntityMaster[listOfMergedEntities.size()]);
+        var rValue = listOfMergedEntities.toArray(new EntityMaster[0]);
         setAllActivityStateToNone( rValue );
         return rValue;
     }

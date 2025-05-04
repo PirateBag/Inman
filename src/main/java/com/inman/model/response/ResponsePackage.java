@@ -4,7 +4,6 @@ import com.inman.entity.EntityMaster;
 import com.inman.model.rest.ErrorLine;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ResponsePackage<T> {
     public ResponsePackage() {
@@ -16,16 +15,9 @@ public class ResponsePackage<T> {
 
     protected ResponseType responseType;
     private ArrayList<ErrorLine> errors = new ArrayList<ErrorLine>();
-    private T[] data;
+    private ArrayList<T> data = new ArrayList<>();
 
-    public ResponsePackage(ArrayList<ErrorLine> errors, T[] data, ResponseType xResponseType) {
-        this.errors = errors;
-        this.data = data;
-        this.responseType = xResponseType;
-    }
-
-    public ResponsePackage( T[] data, ResponseType xResponseType) {
-        this.data = data;
+    public ResponsePackage(ResponseType xResponseType) {
         this.responseType = xResponseType;
     }
 
@@ -39,8 +31,8 @@ public class ResponsePackage<T> {
     public ResponsePackage<T> mergeAnotherResponse(ResponsePackage xIncrementalChanges) {
         ResponsePackage<T> rValue;
         EntityMaster[] newData = null;
-        var originalNumberOfRows = this.getData().length;
-        var numberOfIncrementalRows = xIncrementalChanges.getData().length;
+        var originalNumberOfRows = this.getData().size();
+        var numberOfIncrementalRows = xIncrementalChanges.getData().size();
 
         int sourceIndex = 0;
 
@@ -50,14 +42,15 @@ public class ResponsePackage<T> {
                 throw new IllegalArgumentException("Query is not a legal Incremental Change type");
             case ADD:
                 var numberOfRowsAfterAdd = originalNumberOfRows + numberOfIncrementalRows;
-                newData = (EntityMaster[]) Arrays.copyOf(this.getData(), originalNumberOfRows + xIncrementalChanges.getData().length);
+                /*
+                newData = (EntityMaster[]) Arrays.copyOf(this.getData(), originalNumberOfRows + xIncrementalChanges.getData().size());
 
                 int destinationIndex = originalNumberOfRows;
                 while (sourceIndex < numberOfIncrementalRows) {
                     newData[destinationIndex] = (EntityMaster) xIncrementalChanges.getData()[sourceIndex];
                     sourceIndex++;
                     destinationIndex++;
-                }
+                }  */
 
                 break;
             case DELETE:
@@ -67,20 +60,20 @@ public class ResponsePackage<T> {
 
                 /*  Make sure that all the items to be deleted can be found in the original list.  */
                 for ( int incrementalIndex = 0; incrementalIndex < numberOfIncrementalRows; incrementalIndex++ ) {
-                    var incrementalEntity = ((EntityMaster) xIncrementalChanges.getData()[incrementalIndex]);
-                    if (null == findEntityWithId(incrementalEntity.getId(), (EntityMaster[]) this.getData())) {
+                    var incrementalEntity = ((EntityMaster) xIncrementalChanges.getData().get(incrementalIndex));
+                    /* if (null == findEntityWithId(incrementalEntity.getId(), (EntityMaster[]) this.getData())) {
                         throw new IllegalStateException("EntityId " + incrementalEntity.getId() + " can't be found to be deleted");
-                    }
+                    }*/
                 }
 
                 /*  Verified that every item to be deleted exists, copy the ones to not be deleted into the destination.  */
                while ( sourceIndex < originalNumberOfRows ) {
                     //  If we don't find the entity in the delete list, copy it into the destination...
-                    var sourceEntity = ((EntityMaster) this.getData()[ sourceIndex ]);
-                    if ( null == findEntityWithId( sourceEntity.getId(), (EntityMaster[]) xIncrementalChanges.getData())  ) {
+                    var sourceEntity = ((EntityMaster) this.getData().get( sourceIndex ));
+                    /*  if ( null == findEntityWithId( sourceEntity.getId(), (EntityMaster[]) xIncrementalChanges.getData())  ) {
                         newData[ destationIndex ] = sourceEntity;
                         destationIndex++;
-                    }
+                    }  */
                     sourceIndex++;
 
                 }
@@ -88,16 +81,16 @@ public class ResponsePackage<T> {
             case CHANGE:
                 newData = new EntityMaster[ originalNumberOfRows ];
                 for ( destationIndex = 0 ; destationIndex < originalNumberOfRows; destationIndex++) {
-                    var originalEntity = (EntityMaster) this.getData()[ destationIndex ];
-                    var updatedEntity = findEntityWithId( originalEntity.getId(), (EntityMaster[]) xIncrementalChanges.getData());
-                    newData[ destationIndex ] = updatedEntity == null ? originalEntity : updatedEntity;
+                    /*  var originalEntity = (EntityMaster) this.getData()[ destationIndex ];
+                    /*  var updatedEntity = findEntityWithId( originalEntity.getId(), (EntityMaster[]) xIncrementalChanges.getData());  */
+                    /*  newData[ destationIndex ] = updatedEntity == null ? originalEntity : updatedEntity;  */
                     }
                 break;
         }
 
         rValue = new ResponsePackage<T>();
         rValue.setErrors( this.errors );
-        rValue.setData((T[]) newData);
+          ///     rValue.setData((T[]) newData);
         rValue.setResponseType( this.responseType );
         return rValue;
 
@@ -115,19 +108,8 @@ public class ResponsePackage<T> {
         this.errors = errors;
     }
 
-    public T[] getData() {
+    public ArrayList<T> getData() {
         return data;
     }
-
-    public void setData(T[] data) {
-        this.data = data;
-    }
-    private EntityMaster findEntityWithId( long xEntityToSearch, EntityMaster[]  entitiesToSearch ) {
-        for( EntityMaster entity : entitiesToSearch ) {
-            if ( entity.getId() == xEntityToSearch ) {
-                return entity;
-            }
-        }
-        return null;
-    }
+    public void setData(ArrayList<T> data) { this.data = data;  }
     }

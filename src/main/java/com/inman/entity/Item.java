@@ -58,12 +58,8 @@ public class  Item extends EntityMaster {
 		return rValue;
 	}
 
-	public long getId() {
-		return this.id;
-	}
-	
 	public String getSummaryId() {
-		return summaryId;
+		return summaryId == null ? "" : summaryId;
 	}
 	public void setSummaryId(String summaryId) {
 		this.summaryId = summaryId;

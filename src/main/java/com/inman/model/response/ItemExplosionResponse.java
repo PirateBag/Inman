@@ -11,20 +11,8 @@ public class ItemExplosionResponse extends ResponsePackage<Text> {
     public ItemExplosionResponse( String [] messages )
     {
 
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
-
-        try {
-            var json1 = ow.writeValueAsString( this );
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+        for ( String message : messages ) {
+            getData().add( new Text( message ) );
         }
-        Text [] texts = new Text[ messages.length ];
-
-        int textIndex = 0;
-        for ( String message : messages  ) {
-            texts[ textIndex++ ] = new Text( message );
-        }
-        this.setData( texts );
     }
 };

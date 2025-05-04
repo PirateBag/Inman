@@ -8,9 +8,7 @@ import com.inman.entity.Item;
 import com.inman.model.request.BomPresentSearchRequest;
 import com.inman.model.request.BomSearchRequest;
 import com.inman.model.request.BomUpdate;
-import com.inman.model.request.ItemReportRequest;
 import com.inman.model.response.BomResponse;
-import com.inman.model.response.ResponsePackage;
 import com.inman.model.response.ResponseType;
 import com.inman.model.rest.ErrorLine;
 import com.inman.repository.BomPresentRepository;
@@ -25,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 
 
@@ -54,7 +53,6 @@ public class Bom {
 		bomResponse.setResponseType( ResponseType.CHANGE );
 		String message = "";
 		int lineNumber = 0;
-		ArrayList<BomPresent> updatedBomsToReturn = new ArrayList<>();
 
 		for ( BomPresent updatedBom : xBomPresentToUpdate ) {
 			Optional<com.inman.entity.Bom> oldBom;
@@ -79,8 +77,7 @@ public class Bom {
 					bomRepository.save(oldBom.get());
 					var refreshedBom = bomPresentRepository.findById(updatedBom.getId());
 					refreshedBom.setActivityState(ActivityState.CHANGE);
-
-					updatedBomsToReturn.add(refreshedBom);
+					bomResponse.getData().add( refreshedBom );
 				}
 			} else if (updatedBom.getActivityState() == ActivityState.INSERT) {
 				logger.info("Bom Insert  " + updatedBom.getParentId() + "," + updatedBom.getChildId() + ", " + updatedBom.getQuantityPer());
@@ -97,7 +94,7 @@ public class Bom {
 						bomResponse.addError(new ErrorLine(lineNumber, "0001", message));
 					}
 					refreshedBom.setActivityState(ActivityState.INSERT);
-					updatedBomsToReturn.add(refreshedBom);
+					bomResponse.getData().add( refreshedBom );
 
 				} catch ( DataIntegrityViolationException dataIntegrityViolationException ) {
 					message = "Unable to insert " + bomToBeInserted.getParentId() + ":" +
@@ -106,15 +103,12 @@ public class Bom {
 					logger.error( message );
 					bomResponse.addError(new ErrorLine(lineNumber, "0001", message));
 				}
-
-
 			} else {
 				logger.info( "Bom " + updatedBom.getId() + " was ignored because ActivtyState was " + updatedBom.getActivityState() );
 			}
 			lineNumber++;
 		}
 
-		bomResponse.setData( updatedBomsToReturn.toArray( new BomPresent[ updatedBomsToReturn.size() ] ) );
 		return bomResponse;
 	}
 
@@ -155,7 +149,8 @@ public class Bom {
 			boms[ 0 ] = bom;
 		}
 
-		ResponsePackage responsePackage = new ResponsePackage(boms, ResponseType.QUERY);
+		BomResponse responsePackage = new BomResponse();
+		responsePackage.setData((ArrayList<BomPresent>) Arrays.asList( boms ));
 
 		return ResponseEntity.ok().body(responsePackage);
 	}
@@ -165,7 +160,9 @@ public class Bom {
 	public ResponseEntity<?> bomFindByParent( @RequestBody BomSearchRequest xBomSearchRequest	) {
 
 		BomPresent[] boms = bomPresentRepository.findByParentId(  xBomSearchRequest.getIdToSearchFor().intValue() );
-		ResponsePackage responsePackage = new ResponsePackage( boms, ResponseType.QUERY );
+		BomResponse responsePackage = new BomResponse();
+		responsePackage.setData((ArrayList<BomPresent>) Arrays.asList( boms ));
+		responsePackage.setResponseType(  ResponseType.QUERY );
 		return ResponseEntity.ok().body( responsePackage );
 	}
 
@@ -173,11 +170,11 @@ public class Bom {
 
 	@CrossOrigin
 	@RequestMapping( value = BomUpdate.updateUrl, method=RequestMethod.POST )
-	public ResponseEntity<?> bomUpdateArray( @RequestBody BomPresent[] xComponents  )
+	public ResponseEntity<BomResponse> bomUpdateArray(@RequestBody BomPresent[] xComponents  )
 	{
-		ResponsePackage responsePackage = go( bomRepository, bomPresentRepository, xComponents );
-
+		BomResponse responsePackage = go( bomRepository, bomPresentRepository, xComponents );
 		return ResponseEntity.ok().body( responsePackage );
+
 	}
 
 	/*

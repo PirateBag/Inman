@@ -13,7 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ItemPickListLogic {
@@ -22,6 +23,7 @@ public class ItemPickListLogic {
 
     @Autowired
     private BomPresentRepository bomPresentRepository;
+
     static Logger logger = LoggerFactory.getLogger( "controller: " + ItemPickListLogic.class );
 
     public ItemPickListResponse getAll( ) {
@@ -29,13 +31,15 @@ public class ItemPickListLogic {
         itemPickListResponse.setResponseType( ResponseType.ADD );
 
         Item[] items = itemRepository.findAll().toArray(new Item[0]);
-        Pick[] picks = new Pick[ items.length ];
-        int i = 0;
-        for ( Item item : items ) {
-            picks[ i++ ] = new Pick( item.getId(), Pick.formatExternalFromSummaryDescription( item.getSummaryId(), item.getDescription() ) );
+
+        for (Item item : items) {
+            Pick pick = new Pick();
+            pick.setExternal( item.getSummaryId() + ", " + item.getDescription() );
+            pick.setId( item.getId() );
+            itemPickListResponse.getData().add( pick );
+
         }
 
-        itemPickListResponse.setData(picks);
         return itemPickListResponse;
     }
 
@@ -48,57 +52,48 @@ public class ItemPickListLogic {
         logger.info( "getItemsForBom for item {}", itemPickListRequest.getIdToSearchFor() );
         itemPickListResponseWithAll = getAll();
 
-        var pickItems = itemPickListResponseWithAll.getData();
+        var allPickItems = itemPickListResponseWithAll.getData();
 
-        StringBuilder summaryOfPicks = new StringBuilder("Pick Items prior to any filtering.:  ");
-        for ( Pick pick : pickItems ) {
-            summaryOfPicks.append("  ").append(pick.getId());
-        }
-        logger.info(summaryOfPicks.toString());
-
+        showProgress( "Pick Items prior to any filtering.:  ", allPickItems );
         //  Remove the input parameter from the output.
-        pickItems = (Pick[])
-                Arrays.stream(pickItems)
-                .filter(pick -> pick.getId() != itemPickListRequest.getIdToSearchFor() )
-                        .toArray( Pick[]::new );
+        var filteredPickItems = allPickItems.stream()
+               .filter(pick -> pick.getId() != itemPickListRequest.getIdToSearchFor() )
+                        .toList();
 
-        summaryOfPicks = new StringBuilder("Pick Items after removing parent:  ");
-        for ( Pick pick : pickItems ) {
-            summaryOfPicks.append("  ").append(pick.getId());
-        }
-        logger.info(summaryOfPicks.toString());
+        showProgress( "Pick Items after removing parent:  ", filteredPickItems );
 
         //  Collect the Ids of the components of the input parameter.
         BomPresent[] boms = bomPresentRepository.findByParentId( itemPickListRequest.getIdToSearchFor() );
 
-        summaryOfPicks = new StringBuilder("Component Ids  ");
-        for ( BomPresent bom  : boms  ) {
-            summaryOfPicks.append("  ").append(bom.getChildId());
-        }
-        logger.info(summaryOfPicks.toString());
+        showProgress("Component Ids  ", boms );
 
-        pickItems = (Pick[])
-                Arrays.stream(pickItems)
-                        .filter( x ->isNotInListOfChildren( x, boms ) )
-                        .toArray( Pick[]::new );
+        var picksAfterRemovingSiblings = filteredPickItems.stream()
+                .filter(pick -> isNotInListOfChildren(pick,boms ))
+                .toList();
 
-        summaryOfPicks = new StringBuilder("Pick Items after removing parent: ");
-        for ( Pick pick : pickItems ) {
-            summaryOfPicks.append("  ").append(pick.getId());
-        }
-        logger.info(summaryOfPicks.toString());
+        showProgress( "Pick Items after siblings: ",       picksAfterRemovingSiblings );
+        var arrayListAfterRemovingSiblings = convertListToArrayList( picksAfterRemovingSiblings );
 
-
-        itemPickListResponseWithAll.setData( pickItems );
-
-        summaryOfPicks = new StringBuilder("Pick Items after removing siblings: ");
-        for ( Pick pick : pickItems ) {
-            summaryOfPicks.append("  ").append(pick.getId());
-        }
-        logger.info(summaryOfPicks.toString());
-
+        itemPickListResponseWithAll.setData( arrayListAfterRemovingSiblings );
+        itemPickListResponseWithAll.setResponseType( ResponseType.ADD );
 
         return itemPickListResponseWithAll;
+    }
+
+
+    private void showProgress(String description, List<Pick> allPickItems) {
+        StringBuilder summaryOfPicks = new StringBuilder( description );
+        for ( Pick pick : allPickItems) {
+            summaryOfPicks.append("  ").append(pick.getId());
+        }
+        logger.info(summaryOfPicks.toString());
+    }
+    private void showProgress(String description, BomPresent[] bomPresents ) {
+        StringBuilder summary = new StringBuilder( description );
+        for ( BomPresent bomPresent : bomPresents) {
+            summary.append("  ").append( bomPresent.getParentId() + ":" + bomPresent.getChildId() );
+        }
+        logger.info(summary.toString());
     }
 
     private boolean isNotInListOfChildren(Pick x, BomPresent[] boms) {
@@ -115,15 +110,24 @@ public class ItemPickListLogic {
         assert itemPickListRequest.getIdToSearchFor() > 0L;
         ItemPickListResponse itemPickListResponse = getAll();
 
-        Pick[] allPicks = itemPickListResponse.getData();
-        Pick[] theOne = new Pick[1];
+        var allPicks = itemPickListResponse.getData();
+        ArrayList<Pick> theOne = new ArrayList<>();
         for (Pick pick : allPicks) {
             if (pick.getId() == itemPickListRequest.getIdToSearchFor()) {
-                theOne[0] = pick;
-                itemPickListResponse.setData(theOne);
+                theOne.add( pick );
+                itemPickListResponse.setData( theOne);
                 break;
             }
         }
         return itemPickListResponse;
+    }
+
+    private ArrayList<Pick> convertListToArrayList( List<Pick> picksAsList ) {
+
+        ArrayList<Pick> picksAsArray = new ArrayList<>();
+        for ( Pick pick : picksAsList ) {
+            picksAsArray.add(  pick );
+        }
+        return picksAsArray;
     }
 }

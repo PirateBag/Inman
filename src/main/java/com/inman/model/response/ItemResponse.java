@@ -9,6 +9,7 @@ public class ItemResponse extends ResponsePackage<Item> {
         responseType = xResponseType;
     }
 
+    /*
     public ItemResponse( ResponsePackage xResponsePackage ) {
 
         //   this.setData((Item[]) xResponsePackage.getData());
@@ -21,5 +22,5 @@ public class ItemResponse extends ResponsePackage<Item> {
 
         this.setErrors( xResponsePackage.getErrors() );
         this.responseType = xResponsePackage.getResponseType();
-    }
+    }  */
 };

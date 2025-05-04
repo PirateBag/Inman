@@ -2,10 +2,10 @@ package com.inman.business;
 
 import com.inman.entity.Item;
 import com.inman.model.response.ItemResponse;
+import com.inman.model.response.ResponsePackage;
 import com.inman.model.response.ResponseType;
 import com.inman.model.rest.ErrorLine;
 import com.inman.model.rest.ItemUpdateRequest;
-import com.inman.model.response.ResponsePackage;
 import com.inman.repository.ItemRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ItemUpdateLogic {
 	static Logger logger = LoggerFactory.getLogger(ItemUpdateLogic.class + "go" );
 	@Transactional
-	public ResponsePackage go(ItemRepository itemRepository, ItemUpdateRequest updateItemRequest ) {
+	public ResponsePackage<Item> go(ItemRepository itemRepository, ItemUpdateRequest updateItemRequest ) {
 
 		ItemResponse itemResponse = new ItemResponse(ResponseType.CHANGE );
 
@@ -29,16 +29,14 @@ public class ItemUpdateLogic {
 			return itemResponse;
 		}
 
-		logger.info( "Successfully retrieved " + item.getId() + " for update" );
+        logger.info("Successfully retrieved {} for update", item.getId());
 		item.setSummaryId( updateItemRequest.getSummaryId() );
 		item.setDescription( updateItemRequest.getDescription() );
 		item.setUnitCost( updateItemRequest.getUnitCost() );
 		item.setSourcing( updateItemRequest.getSourcing() );
 		itemRepository.save( item );
-		
-		Item [] items = new Item[ ] { item };
 
-		itemResponse.setData( items );
+		itemResponse.getData().add( item );
 		return itemResponse;
 	}
 }

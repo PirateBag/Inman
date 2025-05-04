@@ -85,11 +85,9 @@ public class ItemAndStatus {
     		if ( items.length == 0 ) {
     			responsePackage.addError( new ErrorLine( 0, "0", Message.NO_DATA_FOR_PARAMETERS ));
     		}
-
-    		responsePackage.setData( items );
+    		responsePackage.getData().add( items[ 0 ] );
     	} catch ( Exception e ) {
     		responsePackage.addError( new ErrorLine( 0, "0", e.getMessage() ));
-    		responsePackage.setData( new Item[0] );
     	}
     	
     	return ResponseEntity.ok().body(responsePackage);
@@ -110,10 +108,9 @@ public class ItemAndStatus {
 				responsePackage.addError( new ErrorLine( 0, "0", Message.NO_DATA_FOR_PARAMETERS ));
 			}
 
-			responsePackage.setData( items );
+			responsePackage.getData().add( items[ 0 ] );
 		} catch ( Exception e ) {
 			responsePackage.addError( new ErrorLine( 0, "0", e.getMessage() ));
-			responsePackage.setData( new Item[0] );
 		}
 
 		return ResponseEntity.ok().body(responsePackage);
@@ -149,15 +146,13 @@ public class ItemAndStatus {
     			responsePackage.addError( new ErrorLine( 0, "0", 
     					String.format( Message.WRONG_NUMBER_OF_PARAMETERS, 0, items.length )) );
     		}
-    		responsePackage.setData( items );
+    		responsePackage.getData().add( items[ 0 ] );
     		
     	} catch ( QueryParameterException e ) {
     		responsePackage.addError( new ErrorLine( 0, "0", e.getMessage() ));
-    		responsePackage.setData( new Item[0] );
-   		
+
     	} catch ( Exception e ) {
     		responsePackage.addError( new ErrorLine( 0, "0", e.getMessage() ));
-    		responsePackage.setData( new Item[0] );
     	}
     	return ResponseEntity.ok().body( responsePackage );
     }
