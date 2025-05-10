@@ -2,6 +2,8 @@ package com.inman.model.request;
 
 import com.inman.entity.ActivityState;
 import com.inman.entity.EntityMaster;
+import com.inman.entity.Item;
+import com.inman.repository.ItemRepository;
 
 import java.util.Objects;
 
@@ -66,6 +68,29 @@ public class ItemCrudSingle extends EntityMaster {
                 "sourcing=" + sourcing + ", " +
                 "activityState=" + activityState + ']';
     }
+
+    public Item generateItem( long xId) {
+        var rValue = new Item();
+        rValue.setId( xId );
+        rValue.setSummaryId(this.summaryId);
+        rValue.setDescription(this.description);
+        rValue.setUnitCost(this.unitCost);
+        rValue.setSourcing(this.sourcing);
+        rValue.setActivityState( ActivityState.NONE);
+        return rValue;
+    }
+
+    public Item generateItem() {
+        var rValue = new Item();
+        rValue.setId( this.id );
+        rValue.setSummaryId(this.summaryId);
+        rValue.setDescription(this.description);
+        rValue.setUnitCost(this.unitCost);
+        rValue.setSourcing(this.sourcing);
+        rValue.setActivityState( ActivityState.NONE);
+        return rValue;
+    }
+
 
     @Override
     public EntityMaster copy(EntityMaster oldValue) {

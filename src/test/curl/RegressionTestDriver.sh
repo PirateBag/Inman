@@ -1,9 +1,18 @@
 #!/bin/bash
 
-declare -a tests=( "BomRecursionCheckPositive" "BomRecursionCheckNegative" "ItemExplosionReport" "ItemPickList" "ItemPickListForBom" "ItemPickListForOne")
+declare -a tests=( "ItemDeleteSilentPositive" "BomRecursionCheckPositive" "BomRecursionCheckNegative" "ItemExplosionReport" "ItemPickList" "ItemPickListForBom" "ItemPickListForOne" )
+
+#Insert an item, update it and then delete it.
+tests+=( "ItemInsertPositive" "ItemChangePositive" "ItemDeletePositive")
+
 declare -i passed=0
 declare -i failed=0
 declare -i newBaseLines=0
+
+#    .---------- constant part!
+#    vvvv vvvv-- the code from above
+RED='\033[0;31m'
+NC='\033[0m' # No Color
 
 # shellcheck disable=SC2068
 for test in ${tests[@]}
@@ -15,11 +24,14 @@ do
     newBaseLines+=1
   else
     if  cmp --silent "$test.actual" "$test.expected" ; then
-      echo test $test passed.
+      printf  '%-30s %-10s' "$test" "passed"
+      echo
       passed+=1
     else
-      echo Test $test failed.
-      echo diff $test.actual $test.expected
+      printf  '%-30s %-10s' "$test" "failed"
+      echo
+      echo -e "${RED}diff $test.actual $test.expected${NC}"
+      echo   ./$test.sh $test.actual; cat $test.actual
       failed+=1
     fi
   fi

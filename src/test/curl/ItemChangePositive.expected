@@ -1,0 +1,12 @@
+{
+  "responseType" : "MULTILINE",
+  "errors" : [ ],
+  "data" : [ {
+    "id" : 0,
+    "activityState" : "CHANGE",
+    "summaryId" : "W-101",
+    "description" : "Purple Wagon",
+    "unitCost" : 2.0,
+    "sourcing" : "PUR"
+  } ]
+}

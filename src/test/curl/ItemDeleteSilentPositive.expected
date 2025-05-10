@@ -1,0 +1,12 @@
+{
+  "responseType" : "MULTILINE",
+  "errors" : [ ],
+  "data" : [ {
+    "id" : 0,
+    "activityState" : "DELETE_SILENT",
+    "summaryId" : "W-101",
+    "description" : "Blue Wagon",
+    "unitCost" : 1.0,
+    "sourcing" : "PUR"
+  } ]
+}

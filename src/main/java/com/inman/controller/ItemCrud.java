@@ -24,6 +24,7 @@ public class ItemCrud {
 
     static Logger logger = LoggerFactory.getLogger("controller: " + ItemCrud.class);
 
+    @Autowired
     ItemRepository itemRepository;
 
     public ItemCrudBatchResponse go( ItemCrudBatch itemCrudBatch) {
@@ -35,8 +36,11 @@ public class ItemCrud {
 
             if (itemCrudToBeCrud.getActivityState() == ActivityState.INSERT) {
                 insertItem(itemCrudToBeCrud, itemCrudBatchResponse);
-            } else if (itemCrudToBeCrud.getActivityState() == ActivityState.DELETE) {
+            } else if (itemCrudToBeCrud.getActivityState() == ActivityState.DELETE ||
+                       itemCrudToBeCrud.getActivityState() == ActivityState.DELETE_SILENT) {
                 deleteItem(itemCrudToBeCrud, itemCrudBatchResponse);
+            } else if ( itemCrudToBeCrud.getActivityState() == ActivityState.CHANGE ) {
+                changeItem(itemCrudToBeCrud, itemCrudBatchResponse);
             } else {
                 logger.info("Item {} was ignored because ActivityState was {}", itemCrudToBeCrud.getSummaryId(), itemCrudToBeCrud.getActivityState());
             }
@@ -63,20 +67,51 @@ public class ItemCrud {
             itemCrudBatchResponse.addError(error);
         }
     }
+private void changeItem(ItemCrudSingle itemCrudToBeCrud,
+                        ItemCrudBatchResponse itemCrudBatchResponse) {
+    String message;
+     try {
+        var itemToBeModified = itemRepository.findBySummaryId(itemCrudToBeCrud.getSummaryId());
+        if (itemToBeModified == null) {
+            message = "Item " + itemCrudToBeCrud.getSummaryId() + " not found.";
+            itemCrudBatchResponse.getErrors().add(new ErrorLine(1, message));
+            logger.error(message);
+        } else {
+            var crudItem = itemCrudToBeCrud.generateItem( itemToBeModified.getId() );
+            itemRepository.save(crudItem);
+
+            itemCrudBatchResponse.getData().add(new ItemCrudSingle(itemToBeModified.getSummaryId(), itemToBeModified.getDescription(),
+                    itemToBeModified.getUnitCost(), itemToBeModified.getSourcing(), ActivityState.CHANGE));
+        }
+        } catch(Exception exception){
+            var error = translateExceptionToError(exception, itemCrudToBeCrud);
+            itemCrudBatchResponse.addError(error);
+        }
+    }
+
 
     private void deleteItem(ItemCrudSingle itemCrudToBeCrud,
                             ItemCrudBatchResponse itemCrudBatchResponse) {
         try {
             Item toBeDeletedItem = itemRepository.findBySummaryId(itemCrudToBeCrud.getSummaryId());
             if (toBeDeletedItem == null) {
-                var message = "Unable to find item " + itemCrudToBeCrud.getSummaryId() + " in database.";
-                itemCrudBatchResponse.getErrors().add(new ErrorLine(1, message));
-                logger.info(message);
+
+                 if ( itemCrudToBeCrud.getActivityState() == ActivityState.DELETE) {
+                    var message = "Unable to find item " + itemCrudToBeCrud.getSummaryId() + " in database.";
+                    itemCrudBatchResponse.getErrors().add(new ErrorLine(1, message));
+                    logger.info(message);
+                 } else {
+                     var message = "Silent delete on " + itemCrudToBeCrud.getSummaryId() + " in database.";
+                     itemCrudBatchResponse.getData().add(
+                             new ItemCrudSingle(itemCrudToBeCrud.getSummaryId(), itemCrudToBeCrud.getDescription(),
+                                     itemCrudToBeCrud.getUnitCost(), itemCrudToBeCrud.getSourcing(), itemCrudToBeCrud.getActivityState() ) );
+                     logger.info(message);
+                 }
             } else {
                 itemRepository.deleteById(toBeDeletedItem.getId());
                 itemCrudBatchResponse.getData().add(
                         new ItemCrudSingle(toBeDeletedItem.getSummaryId(), toBeDeletedItem.getDescription(),
-                                toBeDeletedItem.getUnitCost(), toBeDeletedItem.getSourcing(), ActivityState.DELETE));
+                                toBeDeletedItem.getUnitCost(), toBeDeletedItem.getSourcing(), itemCrudToBeCrud.getActivityState()));
             }
         } catch (Exception exception) {
             var error = translateExceptionToError(exception, itemCrudToBeCrud);
@@ -102,7 +137,7 @@ public class ItemCrud {
             logger.error(message);
             return new ErrorLine(1, message);
         }
-        message = itemCrudSingle.getActivityState() + "failed on " + itemCrudSingle.getSummaryId() + ":" +
+        message = itemCrudSingle.getActivityState() + " failed on " + itemCrudSingle.getSummaryId() + ":" +
                 itemCrudSingle.getDescription() + " due to " +
                 exception.getMessage();
         logger.error(message);

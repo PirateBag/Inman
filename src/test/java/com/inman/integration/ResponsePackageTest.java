@@ -32,9 +32,10 @@ public class ResponsePackageTest {
 
     @Before
     public void setUp() {
-        ItemPrepare.prepareArray();
+        /*  ItemPrepare.prepareArray();
         queryItems =  new Item[] { ItemPrepare.w001, ItemPrepare.w003, ItemPrepare.w005 };
-        itemResponse.setData( queryItems );
+
+        itemResponse.setData( queryItems );  */:
     }
 
     @Test(expected = IllegalArgumentException.class )
