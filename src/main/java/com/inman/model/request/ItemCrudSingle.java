@@ -13,16 +13,24 @@ public class ItemCrudSingle extends EntityMaster {
     private double unitCost;
     private String sourcing;
 
+    private int    leadTime;
+
+
+    private int    maxDepth;
+
     public ItemCrudSingle(
             String summaryId,
             String description,
             double unitCost,
             String sourcing,
+            int    leadTime,
+            int    maxDepth,
             ActivityState activityState) {
         this.summaryId = summaryId;
         this.description = description;
         this.unitCost = unitCost;
         this.sourcing = sourcing;
+        this.leadTime = leadTime;
         this.activityState = activityState;
     }
 
@@ -66,6 +74,7 @@ public class ItemCrudSingle extends EntityMaster {
                 "description=" + description + ", " +
                 "unitCost=" + unitCost + ", " +
                 "sourcing=" + sourcing + ", " +
+                "leadTime=" + leadTime + ", " +
                 "activityState=" + activityState + ']';
     }
 
@@ -76,9 +85,19 @@ public class ItemCrudSingle extends EntityMaster {
         rValue.setDescription(this.description);
         rValue.setUnitCost(this.unitCost);
         rValue.setSourcing(this.sourcing);
+        rValue.setLeadTime( this.leadTime );
         rValue.setActivityState( ActivityState.NONE);
         return rValue;
     }
+
+    public int getLeadTime() {
+        return leadTime;
+    }
+
+    public void setLeadTime(int leadTime) {
+        this.leadTime = leadTime;
+    }
+
 
     public Item generateItem() {
         var rValue = new Item();
@@ -87,8 +106,19 @@ public class ItemCrudSingle extends EntityMaster {
         rValue.setDescription(this.description);
         rValue.setUnitCost(this.unitCost);
         rValue.setSourcing(this.sourcing);
+        rValue.setLeadTime(this.leadTime);
+        rValue.setMaxDepth( this.maxDepth );
         rValue.setActivityState( ActivityState.NONE);
+
         return rValue;
+    }
+
+    public int getMaxDepth() {
+        return maxDepth;
+    }
+
+    public void setMaxDepth(int maxDepth) {
+        this.maxDepth = maxDepth;
     }
 
 

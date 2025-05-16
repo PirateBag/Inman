@@ -7,6 +7,8 @@
     "summaryId" : "W-101",
     "description" : "Purple Wagon",
     "unitCost" : 2.0,
-    "sourcing" : "PUR"
+    "sourcing" : "PUR",
+    "leadTime" : 0,
+    "maxDepth" : 0
   } ]
 }

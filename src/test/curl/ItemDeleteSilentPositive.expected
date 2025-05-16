@@ -7,6 +7,8 @@
     "summaryId" : "W-101",
     "description" : "Blue Wagon",
     "unitCost" : 1.0,
-    "sourcing" : "PUR"
+    "sourcing" : "PUR",
+    "leadTime" : 0,
+    "maxDepth" : 0
   } ]
 }

@@ -8,11 +8,10 @@ create table if not exists Item (
 
     max_depth int default 0 not null,
 
-    unit_Cost number( 12, 2) default 0.0 not null
+    unit_Cost number( 12, 2) default 0.0 not null,
 
+    lead_time int default 1 not null
 );
-
-
 
 create table if not exists Bom (
     id int auto_increment,

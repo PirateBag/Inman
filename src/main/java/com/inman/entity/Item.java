@@ -22,6 +22,8 @@ public class  Item extends EntityMaster {
 	private String sourcing;
 
 	private int maxDepth = 0;
+
+	private int leadTime = 0;
 	
 	public Item(ItemAddRequest addItemRequest) {
 		this.summaryId = addItemRequest.getSummaryId();
@@ -31,11 +33,13 @@ public class  Item extends EntityMaster {
 	}
 
 
-	public Item(String summaryId, String description, double unitCost, String sourcing) {
+	public Item(String summaryId, String description, double unitCost, String sourcing, int leadTime, int maxDepth ) {
 		this.summaryId = summaryId;
 		this.description = description;
 		this.unitCost = unitCost;
 		this.sourcing = sourcing;
+		this.leadTime = leadTime;
+		this.maxDepth = maxDepth;
 	}
 
 	public Item() {
@@ -55,6 +59,7 @@ public class  Item extends EntityMaster {
 		rValue.unitCost = item.getUnitCost();
 		rValue.sourcing = item.getSourcing();
 		rValue.maxDepth = item.maxDepth;
+		rValue.leadTime = item.leadTime;
 		return rValue;
 	}
 
@@ -89,5 +94,13 @@ public class  Item extends EntityMaster {
 
 	public void setMaxDepth(int maxDepth) {
 		this.maxDepth = maxDepth;
+	}
+
+	public int getLeadTime() {
+		return leadTime;
+	}
+
+	public void setLeadTime(int leadTime) {
+		this.leadTime = leadTime;
 	}
 }

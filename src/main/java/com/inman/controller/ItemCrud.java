@@ -51,7 +51,10 @@ public class ItemCrud {
     private void insertItem(ItemCrudSingle itemCrudToBeCrud,
                             ItemCrudBatchResponse itemCrudBatchResponse) {
         String message;
-        Item itemToBeInserted = new Item(itemCrudToBeCrud.getSummaryId(), itemCrudToBeCrud.getDescription(), itemCrudToBeCrud.getUnitCost(), itemCrudToBeCrud.getSourcing());
+        Item itemToBeInserted = new Item(itemCrudToBeCrud.getSummaryId(), itemCrudToBeCrud.getDescription(),
+                itemCrudToBeCrud.getUnitCost(), itemCrudToBeCrud.getSourcing(), itemCrudToBeCrud.getLeadTime(), itemCrudToBeCrud.getMaxDepth() );
+
+
         try {
             itemRepository.save(itemToBeInserted);
             var refreshedItem = itemRepository.findBySummaryId(itemToBeInserted.getSummaryId());
@@ -61,7 +64,7 @@ public class ItemCrud {
                 logger.error(message);
             }
             itemCrudBatchResponse.getData().add(new ItemCrudSingle(refreshedItem.getSummaryId(), refreshedItem.getDescription(),
-                    refreshedItem.getUnitCost(), refreshedItem.getSourcing(), ActivityState.INSERT));
+                    refreshedItem.getUnitCost(), refreshedItem.getSourcing(), refreshedItem.getLeadTime(), refreshedItem.getMaxDepth(), ActivityState.INSERT));
         } catch (Exception exception) {
             var error = translateExceptionToError(exception, itemCrudToBeCrud);
             itemCrudBatchResponse.addError(error);
@@ -81,7 +84,7 @@ private void changeItem(ItemCrudSingle itemCrudToBeCrud,
             itemRepository.save(crudItem);
 
             itemCrudBatchResponse.getData().add(new ItemCrudSingle(itemToBeModified.getSummaryId(), itemToBeModified.getDescription(),
-                    itemToBeModified.getUnitCost(), itemToBeModified.getSourcing(), ActivityState.CHANGE));
+                    itemToBeModified.getUnitCost(), itemToBeModified.getSourcing(), itemToBeModified.getLeadTime(), itemToBeModified.getMaxDepth(), ActivityState.CHANGE));
         }
         } catch(Exception exception){
             var error = translateExceptionToError(exception, itemCrudToBeCrud);
@@ -104,14 +107,17 @@ private void changeItem(ItemCrudSingle itemCrudToBeCrud,
                      var message = "Silent delete on " + itemCrudToBeCrud.getSummaryId() + " in database.";
                      itemCrudBatchResponse.getData().add(
                              new ItemCrudSingle(itemCrudToBeCrud.getSummaryId(), itemCrudToBeCrud.getDescription(),
-                                     itemCrudToBeCrud.getUnitCost(), itemCrudToBeCrud.getSourcing(), itemCrudToBeCrud.getActivityState() ) );
+                                     itemCrudToBeCrud.getUnitCost(), itemCrudToBeCrud.getSourcing(),
+                                     itemCrudToBeCrud.getLeadTime(), itemCrudToBeCrud.getMaxDepth(),
+                                     itemCrudToBeCrud.getActivityState() ) );
                      logger.info(message);
                  }
             } else {
                 itemRepository.deleteById(toBeDeletedItem.getId());
                 itemCrudBatchResponse.getData().add(
                         new ItemCrudSingle(toBeDeletedItem.getSummaryId(), toBeDeletedItem.getDescription(),
-                                toBeDeletedItem.getUnitCost(), toBeDeletedItem.getSourcing(), itemCrudToBeCrud.getActivityState()));
+                                toBeDeletedItem.getUnitCost(), toBeDeletedItem.getSourcing(), itemCrudToBeCrud.getLeadTime(),
+                                itemCrudToBeCrud.getMaxDepth(), itemCrudToBeCrud.getActivityState()));
             }
         } catch (Exception exception) {
             var error = translateExceptionToError(exception, itemCrudToBeCrud);

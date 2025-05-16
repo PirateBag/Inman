@@ -1,2 +1,0 @@
-#!/bin/bash
- curl -o $1 -s -d '{ "updatedRows" : [  { "summaryId" : "W-101", "description" : "Purple Wagon", "unitCost" : "2.0", "sourcing" : "PUR", "activityState" : "CHANGE" } ] }' -H "Content-Type: application/json" -X POST http://localhost:8080/item/crud
