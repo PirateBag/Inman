@@ -3,7 +3,7 @@ package com.inman.business;
 import com.inman.entity.BomPresent;
 import com.inman.entity.Item;
 import com.inman.entity.Pick;
-import com.inman.model.request.ItemPickListRequest;
+import com.inman.model.request.GenericSingleId;
 import com.inman.model.response.ItemPickListResponse;
 import com.inman.model.response.ResponseType;
 import com.inman.repository.BomPresentRepository;
@@ -43,13 +43,13 @@ public class ItemPickListLogic {
         return itemPickListResponse;
     }
 
-    public ItemPickListResponse getItemsForBom(ItemPickListRequest itemPickListRequest ) {
+    public ItemPickListResponse getItemsForBom(GenericSingleId genericSingleId) {
         var itemPickListResponseWithAll = new ItemPickListResponse();
 
-        assert itemPickListRequest.getIdToSearchFor()  != null;
-        assert itemPickListRequest.getIdToSearchFor() > 0L;
+        assert genericSingleId.getIdToSearchFor()  != null;
+        assert genericSingleId.getIdToSearchFor() > 0L;
 
-        logger.info( "getItemsForBom for item {}", itemPickListRequest.getIdToSearchFor() );
+        logger.info( "getItemsForBom for item {}", genericSingleId.getIdToSearchFor() );
         itemPickListResponseWithAll = getAll();
 
         var allPickItems = itemPickListResponseWithAll.getData();
@@ -57,13 +57,13 @@ public class ItemPickListLogic {
         showProgress( "Pick Items prior to any filtering.:  ", allPickItems );
         //  Remove the input parameter from the output.
         var filteredPickItems = allPickItems.stream()
-               .filter(pick -> pick.getId() != itemPickListRequest.getIdToSearchFor() )
+               .filter(pick -> pick.getId() != genericSingleId.getIdToSearchFor() )
                         .toList();
 
         showProgress( "Pick Items after removing parent:  ", filteredPickItems );
 
         //  Collect the Ids of the components of the input parameter.
-        BomPresent[] boms = bomPresentRepository.findByParentId( itemPickListRequest.getIdToSearchFor() );
+        BomPresent[] boms = bomPresentRepository.findByParentId( genericSingleId.getIdToSearchFor() );
 
         showProgress("Component Ids  ", boms );
 
@@ -105,15 +105,15 @@ public class ItemPickListLogic {
         return true;
     }
 
-    public ItemPickListResponse getOneItem(ItemPickListRequest itemPickListRequest) {
-        assert itemPickListRequest.getIdToSearchFor() != null;
-        assert itemPickListRequest.getIdToSearchFor() > 0L;
+    public ItemPickListResponse getOneItem(GenericSingleId genericSingleId) {
+        assert genericSingleId.getIdToSearchFor() != null;
+        assert genericSingleId.getIdToSearchFor() > 0L;
         ItemPickListResponse itemPickListResponse = getAll();
 
         var allPicks = itemPickListResponse.getData();
         ArrayList<Pick> theOne = new ArrayList<>();
         for (Pick pick : allPicks) {
-            if (pick.getId() == itemPickListRequest.getIdToSearchFor()) {
+            if (pick.getId() == genericSingleId.getIdToSearchFor()) {
                 theOne.add( pick );
                 itemPickListResponse.setData( theOne);
                 break;

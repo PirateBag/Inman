@@ -10,7 +10,13 @@ declare -a tests=(
   "ItemPickListForOne;itemPick/itemsForBom" \
   "ItemInsertPositive;item/crud" \
   "ItemChangePositive;item/crud" \
-  "ItemDeletePositive;item/crud" )
+  "ItemDeletePositive;item/crud"  \
+  "ClearAllData;clearAllData" \
+  \
+  "prototypeTest/prototypeTest" \
+  "ItemBatchAdd;item/crud" \
+   \
+   )
 
 declare -i passed=0
 declare -i failed=0
@@ -36,7 +42,11 @@ do
   testName=${ColumnsOfTest[0]}
   testService=${ColumnsOfTest[1]}
 
-#  echo ${curlDriver} ${testName} ${testService}
+  if [ "$testName" == "prototypeTest" ]; then
+    break;
+  fi
+
+  echo ${curlDriver} ${testName} ${testService}
   ${curlDriver} ${testName} ${testService}
 
   if [ ! -f $testName.expected ]; then

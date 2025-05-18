@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
+
 	Item findById( long id  );
 	Item findBySummaryId( String SummaryId );
 	Item deleteBySummaryId( String SummaryId );
@@ -30,4 +31,5 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 	@Query( "select i.id, i.summaryId, i.description from Item i")
 	Item[] pickList();
 
+	void deleteAllInBatch();
 	}

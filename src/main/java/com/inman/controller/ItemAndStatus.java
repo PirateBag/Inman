@@ -2,7 +2,9 @@ package com.inman.controller;
 
 import com.inman.business.*;
 import com.inman.entity.Item;
+import com.inman.entity.Text;
 import com.inman.model.MetaData;
+import com.inman.model.request.GenericSingleId;
 import com.inman.model.response.ItemResponse;
 import com.inman.model.response.ResponsePackage;
 import com.inman.model.response.ResponseType;
@@ -10,7 +12,10 @@ import com.inman.model.rest.*;
 import com.inman.prepare.BomPrepare;
 import com.inman.prepare.ItemPrepare;
 import com.inman.repository.BomRepository;
+import com.inman.repository.DdlRepository;
 import com.inman.repository.ItemRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +25,13 @@ import org.springframework.web.bind.annotation.*;
 @Configuration
 @RestController
 public class ItemAndStatus {
-	
+	static Logger logger = LoggerFactory.getLogger("controller: " + ItemAndStatus.class);
+	public static final String CLEAR_ALL_DATA = "clearAllData";
+
 	@Autowired
 	private ItemRepository itemRepository;
+
+	@Autowired
 	private BomRepository bomRepository;
 	
 	@Autowired
@@ -30,6 +39,9 @@ public class ItemAndStatus {
 	
 	@Autowired
 	private ItemAddLogic itemAddLogic;
+
+	@Autowired
+	private DdlRepository ddlRepository;
 
 	@CrossOrigin
     @RequestMapping( StatusResponse.rootUrl )
@@ -172,7 +184,7 @@ public class ItemAndStatus {
 			@RequestBody ItemUpdateRequest itemUpdateRequest )
     {
 		ResponsePackage responsePackage = itemUpdateLogic.go( itemRepository, itemUpdateRequest );
- 
+
     	return responsePackage;
     }
 	private void makeSureBasicContentIsReady() {
@@ -182,6 +194,30 @@ public class ItemAndStatus {
 			new BomPrepare().go( bomRepository );
 			Application.setIsPrepared( true );
 		}
+	}
+
+	@CrossOrigin
+	@RequestMapping( value = ItemAndStatus.CLEAR_ALL_DATA, method=RequestMethod.POST )
+	public ResponsePackage<Text> clearAllData(@RequestBody GenericSingleId genericSingleId )
+	{
+		ResponsePackage<Text> responsePackage = clearAllData( itemRepository );
+
+		return responsePackage;
+	}
+
+	public ResponsePackage<Text> clearAllData( ItemRepository itemRepository ){
+		itemRepository.deleteAllInBatch();
+		var rValue = new ResponsePackage<Text>();
+		rValue.getData().add( new Text( "Items deleted" ) );
+
+		bomRepository.deleteAllInBatch();
+		rValue.getData().add( new Text( "BOMs deleted" ) );
+
+		ddlRepository.resetIdForTable( "Item" );
+		//  ddlRepository.resetIdForTable( "Bom" );
+
+
+		return rValue;
 	}
 }
 
