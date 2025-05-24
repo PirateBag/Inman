@@ -1,5 +1,6 @@
 package com.inman.repository;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,7 +19,11 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 	Item deleteBySummaryId( String SummaryId );
 
 	@Override
+	@NotNull
 	List<Item> findAll();
+
+	@NotNull
+	List<Item> findAllByOrderBySummaryIdAsc();
 
 	@Query( "select i from Item i where summaryId like :summaryId")
 	Item[] byleadingSummaryId(

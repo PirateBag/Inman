@@ -8,6 +8,10 @@
   }, {
     "id" : 0,
     "activityState" : "NONE",
+    "message" : "Items deleted"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
     "message" : "BOMs deleted"
   } ]
 }

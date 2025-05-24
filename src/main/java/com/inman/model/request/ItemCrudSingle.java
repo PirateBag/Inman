@@ -18,6 +18,8 @@ public class ItemCrudSingle extends EntityMaster {
 
     private int    maxDepth;
 
+
+
     public ItemCrudSingle(
             String summaryId,
             String description,
@@ -32,6 +34,10 @@ public class ItemCrudSingle extends EntityMaster {
         this.sourcing = sourcing;
         this.leadTime = leadTime;
         this.activityState = activityState;
+    }
+
+    public void setSummaryId(String summaryId) {
+        this.summaryId = summaryId;
     }
 
     public String getSummaryId() {

@@ -15,9 +15,9 @@ public class DdlRepository {
     private EntityManager entityManager;
 
     @Transactional
-    public void resetIdForTable( String tableName ) {
-        String sqlCommand = "alter table Item alter column id restart with 1";
-        logger.info( sqlCommand );
-        entityManager.createNativeQuery( sqlCommand ).executeUpdate();
+    public void resetIdForTable(String tableName) {
+        String sqlCommand = "ALTER TABLE %s ALTER COLUMN id RESTART WITH 1".formatted(tableName);
+        logger.info(sqlCommand);
+        entityManager.createNativeQuery(sqlCommand).executeUpdate();
     }
 }

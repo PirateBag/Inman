@@ -211,12 +211,12 @@ public class ItemAndStatus {
 		rValue.getData().add( new Text( "Items deleted" ) );
 
 		bomRepository.deleteAllInBatch();
-		rValue.getData().add( new Text( "BOMs deleted" ) );
+
 
 		ddlRepository.resetIdForTable( "Item" );
-		//  ddlRepository.resetIdForTable( "Bom" );
-
-
+		rValue.getData().add( new Text( "Items deleted" ) );
+		ddlRepository.resetIdForTable( "Bom" );
+		rValue.getData().add( new Text( "BOMs deleted" ) );
 		return rValue;
 	}
 }

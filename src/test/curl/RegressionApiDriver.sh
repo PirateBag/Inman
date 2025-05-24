@@ -1,23 +1,28 @@
 #!/bin/bash
 
+declare stopTesing="stopTesting"
 declare -a tests=(
-  "ItemDeleteSilentPositive;item/crud" \
+  "ClearAllData;clearAllData" \
+  "ItemBatchAdd;item/crud" \
+  \
+  "ItemExplosionReport;itemReport/showAllItems" \
+
+  \
   "BomRecursionCheckPositive;itemReport/bomRecursionCheck" \
   "BomRecursionCheckNegative;itemReport/bomRecursionCheck" \
-  "ItemExplosionReport;itemReport/explosion" \
   "ItemPickList;itemPick/all"
   "ItemPickListForBom;itemPick/itemsForBom" \
   "ItemPickListForOne;itemPick/itemsForBom" \
   "ItemInsertPositive;item/crud" \
   "ItemChangePositive;item/crud" \
   "ItemDeletePositive;item/crud"  \
-  "ClearAllData;clearAllData" \
+\
   \
-  "prototypeTest/prototypeTest" \
-  "ItemBatchAdd;item/crud" \
-   \
-   )
 
+   "BomCrudTx1Add;bom/crud" \
+   "BomCrudTx2Add;bom/crud"
+   )
+#   "stopTesting" \
 declare -i passed=0
 declare -i failed=0
 declare -i newBaseLines=0
@@ -42,11 +47,11 @@ do
   testName=${ColumnsOfTest[0]}
   testService=${ColumnsOfTest[1]}
 
-  if [ "$testName" == "prototypeTest" ]; then
-    break;
+#  echo ${curlDriver} ${testName} ${testService}
+  if [[ "$testName" == "$stopTesing" ]]; then
+      break;
   fi
 
-  echo ${curlDriver} ${testName} ${testService}
   ${curlDriver} ${testName} ${testService}
 
   if [ ! -f $testName.expected ]; then

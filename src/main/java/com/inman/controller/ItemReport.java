@@ -2,6 +2,7 @@ package com.inman.controller;
 
 import com.inman.business.BomNavigation;
 import com.inman.business.Common;
+import com.inman.business.ItemReportService;
 import com.inman.entity.BomPresent;
 import com.inman.entity.Item;
 import com.inman.model.request.ItemReportRequest;
@@ -33,6 +34,16 @@ public class ItemReport {
     static Logger logger = LoggerFactory.getLogger("controller: " + ItemReport.class);
     @Autowired
     private BomNavigation bomNavigation;
+
+    ItemReportService itemReportService;
+
+
+    public ItemReport(
+            @Autowired
+            ItemReportService itemReportService
+    ) {
+        this.itemReportService = itemReportService;
+    }
 
     @CrossOrigin
     @RequestMapping(value = ItemReportRequest.EXPLOSION_URL, method = RequestMethod.POST,
@@ -116,6 +127,25 @@ public class ItemReport {
         }
 
        return rValue;
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = ItemReportRequest.SHOW_ALL_ITEMS_URL, method = RequestMethod.POST,
+            consumes = "application/json",
+            produces = "application/json")
+    private ItemExplosionResponse showAllItems(@RequestBody ItemReportRequest itemReportRequest) {
+        var rValue = new ItemExplosionResponse();
+        rValue.setResponseType(ResponseType.QUERY);
+
+        rValue.setData( itemReportService.generateAllItemReport( itemRepository ) );
+
+        if ( itemReportRequest.getChildId() != itemReportRequest.getParentId() ) {
+            var message = "Parent and proposed child are same item.  " + itemReportRequest.getChildId() ;
+            rValue.addError( new ErrorLine( 0, "Ancestor matches child", message ));
+            logger.error( message );
+            return rValue;
+        }
+        return rValue;
     }
 
 }
