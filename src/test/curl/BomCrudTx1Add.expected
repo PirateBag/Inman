@@ -13,5 +13,17 @@
     "childDescription" : "Red Wagon Body",
     "unitCost" : 0.0,
     "extendedCost" : 0.0
+  }, {
+    "id" : 2,
+    "activityState" : "INSERT",
+    "parentId" : 2,
+    "childId" : 14,
+    "quantityPer" : 1.0,
+    "parentSummary" : "W-002",
+    "parentDescription" : "Red Wagon Body",
+    "childSummary" : "W-013",
+    "childDescription" : "Wagon Body",
+    "unitCost" : 2.25,
+    "extendedCost" : 2.25
   } ]
 }

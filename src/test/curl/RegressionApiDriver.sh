@@ -4,23 +4,30 @@ declare stopTesing="stopTesting"
 declare -a tests=(
   "ClearAllData;clearAllData" \
   "ItemBatchAdd;item/crud" \
-  \
+  "ItemPickList;itemPick/all"\
   "ItemExplosionReport;itemReport/showAllItems" \
 
-  \
+  #Insert W-001 W-002,
+  #       W-002 W-014
+  "BomCrudTx1Add;bom/crud"
+
+   # Insert W-001 and W-002 (Duplicate Key) and make sure the insert of
+   # W-002 and W-0013 failes and is rolled back.
+   "BomCrudTx2Add;bom/crud"
+
+
+   #Verify that Only W-001,002 and W-002 and W-004 are in the database
+  "ItemExplosionForShortBom;itemReport/explosion" \
+   "stopTesting"
   "BomRecursionCheckPositive;itemReport/bomRecursionCheck" \
+  \
+  \
   "BomRecursionCheckNegative;itemReport/bomRecursionCheck" \
-  "ItemPickList;itemPick/all"
+  \
   "ItemPickListForBom;itemPick/itemsForBom" \
-  "ItemPickListForOne;itemPick/itemsForBom" \
   "ItemInsertPositive;item/crud" \
   "ItemChangePositive;item/crud" \
   "ItemDeletePositive;item/crud"  \
-\
-  \
-
-   "BomCrudTx1Add;bom/crud" \
-   "BomCrudTx2Add;bom/crud"
    )
 #   "stopTesting" \
 declare -i passed=0
@@ -39,7 +46,21 @@ if [ ! -z "$1" ]; then
   tests=( $1 )
 fi
 
-# shellcheck disable=SC2068
+#Is there a server?
+serverHealthCheck_root="ServerHealthCheck"
+${curlDriver} $serverHealthCheck_root status
+if [ ! -f $serverHealthCheck_root.actual  ]; then
+  echo No response from server in $serverHealthCheck_root.actual file
+  exit
+else
+   if  cmp --silent "$serverHealthCheck_root.actual" "$serverHealthCheck_root.expected" ; then
+     echo Server Health Check passed.
+  else
+      echo Did not get expected health check resposne.
+      cat $serverHealthCheck_root.actual
+  fi
+fi
+
 for test in ${tests[@]}
 do
   IFS=';'
@@ -47,7 +68,7 @@ do
   testName=${ColumnsOfTest[0]}
   testService=${ColumnsOfTest[1]}
 
-#  echo ${curlDriver} ${testName} ${testService}
+  echo ${curlDriver} ${testName} ${testService}
   if [[ "$testName" == "$stopTesing" ]]; then
       break;
   fi

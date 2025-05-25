@@ -1,0 +1,21 @@
+{
+  "responseType" : "QUERY",
+  "errors" : [ ],
+  "data" : [ {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "Summary     Description                      Unit Cost  Sourcing       Depthd"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "W-001       36 In Red Wagon                       0.00  MAN           0"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "   W-002       Red Wagon Body                        0.00  MAN           0"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "       W-013       Wagon Body                            2.25  PUR           0"
+  } ]
+}

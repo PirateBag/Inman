@@ -8,6 +8,8 @@
  ResponseFile=$1.actual
  ServiceSuffix=$2
 
+ #echo "No response.  Is the server alive?" > $ResponseFile
+
  if [ -f $RequestFile ]; then
   curl -o $ResponseFile  --silent --data "@$RequestFile" -H "Content-Type: application/json" -X POST http://localhost:8080/$ServiceSuffix
 #  echo curl -o $ResponseFile  --silent --data "@$RequestFile" -H "Content-Type: application/json" -X POST http://localhost:8080/$ServiceSuffix

@@ -136,15 +136,7 @@ public class ItemReport {
     private ItemExplosionResponse showAllItems(@RequestBody ItemReportRequest itemReportRequest) {
         var rValue = new ItemExplosionResponse();
         rValue.setResponseType(ResponseType.QUERY);
-
         rValue.setData( itemReportService.generateAllItemReport( itemRepository ) );
-
-        if ( itemReportRequest.getChildId() != itemReportRequest.getParentId() ) {
-            var message = "Parent and proposed child are same item.  " + itemReportRequest.getChildId() ;
-            rValue.addError( new ErrorLine( 0, "Ancestor matches child", message ));
-            logger.error( message );
-            return rValue;
-        }
         return rValue;
     }
 
