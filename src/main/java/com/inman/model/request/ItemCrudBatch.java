@@ -1,6 +1,8 @@
 package com.inman.model.request;
 
-public record ItemCrudBatch( ItemCrudSingle[] updatedRows ) {};
+import com.inman.entity.Item;
+
+public record ItemCrudBatch(Item[] updatedRows ) {};
 
 
 

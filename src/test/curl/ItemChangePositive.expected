@@ -2,13 +2,13 @@
   "responseType" : "MULTILINE",
   "errors" : [ ],
   "data" : [ {
-    "id" : 0,
-    "activityState" : "CHANGE",
+    "id" : 19,
+    "activityState" : "NONE",
     "summaryId" : "W-101",
-    "description" : "Purple Wagon",
-    "unitCost" : 2.0,
+    "description" : "Blue Wagon",
+    "unitCost" : 1.0,
     "sourcing" : "PUR",
-    "leadTime" : 0,
-    "maxDepth" : 0
+    "maxDepth" : 0,
+    "leadTime" : 0
   } ]
 }

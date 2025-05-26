@@ -6,7 +6,7 @@ import com.inman.business.ItemReportService;
 import com.inman.entity.BomPresent;
 import com.inman.entity.Item;
 import com.inman.model.request.ItemReportRequest;
-import com.inman.model.response.ItemExplosionResponse;
+import com.inman.model.response.TextResponse;
 import com.inman.model.response.ResponseType;
 import com.inman.model.rest.ErrorLine;
 import com.inman.repository.BomPresentRepository;
@@ -49,10 +49,10 @@ public class ItemReport {
     @RequestMapping(value = ItemReportRequest.EXPLOSION_URL, method = RequestMethod.POST,
             consumes = "application/json",
             produces = "application/json")
-    private ItemExplosionResponse handleItemExplosionRequest(@RequestBody ItemReportRequest itemReportRequest) {
+    private TextResponse handleItemExplosionRequest(@RequestBody ItemReportRequest itemReportRequest) {
         List<String> cummulativeResponse = generateItemExplosionReport(itemReportRequest.getParentId(), null, 0);
 
-        ItemExplosionResponse rValue = new ItemExplosionResponse(cummulativeResponse.toArray(new String[0]));
+        TextResponse rValue = new TextResponse(cummulativeResponse.toArray(new String[0]));
         rValue.setResponseType(ResponseType.QUERY);
         return rValue;
     }
@@ -104,8 +104,8 @@ public class ItemReport {
     @RequestMapping(value = ItemReportRequest.BOM_RECURSION_CHECK_URL, method = RequestMethod.POST,
             consumes = "application/json",
             produces = "application/json")
-    private ItemExplosionResponse handleItemWhereUsed(@RequestBody ItemReportRequest itemReportRequest) {
-        var rValue = new ItemExplosionResponse();
+    private TextResponse handleItemWhereUsed(@RequestBody ItemReportRequest itemReportRequest) {
+        var rValue = new TextResponse();
         rValue.setResponseType(ResponseType.QUERY);
 
         var isItemIdInWhereUsed = bomNavigation.isItemIdInWhereUsed(itemReportRequest.getChildId(),
@@ -133,8 +133,8 @@ public class ItemReport {
     @RequestMapping(value = ItemReportRequest.SHOW_ALL_ITEMS_URL, method = RequestMethod.POST,
             consumes = "application/json",
             produces = "application/json")
-    private ItemExplosionResponse showAllItems(@RequestBody ItemReportRequest itemReportRequest) {
-        var rValue = new ItemExplosionResponse();
+    private TextResponse showAllItems(@RequestBody ItemReportRequest itemReportRequest) {
+        var rValue = new TextResponse();
         rValue.setResponseType(ResponseType.QUERY);
         rValue.setData( itemReportService.generateAllItemReport( itemRepository ) );
         return rValue;

@@ -1,8 +1,8 @@
 package com.inman.model.response;
 
-import com.inman.model.request.ItemCrudSingle;
+import com.inman.entity.Item;
 
-public class ItemCrudBatchResponse extends ResponsePackage<ItemCrudSingle> {
+public class ItemCrudBatchResponse extends ResponsePackage<Item> {
     public ItemCrudBatchResponse() {}
 
 }

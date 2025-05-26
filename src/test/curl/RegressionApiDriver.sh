@@ -15,19 +15,18 @@ declare -a tests=(
    # W-002 and W-0013 failes and is rolled back.
    "BomCrudTx2Add;bom/crud"
 
-
    #Verify that Only W-001,002 and W-002 and W-004 are in the database
   "ItemExplosionForShortBom;itemReport/explosion" \
-   "stopTesting"
+
+  #See if Item W-001 can be added as a child to W-002
   "BomRecursionCheckPositive;itemReport/bomRecursionCheck" \
-  \
-  \
+
   "BomRecursionCheckNegative;itemReport/bomRecursionCheck" \
-  \
-  "ItemPickListForBom;itemPick/itemsForBom" \
-  "ItemInsertPositive;item/crud" \
-  "ItemChangePositive;item/crud" \
-  "ItemDeletePositive;item/crud"  \
+
+  "ItemPickListForBom;itemPick/itemsForBom"
+  "ItemInsertPositive;item/crud"
+  "ItemChangePositive;item/crud"
+  "ItemDeletePositive;item/crud"
    )
 #   "stopTesting" \
 declare -i passed=0

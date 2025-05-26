@@ -2,10 +2,6 @@
   "responseType" : "ADD",
   "errors" : [ ],
   "data" : [ {
-    "id" : 2,
-    "activityState" : "NONE",
-    "external" : "W-002, Red Wagon Body"
-  }, {
     "id" : 3,
     "activityState" : "NONE",
     "external" : "W-003, Front Wheel Asmbly"

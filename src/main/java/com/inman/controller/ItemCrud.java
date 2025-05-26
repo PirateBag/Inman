@@ -3,7 +3,6 @@ package com.inman.controller;
 import com.inman.entity.ActivityState;
 import com.inman.entity.Item;
 import com.inman.model.request.ItemCrudBatch;
-import com.inman.model.request.ItemCrudSingle;
 import com.inman.model.response.ItemCrudBatchResponse;
 import com.inman.model.response.ResponseType;
 import com.inman.model.rest.ErrorLine;
@@ -30,7 +29,7 @@ public class ItemCrud {
     public ItemCrudBatchResponse go( ItemCrudBatch itemCrudBatch) {
         ItemCrudBatchResponse itemCrudBatchResponse = new ItemCrudBatchResponse();
 
-        for (ItemCrudSingle itemCrudToBeCrud : itemCrudBatch.updatedRows()) {
+        for (Item itemCrudToBeCrud : itemCrudBatch.updatedRows()) {
 
             logger.info("{} on {}", itemCrudToBeCrud.getActivityState(), itemCrudToBeCrud);
 
@@ -48,7 +47,7 @@ public class ItemCrud {
         return itemCrudBatchResponse;
     }
 
-    private void insertItem(ItemCrudSingle itemCrudToBeCrud,
+    private void insertItem(Item itemCrudToBeCrud,
                             ItemCrudBatchResponse itemCrudBatchResponse) {
         String message;
         Item itemToBeInserted = new Item(itemCrudToBeCrud.getSummaryId(), itemCrudToBeCrud.getDescription(),
@@ -63,14 +62,13 @@ public class ItemCrud {
                 itemCrudBatchResponse.getErrors().add(new ErrorLine(1, message));
                 logger.error(message);
             }
-            itemCrudBatchResponse.getData().add(new ItemCrudSingle(refreshedItem.getSummaryId(), refreshedItem.getDescription(),
-                    refreshedItem.getUnitCost(), refreshedItem.getSourcing(), refreshedItem.getLeadTime(), refreshedItem.getMaxDepth(), ActivityState.INSERT));
+            itemCrudBatchResponse.getData().add( refreshedItem );
         } catch (Exception exception) {
             var error = translateExceptionToError(exception, itemCrudToBeCrud);
             itemCrudBatchResponse.addError(error);
         }
     }
-private void changeItem(ItemCrudSingle itemCrudToBeCrud,
+private void changeItem(Item itemCrudToBeCrud,
                         ItemCrudBatchResponse itemCrudBatchResponse) {
     String message;
      try {
@@ -80,11 +78,10 @@ private void changeItem(ItemCrudSingle itemCrudToBeCrud,
             itemCrudBatchResponse.getErrors().add(new ErrorLine(1, message));
             logger.error(message);
         } else {
-            var crudItem = itemCrudToBeCrud.generateItem( itemToBeModified.getId() );
-            itemRepository.save(crudItem);
 
-            itemCrudBatchResponse.getData().add(new ItemCrudSingle(itemToBeModified.getSummaryId(), itemToBeModified.getDescription(),
-                    itemToBeModified.getUnitCost(), itemToBeModified.getSourcing(), itemToBeModified.getLeadTime(), itemToBeModified.getMaxDepth(), ActivityState.CHANGE));
+            itemRepository.save(itemToBeModified);
+
+            itemCrudBatchResponse.getData().add( itemToBeModified);
         }
         } catch(Exception exception){
             var error = translateExceptionToError(exception, itemCrudToBeCrud);
@@ -93,7 +90,7 @@ private void changeItem(ItemCrudSingle itemCrudToBeCrud,
     }
 
 
-    private void deleteItem(ItemCrudSingle itemCrudToBeCrud,
+    private void deleteItem(Item itemCrudToBeCrud,
                             ItemCrudBatchResponse itemCrudBatchResponse) {
         try {
             Item toBeDeletedItem = itemRepository.findBySummaryId(itemCrudToBeCrud.getSummaryId());
@@ -105,19 +102,12 @@ private void changeItem(ItemCrudSingle itemCrudToBeCrud,
                     logger.info(message);
                  } else {
                      var message = "Silent delete on " + itemCrudToBeCrud.getSummaryId() + " in database.";
-                     itemCrudBatchResponse.getData().add(
-                             new ItemCrudSingle(itemCrudToBeCrud.getSummaryId(), itemCrudToBeCrud.getDescription(),
-                                     itemCrudToBeCrud.getUnitCost(), itemCrudToBeCrud.getSourcing(),
-                                     itemCrudToBeCrud.getLeadTime(), itemCrudToBeCrud.getMaxDepth(),
-                                     itemCrudToBeCrud.getActivityState() ) );
+                     itemCrudBatchResponse.getData().add( itemCrudToBeCrud );
                      logger.info(message);
                  }
             } else {
                 itemRepository.deleteById(toBeDeletedItem.getId());
-                itemCrudBatchResponse.getData().add(
-                        new ItemCrudSingle(toBeDeletedItem.getSummaryId(), toBeDeletedItem.getDescription(),
-                                toBeDeletedItem.getUnitCost(), toBeDeletedItem.getSourcing(), itemCrudToBeCrud.getLeadTime(),
-                                itemCrudToBeCrud.getMaxDepth(), itemCrudToBeCrud.getActivityState()));
+                itemCrudBatchResponse.getData().add( toBeDeletedItem );
             }
         } catch (Exception exception) {
             var error = translateExceptionToError(exception, itemCrudToBeCrud);
@@ -133,7 +123,7 @@ private void changeItem(ItemCrudSingle itemCrudToBeCrud,
         return detailedMessage;
     }
 
-    ErrorLine translateExceptionToError(Exception exception, ItemCrudSingle itemCrudSingle) {
+    ErrorLine translateExceptionToError(Exception exception, Item itemCrudSingle) {
         String message;
 
         if (exception instanceof DataIntegrityViolationException) {
