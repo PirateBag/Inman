@@ -6,6 +6,7 @@ public class BomCrudBatch {
 	public static final String updateUrl = "bomArray/update";
 	public static final String bomCrud = "bom/crud";
 	public static final String BOM_RECURSION_CHECK_URL = "bomRecursionCheck";
+	public static final String bomRefreshDepth = "bomRefreshDepth";
 
 	BomPresent[] updatedRows;
 

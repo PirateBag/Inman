@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 @Entity
 @Table( name = "Item" )
 public class  Item extends EntityMaster {
-
+	public static String toStringFormat = "%04d: %s,%s %8.2f %s %3d %3d";
 	@Column( unique = true )
 	private String summaryId;
 	
@@ -102,5 +102,9 @@ public class  Item extends EntityMaster {
 
 	public void setLeadTime(int leadTime) {
 		this.leadTime = leadTime;
+	}
+
+	public String toString(){
+		return toStringFormat.formatted( id, summaryId, description, unitCost, sourcing, maxDepth, leadTime );
 	}
 }

@@ -16,17 +16,33 @@ declare -a tests=(
    "BomCrudTx2Add;bom/crud"
 
    #Verify that Only W-001,002 and W-002 and W-004 are in the database
-  "ItemExplosionForShortBom;itemReport/explosion" \
+  "ItemExplosionForShortBom;itemReport/explosion"
 
   #See if Item W-001 can be added as a child to W-002
-  "BomRecursionCheckPositive;itemReport/bomRecursionCheck" \
+  "BomRecursionCheckPositive;itemReport/bomRecursionCheck"
 
-  "BomRecursionCheckNegative;itemReport/bomRecursionCheck" \
+  "BomRecursionCheckNegative;itemReport/bomRecursionCheck"
 
+  #Given the bill of materials of w-001->W-002->W-003, find legal items for a new
+  # child inserted into W-002
   "ItemPickListForBom;itemPick/itemsForBom"
+
+  # Insert a new item W-101.
   "ItemInsertPositive;item/crud"
+  # Change W-101.
   "ItemChangePositive;item/crud"
+
+  # Report all items...
+  "ItemReportWithW-101;itemReport/showAllItems"
+
+  # Remove the new item, and re-run original report.
   "ItemDeletePositive;item/crud"
+  "ItemExplosionReport;itemReport/showAllItems"
+
+  # Insert BOM W-001, W-0-3
+  "BomCrudTx3Add;bom/crud"
+  "ItemExplosionReportAfter;itemReport/showAllItems"
+
    )
 #   "stopTesting" \
 declare -i passed=0

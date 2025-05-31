@@ -13,7 +13,6 @@ import java.util.List;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
-
 	Item findById( long id  );
 	Item findBySummaryId( String SummaryId );
 	Item deleteBySummaryId( String SummaryId );
@@ -36,5 +35,9 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 	@Query( "select i.id, i.summaryId, i.description from Item i")
 	Item[] pickList();
 
+	@Query( "select b.parentId from Item i,Bom b where b.childId=i.id and i.id = :itemId")
+	long[] findParentsFor( @Param( "itemId") long id );
+
+	//  Delete all as a transaction.
 	void deleteAllInBatch();
 	}
