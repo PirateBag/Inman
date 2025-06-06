@@ -1,6 +1,6 @@
 package com.inman.controller;
 
-import com.inman.business.BomNavigation;
+import com.inman.business.BomLogicService;
 import com.inman.business.Common;
 import com.inman.business.ItemReportService;
 import com.inman.entity.BomPresent;
@@ -33,7 +33,7 @@ public class ItemReport {
 
     static Logger logger = LoggerFactory.getLogger("controller: " + ItemReport.class);
     @Autowired
-    private BomNavigation bomNavigation;
+    private BomLogicService bomLogicService;
 
     ItemReportService itemReportService;
 
@@ -108,7 +108,7 @@ public class ItemReport {
         var rValue = new TextResponse();
         rValue.setResponseType(ResponseType.QUERY);
 
-        var isItemIdInWhereUsed = bomNavigation.isItemIdInWhereUsed(itemReportRequest.getChildId(),
+        var isItemIdInWhereUsed = bomLogicService.isItemIdInWhereUsed(itemReportRequest.getChildId(),
                 itemReportRequest.getParentId() );
 
         if ( itemReportRequest.getChildId() != itemReportRequest.getParentId() ) {

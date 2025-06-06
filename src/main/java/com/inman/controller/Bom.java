@@ -2,9 +2,8 @@ package com.inman.controller;
 
 import com.inman.business.BomCrudService;
 import com.inman.business.BomSearchLogic;
-import com.inman.business.BomNavigation;
+import com.inman.business.BomLogicService;
 import com.inman.entity.BomPresent;
-import com.inman.entity.Item;
 import com.inman.entity.Text;
 import com.inman.model.request.*;
 import com.inman.model.response.BomResponse;
@@ -18,12 +17,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Optional;
 
 
 @Configuration
@@ -44,15 +41,15 @@ public class Bom {
 	ItemRepository itemRepository;
 
 	@Autowired
-	BomNavigation bomNavigation;
+	BomLogicService bomLogicService;
 
 	BomCrudService bomCrudService;
 
 	@Autowired
 	public Bom(BomCrudService bomCrudService,
-			   BomNavigation bomNavigation	) {
+			   BomLogicService bomLogicService) {
 		this.bomCrudService = bomCrudService;
-		this.bomNavigation = bomNavigation;
+		this.bomLogicService = bomLogicService;
 	}
 
 	static Logger logger = LoggerFactory.getLogger("controller: " + Bom.class);
@@ -117,7 +114,7 @@ public class Bom {
 
 		ArrayList<Text> texts = new ArrayList<>();
 
-		bomNavigation.updateMaxDepthOf( itemToRefresh.getIdToSearchFor(), texts );
+		bomLogicService.updateMaxDepthOf( itemToRefresh.getIdToSearchFor(), texts );
 		texts.add( new Text( "Report Comppleted" ) );
 		rValue.setData( texts );
 		rValue.setResponseType(ResponseType.QUERY);

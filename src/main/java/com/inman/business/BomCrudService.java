@@ -4,9 +4,7 @@ import com.inman.entity.ActivityState;
 import com.inman.entity.Bom;
 import com.inman.entity.BomPresent;
 import com.inman.entity.Item;
-import com.inman.model.request.BomCrudBatch;
 import com.inman.model.request.BomPresentSearchRequest;
-import com.inman.model.request.BomSearchRequest;
 import com.inman.model.response.BomResponse;
 import com.inman.model.response.ResponseType;
 import com.inman.model.rest.ErrorLine;
@@ -39,17 +37,17 @@ public class BomCrudService {
     BomPresentRepository bomPresentRepository;
     ItemRepository itemRepository;
     BomRepository bomRepository;
-    BomNavigation bomNavigation;
+    BomLogicService bomLogicService;
 
     @Autowired
     public BomCrudService(BomPresentRepository bomPresentRepository,
                           ItemRepository itemRepository,
                           BomRepository bomRepository,
-                          BomNavigation bomNavigation) {
+                          BomLogicService bomLogicService) {
         this.bomPresentRepository = bomPresentRepository;
         this.itemRepository = itemRepository;
         this.bomRepository = bomRepository;
-        this.bomNavigation = bomNavigation;
+        this.bomLogicService = bomLogicService;
     }
 
 
@@ -176,7 +174,7 @@ public class BomCrudService {
         com.inman.entity.Bom bomToBeInserted = new com.inman.entity.Bom(updatedBom.getParentId(), updatedBom.getChildId(), updatedBom.getQuantityPer());
         com.inman.entity.Bom insertedBom = null;
         try {
-            bomNavigation.isItemIdInWhereUsed(updatedBom.getParentId(),
+            bomLogicService.isItemIdInWhereUsed(updatedBom.getParentId(),
                     bomToBeInserted.getChildId());
             insertedBom = bomRepository.save(bomToBeInserted);
             var refreshedBom = bomPresentRepository.byParentIdChildId(insertedBom.getParentId(), bomToBeInserted.getChildId());

@@ -39,10 +39,14 @@ declare -a tests=(
   "ItemDeletePositive;item/crud"
   "ItemExplosionReport;itemReport/showAllItems"
 
-  # Insert BOM W-001, W-0-3
+  # Add components W-004 and W-005 to W-003
   "BomCrudTx3Add;bom/crud"
-  "ItemExplosionReportAfter;itemReport/showAllItems"
 
+  # Adjust maxdepth for newly inserted items.
+  "MaxDepthFor003;itemReport/whereUsedReport"
+
+  # Rerun the item detail report to review new depth settings for 003, 004, and 005.
+  "ItemExplosionReportFor003thru005;itemReport/showAllItems"
    )
 #   "stopTesting" \
 declare -i passed=0
@@ -83,7 +87,7 @@ do
   testName=${ColumnsOfTest[0]}
   testService=${ColumnsOfTest[1]}
 
-  echo ${curlDriver} ${testName} ${testService}
+  #echo ${curlDriver} ${testName} ${testService}
   if [[ "$testName" == "$stopTesing" ]]; then
       break;
   fi
