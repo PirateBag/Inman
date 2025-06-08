@@ -43,7 +43,7 @@
     "summaryId" : "W-005",
     "description" : "Axle",
     "unitCost" : 0.0,
-    "sourcing" : "PUR",
+    "sourcing" : "MAN",
     "maxDepth" : 0,
     "leadTime" : 4
   }, {
@@ -112,15 +112,6 @@
   }, {
     "id" : 13,
     "activityState" : "NONE",
-    "summaryId" : "W-017",
-    "description" : "Rod Stock",
-    "unitCost" : 0.7,
-    "sourcing" : "PUR",
-    "maxDepth" : 0,
-    "leadTime" : 5
-  }, {
-    "id" : 14,
-    "activityState" : "NONE",
     "summaryId" : "W-013",
     "description" : "Wagon Body",
     "unitCost" : 2.25,
@@ -128,7 +119,7 @@
     "maxDepth" : 0,
     "leadTime" : 20
   }, {
-    "id" : 15,
+    "id" : 14,
     "activityState" : "NONE",
     "summaryId" : "W-014",
     "description" : "Red Paint",
@@ -137,7 +128,7 @@
     "maxDepth" : 0,
     "leadTime" : 5
   }, {
-    "id" : 16,
+    "id" : 15,
     "activityState" : "NONE",
     "summaryId" : "W-015",
     "description" : "Rear Wheel bracket",
@@ -146,7 +137,7 @@
     "maxDepth" : 0,
     "leadTime" : 4
   }, {
-    "id" : 17,
+    "id" : 16,
     "activityState" : "NONE",
     "summaryId" : "W-016",
     "description" : "Axle Bracket Brace",
@@ -154,6 +145,15 @@
     "sourcing" : "PUR",
     "maxDepth" : 0,
     "leadTime" : 6
+  }, {
+    "id" : 17,
+    "activityState" : "NONE",
+    "summaryId" : "W-017",
+    "description" : "Rod Stock",
+    "unitCost" : 0.7,
+    "sourcing" : "PUR",
+    "maxDepth" : 0,
+    "leadTime" : 5
   }, {
     "id" : 18,
     "activityState" : "NONE",

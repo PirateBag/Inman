@@ -61,7 +61,7 @@ public class ItemReport {
                                                      List<String> cumulativeResponse,
                                                      long parentLevel) {
         String lineContents = "%-10s  %-30s  %10.2f  %3s  %10d";
-        String lineHeader = "%-10s  %-30s  %10s  %3s  %10sd";
+        String lineHeader = "%-10s  %-30s  %10s  %3s  %10s";
 
         if (cumulativeResponse == null) {
             cumulativeResponse = new LinkedList<>();

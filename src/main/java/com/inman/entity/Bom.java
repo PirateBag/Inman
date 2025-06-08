@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 @Entity
 @Table( name = "Bom"  )
 public class Bom extends EntityMaster {
-
+	public static String formatter = "%4d %4d %4d %6.2f %-10s";
 	protected long parentId;
 	protected long childId;
 	protected double quantityPer;
@@ -15,12 +15,6 @@ public class Bom extends EntityMaster {
 	}
 
 	public Bom(Long xParent, Long xChild, Double xQuantityPer ) {
-		this.parentId = xParent;
-		this.childId = xChild;
-		this.quantityPer = xQuantityPer;
-	}
-
-	public Bom(Long xParent, Long xChild, Double xQuantityPer, String xParentSummary ) {
 		this.parentId = xParent;
 		this.childId = xChild;
 		this.quantityPer = xQuantityPer;
@@ -44,6 +38,10 @@ public class Bom extends EntityMaster {
 		rValue.childId = oldValue.getChildId();
 		rValue.quantityPer = oldValue.getQuantityPer();
 		return rValue;
+	}
+
+	public String toString() {
+		return String.format(formatter, id, parentId, childId, quantityPer, activityState);
 	}
 
 	public long getParentId() {

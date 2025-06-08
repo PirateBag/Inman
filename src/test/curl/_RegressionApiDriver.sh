@@ -1,6 +1,8 @@
 #!/bin/bash
+declare TestResultFormat='%-35s %-10s\n'
+declare TestSummaryFormat='%-15s %10s\n'
+declare stopTesting="stopTesting"
 
-declare stopTesing="stopTesting"
 declare -a tests=(
   "ClearAllData;clearAllData" \
   "ItemBatchAdd;item/crud" \
@@ -20,7 +22,6 @@ declare -a tests=(
 
   #See if Item W-001 can be added as a child to W-002
   "BomRecursionCheckPositive;itemReport/bomRecursionCheck"
-
   "BomRecursionCheckNegative;itemReport/bomRecursionCheck"
 
   #Given the bill of materials of w-001->W-002->W-003, find legal items for a new
@@ -37,7 +38,7 @@ declare -a tests=(
 
   # Remove the new item, and re-run original report.
   "ItemDeletePositive;item/crud"
-  "ItemExplosionReport;itemReport/showAllItems"
+  "IERafterDelete;itemReport/showAllItems"
 
   # Add components W-004 and W-005 to W-003
   "BomCrudTx3Add;bom/crud"
@@ -47,36 +48,56 @@ declare -a tests=(
 
   # Rerun the item detail report to review new depth settings for 003, 004, and 005.
   "ItemExplosionReportFor003thru005;itemReport/showAllItems"
+
+  # Reclaculate max depth from the, W-013..
+  # There should be no change from the Max Depth calculation on 003
+  "MaxDepthFor014;itemReport/whereUsedReport"
+  "ItemExplosionReportFor003thru005;itemReport/showAllItems"
+
+#Add the missing bill of material for W-001
+  "BomCrudAddMissing;bom/crud"
+  "ItemExplosionComplete;itemReport/explosion"
    )
 #   "stopTesting" \
 declare -i passed=0
 declare -i failed=0
 declare -i newBaseLines=0
 
-declare curlDriver=./curlDriver.sh
+declare curlDriver=./_curlDriver.sh
+declare testToRequest=./_testToRequest.sh
 
 #    .---------- constant part!
 #    vvvv vvvv-- the code from above
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
+
 if [ ! -z "$1" ]; then
   echo Parameter passed
   tests=( $1 )
 fi
 
+#Convert any test file to a request file.  The remainder of the script
+#only deals with .request.
+for filename in *.test; do
+  $testToRequest "$filename"
+done
+
 #Is there a server?
 serverHealthCheck_root="ServerHealthCheck"
 ${curlDriver} $serverHealthCheck_root status
+
 if [ ! -f $serverHealthCheck_root.actual  ]; then
   echo No response from server in $serverHealthCheck_root.actual file
   exit
 else
    if  cmp --silent "$serverHealthCheck_root.actual" "$serverHealthCheck_root.expected" ; then
-     echo Server Health Check passed.
+     printf "$TestResultFormat" "ServerHealthCheck"  "passed"
+     passed+=1
   else
-      echo Did not get expected health check resposne.
-      cat $serverHealthCheck_root.actual
+     printf "$TestResultFormat" "ServerHealthCheck"  "Failed"
+     echo -e "${RED}diff $serverHealthCheck_root.actual $serverHealthCheck_root.expected${NC}"
+     failed+=1
   fi
 fi
 
@@ -87,8 +108,9 @@ do
   testName=${ColumnsOfTest[0]}
   testService=${ColumnsOfTest[1]}
 
-  #echo ${curlDriver} ${testName} ${testService}
-  if [[ "$testName" == "$stopTesing" ]]; then
+  # echo ${curlDriver} ${testName} ${testService}
+
+  if [[ "$testName" == "$stopTesting" ]]; then
       break;
   fi
 
@@ -100,12 +122,10 @@ do
     newBaseLines+=1
   else
     if  cmp --silent "$testName.actual" "$testName.expected" ; then
-      printf  '%-30s %-10s' "$testName" "passed"
-      echo
+      printf  $TestResultFormat "$testName" "passed"
       passed+=1
     else
-      printf  '%-30s %-10s' "$test" "failed"
-      echo
+      printf  $TestResultFormat "$test" "failed"
       echo -e "${RED}diff $testName.actual $testName.expected${NC}"
       cat $testName.actual
       failed+=1
@@ -124,6 +144,6 @@ done
 
 echo --------------------
 echo Summary of Test Results.
-echo Passed $passed
-echo Failed $failed
-echo New Baselines $newBaseLines
+printf $TestSummaryFormat Passed $passed
+printf $TestSummaryFormat failed $failed
+printf $TestSummaryFormat 'New Baselines' $newBaseLines

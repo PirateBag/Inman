@@ -1,7 +1,6 @@
 package com.inman.business;
 
 import com.inman.entity.ActivityState;
-import com.inman.entity.Bom;
 import com.inman.entity.BomPresent;
 import com.inman.entity.Item;
 import com.inman.model.request.BomPresentSearchRequest;
@@ -25,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Optional;
 
 import static com.inman.controller.Bom.UNIQUE_INDEX_OR_PRIMARY_KEY_VIOLATION;
 
@@ -58,14 +56,15 @@ public class BomCrudService {
         int lineNumber = 0;
 
         for (BomPresent updatedBom : xBomPresentToUpdate) {
-            Optional<Bom> oldBom;
+            logger.info("Bom {},{} {}, {}", updatedBom.getParentId(), updatedBom.getActivityState(), updatedBom.getChildId(), updatedBom.getQuantityPer());
 
-            logger.info("Bom " + updatedBom.getParentId() + "," + updatedBom.getActivityState() + " " + updatedBom.getChildId() + ", " + updatedBom.getQuantityPer());
-
-            if (updatedBom.getActivityState() == ActivityState.CHANGE) {
-                change(updatedBom, bomResponse, lineNumber);
-            } else if (updatedBom.getActivityState() == ActivityState.INSERT) {
-                insert(updatedBom, bomResponse, lineNumber);
+            switch ( updatedBom.getActivityState() ) {
+                case CHANGE ->  change(updatedBom, bomResponse, lineNumber);
+                case INSERT ->  insert(updatedBom, bomResponse, lineNumber);
+                default ->  {
+                    logger.info( "Activity state " + updatedBom.getActivityState() + " not supported" );
+                    throw new RuntimeException( "Bom " + updatedBom.getParentId() + "," + updatedBom.getActivityState() );
+                }
             }
             lineNumber++;
         }
@@ -78,15 +77,6 @@ public class BomCrudService {
         return bomResponse;
     }
 
-    /**
-     * ,
-     * { "parentId" :  "1", "childId" :  "3", "quantityPer" :  "1.00", "activityState" :  "INSERT" },
-     * { "parentId" :  "1", "childId" :  "4", "quantityPer" :  "1.00", "activityState" :  "INSERT" },
-     * { "parentId" :  "1", "childId" :  "5", "quantityPer" :  "5.00", "activityState" :  "INSERT" }
-     *
-     * @param dataIntegrityViolationException
-     * @return
-     */
 
     private String generateErrorMessageFrom(DataIntegrityViolationException dataIntegrityViolationException) {
         var detailedMessage = dataIntegrityViolationException.getMessage();
@@ -96,19 +86,18 @@ public class BomCrudService {
         return detailedMessage;
     }
 
-    private BomResponse updateMaxDepthOf(BomPresent updatedBom, BomResponse bomResponse) {
+    private void updateMaxDepthOf(BomPresent updatedBom ) {
         Item component = itemRepository.findById(updatedBom.getChildId());
         Item parent = itemRepository.findById(updatedBom.getParentId());
 
         if (component.getMaxDepth() <= parent.getMaxDepth()) {
             int newMaxDepth = parent.getMaxDepth() + 1;
-            logger.info(component.getId() + " depth changing from " + component.getMaxDepth() + " to " + parent.getMaxDepth() + 1);
+            logger.info("{} depth changing from {} to {}" + 1, component.getId(), component.getMaxDepth(), parent.getMaxDepth());
             component.setMaxDepth(newMaxDepth);
             itemRepository.save(component);
-            return bomResponse;
+            return;
         }
-        logger.info(component.getId() + " depth not changing " + component.getMaxDepth() + " to " + parent.getMaxDepth() + 1);
-        return bomResponse;
+        logger.info("{} depth not changing {} to {}" + 1, component.getId(), component.getMaxDepth(), parent.getMaxDepth());
     }
 
 
@@ -160,16 +149,17 @@ public class BomCrudService {
         } else {
             logger.info("Bom " + updatedBom.getId() + " quantityPer was updated from " + oldBom.get().getQuantityPer() + " to " + updatedBom.getQuantityPer());
             oldBom.get().setQuantityPer(updatedBom.getQuantityPer());
-            bomResponse = updateMaxDepthOf(updatedBom, bomResponse);
+
             bomRepository.save(oldBom.get());
             var refreshedBom = bomPresentRepository.findById(updatedBom.getId());
             refreshedBom.setActivityState(ActivityState.CHANGE);
             bomResponse.getData().add(refreshedBom);
         }
+
+        updateMaxDepthOf(updatedBom );
     }
 
     private void insert(BomPresent updatedBom, BomResponse bomResponse, int lineNumber) {
-
         String message;
         com.inman.entity.Bom bomToBeInserted = new com.inman.entity.Bom(updatedBom.getParentId(), updatedBom.getChildId(), updatedBom.getQuantityPer());
         com.inman.entity.Bom insertedBom = null;
@@ -177,6 +167,7 @@ public class BomCrudService {
             bomLogicService.isItemIdInWhereUsed(updatedBom.getParentId(),
                     bomToBeInserted.getChildId());
             insertedBom = bomRepository.save(bomToBeInserted);
+            logger.info( "insertedBom" + insertedBom );
             var refreshedBom = bomPresentRepository.byParentIdChildId(insertedBom.getParentId(), bomToBeInserted.getChildId());
             if (refreshedBom == null) {
                 message = "Bom " + insertedBom.getId() + " unable to re-retrieve inserted BOM ";
@@ -187,6 +178,7 @@ public class BomCrudService {
 
             refreshedBom.setActivityState(ActivityState.INSERT);
             bomResponse.getData().add(refreshedBom);
+            updateMaxDepthOf(updatedBom );
 
         } catch (DataIntegrityViolationException dataIntegrityViolationException) {
             message = "Unable to insert " + bomToBeInserted.getParentId() + ":" +

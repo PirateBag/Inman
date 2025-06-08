@@ -12,7 +12,7 @@
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "W-002       Red Wagon Body                        0.00  MAN           0"
+    "message" : "W-002       Red Wagon Body                        0.00  MAN           1"
   }, {
     "id" : 0,
     "activityState" : "NONE",
@@ -24,7 +24,7 @@
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "W-005       Axle                                  0.00  PUR           0"
+    "message" : "W-005       Axle                                  0.00  MAN           0"
   }, {
     "id" : 0,
     "activityState" : "NONE",
@@ -56,7 +56,7 @@
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "W-013       Wagon Body                            2.25  PUR           0"
+    "message" : "W-013       Wagon Body                            2.25  PUR           2"
   }, {
     "id" : 0,
     "activityState" : "NONE",
