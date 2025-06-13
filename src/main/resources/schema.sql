@@ -29,3 +29,13 @@ create view if not exists  bom_Present as
     c.unit_cost unit_cost, c.unit_cost * b.quantity_per extended_cost
     from item p, item c, bom b where b.parent_id = p.id and b.child_id = c.id;
 
+CREATE TABLE IF NOT EXISTS orderlineItem (
+    id int auto_increment,
+    start_date varchar( 10 ),
+    complete_date varchar( 10 ),
+    item_id int,
+    order_state varchar(12),
+    debit_credit_indicator varchar(12),
+    quantity_complete number( 12,2) default 0.0,
+    quantity_ordered number (12,2) default 0.0,
+    CONSTRAINT PK_ORDER_LINE_ITEM PRIMARY KEY ( ID ) );
