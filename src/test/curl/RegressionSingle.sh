@@ -1,5 +1,5 @@
 #!/bin/bash
-
+This is not used
 declare -- test=$1
 
 declare -a tests=( "ItemDeleteSilentPositive" "BomRecursionCheckPositive" "BomRecursionCheckNegative" "ItemExplosionReport" "ItemPickList" "ItemPickListForBom" "ItemPickListForOne" )
