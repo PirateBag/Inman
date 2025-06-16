@@ -1,14 +1,26 @@
 package com.inman.business;
 
 import com.inman.controller.OrderLineItemController;
+import com.inman.controller.Utility;
+import com.inman.entity.ActivityState;
+import com.inman.entity.Item;
 import com.inman.entity.OrderLineItem;
 import com.inman.entity.Text;
-import com.inman.model.response.TextResponse;
+import com.inman.model.request.CrudBatch;
+import com.inman.model.request.ItemCrudBatch;
+import com.inman.model.request.OrderLineItemRequest;
+import com.inman.model.response.*;
+import com.inman.model.rest.ErrorLine;
+import com.inman.model.rest.ItemUpdateRequest;
+import com.inman.repository.ItemRepository;
 import com.inman.repository.OrderLineItemRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.inman.controller.OrderLineItemController.OrderLineItem_AllOrders;
@@ -16,11 +28,22 @@ import static com.inman.controller.OrderLineItemController.OrderLineItem_AllOrde
 @Service
 public class OrderLineItemService {
     private static final Logger logger = LoggerFactory.getLogger(OrderLineItemService.class);
+    private final ItemRepository itemRepository;
 
     OrderLineItemRepository orderLineItemRepository;
 
-    public OrderLineItemService(OrderLineItemRepository orderLineItemRepository) {
+    private void outputInfo(String message, ResponsePackage<OrderLineItem> responsePackage ) {
+        logger.info(message);
+        responsePackage.getErrors().add( new ErrorLine(1, message) );
+    }
+    private void outputError(String message, ResponsePackage<OrderLineItem> responsePackage ) {
+        logger.info(message);
+        responsePackage.getErrors().add( new ErrorLine(1, message) );
+    }
+
+    public OrderLineItemService(OrderLineItemRepository orderLineItemRepository, ItemRepository itemRepository) {
         this.orderLineItemRepository = orderLineItemRepository;
+        this.itemRepository = itemRepository;
     }
 
 //    private String generateErrorMessageFrom(DataIntegrityViolationException dataIntegrityViolationException) {
@@ -46,37 +69,7 @@ public class OrderLineItemService {
 //    }
 //
 //
-//    @CrossOrigin
-//    @RequestMapping(value = BomPresentSearchRequest.all, method = RequestMethod.POST)
-//    public ResponseEntity<?> bomPresentFindAll(@RequestBody BomPresentSearchRequest xBomPresentSearchRequest) {
-//        BomPresent[] boms;
-//        if (xBomPresentSearchRequest.getIdToSearchFor() == 0) {
-//            boms = bomPresentRepository.findAll().toArray(new BomPresent[0]);
-//        } else {
-//            BomPresent bom = bomPresentRepository.findById(xBomPresentSearchRequest.getIdToSearchFor());
-//            boms = new BomPresent[1];
-//            boms[0] = bom;
-//        }
-//
-//        BomResponse responsePackage = new BomResponse();
-//        responsePackage.setData((ArrayList<BomPresent>) Arrays.asList(boms));
-//
-//        return ResponseEntity.ok().body(responsePackage);
-//    }
-//
-//
-//	/*
-//	@CrossOrigin
-//	@RequestMapping( value = BomUpdate.INVALID_COMPONENTS_URL, method=RequestMethod.POST )
-//	public ResponseEntity<?> bomFindInvalidComponents( @RequestBody BomPresent[] proposedComponents  )
-//	{
-//		ResponsePackage responsePackage = bomNavigation.isItemIdInWhereUsed( proposedComponents );
-//
-//		return ResponseEntity.ok().body( responsePackage );
-//	}
-//	*/
-//
-//
+////
 //    private void change(BomPresent updatedBom, BomResponse bomResponse, int lineNumber) {
 //        var oldBom = bomRepository.findById(updatedBom.getId());
 //        String message = "";
@@ -104,35 +97,77 @@ public class OrderLineItemService {
 //        updateMaxDepthOf(updatedBom );
 //    }
 //
-//    private void insert(BomPresent updatedBom, BomResponse bomResponse, int lineNumber) {
-//        String message;
-//        com.inman.entity.Bom bomToBeInserted = new com.inman.entity.Bom(updatedBom.getParentId(), updatedBom.getChildId(), updatedBom.getQuantityPer());
-//        com.inman.entity.Bom insertedBom = null;
-//        try {
-//            bomLogicService.isItemIdInWhereUsed(updatedBom.getParentId(),
-//                    bomToBeInserted.getChildId());
-//            insertedBom = bomRepository.save(bomToBeInserted);
-//            logger.info( "insertedBom" + insertedBom );
-//            var refreshedBom = bomPresentRepository.byParentIdChildId(insertedBom.getParentId(), bomToBeInserted.getChildId());
-//            if (refreshedBom == null) {
-//                message = "Bom " + insertedBom.getId() + " unable to re-retrieve inserted BOM ";
-//                logger.error(message);
-//                bomResponse.addError(new ErrorLine(lineNumber, message));
-//                return;
-//            }
-//
-//            refreshedBom.setActivityState(ActivityState.INSERT);
-//            bomResponse.getData().add(refreshedBom);
-//            updateMaxDepthOf(updatedBom );
-//
-//        } catch (DataIntegrityViolationException dataIntegrityViolationException) {
-//            message = "Unable to insert " + bomToBeInserted.getParentId() + ":" +
-//                    bomToBeInserted.getChildId() + " due to " +
-//                    generateErrorMessageFrom(dataIntegrityViolationException);
-//            logger.error(message);
-//            bomResponse.addError(new ErrorLine(lineNumber, message));
-//        }
-//    }
+    private void insert( OrderLineItem orderLineItem,  ResponsePackage<OrderLineItem> oliResponse, int lineNumber) {
+        String message;
+        OrderLineItem updatedOrderLineItem;
+        try {
+            Item item = itemRepository.findById( orderLineItem.getItemId() );
+            if ( validateOrderLineItemForMOInsertion(orderLineItem, oliResponse, item) > 0 ) {
+                outputError( "Validation on " + orderLineItem + " failed", oliResponse );
+                throw new RuntimeException( "OrderLineItem validation failed with check logs" );
+            };
+
+            updatedOrderLineItem = orderLineItemRepository.save(orderLineItem);
+            logger.info( "inserted " + updatedOrderLineItem );
+            oliResponse.getData().add( updatedOrderLineItem );
+        } catch (DataIntegrityViolationException dataIntegrityViolationException) {
+            message = "Unable to insert " + orderLineItem + ":" +
+                    Utility.generateErrorMessageFrom(dataIntegrityViolationException);
+            outputError( message, oliResponse );
+        }
+    }
+
+    private int validateOrderLineItemForMOInsertion(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse, Item item) {
+        int numberOfMessages = 0;
+        if ( item == null ) {
+            outputInfo( "Item " + orderLineItem.getItemId() + " cannot be found", oliResponse);
+            numberOfMessages++;
+        }
+
+        if ( orderLineItem.getParentOliId() != 0 ) {
+            outputInfo( "Order has a parent item:  " + orderLineItem, oliResponse);
+            numberOfMessages++;
+        }
+
+        if ( item.getSourcing().compareTo( Item.SOURCE_MAN ) != 0  ) {
+            outputInfo("Item is is not MANufactured: " + item, oliResponse);
+            numberOfMessages++;
+        }
+
+        if ( orderLineItem.getQuantityOrdered() < 0.0 ) {
+            outputInfo("Order Quantity " + orderLineItem + " must be greater than 0.  ", oliResponse);
+            numberOfMessages++;
+        }
+
+        if ( orderLineItem.getQuantityAssigned() != 0.0 ) {
+            outputInfo("Quantity Assigned must be zero only at creation. ", oliResponse);
+            numberOfMessages++;
+        }
+        return numberOfMessages;
+    }
+
+    @Transactional
+    public ResponsePackage<OrderLineItem> applyCrud( OrderLineItemRequest crudBatch ) {
+        ResponsePackage<OrderLineItem> responsePackage = new ResponsePackage<>();
+
+        for ( OrderLineItem orderLineItem : crudBatch.rows() ) {
+
+            logger.info("{} on {}", orderLineItem.getActivityState(), orderLineItem);
+
+            if (orderLineItem.getActivityState() == ActivityState.INSERT) {
+                insert (orderLineItem, responsePackage, 1 );
+            }
+            /*else if (itemCrudToBeCrud.getActivityState() == ActivityState.DELETE ||
+                    itemCrudToBeCrud.getActivityState() == ActivityState.DELETE_SILENT) {
+                deleteItem(itemCrudToBeCrud, itemCrudBatchResponse);
+            } else if ( itemCrudToBeCrud.getActivityState() == ActivityState.CHANGE ) {
+                changeItem(itemCrudToBeCrud, itemCrudBatchResponse);
+            }  */ else {
+                logger.info("{} was ignored because of unknown ActivityState", orderLineItem );
+            }
+        }
+        return responsePackage;
+    }
 
     public TextResponse orderReport( int orderId ) {
         if (orderId != OrderLineItem_AllOrders) {

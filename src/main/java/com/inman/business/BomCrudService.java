@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static com.inman.controller.Bom.UNIQUE_INDEX_OR_PRIMARY_KEY_VIOLATION;
+import static com.inman.controller.Utility.generateErrorMessageFrom;
 
 @Service
 public class BomCrudService {
@@ -78,13 +79,7 @@ public class BomCrudService {
     }
 
 
-    private String generateErrorMessageFrom(DataIntegrityViolationException dataIntegrityViolationException) {
-        var detailedMessage = dataIntegrityViolationException.getMessage();
-        if (detailedMessage.contains(UNIQUE_INDEX_OR_PRIMARY_KEY_VIOLATION)) {
-            return UNIQUE_INDEX_OR_PRIMARY_KEY_VIOLATION;
-        }
-        return detailedMessage;
-    }
+
 
     private void updateMaxDepthOf(BomPresent updatedBom ) {
         Item component = itemRepository.findById(updatedBom.getChildId());

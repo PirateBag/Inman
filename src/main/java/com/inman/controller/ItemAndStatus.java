@@ -217,6 +217,8 @@ public class ItemAndStatus {
 		rValue.getData().add( new Text( "Items deleted" ) );
 		ddlRepository.resetIdForTable( "Bom" );
 		rValue.getData().add( new Text( "BOMs deleted" ) );
+		ddlRepository.resetIdForTable( "order_line_item" );
+		rValue.getData().add( new Text( "Order Line Items deleted" ) );
 		return rValue;
 	}
 }

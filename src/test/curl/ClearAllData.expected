@@ -13,5 +13,9 @@
     "id" : 0,
     "activityState" : "NONE",
     "message" : "BOMs deleted"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "Order Line Items deleted"
   } ]
 }

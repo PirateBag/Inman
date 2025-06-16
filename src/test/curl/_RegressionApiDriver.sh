@@ -57,6 +57,11 @@ declare -a tests=(
 #Add the missing bill of material for W-001
   "BomCrudAddMissing;bom/crud"
   "ItemExplosionComplete;itemReport/explosion"
+
+  # Generate an empty order line item report.
+  "oliRepAll;oli/showAll"
+
+  "oliInsertOnly;oli/crud"
    )
 #   "stopTesting" \
 declare -i passed=0
@@ -108,7 +113,7 @@ do
   testName=${ColumnsOfTest[0]}
   testService=${ColumnsOfTest[1]}
 
-  # echo ${curlDriver} ${testName} ${testService}
+  echo ${curlDriver} ${testName} ${testService}
 
   if [[ "$testName" == "$stopTesting" ]]; then
       break;
