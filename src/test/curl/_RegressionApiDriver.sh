@@ -61,7 +61,14 @@ declare -a tests=(
   # Generate an empty order line item report.
   "oliRepAll;oli/showAll"
 
+# Insert orders for W-001 and W-002.
   "oliInsertOnly;oli/crud"
+
+  "oliAfter001and002;oli/showAll"
+
+  #Delete order 1 (W-001).
+  "oliDelete01;oli/crud"
+
    )
 #   "stopTesting" \
 declare -i passed=0
@@ -113,7 +120,7 @@ do
   testName=${ColumnsOfTest[0]}
   testService=${ColumnsOfTest[1]}
 
-  echo ${curlDriver} ${testName} ${testService}
+  #echo ${curlDriver} ${testName} ${testService}
 
   if [[ "$testName" == "$stopTesting" ]]; then
       break;
@@ -131,6 +138,7 @@ do
       passed+=1
     else
       printf  $TestResultFormat "$test" "failed"
+      echo ${curlDriver} ${testName} ${testService}
       echo -e "${RED}diff $testName.actual $testName.expected${NC}"
       cat $testName.actual
       failed+=1

@@ -149,11 +149,9 @@ public class OrderLineItemController {
     @RequestMapping(value = OrderLineItem_ShowAll, method = RequestMethod.POST,
             consumes = "application/json",
             produces = "application/json" )
-    public ResponseEntity<?> OrderLineItem_ShowAll( ) {
+    public ResponseEntity<?> OrderLineItem_ShowAll( @RequestBody GenericSingleId genericSingleId  ) {
         TextResponse textResponse = new TextResponse();
-        GenericSingleId gsi = new GenericSingleId();
-        gsi.setIdToSearchFor(1L);
-        if ( gsi.getIdToSearchFor() == OrderLineItem_AllOrders) {
+        if ( genericSingleId.getIdToSearchFor() == OrderLineItem_AllOrders) {
             textResponse = orderLineItemService.orderReport( OrderLineItem_AllOrders  );
         }
 

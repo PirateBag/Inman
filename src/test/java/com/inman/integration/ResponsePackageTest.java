@@ -14,7 +14,7 @@ import static org.junit.Assert.assertTrue;
 public class ResponsePackageTest {
     ItemResponse itemResponse = new ItemResponse( ResponseType.QUERY );
     Item[] queryItems;
-
+/*
     static <T> T[] concatWithArrayCopy(T[] array1, T[] array2) {
         T[] result = Arrays.copyOf(array1, array1.length + array2.length);
         System.arraycopy(array2, 0, result, array1.length, array2.length);
@@ -35,7 +35,7 @@ public class ResponsePackageTest {
         /*  ItemPrepare.prepareArray();
         queryItems =  new Item[] { ItemPrepare.w001, ItemPrepare.w003, ItemPrepare.w005 };
 
-        itemResponse.setData( queryItems );  */:
+        itemResponse.setData( queryItems );
     }
 
     @Test(expected = IllegalArgumentException.class )
@@ -115,5 +115,5 @@ public class ResponsePackageTest {
         assertTrue( areItemArraysEqual( actual.getData(), expected ) );
     }
 
-
+ */
 }

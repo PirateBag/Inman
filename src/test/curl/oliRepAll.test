@@ -5,4 +5,4 @@ No order line items have been created
 Exected output:
 Empty report but no failures.
 ===== JSON ====
-{ "idToSearchFor" : "1" }
+{ "idToSearchFor" : "-1" }
