@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.inman.controller.OrderLineItemController.OrderLineItem_AllOrders;
 
@@ -117,6 +118,29 @@ public class OrderLineItemService {
         }
     }
 
+    private void delete( OrderLineItem orderLineItem,  ResponsePackage<OrderLineItem> oliResponse ) {
+        String message;
+        try {
+            Optional<OrderLineItem> orderLineItemFromRepository = orderLineItemRepository.findById( orderLineItem.getId() );
+
+            if ( orderLineItemFromRepository.isPresent() ) {
+                orderLineItemRepository.delete( orderLineItemFromRepository.get() );
+            } else {
+                outputError( "Validation on " + orderLineItem + " failed", oliResponse );
+                throw new RuntimeException( "OrderLineItem validation failed with check logs" );
+            }
+
+            logger.info(  orderLineItem.getActivityState() + " " + orderLineItemFromRepository );
+            orderLineItemFromRepository.get().setActivityState( orderLineItem.getActivityState() );
+            oliResponse.getData().add( orderLineItemFromRepository.get() );
+        } catch (DataIntegrityViolationException dataIntegrityViolationException) {
+            message = "Unable to " + orderLineItem.getActivityState() + " " + orderLineItem + ":" +
+                    Utility.generateErrorMessageFrom(dataIntegrityViolationException);
+            outputError( message, oliResponse );
+        }
+    }
+
+
     private int validateOrderLineItemForMOInsertion(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse, Item item) {
         int numberOfMessages = 0;
         if ( item == null ) {
@@ -156,13 +180,12 @@ public class OrderLineItemService {
 
             if (orderLineItem.getActivityState() == ActivityState.INSERT) {
                 insert (orderLineItem, responsePackage, 1 );
-            }
-            /*else if (itemCrudToBeCrud.getActivityState() == ActivityState.DELETE ||
-                    itemCrudToBeCrud.getActivityState() == ActivityState.DELETE_SILENT) {
-                deleteItem(itemCrudToBeCrud, itemCrudBatchResponse);
-            } else if ( itemCrudToBeCrud.getActivityState() == ActivityState.CHANGE ) {
-                changeItem(itemCrudToBeCrud, itemCrudBatchResponse);
-            }  */ else {
+            } else if ( orderLineItem.getActivityState() == ActivityState.DELETE ||
+                    orderLineItem.getActivityState() == ActivityState.DELETE_SILENT) {
+                delete( orderLineItem, responsePackage);
+            } /*  else if ( orderLineItem.getActivityState() == ActivityState.CHANGE ) {
+                changeItem(orderLineItem, responsePackage);
+            }  */  else {
                 logger.info("{} was ignored because of unknown ActivityState", orderLineItem );
             }
         }
