@@ -64,10 +64,11 @@ declare -a tests=(
 # Insert orders for W-001 and W-002.
   "oliInsertOnly;oli/crud"
 
+#Verify the items were inserted.
   "oliAfter001and002;oli/showAll"
 
   #Delete order 1 (W-001).
-  "oliDelete01;oli/crud"
+  "oliDelete;oli/crud"
 
    )
 #   "stopTesting" \
@@ -112,6 +113,8 @@ else
      failed+=1
   fi
 fi
+
+rm *.actual
 
 for test in ${tests[@]}
 do
