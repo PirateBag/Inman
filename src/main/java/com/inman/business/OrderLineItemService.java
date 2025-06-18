@@ -2,10 +2,7 @@ package com.inman.business;
 
 import com.inman.controller.OrderLineItemController;
 import com.inman.controller.Utility;
-import com.inman.entity.ActivityState;
-import com.inman.entity.Item;
-import com.inman.entity.OrderLineItem;
-import com.inman.entity.Text;
+import com.inman.entity.*;
 import com.inman.model.request.CrudBatch;
 import com.inman.model.request.ItemCrudBatch;
 import com.inman.model.request.OrderLineItemRequest;
@@ -22,9 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static com.inman.controller.OrderLineItemController.OrderLineItem_AllOrders;
 import static com.inman.controller.Utility.DATE_FORMATTER;
@@ -109,6 +104,12 @@ public class OrderLineItemService {
             if (orderLineItem.getItemId() != orderLineItemFromRepository.get().getItemId()) {
                 outputError("Item Changed in order.  Try delete/insert instead", oliResponse);
             }
+
+            SortedMap<String,String> fieldsToUpdate =
+                    createMapFromOldAndNew( OrderLineItem orderLineItemFromRepostory,
+                    OrderLineItem orderLineItem, oliResponse );
+            logger.info( "update string is: " + fieldsToUpdate );
+
             orderLineItemFromRepository.get().setQuantityOrdered(orderLineItem.getQuantityOrdered() );
             logger.info( "Just Before:  " + orderLineItem.getActivityState() + " " + orderLineItemFromRepository.get());
             orderLineItemRepository.save(orderLineItemFromRepository.get());
@@ -155,6 +156,35 @@ public class OrderLineItemService {
         return numberOfMessages;
     }
 
+    private Map<String,String> createMapFromOldAndNew( OrderLineItem oldOli,
+            OrderLineItem newOli, ResponsePackage<OrderLineItem> oliResponse  ) {
+//        //	0 when an MO Order header.  Non 0 when a detail of either MO or PO.
+//        int parentOliId;
+//        OrderState orderState = OrderState.PLANNED;
+//        DebitCreditIndicator debitCreditIndicator = com.inman.entity.DebitCreditIndicator.ADDS_TO_BALANCE;
+        SortedMap<String,String> rValue = new TreeMap<String,String>();
+
+        if ( oldOli.getId() != newOli.getId() ) {
+            outputInfo( "Order Id is different",  oliResponse );
+        }
+        if ( oldOli.getItemId() != newOli.getItemId() ) {
+            outputInfo( "Item Ids are not the same. ", oliResponse );
+        }
+        if ( oldOli.getQuantityOrdered() != newOli.getQuantityOrdered() ) {
+            rValue.put( "QuantityOrders", String.valueOf( newOli.getQuantityOrdered() ) );
+        }
+        if ( oldOli.getQuantityAssigned() != newOli.getQuantityAssigned() ) {
+            rValue.put( "QuantityAssigned", String.valueOf( newOli.getQuantityAssigned() ) );
+        }
+        if ( oldOli.getStartDate().compareTo( newOli.getStartDate() ) != 0 ) {
+            rValue.put( "StartDate", newOli.getStartDate() );
+        }
+        if ( oldOli.getCompleteDate().compareTo( newOli.getCompleteDate() ) != 0 ) {
+            rValue.put( "CompletedDate", newOli.getCompleteDate() );
+        }
+        return rValue;
+    };
+
     @Transactional
     public ResponsePackage<OrderLineItem> applyCrud(OrderLineItemRequest crudBatch) {
         ResponsePackage<OrderLineItem> responsePackage = new ResponsePackage<>();
@@ -162,6 +192,7 @@ public class OrderLineItemService {
         for (OrderLineItem orderLineItem : crudBatch.rows()) {
 
             logger.info("{} on {}", orderLineItem.getActivityState(), orderLineItem);
+
 
             if (orderLineItem.getActivityState() == ActivityState.INSERT) {
                 insert(orderLineItem, responsePackage, 1);

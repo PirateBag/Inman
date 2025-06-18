@@ -2,7 +2,7 @@ Generate a report of all order line items.
 Setup:
 No order line items have been created
 
-Exected output:
+Expected output:
 Empty report but no failures.
 ===== JSON ====
 { "idToSearchFor" : "-1" }

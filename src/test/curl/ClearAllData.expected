@@ -8,14 +8,22 @@
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "Items deleted"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
     "message" : "BOMs deleted"
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "Order Line Items deleted"
+    "message" : "OrdereLineItems deleted"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "Items PK Reset"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "BOMs PK Reset"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "Order Line Items PK reset"
   } ]
 }

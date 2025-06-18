@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Map;
+
 @Repository
 public class DdlRepository {
     static Logger logger = LoggerFactory.getLogger("controller: " + DdlRepository.class);
@@ -19,5 +21,15 @@ public class DdlRepository {
         String sqlCommand = "ALTER TABLE %s ALTER COLUMN id RESTART WITH 1".formatted(tableName);
         logger.info(sqlCommand);
         entityManager.createNativeQuery(sqlCommand).executeUpdate();
+    }
+    public static String createUpdateByRowIdStatemet( String tableName, int rowId, Map<String,String> fieldsToUpdate ) {
+        StringBuilder sqlCommand = new StringBuilder( "UPDATE " + tableName + " SET "  );
+        int numberOfKeys = 0;
+        for ( String key : fieldsToUpdate.keySet()) {
+            sqlCommand.append( key + "=" + fieldsToUpdate.get(key) + (numberOfKeys < fieldsToUpdate.size() ? "," : "" ) );
+        }
+        sqlCommand.append( "WHERE id=" + rowId );
+        logger.info(sqlCommand.toString());
+        return sqlCommand.toString();
     }
 }

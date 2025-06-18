@@ -59,7 +59,7 @@ declare -a tests=(
   "ItemExplosionComplete;itemReport/explosion"
 
   # Generate an empty order line item report.
-  "oliRepAll;oli/showAll"
+  "oliEmpty;oli/showAll"
 
 # Insert orders for W-001 and W-002.
   "oliInsertOnly;oli/crud"
@@ -70,6 +70,11 @@ declare -a tests=(
   #Delete order 1 (W-001).
   "oliDelete;oli/crud"
 
+#Make sure W-001 is really dead...
+  "oliAfter001Delete;oli/showAll"
+
+#Change the quantity ordered of order2 to 5.
+  "oliCrudChange002;oli/crud"
    )
 #   "stopTesting" \
 declare -i passed=0

@@ -29,8 +29,6 @@ public class OrderLineItem extends EntityMaster {
 	//	0 when an MO Order header.  Non 0 when a detail of either MO or PO.
 	int parentOliId;
 	OrderState orderState = OrderState.PLANNED;
-
-
 	DebitCreditIndicator debitCreditIndicator = com.inman.entity.DebitCreditIndicator.ADDS_TO_BALANCE;
 
 	public OrderLineItem() {
