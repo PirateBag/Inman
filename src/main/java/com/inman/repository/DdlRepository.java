@@ -22,13 +22,13 @@ public class DdlRepository {
         logger.info(sqlCommand);
         entityManager.createNativeQuery(sqlCommand).executeUpdate();
     }
-    public static String createUpdateByRowIdStatemet( String tableName, int rowId, Map<String,String> fieldsToUpdate ) {
+    public static String createUpdateByRowIdStatement( String tableName, int rowId, Map<String,String> fieldsToUpdate ) {
         StringBuilder sqlCommand = new StringBuilder( "UPDATE " + tableName + " SET "  );
         int numberOfKeys = 0;
         for ( String key : fieldsToUpdate.keySet()) {
-            sqlCommand.append( key + "=" + fieldsToUpdate.get(key) + (numberOfKeys < fieldsToUpdate.size() ? "," : "" ) );
+            sqlCommand.append( key + "=" + fieldsToUpdate.get(key) + (++numberOfKeys < fieldsToUpdate.size() ? "," : " " ) );
         }
-        sqlCommand.append( "WHERE id=" + rowId );
+        sqlCommand.append( " WHERE id=" + rowId );
         logger.info(sqlCommand.toString());
         return sqlCommand.toString();
     }

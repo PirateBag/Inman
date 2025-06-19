@@ -23,6 +23,8 @@ import java.util.*;
 
 import static com.inman.controller.OrderLineItemController.OrderLineItem_AllOrders;
 import static com.inman.controller.Utility.DATE_FORMATTER;
+import static com.inman.controller.Utility.normalize;
+import static com.inman.repository.DdlRepository.createUpdateByRowIdStatement;
 import static java.time.format.DateTimeFormatter.*;
 
 @Service
@@ -107,9 +109,11 @@ public class OrderLineItemService {
 
             Map<String,String> fieldsToUpdate =
                     createMapFromOldAndNew( orderLineItemFromRepository.get(), orderLineItem, oliResponse );
-            logger.info( "update string is: " + fieldsToUpdate );
+            logger.info( "Map is: " + fieldsToUpdate );
 
-            orderLineItemFromRepository.get().setQuantityOrdered(orderLineItem.getQuantityOrdered() );
+            var SqlString = createUpdateByRowIdStatement( "OrderLineItem", 1, fieldsToUpdate );
+            logger.info( "Update Statement: " + SqlString );
+
             logger.info( "Just Before:  " + orderLineItem.getActivityState() + " " + orderLineItemFromRepository.get());
             orderLineItemRepository.save(orderLineItemFromRepository.get());
             oliResponse.getData().add(orderLineItem);
@@ -151,7 +155,6 @@ public class OrderLineItemService {
             numberOfMessages++;
         }
 
-
         return numberOfMessages;
     }
 
@@ -175,11 +178,11 @@ public class OrderLineItemService {
         if ( oldOli.getQuantityAssigned() != newOli.getQuantityAssigned() ) {
             rValue.put( "QuantityAssigned", String.valueOf( newOli.getQuantityAssigned() ) );
         }
-        if ( oldOli.getStartDate().compareTo( newOli.getStartDate() ) != 0 ) {
-            rValue.put( "StartDate", newOli.getStartDate() );
+        if ( normalize( oldOli.getStartDate()).compareTo( normalize( newOli.getStartDate() ) ) != 0 ) {
+            rValue.put( "StartDate", "'" + newOli.getStartDate() + "'");
         }
-        if ( oldOli.getCompleteDate().compareTo( newOli.getCompleteDate() ) != 0 ) {
-            rValue.put( "CompletedDate", newOli.getCompleteDate() );
+        if ( normalize( oldOli.getCompleteDate()).compareTo( normalize(newOli.getCompleteDate()) ) != 0 ) {
+            rValue.put( "CompletedDate", "'" + newOli.getCompleteDate() + "'" );
         }
         return rValue;
     };

@@ -10,6 +10,10 @@ public class Utility {
     public static String _DATE_FORMAT = "yyyy-MMdd";
     public static DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern( _DATE_FORMAT ); // Define the format
 
+    public static String normalize( String str ) {
+        if ( str == null ) { return ""; };
+        return str;
+    }
 
     public static String generateErrorMessageFrom(DataIntegrityViolationException dataIntegrityViolationException) {
         var detailedMessage = dataIntegrityViolationException.getMessage();
