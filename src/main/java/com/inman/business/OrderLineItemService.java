@@ -105,9 +105,8 @@ public class OrderLineItemService {
                 outputError("Item Changed in order.  Try delete/insert instead", oliResponse);
             }
 
-            SortedMap<String,String> fieldsToUpdate =
-                    createMapFromOldAndNew( OrderLineItem orderLineItemFromRepostory,
-                    OrderLineItem orderLineItem, oliResponse );
+            Map<String,String> fieldsToUpdate =
+                    createMapFromOldAndNew( orderLineItemFromRepository.get(), orderLineItem, oliResponse );
             logger.info( "update string is: " + fieldsToUpdate );
 
             orderLineItemFromRepository.get().setQuantityOrdered(orderLineItem.getQuantityOrdered() );
