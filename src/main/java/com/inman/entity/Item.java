@@ -1,5 +1,6 @@
 package com.inman.entity;
 
+import com.inman.controller.Utility;
 import com.inman.model.rest.ItemAddRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -83,8 +84,8 @@ public class  Item extends EntityMaster {
 		this.unitCost = unitCost;
 	}
 
-	public String getSourcing() {
-		return sourcing;
+	public String getSourcing( ) {
+		return Utility.normalize( sourcing );
 	}
 	public void setSourcing( String xSourcing ) {
 		this.sourcing = xSourcing;

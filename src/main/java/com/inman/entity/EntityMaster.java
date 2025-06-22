@@ -15,7 +15,7 @@ public abstract class EntityMaster {
     public EntityMaster() {
     }
 
-    public void setId(Long id) {
+    public void setId( long id) {
         this.id = id;
     }
 

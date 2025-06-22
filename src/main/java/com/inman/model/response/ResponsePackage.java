@@ -1,5 +1,6 @@
 package com.inman.model.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inman.entity.EntityMaster;
 import com.inman.model.rest.ErrorLine;
 
@@ -112,4 +113,13 @@ public class ResponsePackage<T> {
         return data;
     }
     public void setData(ArrayList<T> data) { this.data = data;  }
+
+    @JsonIgnore
+    public String getErrorsTextAsString( ) {
+        StringBuilder responseMessages = new StringBuilder();
+        for (ErrorLine errorLine : this.errors) {
+            responseMessages.append(String.format( "%-3d  %s\n", errorLine.getKey(), errorLine.getMessage()));
+        }
+        return responseMessages.toString();
+    }
     }

@@ -1,143 +1,124 @@
 package com.inman.integration;
 
 import com.inman.business.EntityUtility;
+import com.inman.business.OrderLineItemService;
 import com.inman.entity.*;
+import com.inman.model.response.ResponsePackage;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class SqlBuilderTest {
 
-    OrderLineItem oldValue = new OrderLineItem();
-    OrderLineItem newValue = new OrderLineItem();
-
-    @Before
-    public prepare() {
+    static OrderLineItem oldValue = new OrderLineItem();
+    static OrderLineItem newValue = new OrderLineItem();
+    static ResponsePackage<OrderLineItem> responsePackage;
+    static OrderLineItemService orderLineItemService;
+    static Item testItem;
+    @BeforeClass
+    public static void prepare() {
         oldValue.setItemId( 17 );
         oldValue.setQuantityOrdered( 10 );
         oldValue.setQuantityAssigned( 0 );
-        oldValue.getCompleteDate( "" );
+        oldValue.setCompleteDate( "" );
         oldValue.setStartDate( "2025-0620" );
         oldValue.setParentOliId( 0 );
         oldValue.setDebitCreditIndicator( DebitCreditIndicator.ADDS_TO_BALANCE );
         oldValue.setActivityState( ActivityState.CHANGE );
+        orderLineItemService= new OrderLineItemService();
+
+         testItem = new Item();
+        responsePackage = new ResponsePackage<>();
     }
 
     @Test
-    public void noData() {
-        EntityMaster[] expected = new Bom[0], actual;
+    public void associatedItemIsNull() {
+        int numberOfMessages = orderLineItemService.validateOrderLineItemForMOInsertion( oldValue, responsePackage, null );
 
-        actual = EntityUtility.mergeUpdate(emptybaseline, emptyChanges);
-        assertTrue(EntityUtility.isEqual(emptybaseline, actual));
+        responsePackage.getErrors();
+        int expectedNumberOfMessages = 1;
+        assertEquals(expectedNumberOfMessages, numberOfMessages);
+        String expectedErrorText = "1    Order references Item 17 that cannot be found\n";
+        assertEquals( expectedErrorText, responsePackage.getErrorsTextAsString());
+
     }
 
     @Test
-    public void baselineWithDataEmptyChanges() {
+    public void orderHasAnUnwantedParentAndNotMAN() {
+        oldValue.setParentOliId( 86 );
+        int numberOfMessages = orderLineItemService.validateOrderLineItemForMOInsertion( oldValue, responsePackage, testItem );
 
-        EntityMaster[] baseLineWith1 = new Bom[1];
-        baseLineWith1[0] = new Bom( 1L, 2L, 1.0);
-        baseLineWith1[0].setId( 1L );
-        EntityMaster[] expected = baseLineWith1;
+        responsePackage.getErrors();
+        int expectedNumberOfMessages = 2;
+        assertEquals(expectedNumberOfMessages, numberOfMessages);
+        String expectedErrorText = """
+        1    Order has a parent item:     0   17      86  10.00   0.00  2025-0620            PLANNED ADDS_TO_BALANCE CHANGE
+        1    Item is is not MANufactured: 0000: null,null     0.00 null   0   0
+        """;
 
-        EntityMaster[] actual = EntityUtility.mergeUpdate(baseLineWith1, emptyChanges);
-        assertTrue( EntityUtility.isEqual( expected, actual));
+        assertEquals( expectedErrorText, responsePackage.getErrorsTextAsString());
     }
 
     @Test
-    public void baselineEmptyWithInserts() {
+    public void positiveOrderAmountAndZeroOrderAssigned() {
+        oldValue.setQuantityOrdered( 0 );
+        oldValue.setQuantityAssigned( 1 );
+        testItem.setSourcing( Item.SOURCE_MAN );
+        int numberOfMessages = orderLineItemService.validateOrderLineItemForMOInsertion( oldValue, responsePackage, testItem );
 
-        EntityMaster[] inserts = new Bom[1];
-        inserts[0] = new Bom( 1L, 2L, 1.0);
-        inserts[0].setId( 1L );
-        inserts[0].setActivityState( ActivityState.INSERT );
+        int expectedNumberOfMessages = 2;
+        assertEquals(expectedNumberOfMessages, numberOfMessages);
+        String expectedErrorText = """
+        1    Order Quantity    0   17       0   0.00   1.00  2025-0620            PLANNED ADDS_TO_BALANCE CHANGE must be greater than 0.
+        1    Quantity Assigned must be zero. 
+        """;
 
-        EntityMaster[] expected = new Bom[1];
-        System.arraycopy( inserts, 0, expected, 0, inserts.length );
-
-        EntityMaster[] actual = EntityUtility.mergeUpdate( emptybaseline, inserts );
-        assertTrue( EntityUtility.isEqual( expected, actual));
-        assertTrue( EntityUtility.allAreActivityNone( actual ));
+        assertEquals( expectedErrorText, responsePackage.getErrorsTextAsString());
     }
 
     @Test
-    public void NonEmptyBaselineWithInserts() {
+    public void noErrors() {
+        oldValue.setQuantityOrdered( 1 );
+        oldValue.setQuantityAssigned( 0 );
+        testItem.setSourcing( Item.SOURCE_MAN );
+        int numberOfMessages = orderLineItemService.validateOrderLineItemForMOInsertion( oldValue, responsePackage, testItem );
 
-        EntityMaster[] nonEmptyBaseLine = new Bom[2];
-        nonEmptyBaseLine[ 0 ] = new Bom( 1, 1, 2, 1.0, ActivityState.NONE);
-        nonEmptyBaseLine[ 1 ] = new Bom( 2, 1, 2, 2.0, ActivityState.NONE  );
+        int expectedNumberOfMessages = 0;
+        assertEquals(expectedNumberOfMessages, numberOfMessages);
+        String expectedErrorText = """
+        """;
 
-
-        EntityMaster[] inserts = new Bom[2];
-        inserts[0] = new Bom( 100,1L, 3L, 10.0, ActivityState.INSERT );
-        inserts[1] = new Bom( 100,1L, 3L, 10.0, ActivityState.INSERT );
-
-        EntityMaster[] expected = new EntityMaster[ nonEmptyBaseLine.length + inserts.length ];
-
-        System.arraycopy( nonEmptyBaseLine, 0, expected, 0, nonEmptyBaseLine.length );
-        System.arraycopy( inserts, 0, expected, nonEmptyBaseLine.length, inserts.length );
-
-        EntityMaster[] actual = EntityUtility.mergeUpdate( nonEmptyBaseLine, inserts );
-        assertTrue( EntityUtility.isEqual( expected, actual));
-        assertTrue( EntityUtility.allAreActivityNone( actual ));
+        assertEquals( expectedErrorText, responsePackage.getErrorsTextAsString());
     }
+
+
 
     @Test
-    public void NonEmptyBaselineWithChangeAndInsert() {
+    public void testMapCreateBasic() {
+        oldValue.setQuantityOrdered( 10 );
+        oldValue.setQuantityAssigned( 0 );
+        newValue.setItemId( testItem.getId());
 
-        EntityMaster[] nonEmptyBaseLine = new Bom[2];
-        nonEmptyBaseLine[ 0 ] = new Bom( 1, 1, 2, 1.0, ActivityState.NONE);
-        nonEmptyBaseLine[ 1 ] = new Bom( 2, 1, 2, 2.0, ActivityState.NONE  );
+        oldValue.setItemId( testItem.getId() );
+        testItem.setSourcing( Item.SOURCE_MAN );
+        int numberOfMessages = orderLineItemService.validateOrderLineItemForMOInsertion( oldValue, responsePackage, testItem );
 
+        int expectedNumberOfMessages = 0;
+        assertEquals(expectedNumberOfMessages, numberOfMessages);
+        String expectedErrorText = """
+        """;
+        assertEquals( expectedErrorText, responsePackage.getErrorsTextAsString());
 
-        EntityMaster[] changes = new Bom[2];
-        changes[0] = new Bom( 100,1L, 3L, 10.0, ActivityState.INSERT );
-        changes[1] = new Bom( 1,1L, 3L, 10.0, ActivityState.CHANGE );
+        var expected = orderLineItemService.createMapFromOldAndNew( oldValue, newValue, responsePackage );
+        String expectedMapText = """
+        """;
+        assertEquals( expectedMapText, responsePackage.getErrorsTextAsString());
 
-        EntityMaster[] expected = new EntityMaster[ nonEmptyBaseLine.length + changes.length - 1 ];
-        expected[ 0 ] = changes[ 1 ];
-        expected[ 1 ] = nonEmptyBaseLine[ 1 ];
-        expected[ 2 ] = changes[ 0 ];
-
-        EntityMaster[] actual = EntityUtility.mergeUpdate( nonEmptyBaseLine, changes );
-        assertTrue( EntityUtility.isEqual( expected, actual));
-        assertTrue( EntityUtility.allAreActivityNone( actual ));
     }
 
-    @Test
-    public void NonEmptyBaselineWithDelete() {
-
-        EntityMaster[] originals = new Bom[3];
-        originals[ 0 ] = new Bom( 1, 1, 2, 1.0, ActivityState.NONE);
-        originals[ 1 ] = new Bom( 2, 1, 3, 2.0, ActivityState.NONE  );
-        originals[ 2] = new Bom( 3, 1, 4, 3.0, ActivityState.NONE  );
-
-        /*
-        Id, parent/child, qty
-        1   1,2             1
-        2   1,3             2
-        3   1,4             3
-
-        Id, parent/child, qty
-        1   1,2             10
-        3   1,4             3
-        100, 1,5            50
-         */
-
-        EntityMaster[] changes = new Bom[3];
-        changes[0] = new Bom( 100,1L, 5L, 50.0, ActivityState.INSERT );
-        changes[1] = new Bom( 1,1L, 2L, 10.0, ActivityState.CHANGE );
-        changes[2] = new Bom( 2,2L, 2L, 20.0, ActivityState.DELETE );
-
-        EntityMaster[] actual = EntityUtility.mergeUpdate( originals, changes );
-
-        EntityMaster[] expected = new EntityMaster[ 3 ];
-        EntityUtility.setAllActivityStateToNone( changes );
-        expected[ 0 ] = changes[ 1 ];
-        expected[ 1 ] = originals[ 2 ];
-        expected[ 2 ] = changes[ 0 ];
-
-        assertTrue( EntityUtility.isEqual( expected, actual));
-        assertTrue( EntityUtility.allAreActivityNone( actual ));
-    }
 }

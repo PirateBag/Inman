@@ -12,7 +12,7 @@ public class OrderLineItem extends EntityMaster {
 	public static String formatter = "%4d %4d %7d %6.2f %6.2f %10s %10s %4s %4s %4s";
 	public static String header = String.format( "%-4s %-4s %8s %8s %8s %10s %10s %4s %4s %4s",
 			"Id", "Item", "ParentId", "Ordered", "Assigned", "Start", "Complete", "Stat", "DbCr", "Activity");
-	int itemId;
+	long itemId;
 	double quantityOrdered = 0.0;
 	double quantityAssigned = 0.0;
 	String startDate;
@@ -40,11 +40,11 @@ public class OrderLineItem extends EntityMaster {
 		throw new RuntimeException( "Not implemented yet" );
 	}
 
-	public int getItemId() {
+	public long getItemId() {
 		return itemId;
 	}
 
-	public void setItemId(int itemId) {
+	public void setItemId(long itemId) {
 		this.itemId = itemId;
 	}
 

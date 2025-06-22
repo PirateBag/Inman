@@ -1,5 +1,6 @@
 package com.inman.controller;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import java.time.format.DateTimeFormatter;
@@ -10,6 +11,7 @@ public class Utility {
     public static String _DATE_FORMAT = "yyyy-MMdd";
     public static DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern( _DATE_FORMAT ); // Define the format
 
+    @NotNull
     public static String normalize( String str ) {
         if ( str == null ) { return ""; };
         return str;

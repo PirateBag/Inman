@@ -1,38 +1,39 @@
 package com.inman.business;
 
-import com.inman.controller.OrderLineItemController;
 import com.inman.controller.Utility;
 import com.inman.entity.*;
-import com.inman.model.request.CrudBatch;
-import com.inman.model.request.ItemCrudBatch;
 import com.inman.model.request.OrderLineItemRequest;
 import com.inman.model.response.*;
 import com.inman.model.rest.ErrorLine;
-import com.inman.model.rest.ItemUpdateRequest;
 import com.inman.repository.ItemRepository;
 import com.inman.repository.OrderLineItemRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static com.inman.controller.OrderLineItemController.OrderLineItem_AllOrders;
 import static com.inman.controller.Utility.DATE_FORMATTER;
 import static com.inman.controller.Utility.normalize;
 import static com.inman.repository.DdlRepository.createUpdateByRowIdStatement;
-import static java.time.format.DateTimeFormatter.*;
 
 @Service
 public class OrderLineItemService {
     private static final Logger logger = LoggerFactory.getLogger(OrderLineItemService.class);
-    private final ItemRepository itemRepository;
+    private ItemRepository itemRepository;
+    private OrderLineItemRepository orderLineItemRepository;
 
-    OrderLineItemRepository orderLineItemRepository;
+
+    @Autowired
+    public OrderLineItemService( ItemRepository itemRepository, OrderLineItemRepository orderLineItemRepository ) {
+        this.itemRepository = itemRepository;
+        this.orderLineItemRepository = orderLineItemRepository;
+    }
 
     private void outputInfo(String message, ResponsePackage<OrderLineItem> responsePackage) {
         logger.info(message);
@@ -75,7 +76,7 @@ public class OrderLineItemService {
     private void delete(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse) {
         String message;
         try {
-            Optional<OrderLineItem> orderLineItemFromRepository = orderLineItemRepository.findById(orderLineItem.getId());
+            Optional<OrderLineItem> orderLineItemFromRepository = orderLineItemRepository.findById( orderLineItem.getId());
 
             if (orderLineItemFromRepository.isPresent()) {
                 orderLineItemRepository.delete(orderLineItemFromRepository.get());
@@ -128,11 +129,14 @@ public class OrderLineItemService {
     }
 
 
-    private int validateOrderLineItemForMOInsertion(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse, Item item) {
+    public int validateOrderLineItemForMOInsertion(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse, Item item) {
         int numberOfMessages = 0;
         if (item == null) {
-            outputInfo("Item " + orderLineItem.getItemId() + " cannot be found", oliResponse);
+            outputInfo("Order references Item " + orderLineItem.getItemId() + " that cannot be found", oliResponse);
             numberOfMessages++;
+
+            //  Empty Item will break other tests.  Proceed no further.
+            return numberOfMessages;
         }
 
         if (orderLineItem.getParentOliId() != 0) {
@@ -140,25 +144,25 @@ public class OrderLineItemService {
             numberOfMessages++;
         }
 
-        if (item.getSourcing().compareTo(Item.SOURCE_MAN) != 0) {
+        if (item.getSourcing( ).compareTo(Item.SOURCE_MAN) != 0) {
             outputInfo("Item is is not MANufactured: " + item, oliResponse);
             numberOfMessages++;
         }
 
-        if (orderLineItem.getQuantityOrdered() < 0.0) {
-            outputInfo("Order Quantity " + orderLineItem + " must be greater than 0.  ", oliResponse);
+        if (orderLineItem.getQuantityOrdered() <= 0.0) {
+            outputInfo("Order Quantity " + orderLineItem + " must be greater than 0.", oliResponse);
             numberOfMessages++;
         }
 
         if (orderLineItem.getQuantityAssigned() != 0.0) {
-            outputInfo("Quantity Assigned must be zero only at creation. ", oliResponse);
+            outputInfo("Quantity Assigned must be zero.", oliResponse);
             numberOfMessages++;
         }
 
         return numberOfMessages;
     }
 
-    private Map<String,String> createMapFromOldAndNew( OrderLineItem oldOli,
+    public  Map<String,String> createMapFromOldAndNew( OrderLineItem oldOli,
             OrderLineItem newOli, ResponsePackage<OrderLineItem> oliResponse  ) {
 //        //	0 when an MO Order header.  Non 0 when a detail of either MO or PO.
 //        int parentOliId;

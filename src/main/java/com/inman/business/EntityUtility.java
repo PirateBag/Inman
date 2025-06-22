@@ -20,7 +20,7 @@ public class EntityUtility {
 
         Map<Long, EntityMaster> mappedChanges = new HashMap<>();
         for (var change : changes) {
-            mappedChanges.put(change.getId(), change);
+            mappedChanges.put( Long.valueOf( change.getId() ), change);
         }
 
         for (var baselineEntity : baseline) {
