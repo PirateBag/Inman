@@ -25,8 +25,8 @@ import static com.inman.repository.DdlRepository.createUpdateByRowIdStatement;
 @Service
 public class OrderLineItemService {
     private static final Logger logger = LoggerFactory.getLogger(OrderLineItemService.class);
-    private ItemRepository itemRepository;
-    private OrderLineItemRepository orderLineItemRepository;
+    private final ItemRepository itemRepository;
+    private final OrderLineItemRepository orderLineItemRepository;
 
 
     @Autowired
@@ -64,7 +64,7 @@ public class OrderLineItemService {
             }
 
             updatedOrderLineItem = orderLineItemRepository.save(orderLineItem);
-            logger.info("inserted adjusted: " + updatedOrderLineItem);
+            logger.info("inserted adjusted: {}", updatedOrderLineItem);
             oliResponse.getData().add(updatedOrderLineItem);
         } catch (DataIntegrityViolationException dataIntegrityViolationException) {
             message = "Unable to insert " + orderLineItem + ":" +
@@ -84,7 +84,7 @@ public class OrderLineItemService {
                 outputError("Unable to find " + orderLineItem, oliResponse);
             }
             logger.info(orderLineItem.getActivityState() + " " + orderLineItemFromRepository);
-            orderLineItemFromRepository.get().setActivityState(orderLineItem.getActivityState());
+            orderLineItem.setActivityState(orderLineItemFromRepository.get().getActivityState());
             oliResponse.getData().add(orderLineItemFromRepository.get());
             orderLineItemRepository.deleteById( orderLineItem.getId());
         } catch (DataIntegrityViolationException dataIntegrityViolationException) {
@@ -174,7 +174,7 @@ public class OrderLineItemService {
             outputInfo( "Order Id is different",  oliResponse );
         }
         if ( oldOli.getItemId() != newOli.getItemId() ) {
-            outputInfo( "Item Ids are not the same. ", oliResponse );
+            outputInfo( "Item Ids are not the same.", oliResponse );
         }
         if ( oldOli.getQuantityOrdered() != newOli.getQuantityOrdered() ) {
             rValue.put( "QuantityOrders", String.valueOf( newOli.getQuantityOrdered() ) );
@@ -189,7 +189,7 @@ public class OrderLineItemService {
             rValue.put( "CompletedDate", "'" + newOli.getCompleteDate() + "'" );
         }
         return rValue;
-    };
+    }
 
     @Transactional
     public ResponsePackage<OrderLineItem> applyCrud(OrderLineItemRequest crudBatch) {

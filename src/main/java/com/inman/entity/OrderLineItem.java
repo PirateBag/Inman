@@ -18,16 +18,8 @@ public class OrderLineItem extends EntityMaster {
 	String startDate;
 	String completeDate;
 
-	public int getParentOliId() {
-		return parentOliId;
-	}
-
-	public void setParentOliId(int parentOliId) {
-		this.parentOliId = parentOliId;
-	}
-
 	//	0 when an MO Order header.  Non 0 when a detail of either MO or PO.
-	int parentOliId;
+	long parentOliId;
 	OrderState orderState = OrderState.PLANNED;
 	DebitCreditIndicator debitCreditIndicator = com.inman.entity.DebitCreditIndicator.ADDS_TO_BALANCE;
 
@@ -92,6 +84,15 @@ public class OrderLineItem extends EntityMaster {
 	public void setDebitCreditIndicator(DebitCreditIndicator debitCreditIndicator) {
 		this.debitCreditIndicator = debitCreditIndicator;
 	}
+
+	public long getParentOliId() {
+		return parentOliId;
+	}
+
+	public void setParentOliId( long parentOliId) {
+		this.parentOliId = parentOliId;
+	}
+
 
 
 }

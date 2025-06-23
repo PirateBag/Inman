@@ -1,6 +1,5 @@
 package com.inman.repository;
 
-import com.inman.controller.ItemCrud;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.slf4j.Logger;
@@ -22,13 +21,13 @@ public class DdlRepository {
         logger.info(sqlCommand);
         entityManager.createNativeQuery(sqlCommand).executeUpdate();
     }
-    public static String createUpdateByRowIdStatement( String tableName, int rowId, Map<String,String> fieldsToUpdate ) {
+    public static String createUpdateByRowIdStatement( String tableName, long rowId, Map<String,String> fieldsToUpdate ) {
         StringBuilder sqlCommand = new StringBuilder( "UPDATE " + tableName + " SET "  );
         int numberOfKeys = 0;
         for ( String key : fieldsToUpdate.keySet()) {
-            sqlCommand.append( key + "=" + fieldsToUpdate.get(key) + (++numberOfKeys < fieldsToUpdate.size() ? "," : " " ) );
+            sqlCommand.append(key).append("=").append(fieldsToUpdate.get(key)).append(++numberOfKeys < fieldsToUpdate.size() ? ", " : " ");
         }
-        sqlCommand.append( " WHERE id=" + rowId );
+        sqlCommand.append(" WHERE id=").append(rowId);
         logger.info(sqlCommand.toString());
         return sqlCommand.toString();
     }
