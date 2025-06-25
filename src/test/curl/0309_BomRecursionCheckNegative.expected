@@ -1,0 +1,8 @@
+{
+  "responseType" : "QUERY",
+  "errors" : [ {
+    "key" : 1,
+    "message" : "Parent and proposed child are same item.  6"
+  } ],
+  "data" : [ ]
+}
