@@ -2,12 +2,14 @@ package com.inman.repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
+import java.util.Objects;
 
 @Repository
 public class DdlRepository {
@@ -30,5 +32,12 @@ public class DdlRepository {
         sqlCommand.append(" WHERE id=").append(rowId);
         logger.info(sqlCommand.toString());
         return sqlCommand.toString();
+    }
+
+    @Transactional
+    public void executeDynamicDML( @NotNull String sqlCommand)    {
+        logger.info(sqlCommand);
+        entityManager.createNativeQuery(sqlCommand).executeUpdate();
+
     }
 }

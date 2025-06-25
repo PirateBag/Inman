@@ -1,3 +1,6 @@
+Add all possible items in a single batch.
+
+===  JSON  ===
 { "updatedRows" : [
   { "summaryId" : "W-001", "description" : "36 In Red Wagon",    "unitCost" : "0.0", "sourcing" : "MAN", "leadTime" :  "2", "activityState" : "INSERT" },
   { "summaryId" : "W-002", "description" : "Red Wagon Body",     "unitCost" : "0.0", "sourcing" : "MAN", "leadTime" : "10", "activityState" : "INSERT" },

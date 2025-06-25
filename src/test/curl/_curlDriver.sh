@@ -1,12 +1,18 @@
 #!/bin/bash
- RequestFile=$1.request
- ResponseFile=$1.actual
- ServiceSuffix=$2
+if [[ -z $1 ]]; then
+  echo $0 null or empty parameter.
+  exit
+fi
 
- if [ -f $RequestFile ]; then
-  #echo curl -o $ResponseFile  --silent --data "@$RequestFile" -H "Content-Type: application/json" -X POST http://localhost:8080/$ServiceSuffix
+RequestFile=$1.request
+ResponseFile=$1.actual
+ServiceSuffix=$2
+#echo bag me.
+if [ -f $RequestFile ]; then
+  #echo no, do me.
+  #echo curl -o $ResponseFile  --data "@$RequestFile" -H "Content-Type: application/json" -X POST http://localhost:8080/$ServiceSuffix
   curl -o $ResponseFile  --silent --data "@$RequestFile" -H "Content-Type: application/json" -X POST http://localhost:8080/$ServiceSuffix
-
 else
-  echo "Unable to find or open ${RequestFile}." >ResponseFile
+  echo "Unable to find or open ${RequestFile}." | tee ResponseFile
+  #echo do me instead
 fi

@@ -1,8 +1,0 @@
-```Purpose
-Clear the contents of the following tables:
-  Item
-  BOM
-```
-==JSON==
-{ "idToSearchFor" : "1" }
-

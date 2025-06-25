@@ -5,6 +5,7 @@ import com.inman.entity.*;
 import com.inman.model.request.OrderLineItemRequest;
 import com.inman.model.response.*;
 import com.inman.model.rest.ErrorLine;
+import com.inman.repository.DdlRepository;
 import com.inman.repository.ItemRepository;
 import com.inman.repository.OrderLineItemRepository;
 import org.slf4j.Logger;
@@ -27,12 +28,14 @@ public class OrderLineItemService {
     private static final Logger logger = LoggerFactory.getLogger(OrderLineItemService.class);
     private final ItemRepository itemRepository;
     private final OrderLineItemRepository orderLineItemRepository;
+    private final DdlRepository ddlRepository;
 
 
     @Autowired
-    public OrderLineItemService( ItemRepository itemRepository, OrderLineItemRepository orderLineItemRepository ) {
+    public OrderLineItemService(ItemRepository itemRepository, OrderLineItemRepository orderLineItemRepository, DdlRepository ddlRepository) {
         this.itemRepository = itemRepository;
         this.orderLineItemRepository = orderLineItemRepository;
+        this.ddlRepository = ddlRepository;
     }
 
     private void outputInfo(String message, ResponsePackage<OrderLineItem> responsePackage) {
@@ -44,11 +47,6 @@ public class OrderLineItemService {
         logger.info(message);
         responsePackage.getErrors().add(new ErrorLine(1, message));
         throw new RuntimeException(message);
-    }
-
-    public OrderLineItemService(OrderLineItemRepository orderLineItemRepository, ItemRepository itemRepository) {
-        this.orderLineItemRepository = orderLineItemRepository;
-        this.itemRepository = itemRepository;
     }
 
     private void insert(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse, int lineNumber) {
@@ -70,7 +68,10 @@ public class OrderLineItemService {
             message = "Unable to insert " + orderLineItem + ":" +
                     Utility.generateErrorMessageFrom(dataIntegrityViolationException);
             outputError(message, oliResponse);
+        } catch (RuntimeException runtimeException) {
+            outputError( "Unable to insert " + orderLineItem + ":" + runtimeException.getMessage(), oliResponse);
         }
+
     }
 
     private void delete(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse) {
@@ -84,9 +85,10 @@ public class OrderLineItemService {
                 outputError("Unable to find " + orderLineItem, oliResponse);
             }
             logger.info(orderLineItem.getActivityState() + " " + orderLineItemFromRepository);
-            orderLineItem.setActivityState(orderLineItemFromRepository.get().getActivityState());
+            orderLineItemFromRepository.get().setActivityState(orderLineItem.getActivityState());
             oliResponse.getData().add(orderLineItemFromRepository.get());
             orderLineItemRepository.deleteById( orderLineItem.getId());
+
         } catch (DataIntegrityViolationException dataIntegrityViolationException) {
             message = "Unable to " + orderLineItem.getActivityState() + " " + orderLineItem + ":" +
                     Utility.generateErrorMessageFrom(dataIntegrityViolationException);
@@ -112,11 +114,10 @@ public class OrderLineItemService {
                     createMapFromOldAndNew( orderLineItemFromRepository.get(), orderLineItem, oliResponse );
             logger.info( "Map is: " + fieldsToUpdate );
 
-            var SqlString = createUpdateByRowIdStatement( "OrderLineItem", 1, fieldsToUpdate );
-            logger.info( "Update Statement: " + SqlString );
-
-            logger.info( "Just Before:  " + orderLineItem.getActivityState() + " " + orderLineItemFromRepository.get());
-            orderLineItemRepository.save(orderLineItemFromRepository.get());
+            var sqlCommand = createUpdateByRowIdStatement( "order_line_item", 1, fieldsToUpdate );
+            logger.info( "Update Statement: " + sqlCommand );
+            ddlRepository.executeDynamicDML( sqlCommand );
+            logger.info( "Update completed. " + sqlCommand );
             oliResponse.getData().add(orderLineItem);
         } catch (DataIntegrityViolationException dataIntegrityViolationException) {
             message = "Unable to " + orderLineItem.getActivityState() + " " + orderLineItem + ":" +
@@ -177,16 +178,16 @@ public class OrderLineItemService {
             outputInfo( "Item Ids are not the same.", oliResponse );
         }
         if ( oldOli.getQuantityOrdered() != newOli.getQuantityOrdered() ) {
-            rValue.put( "QuantityOrders", String.valueOf( newOli.getQuantityOrdered() ) );
+            rValue.put( "quantity_ordered", String.valueOf( newOli.getQuantityOrdered() ) );
         }
         if ( oldOli.getQuantityAssigned() != newOli.getQuantityAssigned() ) {
-            rValue.put( "QuantityAssigned", String.valueOf( newOli.getQuantityAssigned() ) );
+            rValue.put( "quantity_assigned", String.valueOf( newOli.getQuantityAssigned() ) );
         }
         if ( normalize( oldOli.getStartDate()).compareTo( normalize( newOli.getStartDate() ) ) != 0 ) {
-            rValue.put( "StartDate", "'" + newOli.getStartDate() + "'");
+            rValue.put( "start_date", "'" + newOli.getStartDate() + "'");
         }
         if ( normalize( oldOli.getCompleteDate()).compareTo( normalize(newOli.getCompleteDate()) ) != 0 ) {
-            rValue.put( "CompletedDate", "'" + newOli.getCompleteDate() + "'" );
+            rValue.put( "Complete_date", "'" + newOli.getCompleteDate() + "'" );
         }
         return rValue;
     }
@@ -198,7 +199,6 @@ public class OrderLineItemService {
         for (OrderLineItem orderLineItem : crudBatch.rows()) {
 
             logger.info("{} on {}", orderLineItem.getActivityState(), orderLineItem);
-
 
             if (orderLineItem.getActivityState() == ActivityState.INSERT) {
                 insert(orderLineItem, responsePackage, 1);
