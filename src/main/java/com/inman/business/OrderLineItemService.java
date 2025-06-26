@@ -38,12 +38,12 @@ public class OrderLineItemService {
         this.ddlRepository = ddlRepository;
     }
 
-    private void outputInfo(String message, ResponsePackage<OrderLineItem> responsePackage) {
+    private void outputInfo(String message, ResponsePackage<?> responsePackage) {
         logger.info(message);
         responsePackage.getErrors().add(new ErrorLine(1, message));
     }
 
-    private void outputError(String message, ResponsePackage<OrderLineItem> responsePackage) {
+    private void outputError(String message, ResponsePackage<?> responsePackage) {
         logger.info(message);
         responsePackage.getErrors().add(new ErrorLine(1, message));
         throw new RuntimeException(message);
@@ -53,7 +53,6 @@ public class OrderLineItemService {
         String message;
         OrderLineItem updatedOrderLineItem;
         try {
-
             Item item = itemRepository.findById(orderLineItem.getItemId());
             LocalDate completedDate = LocalDate.parse(orderLineItem.getStartDate(), DATE_FORMATTER).plusDays(item.getLeadTime());
             orderLineItem.setCompleteDate(completedDate.format(DATE_FORMATTER));
@@ -129,6 +128,35 @@ public class OrderLineItemService {
         }
     }
 
+    private void changeViaJpa(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse) {
+        String message;
+
+        try {
+            Optional<OrderLineItem> orderLineItemFromRepository = orderLineItemRepository.findById(orderLineItem.getId());
+
+            if (orderLineItemFromRepository.isPresent()) {
+                if (orderLineItem.getItemId() != orderLineItemFromRepository.get().getItemId()) {
+                    outputError("Item Changed in order.  Try delete/insert instead", oliResponse);
+                }
+                var countOfChanges = updateOldFromNew( orderLineItemFromRepository.get(), orderLineItem, oliResponse );
+                logger.info("Number Of Changes: {}", countOfChanges);
+                orderLineItemRepository.save(orderLineItemFromRepository.get());
+            } else {
+                outputError( "Unable to find " + orderLineItem, oliResponse);
+            }
+
+            orderLineItemFromRepository.get().setActivityState(orderLineItem.getActivityState());
+            oliResponse.getData().add(orderLineItemFromRepository.get() );
+        } catch (DataIntegrityViolationException dataIntegrityViolationException) {
+            message = "Unable to " + orderLineItem.getActivityState() + " " + orderLineItem + ":" +
+                    Utility.generateErrorMessageFrom(dataIntegrityViolationException);
+            outputError(message, oliResponse);
+        } catch (Exception e) {
+            logger.error( "Unexpected exception " + e.getMessage() );
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public int validateOrderLineItemForMOInsertion(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse, Item item) {
         int numberOfMessages = 0;
@@ -138,11 +166,6 @@ public class OrderLineItemService {
 
             //  Empty Item will break other tests.  Proceed no further.
             return numberOfMessages;
-        }
-
-        if (orderLineItem.getParentOliId() != 0) {
-            outputInfo("Order has a parent item:  " + orderLineItem, oliResponse);
-            numberOfMessages++;
         }
 
         if (item.getSourcing( ).compareTo(Item.SOURCE_MAN) != 0) {
@@ -192,12 +215,46 @@ public class OrderLineItemService {
         return rValue;
     }
 
+    /**
+     * @param oldOli old order line item from database.
+     * @param newOli new orderLineItem from request.
+     * @param oliResponse build up our response message
+     * @return count of number of changes.
+     */
+    public  int updateOldFromNew( OrderLineItem oldOli,
+                                                       OrderLineItem newOli, ResponsePackage<OrderLineItem> oliResponse  ) {
+
+        int countOfChanges = 0;
+        if ( oldOli.getId() != newOli.getId() ) {
+            outputInfo( "Order Id is different",  oliResponse );
+        }
+        if ( oldOli.getItemId() != newOli.getItemId() ) {
+            outputInfo( "Item Ids are not the same.", oliResponse );
+        }
+        if ( oldOli.getQuantityOrdered() != newOli.getQuantityOrdered() ) {
+            countOfChanges++;
+            oldOli.setQuantityOrdered( newOli.getQuantityOrdered() );
+        }
+        if ( oldOli.getQuantityAssigned() != newOli.getQuantityAssigned() ) {
+            countOfChanges++;
+            oldOli.setQuantityAssigned( newOli.getQuantityAssigned() );
+        }
+        if ( normalize( oldOli.getStartDate()).compareTo( normalize( newOli.getStartDate() ) ) != 0 ) {
+            countOfChanges++;
+            oldOli.setStartDate( newOli.getStartDate() );
+        }
+        if ( normalize( oldOli.getCompleteDate()).compareTo( normalize(newOli.getCompleteDate()) ) != 0 ) {
+            countOfChanges++;
+            oldOli.setCompleteDate( newOli.getCompleteDate() );
+        }
+        return countOfChanges;
+    }
+
     @Transactional
-    public ResponsePackage<OrderLineItem> applyCrud(OrderLineItemRequest crudBatch) {
-        ResponsePackage<OrderLineItem> responsePackage = new ResponsePackage<>();
+    public ResponsePackage<OrderLineItem> applyCrud(OrderLineItemRequest crudBatch,
+                                                    ResponsePackage<OrderLineItem> responsePackage ) {
 
         for (OrderLineItem orderLineItem : crudBatch.rows()) {
-
             logger.info("{} on {}", orderLineItem.getActivityState(), orderLineItem);
 
             if (orderLineItem.getActivityState() == ActivityState.INSERT) {
@@ -205,7 +262,8 @@ public class OrderLineItemService {
             } else if (orderLineItem.getActivityState() == ActivityState.DELETE ) {
                 delete(orderLineItem, responsePackage);
             } else if ( orderLineItem.getActivityState() == ActivityState.CHANGE ) {
-                change(orderLineItem, responsePackage);
+                //  change(orderLineItem, responsePackage);
+                changeViaJpa( orderLineItem, responsePackage);
             }  else {
                 logger.info("{} was ignored because of unknown ActivityState", orderLineItem);
             }
@@ -213,17 +271,51 @@ public class OrderLineItemService {
         return responsePackage;
     }
 
-    public TextResponse orderReport(int orderId) {
-        if (orderId != OrderLineItem_AllOrders) {
-            throw new RuntimeException("Illegal order id of " + orderId);
-        }
-        TextResponse textResponse = new TextResponse();
-        List<com.inman.entity.OrderLineItem> reportList = orderLineItemRepository.findAll();
+    public void generateRecursiveOrderReport( long orderId, TextResponse textResponse, int level  ) {
+        String report;
+        Optional<OrderLineItem> oli = orderLineItemRepository.findById( orderId );
 
-        logger.info(OrderLineItem.header);
-        for (com.inman.entity.OrderLineItem orderLineItem : reportList) {
-            logger.info(orderLineItem.toString());
-            textResponse.getData().add(new Text(orderLineItem.toString()));
+        if (oli.isEmpty() ) {
+            outputError( "Can't find order " + orderId, textResponse  );
+        }
+        Item item = itemRepository.findById( oli.get().getItemId());
+        if ( item == null ) {
+            outputError( "Can't find item " + oli.get().getItemId() + " referenced by oli " + oli.get().getId(), textResponse  );
+        }
+
+        String headerFormat = "%-26s  %8s %8s %9s %9s %7s";
+        String lineFormat = "%-26s  %8.2f %8.2f %9s %9s";
+
+        if ( level == 0 ) {
+            report = String.format( headerFormat, "Item", "Ordered", "Assigned", "Start", "Complete", "State" );
+            logger.info( report );
+            textResponse.getData().add( new Text( report ) );
+        }
+
+
+        report = String.format( lineFormat, Common.spacesForLevel( level) + item.getSummaryId(), oli.get().getQuantityOrdered(), oli.get().getQuantityAssigned(),
+                oli.get().getStartDate(), oli.get().getCompleteDate(), "Open" );
+        textResponse.getData().add( new Text( report ) );
+
+        List<OrderLineItem> childOrderLineItems = orderLineItemRepository.findByParentOliId( oli.get().getId());
+        for ( OrderLineItem childOrderLineItem : childOrderLineItems ) {
+            generateRecursiveOrderReport( childOrderLineItem.getId(), textResponse, level+1 );
+        }
+    }
+
+
+    public TextResponse orderReport(long orderId) {
+        TextResponse textResponse = new TextResponse();
+        if (orderId == OrderLineItem_AllOrders ) {
+            List<com.inman.entity.OrderLineItem> reportList = orderLineItemRepository.findAll();
+
+            logger.info(OrderLineItem.header);
+            for (com.inman.entity.OrderLineItem orderLineItem : reportList) {
+                logger.info(orderLineItem.toString());
+                textResponse.getData().add(new Text(orderLineItem.toString()));
+            }
+        } else {
+            generateRecursiveOrderReport( orderId, textResponse, 0  );
         }
         return textResponse;
     }

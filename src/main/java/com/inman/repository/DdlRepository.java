@@ -1,6 +1,7 @@
 package com.inman.repository;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceContext;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -34,10 +35,13 @@ public class DdlRepository {
         return sqlCommand.toString();
     }
 
-    @Transactional
     public void executeDynamicDML( @NotNull String sqlCommand)    {
         logger.info(sqlCommand);
-        entityManager.createNativeQuery(sqlCommand).executeUpdate();
-
+        try {
+            entityManager.createNativeQuery(sqlCommand).executeUpdate();
+            entityManager.flush();
+        } catch (Exception e) {
+            logger.info("encountered " + e.getMessage() );
+        }
     }
 }

@@ -14,4 +14,6 @@ import java.util.List;
 public interface OrderLineItemRepository extends JpaRepository<OrderLineItem, Long> {
 
 	List<OrderLineItem> findAll();
+
+    List<OrderLineItem> findByParentOliId(long id);
 }

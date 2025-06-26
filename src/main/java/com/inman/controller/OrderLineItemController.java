@@ -34,10 +34,7 @@ public class OrderLineItemController {
             consumes = "application/json",
             produces = "application/json" )
     public ResponseEntity<?> OrderLineItem_ShowAll( @RequestBody GenericSingleId genericSingleId  ) {
-        TextResponse textResponse = new TextResponse();
-        if ( genericSingleId.getIdToSearchFor() == OrderLineItem_AllOrders) {
-            textResponse = orderLineItemService.orderReport( OrderLineItem_AllOrders  );
-        }
+        TextResponse textResponse = orderLineItemService.orderReport(genericSingleId.getIdToSearchFor()  );
 
         textResponse.setResponseType(ResponseType.MULTILINE );
         if (textResponse.getData().isEmpty()) {
@@ -52,9 +49,9 @@ public class OrderLineItemController {
     @CrossOrigin
     @RequestMapping(value = OrderLineItem_crud, method = RequestMethod.POST)
     public ResponseEntity<?> orderLineItemCrud(@RequestBody OrderLineItemRequest crudBatch ) {
-        ResponsePackage<OrderLineItem> responsePackage;
+        ResponsePackage<OrderLineItem> responsePackage = new ResponsePackage<>();
         try {
-             responsePackage= orderLineItemService.applyCrud( crudBatch  );
+             responsePackage= orderLineItemService.applyCrud( crudBatch, responsePackage  );
             responsePackage.setResponseType(ResponseType.MULTILINE );
             if (responsePackage.getData().isEmpty()) {
                 var message = "No items were processed, either due to errors or no actionable inputs.";
@@ -66,7 +63,7 @@ public class OrderLineItemController {
         } catch ( Exception exception ) {
             logger.info( "Encountered runtime exception, check response message for details.");
         }
-        return ResponseEntity.badRequest().body( new ResponsePackage<OrderLineItem>( ));
+        return ResponseEntity.badRequest().body( responsePackage );
     }
 
     @Autowired

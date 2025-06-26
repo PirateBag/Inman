@@ -81,7 +81,21 @@ declare -a tests=(
   "0613_oliAfter001Delete;oli/showAll"
 
 #Change the quantity ordered of order2 to 5.
-  "0615_oliCrudChange;oli/crud"  )
+  "0615_oliCrudChange;oli/crud"
+
+  "0617_oliReport;oli/showAll"
+
+  #Assign some components manually to an order for testing.
+  #Order 2 for 5x W-002, assign an W-013 Wagon Body, and W-014 Red Paint.
+  "0619_oliCrudChange;oli/crud"
+
+  # Generate a recurse report on MO 2.
+  "0621_oliReport;oli/showAll"
+
+#Verify the transaction was committed.
+
+
+   )
 #   "stopTesting" \
 declare -i passed=0
 declare -i failed=0
