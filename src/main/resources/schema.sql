@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS order_line_Item (
     complete_date varchar( 10 ),
     item_id int,
     order_state varchar(12),
-    debit_credit_indicator varchar(12),
+    order_type varchar(5),
     parent_oli_id int,
     quantity_assigned number( 12,2) default 0.0,
     quantity_ordered number (12,2) default 0.0,

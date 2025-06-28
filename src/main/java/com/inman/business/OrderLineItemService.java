@@ -5,6 +5,7 @@ import com.inman.entity.*;
 import com.inman.model.request.OrderLineItemRequest;
 import com.inman.model.response.*;
 import com.inman.model.rest.ErrorLine;
+import com.inman.repository.BomPresentRepository;
 import com.inman.repository.DdlRepository;
 import com.inman.repository.ItemRepository;
 import com.inman.repository.OrderLineItemRepository;
@@ -29,13 +30,16 @@ public class OrderLineItemService {
     private final ItemRepository itemRepository;
     private final OrderLineItemRepository orderLineItemRepository;
     private final DdlRepository ddlRepository;
+    private final BomPresentRepository bomPresentRepository;
 
 
     @Autowired
-    public OrderLineItemService(ItemRepository itemRepository, OrderLineItemRepository orderLineItemRepository, DdlRepository ddlRepository) {
+    public OrderLineItemService(ItemRepository itemRepository, OrderLineItemRepository orderLineItemRepository,
+                                DdlRepository ddlRepository, BomPresentRepository bomPresentRepository ) {
         this.itemRepository = itemRepository;
         this.orderLineItemRepository = orderLineItemRepository;
         this.ddlRepository = ddlRepository;
+        this.bomPresentRepository = bomPresentRepository;
     }
 
     private void outputInfo(String message, ResponsePackage<?> responsePackage) {
@@ -63,6 +67,10 @@ public class OrderLineItemService {
             updatedOrderLineItem = orderLineItemRepository.save(orderLineItem);
             logger.info("inserted adjusted: {}", updatedOrderLineItem);
             oliResponse.getData().add(updatedOrderLineItem);
+
+            if ( orderLineItem.getOrderState() == OrderState.OPEN ) {
+                addLineItemsToOrder( updatedOrderLineItem, oliResponse );
+            }
         } catch (DataIntegrityViolationException dataIntegrityViolationException) {
             message = "Unable to insert " + orderLineItem + ":" +
                     Utility.generateErrorMessageFrom(dataIntegrityViolationException);
@@ -73,9 +81,39 @@ public class OrderLineItemService {
 
     }
 
+    /**
+     * Add orderLineItems to the parent owner based on the BOM of the item associated with the parent.
+     *
+     * @param id of the newly inserted order.k
+     * @param oliResponse final response message, modified by side effect.
+     *
+     */
+    private void addLineItemsToOrder( OrderLineItem parentOli , ResponsePackage<OrderLineItem> oliResponse) {
+        BomPresent[] childrenOfItem = bomPresentRepository.findByParentId( parentOli.getItemId() );
+
+        for ( BomPresent bomPresent : childrenOfItem ) {
+            OrderLineItem oli = new OrderLineItem();
+            oli.setItemId( bomPresent.getChildId() );
+            oli.setQuantityOrdered( parentOli.getQuantityOrdered() * bomPresent.getQuantityPer() );
+            oli.setStartDate(  parentOli.getStartDate() );
+            oli.setCompleteDate( parentOli.getCompleteDate() );
+            oli.setParentOliId( parentOli.getId() );
+            oli.setQuantityAssigned(  0.0 );
+            oli.setActivityState( ActivityState.INSERT );
+
+            var updatedOli = orderLineItemRepository.save(oli);
+            logger.info( updatedOli.toString()  );
+        }
+    }
+
     private void delete(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse) {
         String message;
         try {
+            List<OrderLineItem> childrenOfOrder = orderLineItemRepository.findByParentOliId( orderLineItem.getId() );
+            if ( childrenOfOrder.size() > 0 ) {
+                outputError( "Deletion on " + orderLineItem + " failed because it has children.", oliResponse);
+            }
+
             Optional<OrderLineItem> orderLineItemFromRepository = orderLineItemRepository.findById( orderLineItem.getId());
 
             if (orderLineItemFromRepository.isPresent()) {
@@ -276,11 +314,13 @@ public class OrderLineItemService {
         Optional<OrderLineItem> oli = orderLineItemRepository.findById( orderId );
 
         if (oli.isEmpty() ) {
-            outputError( "Can't find order " + orderId, textResponse  );
+            outputInfo( "Can't find order " + orderId, textResponse  );
+            return;
         }
         Item item = itemRepository.findById( oli.get().getItemId());
         if ( item == null ) {
-            outputError( "Can't find item " + oli.get().getItemId() + " referenced by oli " + oli.get().getId(), textResponse  );
+            outputInfo( "Can't find item " + oli.get().getItemId() + " referenced by oli " + oli.get().getId(), textResponse  );
+            return;
         }
 
         String headerFormat = "%-26s  %8s %8s %9s %9s %7s";

@@ -4,7 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Optional;
 
 @Entity
 @Table( name = "OrderLineItem"  )
@@ -20,8 +19,10 @@ public class OrderLineItem extends EntityMaster {
 
 	//	0 when an MO Order header.  Non 0 when a detail of either MO or PO.
 	long parentOliId;
+
 	OrderState orderState = OrderState.PLANNED;
-	DebitCreditIndicator debitCreditIndicator = com.inman.entity.DebitCreditIndicator.ADDS_TO_BALANCE;
+
+	OrderType orderType = OrderType.NONE;
 
 	public OrderLineItem() {
 	}
@@ -74,15 +75,7 @@ public class OrderLineItem extends EntityMaster {
 
 	public String toString() {
 		return String.format( formatter, id, itemId, parentOliId, quantityOrdered, quantityAssigned,
-				startDate, completeDate, orderState, debitCreditIndicator, activityState );
-	}
-
-	public DebitCreditIndicator getDebitCreditIndicator() {
-		return debitCreditIndicator;
-	}
-
-	public void setDebitCreditIndicator(DebitCreditIndicator debitCreditIndicator) {
-		this.debitCreditIndicator = debitCreditIndicator;
+				startDate, completeDate, orderState, orderType, activityState );
 	}
 
 	public long getParentOliId() {
@@ -93,6 +86,19 @@ public class OrderLineItem extends EntityMaster {
 		this.parentOliId = parentOliId;
 	}
 
+	public OrderState getOrderState() {
+		return orderState;
+	}
 
+	public void setOrderState(OrderState orderState) {
+		this.orderState = orderState;
+	}
 
+	public OrderType getOrderType() {
+		return orderType;
+	}
+
+	public void setOrderType(OrderType orderType) {
+		this.orderType = orderType;
+	}
 }

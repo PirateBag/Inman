@@ -10,6 +10,7 @@
     "startDate" : "2025-0701",
     "completeDate" : "2025-0703",
     "parentOliId" : 0,
-    "debitCreditIndicator" : "ADDS_TO_BALANCE"
+    "orderState" : "PLANNED",
+    "orderType" : "MO"
   } ]
 }

@@ -10,7 +10,8 @@
     "startDate" : "2025-0711",
     "completeDate" : "2025-0712",
     "parentOliId" : 2,
-    "debitCreditIndicator" : "ADDS_TO_BALANCE"
+    "orderState" : "PLANNED",
+    "orderType" : "MO"
   }, {
     "id" : 4,
     "activityState" : "INSERT",
@@ -20,7 +21,8 @@
     "startDate" : "2025-0711",
     "completeDate" : "2025-0712",
     "parentOliId" : 2,
-    "debitCreditIndicator" : "ADDS_TO_BALANCE"
+    "orderState" : "PLANNED",
+    "orderType" : "MO"
   }, {
     "id" : 5,
     "activityState" : "INSERT",
@@ -30,6 +32,7 @@
     "startDate" : "2025-0704",
     "completeDate" : "2025-0708",
     "parentOliId" : 4,
-    "debitCreditIndicator" : "ADDS_TO_BALANCE"
+    "orderState" : "PLANNED",
+    "orderType" : "MO"
   } ]
 }

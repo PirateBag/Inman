@@ -1,0 +1,41 @@
+{
+  "responseType" : "MULTILINE",
+  "errors" : [ ],
+  "data" : [ {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "Item                         Ordered Assigned     Start  Complete   State"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "W-001                          10.00     0.00 2025-0801 2025-0803"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "   W-002                       10.00     0.00 2025-0801 2025-0803"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "   W-003                       10.00     0.00 2025-0801 2025-0803"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "   W-004                       10.00     0.00 2025-0801 2025-0803"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "   W-006                       10.00     0.00 2025-0801 2025-0803"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "   W-007                       80.00     0.00 2025-0801 2025-0803"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "   W-008                       40.00     0.00 2025-0801 2025-0803"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "   W-009                       40.00     0.00 2025-0801 2025-0803"
+  } ]
+}

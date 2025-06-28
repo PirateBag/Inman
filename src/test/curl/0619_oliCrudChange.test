@@ -5,12 +5,12 @@
 { "rows" : [
         {  "activityState" : "INSERT", "itemId" : "3", "parentOliId" : "2", "quantityOrdered" : "5", "quantityAssigned" : "0.0",
         "startDate" : "2025-0711", "completeDate" : "2025-0715", "orderState" : "PLANNED",
-        "debitCreditIndicator" : "ADDS_TO_BALANCE" },
+        "orderType" : "MO" },
         {  "activityState" : "INSERT", "itemId" : "4", "parentOliId" : "2", "quantityOrdered" : "5", "quantityAssigned" : "0.0",
         "startDate" : "2025-0711", "completeDate" : "2025-0715", "orderState" : "PLANNED",
-        "debitCreditIndicator" : "ADDS_TO_BALANCE" },
+        "orderType" : "MO" },
         {  "activityState" : "INSERT", "itemId" : "5", "parentOliId" : "4", "quantityOrdered" : "5", "quantityAssigned" : "0.0",
         "startDate" : "2025-0704", "completeDate" : "2025-0714", "orderState" : "PLANNED",
-        "debitCreditIndicator" : "ADDS_TO_BALANCE" }
+        "orderType" : "MO" }
 
 ] }

@@ -61,7 +61,7 @@ declare -a tests=(
   # Repeat 0505...
   "0509_IER;itemReport/showAllItems"
 
-#Add the missing bill of material for W-001
+   #Add the missing bill of material for W-001
   "0601_BomCrudAddMissing;bom/crud"
   "0603_IERcomplete;itemReport/explosion"
 
@@ -92,8 +92,16 @@ declare -a tests=(
   # Generate a recurse report on MO 2.
   "0621_oliReport;oli/showAll"
 
-#Verify the transaction was committed.
+  # Create new order for item 1 in "open" state.
+  "0701_oliCrud;oli/crud"
 
+  # Should see the new order, the old order #2 without components
+  # and the new order with components.
+  "0703_oliReport;oli/showAll"
+
+  #Verify that the MO explosion report returns a good error message when the
+  #Order doesn't exist.
+  "0705_oliReport;oli/showAll"
 
    )
 #   "stopTesting" \
