@@ -61,7 +61,7 @@ public class OrderLineItemService {
             LocalDate completedDate = LocalDate.parse(orderLineItem.getStartDate(), DATE_FORMATTER).plusDays(item.getLeadTime());
             orderLineItem.setCompleteDate(completedDate.format(DATE_FORMATTER));
             if (validateOrderLineItemForMOInsertion(orderLineItem, oliResponse, item) > 0) {
-                outputError("Validation on " + orderLineItem + " failed", oliResponse);
+                outputInfo("Validation on " + orderLineItem + " failed", oliResponse);
             }
 
             updatedOrderLineItem = orderLineItemRepository.save(orderLineItem);
@@ -109,19 +109,22 @@ public class OrderLineItemService {
     private void delete(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse) {
         String message;
         try {
-            List<OrderLineItem> childrenOfOrder = orderLineItemRepository.findByParentOliId( orderLineItem.getId() );
-            if ( childrenOfOrder.size() > 0 ) {
-                outputError( "Deletion on " + orderLineItem + " failed because it has children.", oliResponse);
-            }
-
             Optional<OrderLineItem> orderLineItemFromRepository = orderLineItemRepository.findById( orderLineItem.getId());
-
             if (orderLineItemFromRepository.isPresent()) {
                 orderLineItemRepository.delete(orderLineItemFromRepository.get());
             } else {
                 outputError("Unable to find " + orderLineItem, oliResponse);
             }
-            logger.info(orderLineItem.getActivityState() + " " + orderLineItemFromRepository);
+
+            if ( orderLineItem.getOrderState() == OrderState.OPEN ) {
+                outputError( "Delete on open order is prohibited.", oliResponse );
+            }
+
+            List<OrderLineItem> childrenOfOrder = orderLineItemRepository.findByParentOliId( orderLineItem.getId() );
+            if ( childrenOfOrder.size() > 0 ) {
+                outputError( "Deletion on " + orderLineItem + " failed because it has children.", oliResponse);
+            }
+
             orderLineItemFromRepository.get().setActivityState(orderLineItem.getActivityState());
             oliResponse.getData().add(orderLineItemFromRepository.get());
             orderLineItemRepository.deleteById( orderLineItem.getId());
@@ -324,7 +327,7 @@ public class OrderLineItemService {
         }
 
         String headerFormat = "%-26s  %8s %8s %9s %9s %7s";
-        String lineFormat = "%-26s  %8.2f %8.2f %9s %9s";
+        String lineFormat = "%-26s  %8.2f %8.2f %9s %9s %7s";
 
         if ( level == 0 ) {
             report = String.format( headerFormat, "Item", "Ordered", "Assigned", "Start", "Complete", "State" );
@@ -334,7 +337,7 @@ public class OrderLineItemService {
 
 
         report = String.format( lineFormat, Common.spacesForLevel( level) + item.getSummaryId(), oli.get().getQuantityOrdered(), oli.get().getQuantityAssigned(),
-                oli.get().getStartDate(), oli.get().getCompleteDate(), "Open" );
+                oli.get().getStartDate(), oli.get().getCompleteDate(), oli.get().getOrderState()  );
         textResponse.getData().add( new Text( report ) );
 
         List<OrderLineItem> childOrderLineItems = orderLineItemRepository.findByParentOliId( oli.get().getId());

@@ -103,6 +103,9 @@ declare -a tests=(
   #Order doesn't exist.
   "0705_oliReport;oli/showAll"
 
+  # Try some illegal things:
+#    Deleting order 6 which is open.
+  "0707_oliCrud;oli/crud"
    )
 #   "stopTesting" \
 declare -i passed=0

@@ -1,0 +1,8 @@
+{
+  "responseType" : null,
+  "errors" : [ {
+    "key" : 1,
+    "message" : "Delete on open order is prohibited."
+  } ],
+  "data" : [ ]
+}
