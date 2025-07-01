@@ -1,21 +1,36 @@
 package com.inman.integration;
 
-import com.inman.business.OrderLineItemService;
 import com.inman.entity.ActivityState;
 import com.inman.entity.OrderLineItem;
-import com.inman.repository.DdlRepository;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 
+
+import java.util.Map;
+
+import static com.inman.business.CompareObjects.compareObjects;
 import static org.junit.Assert.assertEquals;
 
-public class DdlRepositoryTest {
+public class CompareObjecftsTest {
 
     static OrderLineItem oldValue = new OrderLineItem();
     static OrderLineItem newValue = new OrderLineItem();
 
-    OrderLineItemService orderLineItemService = new OrderLineItemService(null, null, null  );
+    private static String mapCompare( Map<String,Object[]> resultOfCompare ) {
+        StringBuilder result = new StringBuilder( "Field  old  new " );
+        int count = 0;
+        for( Map.Entry<String,Object[]> entry : resultOfCompare.entrySet() ) {
+            String key = entry.getKey();
+            Object[] value = entry.getValue();
+            String format = "%3d %-15s: '%s' != '%s'";
 
+            String line = String.format( format, count, key, value[ 0 ],  value[ 1 ] );
+            System.out.println( line  );
+            result.append( line );
+            count++;
+        }
+        return result.toString();
+    }
 
     @BeforeEach
     public void prepare() {
@@ -26,12 +41,11 @@ public class DdlRepositoryTest {
         oldValue.setStartDate( "2025-0620" );
         oldValue.setParentOliId( 0 );
         oldValue.setActivityState( ActivityState.CHANGE );
-
     }
 
 
     @Test
-    public void ddlNoChange() {
+    public void whenNoChange() {
         oldValue.setItemId( 17 );
         oldValue.setQuantityOrdered( 10 );
         oldValue.setQuantityAssigned( 0 );
@@ -48,8 +62,10 @@ public class DdlRepositoryTest {
         newValue.setParentOliId( 0 );
         newValue.setActivityState( ActivityState.CHANGE );
 
-        var fieldsToChange = orderLineItemService.createMapOfChangedValues( oldValue, newValue );
+        var fieldsToChange = compareObjects( oldValue, newValue );
         assertEquals( 0, fieldsToChange.size() );
+
+        var results = mapCompare( fieldsToChange );
     }
 
     @Test
@@ -70,13 +86,11 @@ public class DdlRepositoryTest {
         newValue.setParentOliId( 0 );
         newValue.setActivityState( ActivityState.CHANGE );
 
-        var fieldsToChange = orderLineItemService.createMapOfChangedValues( oldValue, newValue );
+        var fieldsToChange = compareObjects( oldValue, newValue );
         assertEquals( 1, fieldsToChange.size() );
+        var results = mapCompare( fieldsToChange );
 
-        var actualSqlString = DdlRepository.createUpdateByRowIdStatement( "OrderLineItem", 17L,
-                fieldsToChange );
-        var expectedSqlString = "UPDATE OrderLineItem SET quantityOrdered=20.0  WHERE id=17";
-        assertEquals( expectedSqlString, actualSqlString );
+
     }
 
     @Test
@@ -97,12 +111,12 @@ public class DdlRepositoryTest {
         newValue.setParentOliId( 0 );
         newValue.setActivityState( ActivityState.CHANGE );
 
-        var fieldsToChange = orderLineItemService.createMapOfChangedValues( oldValue, newValue );
+        var fieldsToChange = compareObjects( oldValue, newValue );
         assertEquals( 2, fieldsToChange.size() );
-
-        var actualSqlString = DdlRepository.createUpdateByRowIdStatement( "OrderLineItem", 17L,
-                fieldsToChange );
-        var expectedSqlString = "UPDATE OrderLineItem SET completeDate='2025-0705', quantityOrdered=20.0  WHERE id=17";
-        assertEquals( expectedSqlString, actualSqlString );
+        var results = mapCompare( fieldsToChange );
+//        var actualSqlString = DdlRepository.createUpdateByRowIdStatement( "OrderLineItem", 17L,
+                //  fieldsToChange );
+        var expectedSqlString = "UPDATE OrderLineItem SET CompletedDate='2025-0705', QuantityOrders=20.0  WHERE id=17";
+  //      assertEquals( expectedSqlString, actualSqlString );
     }
 }

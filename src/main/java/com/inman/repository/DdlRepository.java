@@ -1,7 +1,6 @@
 package com.inman.repository;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceContext;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
-import java.util.Objects;
 
 @Repository
 public class DdlRepository {
@@ -24,11 +22,13 @@ public class DdlRepository {
         logger.info(sqlCommand);
         entityManager.createNativeQuery(sqlCommand).executeUpdate();
     }
-    public static String createUpdateByRowIdStatement( String tableName, long rowId, Map<String,String> fieldsToUpdate ) {
+    public static String createUpdateByRowIdStatement(String tableName, long rowId, Map<String, Object> fieldsToUpdate ) {
         StringBuilder sqlCommand = new StringBuilder( "UPDATE " + tableName + " SET "  );
         int numberOfKeys = 0;
         for ( String key : fieldsToUpdate.keySet()) {
-            sqlCommand.append(key).append("=").append(fieldsToUpdate.get(key)).append(++numberOfKeys < fieldsToUpdate.size() ? ", " : " ");
+            Object objectValue = fieldsToUpdate.get(key);
+            String stringValue = ( objectValue instanceof String ) ? ( String ) "'" + objectValue + "'" : objectValue.toString();
+            sqlCommand.append(key).append("=").append(stringValue).append(++numberOfKeys < fieldsToUpdate.size() ? ", " : " ");
         }
         sqlCommand.append(" WHERE id=").append(rowId);
         logger.info(sqlCommand.toString());

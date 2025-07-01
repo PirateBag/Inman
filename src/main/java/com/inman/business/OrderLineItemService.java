@@ -6,7 +6,6 @@ import com.inman.model.request.OrderLineItemRequest;
 import com.inman.model.response.*;
 import com.inman.model.rest.ErrorLine;
 import com.inman.repository.BomPresentRepository;
-import com.inman.repository.DdlRepository;
 import com.inman.repository.ItemRepository;
 import com.inman.repository.OrderLineItemRepository;
 import org.slf4j.Logger;
@@ -22,23 +21,20 @@ import java.util.*;
 import static com.inman.controller.OrderLineItemController.OrderLineItem_AllOrders;
 import static com.inman.controller.Utility.DATE_FORMATTER;
 import static com.inman.controller.Utility.normalize;
-import static com.inman.repository.DdlRepository.createUpdateByRowIdStatement;
 
 @Service
 public class OrderLineItemService {
     private static final Logger logger = LoggerFactory.getLogger(OrderLineItemService.class);
     private final ItemRepository itemRepository;
     private final OrderLineItemRepository orderLineItemRepository;
-    private final DdlRepository ddlRepository;
     private final BomPresentRepository bomPresentRepository;
 
 
     @Autowired
     public OrderLineItemService(ItemRepository itemRepository, OrderLineItemRepository orderLineItemRepository,
-                                DdlRepository ddlRepository, BomPresentRepository bomPresentRepository ) {
+                                BomPresentRepository bomPresentRepository ) {
         this.itemRepository = itemRepository;
         this.orderLineItemRepository = orderLineItemRepository;
-        this.ddlRepository = ddlRepository;
         this.bomPresentRepository = bomPresentRepository;
     }
 
@@ -53,7 +49,7 @@ public class OrderLineItemService {
         throw new RuntimeException(message);
     }
 
-    private void insert(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse, int lineNumber) {
+    private void insert(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse ) {
         String message;
         OrderLineItem updatedOrderLineItem;
         try {
@@ -84,7 +80,7 @@ public class OrderLineItemService {
     /**
      * Add orderLineItems to the parent owner based on the BOM of the item associated with the parent.
      *
-     * @param id of the newly inserted order.k
+     * @param parentOli parent of the newly inserted order.k
      * @param oliResponse final response message, modified by side effect.
      *
      */
@@ -121,7 +117,7 @@ public class OrderLineItemService {
             }
 
             List<OrderLineItem> childrenOfOrder = orderLineItemRepository.findByParentOliId( orderLineItem.getId() );
-            if ( childrenOfOrder.size() > 0 ) {
+            if (!childrenOfOrder.isEmpty()) {
                 outputError( "Deletion on " + orderLineItem + " failed because it has children.", oliResponse);
             }
 
@@ -136,38 +132,6 @@ public class OrderLineItemService {
         }
     }
 
-    private void change(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse) {
-        String message;
-        try {
-            Optional<OrderLineItem> orderLineItemFromRepository = orderLineItemRepository.findById(orderLineItem.getId());
-            if (orderLineItemFromRepository.isPresent()) {
-                orderLineItemRepository.delete(orderLineItemFromRepository.get());
-            } else {
-                outputError("Unable to find " + orderLineItem, oliResponse);
-            }
-
-            if (orderLineItem.getItemId() != orderLineItemFromRepository.get().getItemId()) {
-                outputError("Item Changed in order.  Try delete/insert instead", oliResponse);
-            }
-
-            Map<String,String> fieldsToUpdate =
-                    createMapFromOldAndNew( orderLineItemFromRepository.get(), orderLineItem, oliResponse );
-            logger.info( "Map is: " + fieldsToUpdate );
-
-            var sqlCommand = createUpdateByRowIdStatement( "order_line_item", 1, fieldsToUpdate );
-            logger.info( "Update Statement: " + sqlCommand );
-            ddlRepository.executeDynamicDML( sqlCommand );
-            logger.info( "Update completed. " + sqlCommand );
-            oliResponse.getData().add(orderLineItem);
-        } catch (DataIntegrityViolationException dataIntegrityViolationException) {
-            message = "Unable to " + orderLineItem.getActivityState() + " " + orderLineItem + ":" +
-                    Utility.generateErrorMessageFrom(dataIntegrityViolationException);
-            outputError(message, oliResponse);
-        } catch (Exception e) {
-            logger.error( "Unexpected exception " + e.getMessage() );
-            throw new RuntimeException(e);
-        }
-    }
 
     private void changeViaJpa(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse) {
         String message;
@@ -193,7 +157,7 @@ public class OrderLineItemService {
                     Utility.generateErrorMessageFrom(dataIntegrityViolationException);
             outputError(message, oliResponse);
         } catch (Exception e) {
-            logger.error( "Unexpected exception " + e.getMessage() );
+            logger.error("Unexpected exception {}", e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -227,31 +191,47 @@ public class OrderLineItemService {
         return numberOfMessages;
     }
 
-    public  Map<String,String> createMapFromOldAndNew( OrderLineItem oldOli,
-            OrderLineItem newOli, ResponsePackage<OrderLineItem> oliResponse  ) {
-//        //	0 when an MO Order header.  Non 0 when a detail of either MO or PO.
-//        int parentOliId;
-//        OrderState orderState = OrderState.PLANNED;
-//        DebitCreditIndicator debitCreditIndicator = com.inman.entity.DebitCreditIndicator.ADDS_TO_BALANCE;
-        SortedMap<String,String> rValue = new TreeMap<String,String>();
+    /**
+     * Compare two orderLineItem objects.  Compare each fields, and create a map of the name of any field that changed
+     * and its new value.
+     *
+     * @param oldOli One of the two OLIs to compare.
+     * @param newOli The other OLI to compare
+     * @return of field names (key) and corresponding Object
+     */
+    public  Map<String,Object> createMapOfChangedValues(OrderLineItem oldOli,
+                                                        OrderLineItem newOli ) {
+        SortedMap<String,Object> rValue = new TreeMap<>();
 
         if ( oldOli.getId() != newOli.getId() ) {
-            outputInfo( "Order Id is different",  oliResponse );
+            rValue.put( "id", newOli.getId() );
         }
         if ( oldOli.getItemId() != newOli.getItemId() ) {
-            outputInfo( "Item Ids are not the same.", oliResponse );
+            rValue.put( "itemId", newOli.getItemId() );
         }
         if ( oldOli.getQuantityOrdered() != newOli.getQuantityOrdered() ) {
-            rValue.put( "quantity_ordered", String.valueOf( newOli.getQuantityOrdered() ) );
+            rValue.put( "quantityOrdered", newOli.getQuantityOrdered()  );
         }
         if ( oldOli.getQuantityAssigned() != newOli.getQuantityAssigned() ) {
-            rValue.put( "quantity_assigned", String.valueOf( newOli.getQuantityAssigned() ) );
+            rValue.put(  "quantityAssigned", newOli.getQuantityAssigned() );
         }
         if ( normalize( oldOli.getStartDate()).compareTo( normalize( newOli.getStartDate() ) ) != 0 ) {
-            rValue.put( "start_date", "'" + newOli.getStartDate() + "'");
+            rValue.put( "startDate", newOli.getStartDate() );
         }
         if ( normalize( oldOli.getCompleteDate()).compareTo( normalize(newOli.getCompleteDate()) ) != 0 ) {
-            rValue.put( "Complete_date", "'" + newOli.getCompleteDate() + "'" );
+            rValue.put( "completeDate", newOli.getCompleteDate() );
+        }
+
+        if ( oldOli.getParentOliId() != newOli.getParentOliId() ) {
+            rValue.put( "parentOliId", newOli.getParentOliId() );
+        }
+
+        if ( oldOli.getOrderState() != newOli.getOrderState() ) {
+            rValue.put( "orderState", newOli.getOrderState() );
+        }
+
+        if ( oldOli.getOrderType() != newOli.getOrderType() ) {
+            rValue.put( "orderType", newOli.getOrderType() );
         }
         return rValue;
     }
@@ -299,7 +279,7 @@ public class OrderLineItemService {
             logger.info("{} on {}", orderLineItem.getActivityState(), orderLineItem);
 
             if (orderLineItem.getActivityState() == ActivityState.INSERT) {
-                insert(orderLineItem, responsePackage, 1);
+                insert(orderLineItem, responsePackage );
             } else if (orderLineItem.getActivityState() == ActivityState.DELETE ) {
                 delete(orderLineItem, responsePackage);
             } else if ( orderLineItem.getActivityState() == ActivityState.CHANGE ) {

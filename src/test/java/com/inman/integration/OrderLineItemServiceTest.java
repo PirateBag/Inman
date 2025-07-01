@@ -3,7 +3,6 @@ package com.inman.integration;
 import com.inman.business.OrderLineItemService;
 import com.inman.entity.*;
 import com.inman.model.response.ResponsePackage;
-import com.inman.repository.ItemRepository;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -14,7 +13,7 @@ public class OrderLineItemServiceTest {
     static OrderLineItem oldValue = new OrderLineItem();
     static OrderLineItem newValue = new OrderLineItem();
 
-    OrderLineItemService orderLineItemService = new OrderLineItemService((ItemRepository) null, null );
+    OrderLineItemService orderLineItemService = new OrderLineItemService(null, null, null );
     static Item testItem = new Item();
 
     @BeforeEach
@@ -25,7 +24,6 @@ public class OrderLineItemServiceTest {
         oldValue.setCompleteDate( "" );
         oldValue.setStartDate( "2025-0620" );
         oldValue.setParentOliId( 0 );
-        oldValue.setDebitCreditIndicator( DebitCreditIndicator.ADDS_TO_BALANCE );
         oldValue.setActivityState( ActivityState.CHANGE );
 
     }
@@ -54,10 +52,9 @@ public class OrderLineItemServiceTest {
 
         int numberOfMessages = orderLineItemService.validateOrderLineItemForMOInsertion( oldValue, responsePackage, testItem );
 
-        int expectedNumberOfMessages = 2;
+        int expectedNumberOfMessages = 1;
         assertEquals(expectedNumberOfMessages, numberOfMessages);
         String expectedErrorText = """
-        1    Order has a parent item:     1   17      86  10.00   0.00  2025-0620  2025-0701 PLANNED ADDS_TO_BALANCE NONE
         1    Item is is not MANufactured: 0000: null,null     0.00 null   0   0
         """;
 
@@ -77,7 +74,7 @@ public class OrderLineItemServiceTest {
         int expectedNumberOfMessages = 2;
         assertEquals(expectedNumberOfMessages, numberOfMessages);
         String expectedErrorText = """
-        1    Order Quantity    0   17       0   0.00   1.00  2025-0620  2025-0701 PLANNED ADDS_TO_BALANCE NONE must be greater than 0.
+        1    Order Quantity    0   17       0   0.00   1.00  2025-0620  2025-0701 PLANNED NONE NONE must be greater than 0.
         1    Quantity Assigned must be zero.
         """;
 
@@ -128,10 +125,10 @@ public class OrderLineItemServiceTest {
         """;
         assertEquals( expectedErrorText, responsePackage.getErrorsTextAsString() );
 
-        String actualMapString = orderLineItemService.createMapFromOldAndNew( oldValue, newValue, responsePackage ).toString() + "\n";
+        String actualMapString = orderLineItemService.createMapOfChangedValues( oldValue, newValue ).toString() + "\n";
 
         String expectedMapString = """
-        {QuantityOrders=20.0}
+        {id=2, quantityOrdered=20.0}
         """;
         assertEquals( expectedMapString, actualMapString );
     }
@@ -144,27 +141,21 @@ public class OrderLineItemServiceTest {
         oldValue.setItemId( 1 );
         newValue.setItemId( testItem.getId());
 
-        var actualMap = orderLineItemService.createMapFromOldAndNew( oldValue, newValue, responsePackage );
+        var actualMap = orderLineItemService.createMapOfChangedValues( oldValue, newValue );
 
-        String expectedErrorText =
-        """
-        1    Order Id is different
-        1    Item Ids are not the same.
-        """;
-        assertEquals( expectedErrorText, responsePackage.getErrorsTextAsString() );
-        assertEquals( 0, actualMap.size() );
+        assertEquals( 2, actualMap.size() );
+        assertEquals( 2L, actualMap.get( "id" ) );
     }
 
     @Test
     public void ddlNoChange() {
-        ResponsePackage<OrderLineItem> responsePackage = new ResponsePackage<>();
+        oldValue.setId( 2 );
         oldValue.setItemId( 17 );
         oldValue.setQuantityOrdered( 10 );
         oldValue.setQuantityAssigned( 0 );
         oldValue.setCompleteDate( "" );
         oldValue.setStartDate( "2025-0620" );
         oldValue.setParentOliId( 0 );
-        oldValue.setDebitCreditIndicator( DebitCreditIndicator.ADDS_TO_BALANCE );
         oldValue.setActivityState( ActivityState.CHANGE );
 
         newValue.setItemId( 17 );
@@ -173,10 +164,9 @@ public class OrderLineItemServiceTest {
         newValue.setCompleteDate( "" );
         newValue.setStartDate( "2025-0620" );
         newValue.setParentOliId( 0 );
-        newValue.setDebitCreditIndicator( DebitCreditIndicator.ADDS_TO_BALANCE );
         newValue.setActivityState( ActivityState.CHANGE );
 
-        var fieldsToChange = orderLineItemService.createMapFromOldAndNew( oldValue, newValue, responsePackage );
+        var fieldsToChange = orderLineItemService.createMapOfChangedValues( oldValue, newValue );
         assertEquals( 0, fieldsToChange.size() );
     }
 }
