@@ -1,14 +1,9 @@
 package com.inman.business;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.stereotype.Component;
-
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-public class CompareObjects {
-    private final ObjectMapper objectMapper = new ObjectMapper();
+public class ReflectionHelpers {
 
     /**
      * Compares two objects of the same type and returns a map of field differences.
@@ -52,6 +47,48 @@ public class CompareObjects {
         }
 
         return differences;
+    }
+
+    /**
+     * Return a list of field names for a given class:
+     * public members are ommitted.
+     * public members from the parent are included.
+     * Confusing:  Look up differences betwees the Class. getField and getDeclaredFields.
+     *
+     * @param object object with fields.
+     * @return Set with field names.
+     */
+    public static <T> Set<String> setOfFields(T object ) {
+        Set<String> rValue = new TreeSet<>();
+
+        if (object == null ) {
+            throw new IllegalArgumentException("object must be non-null");
+        }
+        Class<?> clazz = object.getClass();
+
+        for (Field field : clazz.getDeclaredFields()) {
+            field.setAccessible(true);
+
+            try {
+                clazz.getField(field.getName());
+            } catch (NoSuchFieldException e) {
+                //  This is OK.
+                //  If field is not accessible through getName(), then add it.
+                rValue.add(field.getName());
+            }
+        }
+
+        Class<?> superClass = clazz.getSuperclass();
+
+        try {
+            superClass.getDeclaredField( "id" );
+            rValue.add( "id" );
+            superClass.getDeclaredField( "activityState" );
+            rValue.add( "activityState" );
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        }
+        return rValue;
     }
 }
 

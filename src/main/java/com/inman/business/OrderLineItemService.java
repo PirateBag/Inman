@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.*;
 
+import static com.inman.business.ReflectionHelpers.compareObjects;
 import static com.inman.controller.OrderLineItemController.OrderLineItem_AllOrders;
 import static com.inman.controller.Utility.DATE_FORMATTER;
 import static com.inman.controller.Utility.normalize;
@@ -43,7 +44,7 @@ public class OrderLineItemService {
         responsePackage.getErrors().add(new ErrorLine(1, message));
     }
 
-    private void outputError(String message, ResponsePackage<?> responsePackage) {
+    private void outputErrorAndThrow(String message, ResponsePackage<?> responsePackage) {
         logger.info(message);
         responsePackage.getErrors().add(new ErrorLine(1, message));
         throw new RuntimeException(message);
@@ -70,9 +71,9 @@ public class OrderLineItemService {
         } catch (DataIntegrityViolationException dataIntegrityViolationException) {
             message = "Unable to insert " + orderLineItem + ":" +
                     Utility.generateErrorMessageFrom(dataIntegrityViolationException);
-            outputError(message, oliResponse);
+            outputErrorAndThrow(message, oliResponse);
         } catch (RuntimeException runtimeException) {
-            outputError( "Unable to insert " + orderLineItem + ":" + runtimeException.getMessage(), oliResponse);
+            outputErrorAndThrow( "Unable to insert " + orderLineItem + ":" + runtimeException.getMessage(), oliResponse);
         }
 
     }
@@ -86,7 +87,7 @@ public class OrderLineItemService {
      */
     private void addLineItemsToOrder( OrderLineItem parentOli , ResponsePackage<OrderLineItem> oliResponse) {
         BomPresent[] childrenOfItem = bomPresentRepository.findByParentId( parentOli.getItemId() );
-
+        int count = 1;
         for ( BomPresent bomPresent : childrenOfItem ) {
             OrderLineItem oli = new OrderLineItem();
             oli.setItemId( bomPresent.getChildId() );
@@ -99,7 +100,9 @@ public class OrderLineItemService {
 
             var updatedOli = orderLineItemRepository.save(oli);
             logger.info( updatedOli.toString()  );
+            count++;
         }
+        outputInfo( "Added " + count + " items to order", oliResponse);
     }
 
     private void delete(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse) {
@@ -109,16 +112,16 @@ public class OrderLineItemService {
             if (orderLineItemFromRepository.isPresent()) {
                 orderLineItemRepository.delete(orderLineItemFromRepository.get());
             } else {
-                outputError("Unable to find " + orderLineItem, oliResponse);
+                outputErrorAndThrow("Unable to find " + orderLineItem, oliResponse);
             }
 
             if ( orderLineItem.getOrderState() == OrderState.OPEN ) {
-                outputError( "Delete on open order is prohibited.", oliResponse );
+                outputErrorAndThrow( "Delete on open order is prohibited.", oliResponse );
             }
 
             List<OrderLineItem> childrenOfOrder = orderLineItemRepository.findByParentOliId( orderLineItem.getId() );
             if (!childrenOfOrder.isEmpty()) {
-                outputError( "Deletion on " + orderLineItem + " failed because it has children.", oliResponse);
+                outputErrorAndThrow( "Deletion on " + orderLineItem + " failed because it has children.", oliResponse);
             }
 
             orderLineItemFromRepository.get().setActivityState(orderLineItem.getActivityState());
@@ -128,7 +131,7 @@ public class OrderLineItemService {
         } catch (DataIntegrityViolationException dataIntegrityViolationException) {
             message = "Unable to " + orderLineItem.getActivityState() + " " + orderLineItem + ":" +
                     Utility.generateErrorMessageFrom(dataIntegrityViolationException);
-            outputError(message, oliResponse);
+            outputErrorAndThrow(message, oliResponse);
         }
     }
 
@@ -139,15 +142,24 @@ public class OrderLineItemService {
         try {
             Optional<OrderLineItem> orderLineItemFromRepository = orderLineItemRepository.findById(orderLineItem.getId());
 
-            if (orderLineItemFromRepository.isPresent()) {
-                if (orderLineItem.getItemId() != orderLineItemFromRepository.get().getItemId()) {
-                    outputError("Item Changed in order.  Try delete/insert instead", oliResponse);
+            if (orderLineItemFromRepository.isEmpty() ) {
+                outputErrorAndThrow("Unable to find order " + orderLineItem, oliResponse);
+            }
+
+            var changeMap = ReflectionHelpers.compareObjects( orderLineItemFromRepository.get(), orderLineItem );
+            logger.info("Number Of Changes: {}", changeMap.size() );
+            if ( changeMap.isEmpty() ) {
+                outputErrorAndThrow("Order does not appear to be changed:  " + orderLineItem, oliResponse);
+            }
+
+            if ( orderLineItemFromRepository.get().getOrderState() == OrderState.OPEN
+                && orderLineItem.getItemId() != orderLineItemFromRepository.get().getItemId()) {
+                        outputErrorAndThrow("Item Changed in Open order.  Try delete/insert instead", oliResponse);
                 }
-                var countOfChanges = updateOldFromNew( orderLineItemFromRepository.get(), orderLineItem, oliResponse );
-                logger.info("Number Of Changes: {}", countOfChanges);
-                orderLineItemRepository.save(orderLineItemFromRepository.get());
-            } else {
-                outputError( "Unable to find " + orderLineItem, oliResponse);
+
+            orderLineItemRepository.save(orderLineItemFromRepository.get());
+            if ( changeMap.get( "orderStatus") != null ) {
+                updateChildrenOfOrder( orderLineItemFromRepository.get(), orderLineItem, oliResponse ) ;
             }
 
             orderLineItemFromRepository.get().setActivityState(orderLineItem.getActivityState());
@@ -155,11 +167,88 @@ public class OrderLineItemService {
         } catch (DataIntegrityViolationException dataIntegrityViolationException) {
             message = "Unable to " + orderLineItem.getActivityState() + " " + orderLineItem + ":" +
                     Utility.generateErrorMessageFrom(dataIntegrityViolationException);
-            outputError(message, oliResponse);
+            outputErrorAndThrow(message, oliResponse);
         } catch (Exception e) {
             logger.error("Unexpected exception {}", e.getMessage());
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Identify what type of orderStatus changes were made and
+     * planned->open:  Create child items.
+     * planned->closed:
+     * open->planned:  delete child items.
+     * open->close: update children with new order status.
+     * close->plan:  delete child items.
+     * close->open update children with new order state
+     *
+     * @param oldOli
+     * @param newOli
+     * @param oliResponse
+     */
+    private void updateChildrenOfOrder(OrderLineItem oldOli, OrderLineItem newOli, ResponsePackage<OrderLineItem> oliResponse) {
+        if ( oldOli.getOrderState() == newOli.getOrderState() ) {
+            throw new RuntimeException( "No change in orderState " );
+        }
+
+        if ( oldOli.getOrderState() == OrderState.PLANNED ) {
+            if ( newOli.getOrderState() == OrderState.OPEN ) {
+                addLineItemsToOrder( newOli,  oliResponse);
+            }
+            if ( newOli.getOrderState() == OrderState.CLOSED ) {
+                throw new RuntimeException( "Cannot change order state from planned to close.  Try delete. " );
+            }
+        }
+
+        if ( oldOli.getOrderState() == OrderState.OPEN ) {
+            if ( newOli.getOrderState() == OrderState.CLOSED ) {
+                updateLineItemsWithNewState( newOli, oliResponse );
+            }
+            if ( newOli.getOrderState() == OrderState.PLANNED ) {
+                deleteChildLineItems( newOli, oliResponse );
+            }
+        }
+
+        if ( oldOli.getOrderState() == OrderState.CLOSED ) {
+            if ( newOli.getOrderState() == OrderState.PLANNED  ) {
+                deleteChildLineItems( newOli, oliResponse );
+            }
+            if ( newOli.getOrderState() == OrderState.OPEN ) {
+                updateLineItemsWithNewState( newOli, oliResponse );
+            }
+        }
+
+
+    }
+
+    private void deleteChildLineItems(OrderLineItem newOli, ResponsePackage<OrderLineItem> oliResponse) {
+            List<OrderLineItem>  lineItems = orderLineItemRepository.findByParentOliId( newOli.getParentOliId() );
+            int count = 1;
+            for ( OrderLineItem oli : lineItems ) {
+                oli.setOrderState( newOli.getOrderState() );
+                orderLineItemRepository.delete(oli);
+                count++;
+            }
+            outputInfo( "Updated " + count + "line items to state " + newOli.getOrderState(), oliResponse );
+    }
+
+    /**
+     * Visit each of the components of the newOli and change state to the same state as the parent.
+     *
+     * @param newOli
+     * @param oliResponse
+     */
+    private void updateLineItemsWithNewState( OrderLineItem newOli, ResponsePackage<OrderLineItem> oliResponse ) {
+        List<OrderLineItem>  lineItems = orderLineItemRepository.findByParentOliId( newOli.getParentOliId() );
+        int count = 1;
+       for ( OrderLineItem oli : lineItems ) {
+           oli.setOrderState( newOli.getOrderState() );
+           orderLineItemRepository.save(oli);
+           count++;
+       }
+
+       outputInfo( "Updated " + count + "line items to state " + newOli.getOrderState(), oliResponse );
     }
 
 
@@ -201,37 +290,11 @@ public class OrderLineItemService {
      */
     public  Map<String,Object> createMapOfChangedValues(OrderLineItem oldOli,
                                                         OrderLineItem newOli ) {
-        SortedMap<String,Object> rValue = new TreeMap<>();
+        Map<String,Object[]> completeCompare = compareObjects( oldOli, newOli );
+        Map<String,Object> rValue= new TreeMap<>();
 
-        if ( oldOli.getId() != newOli.getId() ) {
-            rValue.put( "id", newOli.getId() );
-        }
-        if ( oldOli.getItemId() != newOli.getItemId() ) {
-            rValue.put( "itemId", newOli.getItemId() );
-        }
-        if ( oldOli.getQuantityOrdered() != newOli.getQuantityOrdered() ) {
-            rValue.put( "quantityOrdered", newOli.getQuantityOrdered()  );
-        }
-        if ( oldOli.getQuantityAssigned() != newOli.getQuantityAssigned() ) {
-            rValue.put(  "quantityAssigned", newOli.getQuantityAssigned() );
-        }
-        if ( normalize( oldOli.getStartDate()).compareTo( normalize( newOli.getStartDate() ) ) != 0 ) {
-            rValue.put( "startDate", newOli.getStartDate() );
-        }
-        if ( normalize( oldOli.getCompleteDate()).compareTo( normalize(newOli.getCompleteDate()) ) != 0 ) {
-            rValue.put( "completeDate", newOli.getCompleteDate() );
-        }
-
-        if ( oldOli.getParentOliId() != newOli.getParentOliId() ) {
-            rValue.put( "parentOliId", newOli.getParentOliId() );
-        }
-
-        if ( oldOli.getOrderState() != newOli.getOrderState() ) {
-            rValue.put( "orderState", newOli.getOrderState() );
-        }
-
-        if ( oldOli.getOrderType() != newOli.getOrderType() ) {
-            rValue.put( "orderType", newOli.getOrderType() );
+        for ( String key : completeCompare.keySet() ) {
+            rValue.put( key, completeCompare.get( key )[0] );
         }
         return rValue;
     }
@@ -248,9 +311,6 @@ public class OrderLineItemService {
         int countOfChanges = 0;
         if ( oldOli.getId() != newOli.getId() ) {
             outputInfo( "Order Id is different",  oliResponse );
-        }
-        if ( oldOli.getItemId() != newOli.getItemId() ) {
-            outputInfo( "Item Ids are not the same.", oliResponse );
         }
         if ( oldOli.getQuantityOrdered() != newOli.getQuantityOrdered() ) {
             countOfChanges++;

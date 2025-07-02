@@ -80,8 +80,9 @@ declare -a tests=(
   #Make sure W-001 is really dead...
   "0613_oliAfter001Delete;oli/showAll"
 
-#Change the quantity ordered of order2 to 5.
+   #Change the quantity ordered of order2 to 5.
   "0615_oliCrudChange;oli/crud"
+  "stopTesting"
 
   "0617_oliReport;oli/showAll"
 

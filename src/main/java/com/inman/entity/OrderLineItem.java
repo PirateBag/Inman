@@ -1,8 +1,11 @@
 package com.inman.entity;
 
+import com.inman.business.ReflectionHelpers;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Set;
 
 
 @Entity
@@ -11,6 +14,8 @@ public class OrderLineItem extends EntityMaster {
 	public static String formatter = "%4d %4d %7d %6.2f %6.2f %10s %10s %4s %4s %4s";
 	public static String header = String.format( "%-4s %-4s %8s %8s %8s %10s %10s %4s %4s %4s",
 			"Id", "Item", "ParentId", "Ordered", "Assigned", "Start", "Complete", "Stat", "DbCr", "Activity");
+	public static Set<String> fieldNames;
+
 	long itemId;
 	double quantityOrdered = 0.0;
 	double quantityAssigned = 0.0;
@@ -74,7 +79,7 @@ public class OrderLineItem extends EntityMaster {
 	}
 
 	public String toString() {
-		return String.format( formatter, id, itemId, parentOliId, quantityOrdered, quantityAssigned,
+		return String.format( formatter,id, itemId, parentOliId, quantityOrdered, quantityAssigned,
 				startDate, completeDate, orderState, orderType, activityState );
 	}
 
@@ -100,5 +105,12 @@ public class OrderLineItem extends EntityMaster {
 
 	public void setOrderType(OrderType orderType) {
 		this.orderType = orderType;
+	}
+
+	public static Set<String> getFieldNames() {
+		if ( null == fieldNames ) {
+			fieldNames = ReflectionHelpers.setOfFields(OrderLineItem.class);
+		}
+		return fieldNames;
 	}
 }

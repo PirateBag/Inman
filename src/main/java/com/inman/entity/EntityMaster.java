@@ -7,10 +7,10 @@ import jakarta.persistence.*;
 public abstract class EntityMaster {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long id;
+    long id;
 
     @Transient
-    protected ActivityState activityState = ActivityState.NONE;
+    ActivityState activityState = ActivityState.NONE;
 
     public EntityMaster() {
     }

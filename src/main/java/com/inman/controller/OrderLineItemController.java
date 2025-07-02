@@ -51,8 +51,9 @@ public class OrderLineItemController {
     public ResponseEntity<?> orderLineItemCrud(@RequestBody OrderLineItemRequest crudBatch ) {
         ResponsePackage<OrderLineItem> responsePackage = new ResponsePackage<>();
         try {
-             responsePackage= orderLineItemService.applyCrud( crudBatch, responsePackage  );
+            responsePackage= orderLineItemService.applyCrud( crudBatch, responsePackage  );
             responsePackage.setResponseType(ResponseType.MULTILINE );
+
             if (responsePackage.getData().isEmpty()) {
                 var message = "No items were processed, either due to errors or no actionable inputs.";
                 logger.info(message);

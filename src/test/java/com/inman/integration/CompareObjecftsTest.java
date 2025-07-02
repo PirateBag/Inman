@@ -1,5 +1,6 @@
 package com.inman.integration;
 
+import com.inman.business.ReflectionHelpers;
 import com.inman.entity.ActivityState;
 import com.inman.entity.OrderLineItem;
 import org.junit.Test;
@@ -8,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 import java.util.Map;
 
-import static com.inman.business.CompareObjects.compareObjects;
+import static com.inman.business.ReflectionHelpers.compareObjects;
 import static org.junit.Assert.assertEquals;
 
 public class CompareObjecftsTest {
@@ -25,7 +26,6 @@ public class CompareObjecftsTest {
             String format = "%3d %-15s: '%s' != '%s'";
 
             String line = String.format( format, count, key, value[ 0 ],  value[ 1 ] );
-            System.out.println( line  );
             result.append( line );
             count++;
         }
@@ -118,5 +118,33 @@ public class CompareObjecftsTest {
                 //  fieldsToChange );
         var expectedSqlString = "UPDATE OrderLineItem SET CompletedDate='2025-0705', QuantityOrders=20.0  WHERE id=17";
   //      assertEquals( expectedSqlString, actualSqlString );
+    }
+
+    @Test
+    public void setOfFields() {
+        var setOfFields = ReflectionHelpers.setOfFields( newValue );
+
+        assertEquals( 10, setOfFields.size() );
+
+        String expected = """
+                activityState
+                completeDate
+                id
+                itemId
+                orderState
+                orderType
+                parentOliId
+                quantityAssigned
+                quantityOrdered
+                startDate
+                """;
+
+        StringBuffer actual = new StringBuffer();
+
+        for ( String key : setOfFields ) {
+            actual.append( key ).append( '\n' );
+        }
+        assertEquals( expected, actual.toString() );
+
     }
 }
