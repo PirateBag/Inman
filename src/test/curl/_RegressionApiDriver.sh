@@ -82,8 +82,7 @@ declare -a tests=(
 
    #Change the quantity ordered of order2 to 5.
   "0615_oliCrudChange;oli/crud"
-  "stopTesting"
-
+  
   "0617_oliReport;oli/showAll"
 
   #Assign some components manually to an order for testing.

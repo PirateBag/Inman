@@ -157,13 +157,17 @@ public class OrderLineItemService {
                         outputErrorAndThrow("Item Changed in Open order.  Try delete/insert instead", oliResponse);
                 }
 
-            orderLineItemRepository.save(orderLineItemFromRepository.get());
-            if ( changeMap.get( "orderStatus") != null ) {
+//            var countOfChanges = ReflectionHelpers.applyMapOfChanges( changeMap );
+//            outputInfo( "Number Of Changes Applied: " + countOfChanges, oliResponse);
+//            logger.info( orderLineItemFromRepository.get().toString()  );
+
+            orderLineItemRepository.save(orderLineItem);
+            if ( changeMap.get( "orderState") != null ) {
                 updateChildrenOfOrder( orderLineItemFromRepository.get(), orderLineItem, oliResponse ) ;
             }
 
-            orderLineItemFromRepository.get().setActivityState(orderLineItem.getActivityState());
-            oliResponse.getData().add(orderLineItemFromRepository.get() );
+//            orderLineItemFromRepository.get().setActivityState(orderLineItem.getActivityState());
+            oliResponse.getData().add(orderLineItem  );
         } catch (DataIntegrityViolationException dataIntegrityViolationException) {
             message = "Unable to " + orderLineItem.getActivityState() + " " + orderLineItem + ":" +
                     Utility.generateErrorMessageFrom(dataIntegrityViolationException);

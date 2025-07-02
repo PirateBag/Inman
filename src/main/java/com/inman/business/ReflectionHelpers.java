@@ -90,5 +90,15 @@ public class ReflectionHelpers {
         }
         return rValue;
     }
+
+    public static int  applyMapOfChanges(Map<String, Object[]> changeMap) {
+        int count = 1;
+        for (Map.Entry<String, Object[]> entry : changeMap.entrySet()) {
+            Object[] oldValue = entry.getValue();
+            oldValue[ 0 ] = oldValue[ 1 ];
+            count++;
+        }
+        return count;
+    }
 }
 

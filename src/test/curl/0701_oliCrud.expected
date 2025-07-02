@@ -1,6 +1,9 @@
 {
   "responseType" : "MULTILINE",
-  "errors" : [ ],
+  "errors" : [ {
+    "key" : 1,
+    "message" : "Added 8 items to order"
+  } ],
   "data" : [ {
     "id" : 6,
     "activityState" : "INSERT",
