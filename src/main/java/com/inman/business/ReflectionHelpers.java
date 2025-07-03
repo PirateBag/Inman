@@ -58,8 +58,8 @@ public class ReflectionHelpers {
      * @param object object with fields.
      * @return Set with field names.
      */
-    public static <T> Set<String> setOfFields(T object ) {
-        Set<String> rValue = new TreeSet<>();
+    public static <T> Map<String, Field> setOfFields(T object ) {
+        Map<String, Field> rValue = new TreeMap<>();
 
         if (object == null ) {
             throw new IllegalArgumentException("object must be non-null");
@@ -74,17 +74,17 @@ public class ReflectionHelpers {
             } catch (NoSuchFieldException e) {
                 //  This is OK.
                 //  If field is not accessible through getName(), then add it.
-                rValue.add(field.getName());
+                rValue.put(field.getName(), field);
             }
         }
 
         Class<?> superClass = clazz.getSuperclass();
 
         try {
-            superClass.getDeclaredField( "id" );
-            rValue.add( "id" );
-            superClass.getDeclaredField( "activityState" );
-            rValue.add( "activityState" );
+            var  field =superClass.getDeclaredField( "id" );
+            rValue.put( "id", field );
+            field = superClass.getDeclaredField( "activityState" );
+            rValue.put( "activityState", field );
         } catch (NoSuchFieldException e) {
             throw new RuntimeException(e);
         }

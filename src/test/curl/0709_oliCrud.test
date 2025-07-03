@@ -1,4 +1,3 @@
-Create a new order for W-001 in thhe open state, which should present components also.
  6    1       0  10.00   0.00  2025-0801  2025-0803 OPEN   MO INSERT
  7    2       6  10.00   0.00  2025-0801  2025-0803 OPEN   MO INSERT
  8    3       6  10.00   0.00  2025-0801  2025-0803 OPEN   MO INSERT
@@ -8,10 +7,13 @@ Create a new order for W-001 in thhe open state, which should present components
 12    8       6  40.00   0.00  2025-0801  2025-0803 OPEN   MO INSERT
 13    9       6  40.00   0.00  2025-0801  2025-0803 OPEN   MO INSERT
 
+Change order 6 from Open to Planned.  Should be rejected due to presence of childdren.
+
+
 ===JSON===
 
 { "rows" : [
-        {  "activityState" : "DELETE",  "id" : 6, "itemId" : "1", "parentOliId" : "0", "quantityOrdered" : "10", "quantityAssigned" : "0.0",
-        "startDate" : "2025-0801",  "orderState" : "OPEN",
+        {  "activityState" : "CHANGE",  "id" : 6, "itemId" : "1", "parentOliId" : "0", "quantityOrdered" : "10", "quantityAssigned" : "0.0",
+        "startDate" : "2025-0801", "completeDate" : "2025-0803",  "orderState" : "PLANNED",
         "orderType" : "MO" }
 ] }

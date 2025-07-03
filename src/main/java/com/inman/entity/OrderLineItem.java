@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Field;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -14,7 +16,7 @@ public class OrderLineItem extends EntityMaster {
 	public static String formatter = "%4d %4d %7d %6.2f %6.2f %10s %10s %4s %4s %4s";
 	public static String header = String.format( "%-4s %-4s %8s %8s %8s %10s %10s %4s %4s %4s",
 			"Id", "Item", "ParentId", "Ordered", "Assigned", "Start", "Complete", "Stat", "DbCr", "Activity");
-	public static Set<String> fieldNames;
+	public static Map<String, Field> fieldNames;
 
 	long itemId;
 	double quantityOrdered = 0.0;
@@ -30,6 +32,19 @@ public class OrderLineItem extends EntityMaster {
 	OrderType orderType = OrderType.NONE;
 
 	public OrderLineItem() {
+	}
+
+	public OrderLineItem( OrderLineItem orderLineItem ) {
+		this.id = orderLineItem.getId();
+		this.activityState = orderLineItem.getActivityState();
+		this.itemId = orderLineItem.getItemId();
+		this.quantityOrdered = orderLineItem.getQuantityOrdered();
+		this.quantityAssigned = orderLineItem.getQuantityAssigned();
+		this.startDate = orderLineItem.getStartDate();
+		this.completeDate = orderLineItem.getCompleteDate();
+		this.parentOliId = orderLineItem.getParentOliId();
+		this.orderState = orderLineItem.getOrderState();
+		this.orderType = orderLineItem.getOrderType();
 	}
 
 
@@ -107,7 +122,7 @@ public class OrderLineItem extends EntityMaster {
 		this.orderType = orderType;
 	}
 
-	public static Set<String> getFieldNames() {
+	public static Map<String, Field> getFieldNames() {
 		if ( null == fieldNames ) {
 			fieldNames = ReflectionHelpers.setOfFields(OrderLineItem.class);
 		}

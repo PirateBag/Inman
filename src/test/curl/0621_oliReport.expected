@@ -4,22 +4,22 @@
   "data" : [ {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "Item                         Ordered Assigned     Start  Complete   State"
+    "message" : "Item                         Ordered Assigned     Start  Complete State   Type"
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "W-002                           5.00     0.00 2025-0711 2025-0715 PLANNED"
+    "message" : "W-002                           5.00     0.00 2025-0711 2025-0715 PLANNED MO "
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "   W-003                        5.00     0.00 2025-0711 2025-0712 PLANNED"
+    "message" : "   W-003                        5.00     0.00 2025-0711 2025-0712 PLANNED MO "
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "   W-004                        5.00     0.00 2025-0711 2025-0712 PLANNED"
+    "message" : "   W-004                        5.00     0.00 2025-0711 2025-0712 PLANNED MO "
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "       W-005                    5.00     0.00 2025-0704 2025-0708 PLANNED"
+    "message" : "       W-005                    5.00     0.00 2025-0704 2025-0708 PLANNED MO "
   } ]
 }

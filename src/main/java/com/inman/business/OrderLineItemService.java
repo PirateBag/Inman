@@ -96,8 +96,9 @@ public class OrderLineItemService {
             oli.setCompleteDate( parentOli.getCompleteDate() );
             oli.setParentOliId( parentOli.getId() );
             oli.setQuantityAssigned(  0.0 );
-            oli.setActivityState( ActivityState.INSERT );
-
+            oli.setActivityState( parentOli.getActivityState() );
+            oli.setOrderState( parentOli.getOrderState() );
+            oli.setOrderType( parentOli.getOrderType() );
             var updatedOli = orderLineItemRepository.save(oli);
             logger.info( updatedOli.toString()  );
             count++;
@@ -140,33 +141,33 @@ public class OrderLineItemService {
         String message;
 
         try {
-            Optional<OrderLineItem> orderLineItemFromRepository = orderLineItemRepository.findById(orderLineItem.getId());
+            OrderLineItem oldOrderLineItem;
+            {
+                Optional<OrderLineItem> oldOrderLineFromRepository = orderLineItemRepository.findById(orderLineItem.getId());
 
-            if (orderLineItemFromRepository.isEmpty() ) {
-                outputErrorAndThrow("Unable to find order " + orderLineItem, oliResponse);
+                if (oldOrderLineFromRepository.isEmpty()) {
+                    outputErrorAndThrow("Unable to find order " + orderLineItem, oliResponse);
+                }
+
+                // Make a copy of the old item...
+                oldOrderLineItem = new OrderLineItem(oldOrderLineFromRepository.get());
             }
-
-            var changeMap = ReflectionHelpers.compareObjects( orderLineItemFromRepository.get(), orderLineItem );
+            var changeMap = ReflectionHelpers.compareObjects( oldOrderLineItem, orderLineItem );
             logger.info("Number Of Changes: {}", changeMap.size() );
             if ( changeMap.isEmpty() ) {
                 outputErrorAndThrow("Order does not appear to be changed:  " + orderLineItem, oliResponse);
             }
 
-            if ( orderLineItemFromRepository.get().getOrderState() == OrderState.OPEN
-                && orderLineItem.getItemId() != orderLineItemFromRepository.get().getItemId()) {
+            if ( oldOrderLineItem.getOrderState() == OrderState.OPEN
+                && orderLineItem.getItemId() != oldOrderLineItem.getItemId()) {
                         outputErrorAndThrow("Item Changed in Open order.  Try delete/insert instead", oliResponse);
                 }
 
-//            var countOfChanges = ReflectionHelpers.applyMapOfChanges( changeMap );
-//            outputInfo( "Number Of Changes Applied: " + countOfChanges, oliResponse);
-//            logger.info( orderLineItemFromRepository.get().toString()  );
-
             orderLineItemRepository.save(orderLineItem);
             if ( changeMap.get( "orderState") != null ) {
-                updateChildrenOfOrder( orderLineItemFromRepository.get(), orderLineItem, oliResponse ) ;
+                updateChildrenOfOrder( oldOrderLineItem, orderLineItem, oliResponse ) ;
             }
 
-//            orderLineItemFromRepository.get().setActivityState(orderLineItem.getActivityState());
             oliResponse.getData().add(orderLineItem  );
         } catch (DataIntegrityViolationException dataIntegrityViolationException) {
             message = "Unable to " + orderLineItem.getActivityState() + " " + orderLineItem + ":" +
@@ -210,7 +211,7 @@ public class OrderLineItemService {
                 updateLineItemsWithNewState( newOli, oliResponse );
             }
             if ( newOli.getOrderState() == OrderState.PLANNED ) {
-                deleteChildLineItems( newOli, oliResponse );
+                throwErrorIfChildrenArePresent( newOli, oliResponse );
             }
         }
 
@@ -227,15 +228,24 @@ public class OrderLineItemService {
     }
 
     private void deleteChildLineItems(OrderLineItem newOli, ResponsePackage<OrderLineItem> oliResponse) {
-            List<OrderLineItem>  lineItems = orderLineItemRepository.findByParentOliId( newOli.getParentOliId() );
+            List<OrderLineItem>  lineItems = orderLineItemRepository.findByParentOliId( newOli.getId() );
             int count = 1;
             for ( OrderLineItem oli : lineItems ) {
                 oli.setOrderState( newOli.getOrderState() );
                 orderLineItemRepository.delete(oli);
                 count++;
             }
-            outputInfo( "Updated " + count + "line items to state " + newOli.getOrderState(), oliResponse );
+            outputInfo( "Removed " + count + " lines from order " + newOli, oliResponse );
     }
+
+    private void throwErrorIfChildrenArePresent( OrderLineItem newOli, ResponsePackage<OrderLineItem> oliResponse) {
+        List<OrderLineItem>  lineItems = orderLineItemRepository.findByParentOliId( newOli.getId() );
+        if ( lineItems.isEmpty() ) {
+            logger.info( "Order " + newOli.getId() + " has no children to block this activity" );
+        }
+        outputErrorAndThrow( "Order " + newOli.getId() + " is being updated to planned, but has " + lineItems.size() + " children and the operation is cancelled", oliResponse);
+    }
+
 
     /**
      * Visit each of the components of the newOli and change state to the same state as the parent.
@@ -370,18 +380,18 @@ public class OrderLineItemService {
             return;
         }
 
-        String headerFormat = "%-26s  %8s %8s %9s %9s %7s";
-        String lineFormat = "%-26s  %8.2f %8.2f %9s %9s %7s";
+        String headerFormat = "%-26s  %8s %8s %9s %9s %-7s %-3s";
+        String lineFormat = "%-26s  %8.2f %8.2f %9s %9s %-7s %-3s";
 
         if ( level == 0 ) {
-            report = String.format( headerFormat, "Item", "Ordered", "Assigned", "Start", "Complete", "State" );
+            report = String.format( headerFormat, "Item", "Ordered", "Assigned", "Start", "Complete", "State", "Type" );
             logger.info( report );
             textResponse.getData().add( new Text( report ) );
         }
 
 
         report = String.format( lineFormat, Common.spacesForLevel( level) + item.getSummaryId(), oli.get().getQuantityOrdered(), oli.get().getQuantityAssigned(),
-                oli.get().getStartDate(), oli.get().getCompleteDate(), oli.get().getOrderState()  );
+                oli.get().getStartDate(), oli.get().getCompleteDate(), oli.get().getOrderState(), oli.get().getOrderType() );
         textResponse.getData().add( new Text( report ) );
 
         List<OrderLineItem> childOrderLineItems = orderLineItemRepository.findByParentOliId( oli.get().getId());

@@ -5,6 +5,7 @@ public class StatusResponse {
 	public final static String INMAN_FAIL = "off line.";
 	public final static String rootUrl = "/status";
 	public static final String metaDataUrl = "/metadata";
+	public static final String toLog = "/toLog";
 		
 	private String status;
 

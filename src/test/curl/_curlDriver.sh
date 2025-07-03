@@ -11,8 +11,8 @@ ServiceSuffix=$2
 if [ -f $RequestFile ]; then
   #echo no, do me.
   #echo curl -o $ResponseFile  --data "@$RequestFile" -H "Content-Type: application/json" -X POST http://localhost:8080/$ServiceSuffix
+  curl --silent -o /dev/null http://localhost:8080/toLog?testName=${1}
   curl -o $ResponseFile  --silent --data "@$RequestFile" -H "Content-Type: application/json" -X POST http://localhost:8080/$ServiceSuffix
 else
   echo "Unable to find or open ${RequestFile}." | tee ResponseFile
-  #echo do me instead
 fi

@@ -82,7 +82,7 @@ declare -a tests=(
 
    #Change the quantity ordered of order2 to 5.
   "0615_oliCrudChange;oli/crud"
-  
+
   "0617_oliReport;oli/showAll"
 
   #Assign some components manually to an order for testing.
@@ -106,6 +106,11 @@ declare -a tests=(
   # Try some illegal things:
 #    Deleting order 6 which is open.
   "0707_oliCrud;oli/crud"
+
+  #Change order 6 from Open to Planned.
+  "0709_oliCrud;oli/crud"
+
+
    )
 #   "stopTesting" \
 declare -i passed=0

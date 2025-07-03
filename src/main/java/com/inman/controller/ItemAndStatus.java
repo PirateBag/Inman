@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class ItemAndStatus {
 	static Logger logger = LoggerFactory.getLogger("controller: " + ItemAndStatus.class);
+	static Logger dividerLogger = LoggerFactory.getLogger(" ");
 	public static final String CLEAR_ALL_DATA = "clearAllData";
 
 	@Autowired
@@ -177,17 +178,28 @@ public class ItemAndStatus {
     	}
     	return ResponseEntity.ok().body( responsePackage );
     }
-    
-    @CrossOrigin
-    @RequestMapping( value = StatusResponse.metaDataUrl,
-    				method=RequestMethod.GET )
-    public StatusResponse metaData() throws ClassNotFoundException {
-    	StatusResponse statusResponse = new StatusResponse();
-    	statusResponse.setStatus( MetaData.show( Item.class.getCanonicalName() ) );
-    	return statusResponse;
-    }
-    
-    @CrossOrigin
+//
+//    @CrossOrigin
+//    @RequestMapping( value = StatusResponse.metaDataUrl,
+//    				method=RequestMethod.GET )
+//    public StatusResponse metaData() throws ClassNotFoundException {
+//    	StatusResponse statusResponse = new StatusResponse();
+//    	statusResponse.setStatus( MetaData.show( Item.class.getCanonicalName() ) );
+//    	return statusResponse;
+//    }
+
+	@CrossOrigin
+	@RequestMapping( value = StatusResponse.toLog, method=RequestMethod.GET )
+	public StatusResponse toLog( @RequestParam String testName  )  {
+		dividerLogger.info( testName );
+		StatusResponse statusResponse = new StatusResponse();
+		statusResponse.setStatus( testName );
+		return statusResponse;
+	}
+
+
+
+	@CrossOrigin
     @RequestMapping( value = ItemUpdateRequest.updateUrl, method=RequestMethod.POST )
     public ResponsePackage itemUpdate(
 			@RequestBody ItemUpdateRequest itemUpdateRequest )
