@@ -254,15 +254,14 @@ public class OrderLineItemService {
      * @param oliResponse
      */
     private void updateLineItemsWithNewState( OrderLineItem newOli, ResponsePackage<OrderLineItem> oliResponse ) {
-        List<OrderLineItem>  lineItems = orderLineItemRepository.findByParentOliId( newOli.getParentOliId() );
-        int count = 1;
+        List<OrderLineItem>  lineItems = orderLineItemRepository.findByParentOliId( newOli.getId() );
+        int count = 0;
        for ( OrderLineItem oli : lineItems ) {
            oli.setOrderState( newOli.getOrderState() );
            orderLineItemRepository.save(oli);
            count++;
        }
-
-       outputInfo( "Updated " + count + "line items to state " + newOli.getOrderState(), oliResponse );
+       outputInfo( "Updated " + count + " line items to state " + newOli.getOrderState(), oliResponse );
     }
 
 

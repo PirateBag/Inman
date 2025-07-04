@@ -1,0 +1,19 @@
+{
+  "responseType" : "MULTILINE",
+  "errors" : [ {
+    "key" : 1,
+    "message" : "Updated 7 line items to state CLOSED"
+  } ],
+  "data" : [ {
+    "id" : 6,
+    "activityState" : "CHANGE",
+    "itemId" : 1,
+    "quantityOrdered" : 10.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-0801",
+    "completeDate" : "2025-0803",
+    "parentOliId" : 0,
+    "orderState" : "CLOSED",
+    "orderType" : "MO"
+  } ]
+}

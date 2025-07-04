@@ -1,0 +1,82 @@
+{
+  "responseType" : "MULTILINE",
+  "errors" : [ ],
+  "data" : [ {
+    "id" : 7,
+    "activityState" : "DELETE",
+    "itemId" : 2,
+    "quantityOrdered" : 10.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-0801",
+    "completeDate" : "2025-0803",
+    "parentOliId" : 6,
+    "orderState" : "CLOSED",
+    "orderType" : "MO"
+  }, {
+    "id" : 8,
+    "activityState" : "DELETE",
+    "itemId" : 3,
+    "quantityOrdered" : 10.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-0801",
+    "completeDate" : "2025-0803",
+    "parentOliId" : 6,
+    "orderState" : "CLOSED",
+    "orderType" : "MO"
+  }, {
+    "id" : 9,
+    "activityState" : "DELETE",
+    "itemId" : 4,
+    "quantityOrdered" : 10.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-0801",
+    "completeDate" : "2025-0803",
+    "parentOliId" : 6,
+    "orderState" : "CLOSED",
+    "orderType" : "MO"
+  }, {
+    "id" : 10,
+    "activityState" : "DELETE",
+    "itemId" : 6,
+    "quantityOrdered" : 10.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-0801",
+    "completeDate" : "2025-0803",
+    "parentOliId" : 6,
+    "orderState" : "CLOSED",
+    "orderType" : "MO"
+  }, {
+    "id" : 11,
+    "activityState" : "DELETE",
+    "itemId" : 7,
+    "quantityOrdered" : 80.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-0801",
+    "completeDate" : "2025-0803",
+    "parentOliId" : 6,
+    "orderState" : "CLOSED",
+    "orderType" : "MO"
+  }, {
+    "id" : 12,
+    "activityState" : "DELETE",
+    "itemId" : 8,
+    "quantityOrdered" : 40.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-0801",
+    "completeDate" : "2025-0803",
+    "parentOliId" : 6,
+    "orderState" : "CLOSED",
+    "orderType" : "MO"
+  }, {
+    "id" : 13,
+    "activityState" : "DELETE",
+    "itemId" : 9,
+    "quantityOrdered" : 40.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-0801",
+    "completeDate" : "2025-0803",
+    "parentOliId" : 6,
+    "orderState" : "CLOSED",
+    "orderType" : "MO"
+  } ]
+}

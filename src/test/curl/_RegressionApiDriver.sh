@@ -107,9 +107,36 @@ declare -a tests=(
 #    Deleting order 6 which is open.
   "0707_oliCrud;oli/crud"
 
-  #Change order 6 from Open to Planned.
+  #Change order 6 from Open to Planned.  It should fail.
   "0709_oliCrud;oli/crud"
 
+  # Change order 6 from open to closed
+  # Components should also be closed.
+  "0711_oliCrud;oli/crud"
+
+#  Show all orders and look for order 6 to
+#  be in closed state along with its children.
+
+#    "message" : "   2    2       0   5.00   0.00  2025-0711  2025-0715 PLANNED   MO NONE"
+#    "message" : "   3    3       2   5.00   0.00  2025-0711  2025-0712 PLANNED   MO NONE"
+#    "message" : "   4    4       2   5.00   0.00  2025-0711  2025-0712 PLANNED   MO NONE"
+#    "message" : "   5    5       4   5.00   0.00  2025-0704  2025-0708 PLANNED   MO NONE"
+#    "message" : "   6    1       0  10.00   0.00  2025-0801  2025-0803 CLOSED   MO NONE"
+#    "message" : "   7    2       6  10.00   0.00  2025-0801  2025-0803 CLOSED   MO NONE"
+#    "message" : "   8    3       6  10.00   0.00  2025-0801  2025-0803 CLOSED   MO NONE"
+#    "message" : "   9    4       6  10.00   0.00  2025-0801  2025-0803 CLOSED   MO NONE"
+#    "message" : "  10    6       6  10.00   0.00  2025-0801  2025-0803 CLOSED   MO NONE"
+#    "message" : "  11    7       6  80.00   0.00  2025-0801  2025-0803 CLOSED   MO NONE"
+#    "message" : "  12    8       6  40.00   0.00  2025-0801  2025-0803 CLOSED   MO NONE"
+#    "message" : "  13    9       6  40.00   0.00  2025-0801  2025-0803 CLOSED   MO NONE"
+
+  "0713_oliReport;oli/showAll"
+
+  #Delete those closed lines...
+  "0715_oliCrud;oli/crud"
+
+#  Order Ids 2 through 6 should remain...
+  "0717_oliReport;oli/showAll"
 
    )
 #   "stopTesting" \
