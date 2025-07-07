@@ -138,6 +138,24 @@ declare -a tests=(
 #  Order Ids 2 through 6 should remain...
   "0717_oliReport;oli/showAll"
 
+  # Create two new planned orders with BOMs and delete all the old orders.
+  "0719_oliCrud;oli/crud"
+  "0721_oliReport;oli/showAll"
+#
+#  We now have the following orders:
+#        14    2       0   7.00   0.00  2025-0801  2025-0811 PLANNED   MO NONE"
+#        15    5       0   9.00   0.00  2025-0801  2025-0805 PLANNED   MO NONE"
+#  Change order 14 to "OPEN and order 15 to Closed without ever opening it.  However,
+#the 15 operation will failed because you can jump from planned to closed, rolling back the 14
+#transaction.  No change in report output
+#  "
+  "0723_oliCrud;oli/crud"
+  "0725_oliReport;oli/showAll"
+
+#  Change order 14 to OPEN and 15 to open.
+  "0727_oliCrud;oli/crud"
+  "0729_oliReport;oli/showAll"
+
    )
 #   "stopTesting" \
 declare -i passed=0
@@ -151,9 +169,9 @@ declare testToRequest=./_testToRequest.sh
 #    vvvv vvvv-- the code from above
 RED='\033[0;31m'
 NC='\033[0m' # No Color
-if [ ! -z "$1" ]; then
+if [ -n "$1" ]; then
   echo Parameter passed $1
-  tests=( $1 )
+  tests=( ${1} )
 fi
 
 #Convert any test file to a request file.  The remainder of the script
@@ -217,9 +235,9 @@ do
       cat $testName.actual
       failed+=1
 
-      if [ ! -z "$1" ]; then
+      if [ -n "$1" ]; then
         echo Parameter passed
-        tests=( $1 )
+        tests=( ${1} )
         if [ $failed == "1" ] ; then
           cat $testName.expected
           diff $testName.actual $testName.expected
@@ -232,5 +250,5 @@ done
 echo --------------------
 echo Summary of Test Results.
 printf $TestSummaryFormat Passed $passed
-printf $TestSummaryFormat failed $failed
+printf $TestSummaryFormat Failed $failed
 printf $TestSummaryFormat 'New Baselines' $newBaseLines

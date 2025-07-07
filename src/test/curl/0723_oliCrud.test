@@ -1,0 +1,20 @@
+Given a state of :
+
+#  We now have the following orders:
+#        14    2       0   7.00   0.00  2025-0801  2025-0811 PLANNED   MO NONE"
+#        15    5       0   9.00   0.00  2025-0801  2025-0805 PLANNED   MO NONE".00   0.00  2025-0801  2025-0803 CLOSED   MO NONE"
+
+Move 14 to Open and 15 to closed.
+
+
+===JSON===
+
+{ "rows" : [
+
+        {  "activityState" : "CHANGE",  "id" : 14, "itemId" : "2", "parentOliId" : "0", "quantityOrdered" : "6", "quantityAssigned" : "0.0",
+        "startDate" : "2025-0901", "completeDate" : "2025-0903",  "orderState" : "OPEN",
+        "orderType" : "MO" },
+        {  "activityState" : "CHANGE",  "id" : 15, "itemId" : "5", "parentOliId" : "0", "quantityOrdered" : "9", "quantityAssigned" : "0.0",
+        "startDate" : "2025-0901", "completeDate" : "2025-0003",  "orderState" : "CLOSED",
+        "orderType" : "MO" }
+] }

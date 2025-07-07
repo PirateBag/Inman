@@ -1,0 +1,46 @@
+#    "message" : "   2    2       0   5.00   0.00  2025-0711  2025-0715 PLANNED   MO NONE"
+#    "message" : "   3    3       2   5.00   0.00  2025-0711  2025-0712 PLANNED   MO NONE"
+#    "message" : "   4    4       2   5.00   0.00  2025-0711  2025-0712 PLANNED   MO NONE"
+#    "message" : "   5    5       4   5.00   0.00  2025-0704  2025-0708 PLANNED   MO NONE"
+#    "message" : "   6    1       0  10.00   0.00  2025-0801  2025-0803 CLOSED   MO NONE"
+
+
+Delete the remaining orders...
+Delete the children of order 2 (3, 4) before actually deleting 2.
+Create a new planned order consisting of items 2 and 5.
+
+,
+        {  "activityState" : "INSERT",  "itemId" : "2", "parentOliId" : "0", "quantityOrdered" : "7", "quantityAssigned" : "0.0",
+        "startDate" : "2025-0801", "orderState" : "PLANNED",
+        "orderType" : "MO" },
+        {  "activityState" : "INSERT",  "itemId" : "5", "parentOliId" : "0", "quantityOrdered" : "9", "quantityAssigned" : "0.0",
+        "startDate" : "2025-0801", "completeDate" : "2025-0803",  "orderState" : "PLANNED",
+        "orderType" : "MO" }
+
+===JSON===
+
+{ "rows" : [
+
+        {  "activityState" : "DELETE",  "id" : 3, "itemId" : "3", "parentOliId" : "6", "quantityOrdered" : "10", "quantityAssigned" : "0.0",
+        "startDate" : "2025-0801", "completeDate" : "2025-0803",  "orderState" : "CLOSED",
+        "orderType" : "MO" },
+        {  "activityState" : "DELETE",  "id" : 5, "itemId" : "5", "parentOliId" : "6", "quantityOrdered" : "10", "quantityAssigned" : "0.0",
+        "startDate" : "2025-0801", "completeDate" : "2025-0803",  "orderState" : "CLOSED",
+        "orderType" : "MO" },
+        {  "activityState" : "DELETE",  "id" : 4, "itemId" : "4", "parentOliId" : "6", "quantityOrdered" : "10", "quantityAssigned" : "0.0",
+        "startDate" : "2025-0801", "completeDate" : "2025-0803",  "orderState" : "CLOSED",
+        "orderType" : "MO" },
+        {  "activityState" : "DELETE",  "id" : 2, "itemId" : "2", "parentOliId" : "6", "quantityOrdered" : "10", "quantityAssigned" : "0.0",
+        "startDate" : "2025-0801", "completeDate" : "2025-0803",  "orderState" : "CLOSED",
+        "orderType" : "MO" },
+
+        {  "activityState" : "DELETE",  "id" : 6, "itemId" : "6", "parentOliId" : "6", "quantityOrdered" : "80", "quantityAssigned" : "0.0",
+        "startDate" : "2025-0801", "completeDate" : "2025-0803",  "orderState" : "CLOSED",
+        "orderType" : "MO" },
+        {  "activityState" : "INSERT",  "itemId" : "2", "parentOliId" : "0", "quantityOrdered" : "7", "quantityAssigned" : "0.0",
+        "startDate" : "2025-0801", "orderState" : "PLANNED",
+        "orderType" : "MO" },
+        {  "activityState" : "INSERT",  "itemId" : "5", "parentOliId" : "0", "quantityOrdered" : "9", "quantityAssigned" : "0.0",
+        "startDate" : "2025-0801", "completeDate" : "2025-0803",  "orderState" : "PLANNED",
+        "orderType" : "MO" }
+] }

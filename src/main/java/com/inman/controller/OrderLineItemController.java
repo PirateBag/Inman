@@ -51,6 +51,17 @@ public class OrderLineItemController {
     public ResponseEntity<?> orderLineItemCrud(@RequestBody OrderLineItemRequest crudBatch ) {
         ResponsePackage<OrderLineItem> responsePackage = new ResponsePackage<>();
         try {
+//            if ( Application.isTestName( "0719_oliCrud")) {
+//                logger.info( "You have arrived.");
+//            }
+
+            if ( crudBatch == null ) {
+                String message = "Request message may not be JSON";
+                responsePackage.addError( new ErrorLine(1, message) );
+                logger.error(message);
+                throw new Exception(message);
+            }
+
             responsePackage= orderLineItemService.applyCrud( crudBatch, responsePackage  );
             responsePackage.setResponseType(ResponseType.MULTILINE );
 

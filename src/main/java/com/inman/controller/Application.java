@@ -16,6 +16,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan( basePackages = { "com.inman" } )
 public class Application {
 	public static  boolean isPrepared = false;
+    public static String testName;
 	
     public static void main( String[] args ) {
         	SpringApplication.run( Application.class, args);
@@ -26,6 +27,17 @@ public class Application {
     }
     public synchronized static boolean isPrepared(  ) {
     	return isPrepared;
+    }
+
+    public static void setTestName(String currentTest) {
+        testName = currentTest;
+    }
+    public static String getTestName() {
+        return testName;
+    }
+    public static boolean isTestName( String theTestInProgress )
+    {
+        return testName.equals( theTestInProgress );
     }
 }
 

@@ -190,7 +190,9 @@ public class ItemAndStatus {
 
 	@CrossOrigin
 	@RequestMapping( value = StatusResponse.toLog, method=RequestMethod.GET )
-	public StatusResponse toLog( @RequestParam String testName  )  {
+	public StatusResponse toLog( @RequestParam String testName  )
+	{
+		Application.setTestName( testName );
 		dividerLogger.info( testName );
 		StatusResponse statusResponse = new StatusResponse();
 		statusResponse.setStatus( testName );

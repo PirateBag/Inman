@@ -1,0 +1,33 @@
+{
+  "responseType" : "MULTILINE",
+  "errors" : [ {
+    "key" : 1,
+    "message" : "Added 3 lines to order 14"
+  }, {
+    "key" : 1,
+    "message" : "Added 2 lines to order 15"
+  } ],
+  "data" : [ {
+    "id" : 14,
+    "activityState" : "CHANGE",
+    "itemId" : 2,
+    "quantityOrdered" : 6.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-0901",
+    "completeDate" : "2025-0903",
+    "parentOliId" : 0,
+    "orderState" : "OPEN",
+    "orderType" : "MO"
+  }, {
+    "id" : 15,
+    "activityState" : "CHANGE",
+    "itemId" : 5,
+    "quantityOrdered" : 9.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-0901",
+    "completeDate" : "2025-0003",
+    "parentOliId" : 0,
+    "orderState" : "OPEN",
+    "orderType" : "MO"
+  } ]
+}

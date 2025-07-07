@@ -1,5 +1,6 @@
 package com.inman.business;
 
+import com.inman.controller.Application;
 import com.inman.controller.Utility;
 import com.inman.entity.*;
 import com.inman.model.request.OrderLineItemRequest;
@@ -103,7 +104,7 @@ public class OrderLineItemService {
             logger.info( updatedOli.toString()  );
             count++;
         }
-        outputInfo( "Added " + count + " items to order", oliResponse);
+        outputInfo( "Added " + count + " lines to order " + parentOli.getId()  , oliResponse);
     }
 
     private void delete(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse) {
@@ -202,7 +203,7 @@ public class OrderLineItemService {
                 addLineItemsToOrder( newOli,  oliResponse);
             }
             if ( newOli.getOrderState() == OrderState.CLOSED ) {
-                throw new RuntimeException( "Cannot change order state from planned to close.  Try delete. " );
+                outputErrorAndThrow( "Cannot change state on order " + newOli.getId() + " from planned to close.  Try delete. " , oliResponse );
             }
         }
 
@@ -347,6 +348,9 @@ public class OrderLineItemService {
     @Transactional
     public ResponsePackage<OrderLineItem> applyCrud(OrderLineItemRequest crudBatch,
                                                     ResponsePackage<OrderLineItem> responsePackage ) {
+        if (Application.isTestName("0719_oliCrud")) {
+            logger.info("You have arrived at " + Application.getTestName());
+    }
 
         for (OrderLineItem orderLineItem : crudBatch.rows()) {
             logger.info("{} on {}", orderLineItem.getActivityState(), orderLineItem);
