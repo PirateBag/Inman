@@ -9,7 +9,9 @@
     "unitCost" : 0.0,
     "sourcing" : "MAN",
     "maxDepth" : 0,
-    "leadTime" : 2
+    "leadTime" : 2,
+    "quantityOnHand" : 5.0,
+    "minimumOrderQuantity" : 1.0
   }, {
     "id" : 2,
     "activityState" : "NONE",
@@ -18,7 +20,9 @@
     "unitCost" : 0.0,
     "sourcing" : "MAN",
     "maxDepth" : 0,
-    "leadTime" : 10
+    "leadTime" : 10,
+    "quantityOnHand" : 0.0,
+    "minimumOrderQuantity" : 1.0
   }, {
     "id" : 3,
     "activityState" : "NONE",
@@ -27,7 +31,9 @@
     "unitCost" : 0.0,
     "sourcing" : "MAN",
     "maxDepth" : 0,
-    "leadTime" : 1
+    "leadTime" : 1,
+    "quantityOnHand" : 0.0,
+    "minimumOrderQuantity" : 1.0
   }, {
     "id" : 4,
     "activityState" : "NONE",
@@ -36,7 +42,9 @@
     "unitCost" : 0.0,
     "sourcing" : "MAN",
     "maxDepth" : 0,
-    "leadTime" : 1
+    "leadTime" : 1,
+    "quantityOnHand" : 0.0,
+    "minimumOrderQuantity" : 1.0
   }, {
     "id" : 5,
     "activityState" : "NONE",
@@ -45,7 +53,9 @@
     "unitCost" : 0.0,
     "sourcing" : "MAN",
     "maxDepth" : 0,
-    "leadTime" : 4
+    "leadTime" : 4,
+    "quantityOnHand" : 0.0,
+    "minimumOrderQuantity" : 1.0
   }, {
     "id" : 6,
     "activityState" : "NONE",
@@ -54,7 +64,9 @@
     "unitCost" : 0.0,
     "sourcing" : "MAN",
     "maxDepth" : 0,
-    "leadTime" : 1
+    "leadTime" : 1,
+    "quantityOnHand" : 0.0,
+    "minimumOrderQuantity" : 1.0
   }, {
     "id" : 7,
     "activityState" : "NONE",
@@ -63,7 +75,9 @@
     "unitCost" : 0.21,
     "sourcing" : "PUR",
     "maxDepth" : 0,
-    "leadTime" : 5
+    "leadTime" : 5,
+    "quantityOnHand" : 0.0,
+    "minimumOrderQuantity" : 1000.0
   }, {
     "id" : 8,
     "activityState" : "NONE",
@@ -72,7 +86,9 @@
     "unitCost" : 0.6,
     "sourcing" : "PUR",
     "maxDepth" : 0,
-    "leadTime" : 5
+    "leadTime" : 5,
+    "quantityOnHand" : 0.0,
+    "minimumOrderQuantity" : 500.0
   }, {
     "id" : 9,
     "activityState" : "NONE",
@@ -81,7 +97,9 @@
     "unitCost" : 0.17,
     "sourcing" : "PUR",
     "maxDepth" : 0,
-    "leadTime" : 6
+    "leadTime" : 6,
+    "quantityOnHand" : 0.0,
+    "minimumOrderQuantity" : 500.0
   }, {
     "id" : 10,
     "activityState" : "NONE",
@@ -90,7 +108,9 @@
     "unitCost" : 0.17,
     "sourcing" : "PUR",
     "maxDepth" : 0,
-    "leadTime" : 10
+    "leadTime" : 10,
+    "quantityOnHand" : 0.0,
+    "minimumOrderQuantity" : 120.0
   }, {
     "id" : 11,
     "activityState" : "NONE",
@@ -99,7 +119,9 @@
     "unitCost" : 0.95,
     "sourcing" : "PUR",
     "maxDepth" : 0,
-    "leadTime" : 2
+    "leadTime" : 2,
+    "quantityOnHand" : 0.0,
+    "minimumOrderQuantity" : 50.0
   }, {
     "id" : 12,
     "activityState" : "NONE",
@@ -108,7 +130,9 @@
     "unitCost" : 0.17,
     "sourcing" : "PUR",
     "maxDepth" : 0,
-    "leadTime" : 10
+    "leadTime" : 10,
+    "quantityOnHand" : 0.0,
+    "minimumOrderQuantity" : 50.0
   }, {
     "id" : 13,
     "activityState" : "NONE",
@@ -117,7 +141,9 @@
     "unitCost" : 2.25,
     "sourcing" : "PUR",
     "maxDepth" : 0,
-    "leadTime" : 20
+    "leadTime" : 20,
+    "quantityOnHand" : 0.0,
+    "minimumOrderQuantity" : 100.0
   }, {
     "id" : 14,
     "activityState" : "NONE",
@@ -126,7 +152,9 @@
     "unitCost" : 20.0,
     "sourcing" : "PUR",
     "maxDepth" : 0,
-    "leadTime" : 5
+    "leadTime" : 5,
+    "quantityOnHand" : 0.0,
+    "minimumOrderQuantity" : 4.0
   }, {
     "id" : 15,
     "activityState" : "NONE",
@@ -135,7 +163,9 @@
     "unitCost" : 1.0,
     "sourcing" : "PUR",
     "maxDepth" : 0,
-    "leadTime" : 4
+    "leadTime" : 4,
+    "quantityOnHand" : 0.0,
+    "minimumOrderQuantity" : 50.0
   }, {
     "id" : 16,
     "activityState" : "NONE",
@@ -144,7 +174,9 @@
     "unitCost" : 0.75,
     "sourcing" : "PUR",
     "maxDepth" : 0,
-    "leadTime" : 6
+    "leadTime" : 6,
+    "quantityOnHand" : 0.0,
+    "minimumOrderQuantity" : 50.0
   }, {
     "id" : 17,
     "activityState" : "NONE",
@@ -153,7 +185,9 @@
     "unitCost" : 0.7,
     "sourcing" : "PUR",
     "maxDepth" : 0,
-    "leadTime" : 5
+    "leadTime" : 5,
+    "quantityOnHand" : 0.0,
+    "minimumOrderQuantity" : 1000.0
   }, {
     "id" : 18,
     "activityState" : "NONE",
@@ -162,6 +196,8 @@
     "unitCost" : 0.17,
     "sourcing" : "PUR",
     "maxDepth" : 0,
-    "leadTime" : 3
+    "leadTime" : 3,
+    "quantityOnHand" : 0.0,
+    "minimumOrderQuantity" : 500.0
   } ]
 }

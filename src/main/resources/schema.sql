@@ -10,7 +10,11 @@ create table if not exists Item (
 
     unit_Cost number( 12, 2) default 0.0 not null,
 
-    lead_time int default 1 not null
+    lead_time int default 1 not null,
+
+    quantity_on_hand number( 12, 2) default 0.0 not null,
+
+    minimum_order_quantity number( 12,2 ) default 1.0 not null
 );
 
 create table if not exists Bom (
@@ -39,4 +43,5 @@ CREATE TABLE IF NOT EXISTS order_line_Item (
     parent_oli_id int,
     quantity_assigned number( 12,2) default 0.0,
     quantity_ordered number (12,2) default 0.0,
+
     CONSTRAINT PK_ORDER_LINE_ITEM PRIMARY KEY ( ID ) );

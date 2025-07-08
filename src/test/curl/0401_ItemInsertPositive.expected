@@ -9,6 +9,8 @@
     "unitCost" : 1.0,
     "sourcing" : "PUR",
     "maxDepth" : 0,
-    "leadTime" : 0
+    "leadTime" : 0,
+    "quantityOnHand" : 0.0,
+    "minimumOrderQuantity" : 0.0
   } ]
 }

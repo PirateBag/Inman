@@ -51,7 +51,8 @@ public class ItemCrud {
                             ItemCrudBatchResponse itemCrudBatchResponse) {
         String message;
         Item itemToBeInserted = new Item(itemCrudToBeCrud.getSummaryId(), itemCrudToBeCrud.getDescription(),
-                itemCrudToBeCrud.getUnitCost(), itemCrudToBeCrud.getSourcing(), itemCrudToBeCrud.getLeadTime(), itemCrudToBeCrud.getMaxDepth() );
+                itemCrudToBeCrud.getUnitCost(), itemCrudToBeCrud.getSourcing(), itemCrudToBeCrud.getLeadTime(), itemCrudToBeCrud.getMaxDepth(),
+                itemCrudToBeCrud.getQuantityOnHand(),  itemCrudToBeCrud.getMinimumOrderQuantity() );
 
 
         try {

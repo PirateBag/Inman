@@ -5,7 +5,7 @@
     "message" : "Added 3 lines to order 14"
   }, {
     "key" : 1,
-    "message" : "Cannot change state on order 15 +  from planned to close.  Try delete. "
+    "message" : "Cannot change state on order 15 from planned to close.  Try delete. "
   } ],
   "data" : [ {
     "id" : 14,

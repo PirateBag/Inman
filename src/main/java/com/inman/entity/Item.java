@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 @Entity
 @Table( name = "Item" )
 public class  Item extends EntityMaster {
-	public static String toStringFormat = "%04d: %s,%s %8.2f %s %3d %3d";
+	public static String toStringFormat = "%04d: %s,%s %8.2f %s %3d %3d %8.2f %8.2f";
 	@Column( unique = true )
 	private String summaryId;
 	
@@ -25,6 +25,9 @@ public class  Item extends EntityMaster {
 	private int maxDepth = 0;
 
 	private int leadTime = 0;
+
+	private double quantityOnHand;
+	private double minimumOrderQuantity;
 	
 	public Item(ItemAddRequest addItemRequest) {
 		this.summaryId = addItemRequest.getSummaryId();
@@ -34,13 +37,16 @@ public class  Item extends EntityMaster {
 	}
 
 
-	public Item(String summaryId, String description, double unitCost, String sourcing, int leadTime, int maxDepth ) {
+	public Item(String summaryId, String description, double unitCost, String sourcing, int leadTime, int maxDepth,
+				double quantityOnHand, double minimumOrderQuantity ) {
 		this.summaryId = summaryId;
 		this.description = description;
 		this.unitCost = unitCost;
 		this.sourcing = sourcing;
 		this.leadTime = leadTime;
 		this.maxDepth = maxDepth;
+		this.quantityOnHand = quantityOnHand;
+		this.minimumOrderQuantity = minimumOrderQuantity;
 	}
 
 	public Item() {
@@ -61,6 +67,8 @@ public class  Item extends EntityMaster {
 		rValue.sourcing = item.getSourcing();
 		rValue.maxDepth = item.maxDepth;
 		rValue.leadTime = item.leadTime;
+		rValue.quantityOnHand = item.quantityOnHand;
+		rValue.minimumOrderQuantity = item.minimumOrderQuantity;
 		return rValue;
 	}
 
@@ -106,6 +114,11 @@ public class  Item extends EntityMaster {
 	}
 
 	public String toString(){
-		return toStringFormat.formatted( id, summaryId, description, unitCost, sourcing, maxDepth, leadTime );
+		return toStringFormat.formatted( id, summaryId, description, unitCost, sourcing, maxDepth, leadTime, quantityOnHand, minimumOrderQuantity );
 	}
+	public double getQuantityOnHand() { return quantityOnHand; }
+	public void setQuantityOnHand( double quantityOnHand ) { this.quantityOnHand = quantityOnHand; }
+
+	public double getMinimumOrderQuantity() { return minimumOrderQuantity; }
+	public void setMinimumOrderQuantity(double minimumOrderQuantity) { this.minimumOrderQuantity = minimumOrderQuantity; }
 }

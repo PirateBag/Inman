@@ -14,8 +14,8 @@ import java.util.List;
 @Service
 public class ItemReportService {
 
-    String lineContents = "%-10s  %-30s  %10.2f  %3s  %10d";
-    String lineHeader = "%-10s  %-30s  %10s  %3s  %10s";
+    String lineContents = "%-10s  %-30s  %10.2f  %3s  %10d  %8.2f %8.2f ";
+    String lineHeader = "%-10s  %-30s  %10s  %3s  %10s  %8s  %8s";
 
     static Logger logger = LoggerFactory.getLogger("controller: " + ItemReportService.class);
 
@@ -23,7 +23,7 @@ public class ItemReportService {
         ArrayList<Text> reportOutput = new ArrayList<>();
 
         var message = String.format(lineHeader,
-                    "Summary", "Description", "Unit Cost", "Sourcing", "Depth");
+                    "Summary", "Description", "Unit Cost", "Sourcing", "Depth", "QonHand", "MinOrdQty");
         reportOutput.add( new Text(message));
         logger.info(message);
 
@@ -42,7 +42,9 @@ public class ItemReportService {
                     item.getDescription(),
                     item.getUnitCost(),
                     item.getSourcing(),
-                    item.getMaxDepth());
+                    item.getMaxDepth(),
+                    item.getQuantityOnHand(),
+                    item.getMinimumOrderQuantity() );
 
             logger.info(message);
             reportOutput.add( new Text(message));

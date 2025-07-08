@@ -4,78 +4,78 @@
   "data" : [ {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "Summary     Description                      Unit Cost  Sourcing       Depth"
+    "message" : "Summary     Description                      Unit Cost  Sourcing       Depth   QonHand  MinOrdQty"
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "W-001       36 In Red Wagon                       0.00  MAN           0"
+    "message" : "W-001       36 In Red Wagon                       0.00  MAN           0      5.00     1.00 "
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "W-002       Red Wagon Body                        0.00  MAN           0"
+    "message" : "W-002       Red Wagon Body                        0.00  MAN           0      0.00     1.00 "
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "W-003       Front Wheel Asmbly                    0.00  MAN           0"
+    "message" : "W-003       Front Wheel Asmbly                    0.00  MAN           0      0.00     1.00 "
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "W-004       Rear Wheel Asmbly                     0.00  MAN           0"
+    "message" : "W-004       Rear Wheel Asmbly                     0.00  MAN           0      0.00     1.00 "
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "W-005       Axle                                  0.00  MAN           0"
+    "message" : "W-005       Axle                                  0.00  MAN           0      0.00     1.00 "
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "W-006       Red Wagon Body                        0.00  MAN           0"
+    "message" : "W-006       Red Wagon Body                        0.00  MAN           0      0.00     1.00 "
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "W-007       Washer                                0.21  PUR           0"
+    "message" : "W-007       Washer                                0.21  PUR           0      0.00  1000.00 "
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "W-008       Threaded bolt                         0.60  PUR           0"
+    "message" : "W-008       Threaded bolt                         0.60  PUR           0      0.00   500.00 "
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "W-009       Nut                                   0.17  PUR           0"
+    "message" : "W-009       Nut                                   0.17  PUR           0      0.00   500.00 "
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "W-010       8 In Wheel                            0.17  PUR           0"
+    "message" : "W-010       8 In Wheel                            0.17  PUR           0      0.00   120.00 "
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "W-011       Front Wheel Bracket                   0.95  PUR           0"
+    "message" : "W-011       Front Wheel Bracket                   0.95  PUR           0      0.00    50.00 "
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "W-012       Yoke                                  0.17  PUR           0"
+    "message" : "W-012       Yoke                                  0.17  PUR           0      0.00    50.00 "
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "W-013       Wagon Body                            2.25  PUR           0"
+    "message" : "W-013       Wagon Body                            2.25  PUR           0      0.00   100.00 "
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "W-014       Red Paint                            20.00  PUR           0"
+    "message" : "W-014       Red Paint                            20.00  PUR           0      0.00     4.00 "
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "W-015       Rear Wheel bracket                    1.00  PUR           0"
+    "message" : "W-015       Rear Wheel bracket                    1.00  PUR           0      0.00    50.00 "
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "W-016       Axle Bracket Brace                    0.75  PUR           0"
+    "message" : "W-016       Axle Bracket Brace                    0.75  PUR           0      0.00    50.00 "
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "W-017       Rod Stock                             0.70  PUR           0"
+    "message" : "W-017       Rod Stock                             0.70  PUR           0      0.00  1000.00 "
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "W-018       Carrige Bolt                          0.17  PUR           0"
+    "message" : "W-018       Carrige Bolt                          0.17  PUR           0      0.00   500.00 "
   } ]
 }
