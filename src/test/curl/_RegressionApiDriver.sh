@@ -18,7 +18,7 @@ declare -a tests=(
   "0301_BomCrudAdd;bom/crud"
 
    # Insert W-001 and W-002 (Duplicate Key) and make sure the insert of
-   # W-002 and W-0013 failes and is rolled back.
+   # W-002 and W-0013 fails and is rolled back.
    "0303_BomCrudAdd;bom/crud"
 
    #Verify that Only W-001,002 and W-002 and W-004 are in the database
@@ -54,7 +54,7 @@ declare -a tests=(
   # Rerun the item detail report to review new depth settings for 003, 004, and 005.
   "0505_IERfor003to005X;itemReport/showAllItems"
 
-  # Reclaculate max depth from the, W-013..
+  # Re-calculate max depth from the, W-013..
   # There should be no change from the Max Depth calculation on 003
   "0507_MaxDepthFor014;itemReport/whereUsedReport"
 
@@ -166,16 +166,16 @@ declare curlDriver=./_curlDriver.sh
 declare testToRequest=./_testToRequest.sh
 
 #    .---------- constant part!
-#    vvvv vvvv-- the code from above
+#    the code from above
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 if [ -n "$1" ]; then
-  echo Parameter passed $1
+  echo Parameter passed "$1"
+  # shellcheck disable=SC2206
   tests=( ${1} )
 fi
 
-#Convert any test file to a request file.  The remainder of the script
-#only deals with .request.
+#Extract the requests from the test files...
 echo Converting tests to requests...
 for filename in *.test; do
   #echo ==== ${filename}
@@ -219,14 +219,14 @@ do
 
   ${curlDriver} ${testName} ${testService}
 
-  if [ ! -f $testName.expected ]; then
-    echo File $testName.expected is being created from actual.
-    mv $testName.actual $testName.expected
+  if [ ! -f "$testName".expected ]; then
+    echo File "$testName".expected is being created from actual.
+    mv "$testName".actual "$testName".expected
     newBaseLines+=1
   else
     if  cmp --silent "$testName.actual" "$testName.expected" ; then
-      printf  $TestResultFormat "$testName" "passed"
-      rm ${testName}.actual ${testName}.request
+      printf  "$TestResultFormat" "$testName" "passed"
+      rm "${testName}".actual "${testName}".request
       passed+=1
     else
       printf  $TestResultFormat "$test" "failed"
@@ -249,6 +249,6 @@ done
 
 echo --------------------
 echo Summary of Test Results.
-printf $TestSummaryFormat Passed $passed
-printf $TestSummaryFormat Failed $failed
+printf $TestSummaryFormat 'Passed' $passed
+printf $TestSummaryFormat 'Failed'  $failed
 printf $TestSummaryFormat 'New Baselines' $newBaseLines
