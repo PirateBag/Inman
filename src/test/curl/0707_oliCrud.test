@@ -13,5 +13,5 @@ Create a new order for W-001 in thhe open state, which should present components
 { "rows" : [
         {  "activityState" : "DELETE",  "id" : 6, "itemId" : "1", "parentOliId" : "0", "quantityOrdered" : "10", "quantityAssigned" : "0.0",
         "startDate" : "2025-0801",  "orderState" : "OPEN",
-        "orderType" : "MO" }
+        "orderType" : "MOHEAD" }
 ] }

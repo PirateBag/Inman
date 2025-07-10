@@ -11,7 +11,7 @@
     "completeDate" : "2025-0703",
     "parentOliId" : 0,
     "orderState" : "PLANNED",
-    "orderType" : "MO"
+    "orderType" : "MODET"
   }, {
     "id" : 2,
     "activityState" : "INSERT",
@@ -22,6 +22,6 @@
     "completeDate" : "2025-0711",
     "parentOliId" : 0,
     "orderState" : "PLANNED",
-    "orderType" : "MO"
+    "orderType" : "MODET"
   } ]
 }

@@ -1,5 +1,6 @@
 package com.inman.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inman.business.ReflectionHelpers;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -13,8 +14,8 @@ import java.util.Set;
 @Entity
 @Table( name = "OrderLineItem"  )
 public class OrderLineItem extends EntityMaster {
-	public static String formatter = "%4d %4d %7d %6.2f %6.2f %10s %10s %4s %4s %4s";
-	public static String header = String.format( "%-4s %-4s %8s %8s %8s %10s %10s %4s %4s %4s",
+	public static String formatter = "%4d %4d %7d %8.2f %6.2f %10s %10s %4s %6s %4s";
+	public static String header = String.format( "%-4s %-4s %7s %8s %8s %10s %10s %4s %6s %4s",
 			"Id", "Item", "ParentId", "Ordered", "Assigned", "Start", "Complete", "Stat", "DbCr", "Activity");
 	public static Map<String, Field> fieldNames;
 
@@ -29,7 +30,7 @@ public class OrderLineItem extends EntityMaster {
 
 	OrderState orderState = OrderState.PLANNED;
 
-	OrderType orderType = OrderType.NONE;
+	OrderType orderType;
 
 	public OrderLineItem() {
 	}
@@ -62,6 +63,14 @@ public class OrderLineItem extends EntityMaster {
 	}
 
 	public double getQuantityOrdered() {
+		return quantityOrdered;
+	}
+
+	@JsonIgnore
+	public double getEffectiveQuantityOrdered() {
+		if ( orderType == OrderType.MODET )
+			return -quantityOrdered;
+
 		return quantityOrdered;
 	}
 

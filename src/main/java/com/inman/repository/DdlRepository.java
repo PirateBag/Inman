@@ -22,6 +22,14 @@ public class DdlRepository {
         logger.info(sqlCommand);
         entityManager.createNativeQuery(sqlCommand).executeUpdate();
     }
+
+    @Transactional
+    public int resetMaxDepth() {
+        String sqlCommand = "UPDATE ITEM SET max_depth=0";
+        logger.info(sqlCommand);
+        return entityManager.createNativeQuery(sqlCommand).executeUpdate();
+    }
+
     public static String createUpdateByRowIdStatement(String tableName, long rowId, Map<String, Object> fieldsToUpdate ) {
         StringBuilder sqlCommand = new StringBuilder( "UPDATE " + tableName + " SET "  );
         int numberOfKeys = 0;

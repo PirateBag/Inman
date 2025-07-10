@@ -17,7 +17,7 @@
     "completeDate" : "2025-0903",
     "parentOliId" : 0,
     "orderState" : "OPEN",
-    "orderType" : "MO"
+    "orderType" : "MODET"
   }, {
     "id" : 15,
     "activityState" : "CHANGE",
@@ -28,6 +28,6 @@
     "completeDate" : "2025-0003",
     "parentOliId" : 0,
     "orderState" : "OPEN",
-    "orderType" : "MO"
+    "orderType" : "MODET"
   } ]
 }

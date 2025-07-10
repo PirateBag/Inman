@@ -125,7 +125,7 @@ public class BomLogicService {
             return;
         }
 
-        if (thisComponent.getMaxDepth() > maxDepthFromParents) {
+        if (thisComponent.getMaxDepth() >= maxDepthFromParents) {
             outputInfoNoResponse("Component " + thisComponent + " is greater than parent.  No change.", texts);
             return;
         }

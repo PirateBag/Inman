@@ -142,6 +142,7 @@ declare -a tests=(
   # Create two new planned orders with BOMs and delete all the old orders.
   "0719_oliCrud;oli/crud"
   "0721_oliReport;oli/showAll"
+
 #
 #  We now have the following orders:
 #        14    2       0   7.00   0.00  2025-0801  2025-0811 PLANNED   MO NONE"
@@ -156,6 +157,25 @@ declare -a tests=(
 #  Change order 14 to OPEN and 15 to open.
   "0727_oliCrud;oli/crud"
   "0729_oliReport;oli/showAll"
+
+  # Verify the date setting logic in INSERT orders.
+  "0731_oliCrud;oli/crud"
+
+
+  ########################  Automated Planning.
+#      Id  Item  Par Ord Qty    Ass
+#     14    2       0   6.00   0.00  2025-0901  2025-0903 OPEN   MO NONE
+#     15    5       0   9.00   0.00  2025-0901  2025-0003 OPEN   MO NONE
+#     18   13      14   6.00   0.00  2025-0901  2025-0903 OPEN   MO NONE
+#     19   14      14   1.50   0.00  2025-0901  2025-0903 OPEN   MO NONE
+#     20   17      15  13.50   0.00  2025-0901  2025-0003 OPEN   MO NONE
+    "0801_ap;ap/basic"
+#
+#New Orders:
+#      21    5       0   9.00   0.00  2025-0901  2025-0003 OPEN   MO NONE
+#      22    5       0   9.00   0.00  2025-0901  2025-0003 OPEN   MO NONE
+
+
 
    )
 #   "stopTesting" \

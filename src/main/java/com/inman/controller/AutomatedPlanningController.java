@@ -1,14 +1,11 @@
 package com.inman.controller;
 
-import com.inman.business.OrderLineItemService;
-import com.inman.entity.OrderLineItem;
-import com.inman.model.request.*;
-import com.inman.model.response.ItemCrudBatchResponse;
-import com.inman.model.response.ResponsePackage;
+import com.inman.business.AutomatedPlanningService;
+import com.inman.model.request.GenericSingleId;
 import com.inman.model.response.ResponseType;
 import com.inman.model.response.TextResponse;
 import com.inman.model.rest.ErrorLine;
-import com.inman.repository.ItemRepository;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,51 +15,31 @@ import org.springframework.web.bind.annotation.*;
 
 @Configuration
 @RestController
-public class OrderLineItemController {
-    public static final String OrderLineItem_curd = "oli/crud";
-    public static final String OrderLineItem_ShowAll = "oli/showAll";
-    public static final int OrderLineItem_AllOrders = -1;
-    private static final String OrderLineItem_crud = "oli/crud";
+public class AutomatedPlanningController {
+    public final static String AutomatedPlan_Url = "ap/basic";
+    Logger logger = LoggerFactory.getLogger(AutomatedPlanningController.class);
 
-    static Logger logger = LoggerFactory.getLogger("controller: " + OrderLineItemController.class);
-
-    private OrderLineItemService orderLineItemService;
-
+    AutomatedPlanningService automatedPlanningService;
 
     @CrossOrigin
-    @RequestMapping(value = OrderLineItem_ShowAll, method = RequestMethod.POST,
-            consumes = "application/json",
-            produces = "application/json" )
-    public ResponseEntity<?> OrderLineItem_ShowAll( @RequestBody GenericSingleId genericSingleId  ) {
-        TextResponse textResponse = orderLineItemService.orderReport(genericSingleId.getIdToSearchFor()  );
-
-        textResponse.setResponseType(ResponseType.MULTILINE );
-        if (textResponse.getData().isEmpty()) {
-            var message = "No items were processed, either due to errors or no actionable inputs.";
-            logger.info(message);
-            textResponse.getErrors().add(new ErrorLine(1, message));
-        }
-        return ResponseEntity.ok().body(textResponse);
+    @RequestMapping(value = AutomatedPlan_Url, method = RequestMethod.GET)
+    public ResponseEntity<?> apBasic (@RequestParam String typeOfPlanning  ) {
+        TextResponse responsePackage = new TextResponse();
+        processPlanning(responsePackage);
+        return ResponseEntity.badRequest().body( responsePackage );
     }
 
-
     @CrossOrigin
-    @RequestMapping(value = OrderLineItem_crud, method = RequestMethod.POST)
-    public ResponseEntity<?> orderLineItemCrud(@RequestBody OrderLineItemRequest crudBatch ) {
-        ResponsePackage<OrderLineItem> responsePackage = new ResponsePackage<>();
+    @RequestMapping(value = AutomatedPlan_Url, method = RequestMethod.POST)
+    public ResponseEntity<?> apBasic (@RequestBody GenericSingleId genericSingleId  ) {
+        TextResponse responsePackage = new TextResponse();
+        processPlanning(responsePackage);
+        return ResponseEntity.badRequest().body( responsePackage );
+    }
+
+    private void processPlanning(TextResponse responsePackage) {
         try {
-//            if ( Application.isTestName( "0719_oliCrud")) {
-//                logger.info( "You have arrived.");
-//            }
-
-            if ( crudBatch == null ) {
-                String message = "Request message may not be JSON";
-                responsePackage.addError( new ErrorLine(1, message) );
-                logger.error(message);
-                throw new Exception(message);
-            }
-
-            responsePackage= orderLineItemService.applyCrud( crudBatch, responsePackage  );
+            automatedPlanningService.basic( "", responsePackage);
             responsePackage.setResponseType(ResponseType.MULTILINE );
 
             if (responsePackage.getData().isEmpty()) {
@@ -70,17 +47,16 @@ public class OrderLineItemController {
                 logger.info(message);
                 responsePackage.getErrors().add(new ErrorLine(1, message));
             }
-            return ResponseEntity.ok().body(responsePackage);
 
         } catch ( Exception exception ) {
             logger.info( "Encountered runtime exception, check response message for details.");
         }
-        return ResponseEntity.badRequest().body( responsePackage );
     }
 
+
     @Autowired
-    public OrderLineItemController(    OrderLineItemService orderLineItemService ) {
-        this.orderLineItemService = orderLineItemService;
+    public AutomatedPlanningController(AutomatedPlanningService automatedPlanningService ) {
+        this.automatedPlanningService  =  automatedPlanningService;
     }
 
 }

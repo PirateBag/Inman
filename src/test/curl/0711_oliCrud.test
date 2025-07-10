@@ -15,5 +15,5 @@ Change order 6 from Open to Closed.  Components should get closed as well.
 { "rows" : [
         {  "activityState" : "CHANGE",  "id" : 6, "itemId" : "1", "parentOliId" : "0", "quantityOrdered" : "10", "quantityAssigned" : "0.0",
         "startDate" : "2025-0801", "completeDate" : "2025-0803",  "orderState" : "CLOSED",
-        "orderType" : "MO" }
+        "orderType" : "MOHEAD" }
 ] }

@@ -11,6 +11,6 @@
     "completeDate" : "2025-0715",
     "parentOliId" : 0,
     "orderState" : "PLANNED",
-    "orderType" : "MO"
+    "orderType" : "MOHEAD"
   } ]
 }

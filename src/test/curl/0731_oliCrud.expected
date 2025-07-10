@@ -2,7 +2,52 @@
   "responseType" : null,
   "errors" : [ {
     "key" : 1,
-    "message" : "Order does not appear to be changed:    14    2       0   6.00   0.00  2025-0901  2025-0903 OPEN   MO CHANGE"
+    "message" : "Added 3 lines to order 21"
+  }, {
+    "key" : 1,
+    "message" : "Added 3 lines to order 24"
+  }, {
+    "key" : 1,
+    "message" : "Added 3 lines to order 27"
+  }, {
+    "key" : 1,
+    "message" : "A line item must have either startDate or completedDate"
+  }, {
+    "key" : 1,
+    "message" : "Unable to insert   15    5       0     9.00   0.00       null       null OPEN MOHEAD INSERT:A line item must have either startDate or completedDate"
   } ],
-  "data" : [ ]
+  "data" : [ {
+    "id" : 21,
+    "activityState" : "INSERT",
+    "itemId" : 2,
+    "quantityOrdered" : 6.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-0901",
+    "completeDate" : "2025-0913",
+    "parentOliId" : 0,
+    "orderState" : "OPEN",
+    "orderType" : "MOHEAD"
+  }, {
+    "id" : 24,
+    "activityState" : "INSERT",
+    "itemId" : 2,
+    "quantityOrdered" : 6.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-0901",
+    "completeDate" : "2025-0911",
+    "parentOliId" : 0,
+    "orderState" : "OPEN",
+    "orderType" : "MOHEAD"
+  }, {
+    "id" : 27,
+    "activityState" : "INSERT",
+    "itemId" : 2,
+    "quantityOrdered" : 6.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-0824",
+    "completeDate" : "2025-0903",
+    "parentOliId" : 0,
+    "orderState" : "OPEN",
+    "orderType" : "MOHEAD"
+  } ]
 }

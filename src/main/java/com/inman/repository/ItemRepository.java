@@ -40,4 +40,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
 	//  Delete all as a transaction.
 	void deleteAllInBatch();
-	}
+
+	List<Item> findAllByOrderByMaxDepthDesc();
+	List<Item> findAllByOrderByMaxDepthAsc();
+}

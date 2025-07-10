@@ -21,8 +21,7 @@ import java.util.*;
 
 import static com.inman.business.ReflectionHelpers.compareObjects;
 import static com.inman.controller.OrderLineItemController.OrderLineItem_AllOrders;
-import static com.inman.controller.Utility.DATE_FORMATTER;
-import static com.inman.controller.Utility.normalize;
+import static com.inman.controller.Utility.*;
 
 @Service
 public class OrderLineItemService {
@@ -56,8 +55,20 @@ public class OrderLineItemService {
         OrderLineItem updatedOrderLineItem;
         try {
             Item item = itemRepository.findById(orderLineItem.getItemId());
-            LocalDate completedDate = LocalDate.parse(orderLineItem.getStartDate(), DATE_FORMATTER).plusDays(item.getLeadTime());
-            orderLineItem.setCompleteDate(completedDate.format(DATE_FORMATTER));
+
+            LocalDate derviedStartOrCompleted ;
+
+            if ( isNullOrEmpty( orderLineItem.getStartDate() ) && isNullOrEmpty( orderLineItem.getCompleteDate() ) ) {
+                outputErrorAndThrow( "A line item must have either startDate or completedDate", oliResponse );
+            } else if ( isNullOrEmpty( orderLineItem.getStartDate()  ) ) {
+                derviedStartOrCompleted = LocalDate.parse(orderLineItem.getCompleteDate(), DATE_FORMATTER).minusDays(item.getLeadTime());
+               orderLineItem.setStartDate( derviedStartOrCompleted.format(DATE_FORMATTER));
+                logger.info("Derived start from completed less lead time." );
+            } if ( isNullOrEmpty( orderLineItem.getCompleteDate() ) ) {
+                derviedStartOrCompleted = LocalDate.parse(orderLineItem.getStartDate(), DATE_FORMATTER).plusDays(item.getLeadTime());
+                orderLineItem.setCompleteDate( derviedStartOrCompleted.format(DATE_FORMATTER));
+                logger.info("Derived completeDate from Start plus lead time." );
+            }
             if (validateOrderLineItemForMOInsertion(orderLineItem, oliResponse, item) > 0) {
                 outputInfo("Validation on " + orderLineItem + " failed", oliResponse);
             }

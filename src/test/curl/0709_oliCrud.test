@@ -15,5 +15,5 @@ Change order 6 from Open to Planned.  Should be rejected due to presence of chil
 { "rows" : [
         {  "activityState" : "CHANGE",  "id" : 6, "itemId" : "1", "parentOliId" : "0", "quantityOrdered" : "10", "quantityAssigned" : "0.0",
         "startDate" : "2025-0801", "completeDate" : "2025-0803",  "orderState" : "PLANNED",
-        "orderType" : "MO" }
+        "orderType" : "MOHEAD" }
 ] }

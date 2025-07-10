@@ -17,6 +17,10 @@ public class Utility {
         return str;
     }
 
+    public static boolean isNullOrEmpty( String str ) {
+        return str == null || str.isEmpty();
+    }
+
     public static String generateErrorMessageFrom(DataIntegrityViolationException dataIntegrityViolationException) {
         var detailedMessage = dataIntegrityViolationException.getMessage();
         if (detailedMessage.contains(UNIQUE_INDEX_OR_PRIMARY_KEY_VIOLATION)) {

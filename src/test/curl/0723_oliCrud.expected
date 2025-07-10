@@ -17,6 +17,6 @@
     "completeDate" : "2025-0903",
     "parentOliId" : 0,
     "orderState" : "OPEN",
-    "orderType" : "MO"
+    "orderType" : "MOHEAD"
   } ]
 }

@@ -1,20 +1,26 @@
-Given a state of :
+Test the date setting logic for inserts:
 
-#  We now have the following orders:
-#        14    2       0   7.00   0.00  2025-0801  2025-0811 PLANNED   MO NONE"
-#        15    5       0   9.00   0.00  2025-0801  2025-0805 PLANNED   MO NONE".00   0.00  2025-0801  2025-0803 CLOSED   MO NONE"
-
-Change order 14 from Planned to Open and 15 from planned to open.
+When both start and complete dates, use those dates even if they don't match lead times.
+When either start or complete are provided and the other ommitted, calculate the other date using lead time.
+When both dates are ommitted, vomit.
 
 
 ===JSON===
 
 { "rows" : [
 
-        {  "activityState" : "CHANGE",  "id" : 14, "itemId" : "2", "parentOliId" : "0", "quantityOrdered" : "6", "quantityAssigned" : "0.0",
-        "startDate" : "2025-0901", "completeDate" : "2025-0903",  "orderState" : "OPEN",
-        "orderType" : "MO" },
-        {  "activityState" : "CHANGE",  "id" : 15, "itemId" : "5", "parentOliId" : "0", "quantityOrdered" : "9", "quantityAssigned" : "0.0",
-        "startDate" : "2025-0901", "completeDate" : "2025-0003",  "orderState" : "OPEN",
-        "orderType" : "MO" }
+        {  "activityState" : "INSERT",  "itemId" : "2", "parentOliId" : "0", "quantityOrdered" : "6", "quantityAssigned" : "0.0",
+        "startDate" : "2025-0901", "completeDate" : "2025-0913",  "orderState" : "OPEN",
+        "orderType" : "MOHEAD" },
+        {  "activityState" : "INSERT",  "itemId" : "2", "parentOliId" : "0", "quantityOrdered" : "6", "quantityAssigned" : "0.0",
+        "startDate" : "2025-0901", "orderState" : "OPEN",
+        "orderType" : "MOHEAD" },
+
+        {  "activityState" : "INSERT",  "itemId" : "2", "parentOliId" : "0", "quantityOrdered" : "6", "quantityAssigned" : "0.0",
+        "completeDate" : "2025-0903",  "orderState" : "OPEN",
+        "orderType" : "MOHEAD" },
+
+        {  "activityState" : "INSERT",  "id" : 15, "itemId" : "5", "parentOliId" : "0", "quantityOrdered" : "9", "quantityAssigned" : "0.0",
+         "orderState" : "OPEN",
+        "orderType" : "MOHEAD" }
 ] }
