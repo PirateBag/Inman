@@ -223,10 +223,30 @@ public class ItemAndStatus {
 	@RequestMapping( value = ItemAndStatus.CLEAR_ALL_DATA, method=RequestMethod.POST )
 	public ResponsePackage<Text> clearAllData(@RequestBody GenericSingleId genericSingleId )
 	{
-		ResponsePackage<Text> responsePackage = clearAllData( itemRepository );
+		ResponsePackage<Text> responsePackage;
 
+		if ( genericSingleId.getIdToSearchFor() == 1L ) {
+			responsePackage = clearAllData(itemRepository);
+		} else 	if ( genericSingleId.getIdToSearchFor() == 2L ) {
+			responsePackage = clearAllOrders(itemRepository);
+		} else {
+			responsePackage = new ResponsePackage<>();
+			responsePackage.addError( new ErrorLine( 1, "Id must be 1 for all, 2 for orders only.") );
+		}
 		return responsePackage;
 	}
+
+	private ResponsePackage<Text> clearAllOrders(ItemRepository itemRepository) {
+		var rValue = new ResponsePackage<Text>();
+		orderLineItemRepository.deleteAllInBatch();
+		rValue.getData().add( new Text( "OrdereLineItems deleted" ) );
+
+		ddlRepository.resetIdForTable( "order_line_item" );
+		rValue.getData().add( new Text( "Order Line Items PK reset" ) );
+
+		return rValue;
+	}
+
 
 	public ResponsePackage<Text> clearAllData( ItemRepository itemRepository ){
 		itemRepository.deleteAllInBatch();

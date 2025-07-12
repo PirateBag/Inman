@@ -1,0 +1,15 @@
+{
+  "responseType" : "MULTILINE",
+  "errors" : [ {
+    "key" : 1,
+    "message" : "Resetting max depth..."
+  }, {
+    "key" : 1,
+    "message" : "New order:   21   17       1  1000.00   0.00       null  2025-0901 OPEN     PO INSERT"
+  } ],
+  "data" : [ {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "18 items were reset"
+  } ]
+}

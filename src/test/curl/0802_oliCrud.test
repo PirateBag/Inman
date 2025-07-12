@@ -1,0 +1,14 @@
+Test the date setting logic for inserts:
+
+When both start and complete dates, use those dates even if they don't match lead times.
+When either start or complete are provided and the other ommitted, calculate the other date using lead time.
+When both dates are ommitted, vomit.
+
+
+===JSON===
+
+{ "rows" : [
+        {  "activityState" : "INSERT",  "itemId" : "5", "parentOliId" : "0", "quantityOrdered" : "6", "quantityAssigned" : "0.0",
+        "startDate" : "2025-0901", "completeDate" : "2025-0913",  "orderState" : "OPEN",
+        "orderType" : "MOHEAD" }
+] }

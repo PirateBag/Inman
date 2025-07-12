@@ -11,7 +11,7 @@
     "completeDate" : "2025-0803",
     "parentOliId" : 6,
     "orderState" : "CLOSED",
-    "orderType" : "MOHEAD"
+    "orderType" : "MODET"
   }, {
     "id" : 8,
     "activityState" : "DELETE",
@@ -22,7 +22,7 @@
     "completeDate" : "2025-0803",
     "parentOliId" : 6,
     "orderState" : "CLOSED",
-    "orderType" : "MOHEAD"
+    "orderType" : "MODET"
   }, {
     "id" : 9,
     "activityState" : "DELETE",
@@ -33,7 +33,7 @@
     "completeDate" : "2025-0803",
     "parentOliId" : 6,
     "orderState" : "CLOSED",
-    "orderType" : "MOHEAD"
+    "orderType" : "MODET"
   }, {
     "id" : 10,
     "activityState" : "DELETE",
@@ -44,7 +44,7 @@
     "completeDate" : "2025-0803",
     "parentOliId" : 6,
     "orderState" : "CLOSED",
-    "orderType" : "MOHEAD"
+    "orderType" : "MODET"
   }, {
     "id" : 11,
     "activityState" : "DELETE",
@@ -55,7 +55,7 @@
     "completeDate" : "2025-0803",
     "parentOliId" : 6,
     "orderState" : "CLOSED",
-    "orderType" : "MOHEAD"
+    "orderType" : "MODET"
   }, {
     "id" : 12,
     "activityState" : "DELETE",
@@ -66,7 +66,7 @@
     "completeDate" : "2025-0803",
     "parentOliId" : 6,
     "orderState" : "CLOSED",
-    "orderType" : "MOHEAD"
+    "orderType" : "MODET"
   }, {
     "id" : 13,
     "activityState" : "DELETE",
@@ -77,6 +77,6 @@
     "completeDate" : "2025-0803",
     "parentOliId" : 6,
     "orderState" : "CLOSED",
-    "orderType" : "MOHEAD"
+    "orderType" : "MODET"
   } ]
 }

@@ -1,0 +1,7 @@
+```Purpose
+Clear the contents of the following tables:
+  OrderLineItems (Only)
+```
+==JSON==
+{ "idToSearchFor" : "2" }
+

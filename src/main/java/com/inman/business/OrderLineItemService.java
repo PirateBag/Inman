@@ -110,7 +110,7 @@ public class OrderLineItemService {
             oli.setQuantityAssigned(  0.0 );
             oli.setActivityState( parentOli.getActivityState() );
             oli.setOrderState( parentOli.getOrderState() );
-            oli.setOrderType( parentOli.getOrderType() );
+            oli.setOrderType( OrderType.MODET );
             var updatedOli = orderLineItemRepository.save(oli);
             logger.info( updatedOli.toString()  );
             count++;

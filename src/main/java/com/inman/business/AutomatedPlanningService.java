@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.lang.Double.max;
+import static java.lang.Math.abs;
 
 @Service
 public class AutomatedPlanningService {
@@ -67,27 +68,35 @@ public class AutomatedPlanningService {
                 logger.info( "No outstanding orders for " + item.getSummaryId() );
                 continue;
             }
-            logger.info( "Planning item " + item  );
+
             double balance = item.getQuantityOnHand();
             logger.info( "    " + OrderLineItem.header + "  Balance"  );
             for ( OrderLineItem order : orders ) {
+                if ( order.getParentOliId() == 0 ) {
+                    logger.info( String.format( "    Order %d has no parent. ", order.getId()  ) );
+                    break;
+                }
 
                 balance += order.getEffectiveQuantityOrdered();
                 logger.info( String.format( "    %s : %f8.2", order, balance ) );
 
-                OrderLineItem newOrder = new OrderLineItem( order );
-                newOrder.setId( temporaryStartingOrder++ );
-                newOrder.setQuantityOrdered( max( item.getMinimumOrderQuantity(), balance ) );
-                newOrder.setActivityState( ActivityState.INSERT );
-                newOrder.setStartDate( null );
-                newOrder.setCompleteDate( order.getStartDate() );
-                newOrder.setOrderType( item.getSourcing().equals( Item.SOURCE_MAN ) ? OrderType.MOHEAD : OrderType.PO);
-                newOrders.add( newOrder );
+                if ( balance < 0 ) {
+                    OrderLineItem newOrder = new OrderLineItem(order);
+                    newOrder.setId(temporaryStartingOrder++);
+                    newOrder.setQuantityOrdered(max(item.getMinimumOrderQuantity(), abs( balance) ));
+                    newOrder.setActivityState(ActivityState.INSERT);
+                    newOrder.setStartDate(null);
+                    newOrder.setCompleteDate(order.getStartDate());
+                    newOrder.setOrderType(item.getSourcing().equals(Item.SOURCE_MAN) ? OrderType.MOHEAD : OrderType.PO);
+                    balance += newOrder.getQuantityOrdered();
+                    logger.info( String.format("    Ordering %8.2f more", newOrder.getQuantityOrdered() ) );
+                    newOrders.add(newOrder);
+                }
             }
         }
 
         for ( OrderLineItem newOrder : newOrders ) {
-            logger.info( "New order: " + newOrder );
+            outputInfo( "New order: " + newOrder , textResponse );
         }
         logger.info("apBasic loop exited with " + textResponse.getErrors().size() + " errors");
      }

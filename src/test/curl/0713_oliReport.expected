@@ -24,30 +24,30 @@
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "   7    2       6    10.00   0.00  2025-0801  2025-0803 CLOSED MOHEAD NONE"
+    "message" : "   7    2       6    10.00   0.00  2025-0801  2025-0803 CLOSED  MODET NONE"
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "   8    3       6    10.00   0.00  2025-0801  2025-0803 CLOSED MOHEAD NONE"
+    "message" : "   8    3       6    10.00   0.00  2025-0801  2025-0803 CLOSED  MODET NONE"
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "   9    4       6    10.00   0.00  2025-0801  2025-0803 CLOSED MOHEAD NONE"
+    "message" : "   9    4       6    10.00   0.00  2025-0801  2025-0803 CLOSED  MODET NONE"
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "  10    6       6    10.00   0.00  2025-0801  2025-0803 CLOSED MOHEAD NONE"
+    "message" : "  10    6       6    10.00   0.00  2025-0801  2025-0803 CLOSED  MODET NONE"
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "  11    7       6    80.00   0.00  2025-0801  2025-0803 CLOSED MOHEAD NONE"
+    "message" : "  11    7       6    80.00   0.00  2025-0801  2025-0803 CLOSED  MODET NONE"
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "  12    8       6    40.00   0.00  2025-0801  2025-0803 CLOSED MOHEAD NONE"
+    "message" : "  12    8       6    40.00   0.00  2025-0801  2025-0803 CLOSED  MODET NONE"
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "  13    9       6    40.00   0.00  2025-0801  2025-0803 CLOSED MOHEAD NONE"
+    "message" : "  13    9       6    40.00   0.00  2025-0801  2025-0803 CLOSED  MODET NONE"
   } ]
 }

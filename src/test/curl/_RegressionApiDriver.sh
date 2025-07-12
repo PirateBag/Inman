@@ -161,22 +161,18 @@ declare -a tests=(
   # Verify the date setting logic in INSERT orders.
   "0731_oliCrud;oli/crud"
 
+#####################  Automated Planning  ################
+    # Remove just the orders and reset the id to 1.
+    "0801_ClearOrders;clearAllData"
 
-  ########################  Automated Planning.
-#      Id  Item  Par Ord Qty    Ass
-#     14    2       0   6.00   0.00  2025-0901  2025-0903 OPEN   MO NONE
-#     15    5       0   9.00   0.00  2025-0901  2025-0003 OPEN   MO NONE
-#     18   13      14   6.00   0.00  2025-0901  2025-0903 OPEN   MO NONE
-#     19   14      14   1.50   0.00  2025-0901  2025-0903 OPEN   MO NONE
-#     20   17      15  13.50   0.00  2025-0901  2025-0003 OPEN   MO NONE
-    "0801_ap;ap/basic"
-#
-#New Orders:
-#      21    5       0   9.00   0.00  2025-0901  2025-0003 OPEN   MO NONE
-#      22    5       0   9.00   0.00  2025-0901  2025-0003 OPEN   MO NONE
+#    Create one orders for W-005 (which has one component, W-017)
+    "0802_oliCrud;oli/crud"
 
+    "0803_ap;ap/basic"
 
+    "0804_oliCrud;oli/crud"
 
+    "0805_ap;ap/basic"
    )
 #   "stopTesting" \
 declare -i passed=0

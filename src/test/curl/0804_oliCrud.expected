@@ -1,0 +1,61 @@
+{
+  "responseType" : "MULTILINE",
+  "errors" : [ {
+    "key" : 1,
+    "message" : "Added 2 lines to order 3"
+  }, {
+    "key" : 1,
+    "message" : "Added 2 lines to order 5"
+  }, {
+    "key" : 1,
+    "message" : "Added 2 lines to order 7"
+  }, {
+    "key" : 1,
+    "message" : "Added 2 lines to order 9"
+  } ],
+  "data" : [ {
+    "id" : 3,
+    "activityState" : "INSERT",
+    "itemId" : 5,
+    "quantityOrdered" : 500.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-0911",
+    "completeDate" : "2025-0915",
+    "parentOliId" : 0,
+    "orderState" : "OPEN",
+    "orderType" : "MOHEAD"
+  }, {
+    "id" : 5,
+    "activityState" : "INSERT",
+    "itemId" : 5,
+    "quantityOrdered" : 1000.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-1011",
+    "completeDate" : "2025-1015",
+    "parentOliId" : 0,
+    "orderState" : "OPEN",
+    "orderType" : "MOHEAD"
+  }, {
+    "id" : 7,
+    "activityState" : "INSERT",
+    "itemId" : 5,
+    "quantityOrdered" : 1500.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-1111",
+    "completeDate" : "2025-1115",
+    "parentOliId" : 0,
+    "orderState" : "OPEN",
+    "orderType" : "MOHEAD"
+  }, {
+    "id" : 9,
+    "activityState" : "INSERT",
+    "itemId" : 5,
+    "quantityOrdered" : 50.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-1211",
+    "completeDate" : "2025-1215",
+    "parentOliId" : 0,
+    "orderState" : "OPEN",
+    "orderType" : "MOHEAD"
+  } ]
+}
