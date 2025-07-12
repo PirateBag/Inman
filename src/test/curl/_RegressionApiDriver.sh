@@ -193,11 +193,11 @@ if [ -n "$1" ]; then
 fi
 
 #Extract the requests from the test files...
-echo Converting tests to requests...
-for filename in *.test; do
-  #echo ==== ${filename}
-  $testToRequest "${filename}"
-done
+#echo Converting tests to requests...
+#for filename in *.test; do
+#  #echo ==== ${filename}
+#  $testToRequest "${filename}"
+#done
 
 echo Performing Health Check...
 

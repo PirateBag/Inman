@@ -60,25 +60,23 @@ public class AutomatedPlanningService {
         int temporaryStartingOrder = 21;
 
         for (Item item : itemsToBePlanned) {
-            logger.info("Item: {}", item);
-
             List<OrderLineItem> orders = orderLineItemRepository.findByItemIdAndOrderStateOrderByCompleteDate( item.getId(), OrderState.OPEN );
 
-            if ( orders.isEmpty()) {
-                logger.info( "No outstanding orders for " + item.getSummaryId() );
-                continue;
-            }
+            logger.info("Item: {} has {} orders", item, orders.size());
 
             double balance = item.getQuantityOnHand();
-            logger.info( "    " + OrderLineItem.header + "  Balance"  );
+            textResponse.addText( "Inventory Analysis for " + item, Optional.of( logger )  );
+            textResponse.addText( "  Opening Balance of " + balance +
+                    " and there are " + orders.size() + " open orders", Optional.of( logger )  );
+
             for ( OrderLineItem order : orders ) {
                 if ( order.getParentOliId() == 0 ) {
-                    logger.info( String.format( "    Order %d has no parent. ", order.getId()  ) );
+                    logger.info( String.format( "  Order %d has no parent. ", order.getId()  ) );
                     break;
                 }
 
                 balance += order.getEffectiveQuantityOrdered();
-                logger.info( String.format( "    %s : %f8.2", order, balance ) );
+                textResponse.addText( String.format( "  %s : %f8.2", order, balance ), Optional.of( logger ) );
 
                 if ( balance < 0 ) {
                     OrderLineItem newOrder = new OrderLineItem(order);
@@ -89,16 +87,19 @@ public class AutomatedPlanningService {
                     newOrder.setCompleteDate(order.getStartDate());
                     newOrder.setOrderType(item.getSourcing().equals(Item.SOURCE_MAN) ? OrderType.MOHEAD : OrderType.PO);
                     balance += newOrder.getQuantityOrdered();
-                    logger.info( String.format("    Ordering %8.2f more", newOrder.getQuantityOrdered() ) );
+                    textResponse.addText( " +" + newOrder, Optional.of( logger ) );
                     newOrders.add(newOrder);
                 }
             }
+            if ( newOrders.size() > 0 ) {
+                textResponse.addText("    Projected balance of " + balance + " on " + newOrders.getLast().getCompleteDate(),
+                        Optional.of(logger));
+            }
         }
-
-        for ( OrderLineItem newOrder : newOrders ) {
-            outputInfo( "New order: " + newOrder , textResponse );
-        }
-        logger.info("apBasic loop exited with " + textResponse.getErrors().size() + " errors");
+//
+//        for ( OrderLineItem newOrder : newOrders ) {
+//            outputInfo( "New order: " + newOrder , textResponse );
+//        }
      }
 
     private void calculateMaxDepths(TextResponse textResponse) {

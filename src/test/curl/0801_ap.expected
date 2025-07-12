@@ -1,0 +1,12 @@
+{
+  "responseType" : null,
+  "errors" : [ {
+    "key" : 1,
+    "message" : "Resetting maxdepth..."
+  } ],
+  "data" : [ {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "18 items were reset"
+  } ]
+}

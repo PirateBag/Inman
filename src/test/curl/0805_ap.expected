@@ -3,22 +3,66 @@
   "errors" : [ {
     "key" : 1,
     "message" : "Resetting max depth..."
-  }, {
-    "key" : 1,
-    "message" : "New order:   21   17       1  1000.00   0.00       null  2025-0901 OPEN     PO INSERT"
-  }, {
-    "key" : 1,
-    "message" : "New order:   22   17       5  1000.00   0.00       null  2025-1011 OPEN     PO INSERT"
-  }, {
-    "key" : 1,
-    "message" : "New order:   23   17       7  1000.00   0.00       null  2025-1111 OPEN     PO INSERT"
-  }, {
-    "key" : 1,
-    "message" : "New order:   24   17       9  1000.00   0.00       null  2025-1211 OPEN     PO INSERT"
   } ],
   "data" : [ {
     "id" : 0,
     "activityState" : "NONE",
     "message" : "18 items were reset"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "Inventory Analysis for 0005: W-005,Axle     0.00 MAN   2   4     0.00     1.00"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "  Opening Balance of 0.0 and there are 5 open orders"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "Inventory Analysis for 0017: W-017,Rod Stock     0.70 PUR   3   5     0.00  1000.00"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "  Opening Balance of 0.0 and there are 5 open orders"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "     2   17       1     9.00   0.00  2025-0901  2025-0913 OPEN  MODET NONE : -9.0000008.2"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : " +  21   17       1  1000.00   0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "     4   17       3   750.00   0.00  2025-0911  2025-0915 OPEN  MODET NONE : 241.0000008.2"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "     6   17       5  1500.00   0.00  2025-1011  2025-1015 OPEN  MODET NONE : -1259.0000008.2"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : " +  22   17       5  1259.00   0.00       null  2025-1011 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "     8   17       7  2250.00   0.00  2025-1111  2025-1115 OPEN  MODET NONE : -2250.0000008.2"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : " +  23   17       7  2250.00   0.00       null  2025-1111 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "    10   17       9    75.00   0.00  2025-1211  2025-1215 OPEN  MODET NONE : -75.0000008.2"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : " +  24   17       9  1000.00   0.00       null  2025-1211 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "    Projected balance of 925.0 on 2025-1211"
   } ]
 }
