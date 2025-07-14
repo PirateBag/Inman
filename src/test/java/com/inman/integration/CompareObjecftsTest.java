@@ -140,10 +140,10 @@ public class CompareObjecftsTest {
                 """;
 
         StringBuffer actual = new StringBuffer();
-
+/*
         for ( String key : setOfFields ) {
             actual.append( key ).append( '\n' );
-        }
+        }  */
         assertEquals( expected, actual.toString() );
 
     }

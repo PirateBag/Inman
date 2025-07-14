@@ -173,6 +173,20 @@ declare -a tests=(
     "0804_oliCrud;oli/crud"
 
     "0805_ap;ap/basic"
+#We have outstanding, open orders for W-005 and its single component W-017.
+#         "   1    5       0     6.00   0.00  2025-0901  2025-0913 OPEN MOHEAD NONE"
+#         "   3    5       0   500.00   0.00  2025-0911  2025-0915 OPEN MOHEAD NONE"
+#         "   5    5       0  1000.00   0.00  2025-1011  2025-1015 OPEN MOHEAD NONE"
+#         "   7    5       0  1500.00   0.00  2025-1111  2025-1115 OPEN MOHEAD NONE"
+#         "   9    5       0    50.00   0.00  2025-1211  2025-1215 OPEN MOHEAD NONE"
+#         "   2   17       1  1000.00   0.00  2025-0827  2025-0901 OPEN     PO NONE"
+#         "   4   17       3   750.00   0.00  2025-0911  2025-0915 OPEN  MODET NONE"
+#         "   6   17       5  1250.00   0.00  2025-1006  2025-1011 OPEN     PO NONE"
+#         "   8   17       7  2250.00   0.00  2025-1106  2025-1111 OPEN     PO NONE"
+#         "  10   17       9  1000.00   0.00  2025-1206  2025-1211 OPEN     PO NONE"
+
+  "0806_oliCrud;oli/Crud"
+
    )
 #   "stopTesting" \
 declare -i passed=0

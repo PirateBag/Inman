@@ -418,7 +418,7 @@ public class OrderLineItemService {
     public TextResponse orderReport(long orderId) {
         TextResponse textResponse = new TextResponse();
         if (orderId == OrderLineItem_AllOrders ) {
-            List<com.inman.entity.OrderLineItem> reportList = orderLineItemRepository.findAll();
+            List<OrderLineItem> reportList = orderLineItemRepository.getOliOrderByItemIdAndCompleteDate();
 
             logger.info(OrderLineItem.header);
             for (com.inman.entity.OrderLineItem orderLineItem : reportList) {

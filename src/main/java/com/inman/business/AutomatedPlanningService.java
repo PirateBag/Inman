@@ -1,6 +1,7 @@
 package com.inman.business;
 
 import com.inman.entity.*;
+import com.inman.model.request.OrderLineItemRequest;
 import com.inman.model.response.ResponsePackage;
 import com.inman.model.response.TextResponse;
 import com.inman.model.rest.ErrorLine;
@@ -26,6 +27,7 @@ public class AutomatedPlanningService {
     private final DdlRepository ddlRepository;
     private final BomLogicService bomLogicService;
     private final OrderLineItemRepository orderLineItemRepository;
+    private final OrderLineItemService  orderLineItemService;
 
     private void outputInfo(String message, ResponsePackage<?> responsePackage) {
         logger.info(message);
@@ -41,11 +43,13 @@ public class AutomatedPlanningService {
     @Autowired
     public AutomatedPlanningService(DdlRepository ddlRepository,
                                     BomLogicService bomLogicService, ItemRepository itemRepository,
-                                    OrderLineItemRepository orderLineItemRepository) {
+                                    OrderLineItemRepository orderLineItemRepository,
+                                    OrderLineItemService orderLineItemService ) {
         this.ddlRepository = ddlRepository;
         this.bomLogicService = bomLogicService;
         this.itemRepository = itemRepository;
         this.orderLineItemRepository = orderLineItemRepository;
+        this.orderLineItemService = orderLineItemService;
     }
 
     @Transactional
@@ -57,10 +61,9 @@ public class AutomatedPlanningService {
 
         List<Item> itemsToBePlanned = itemRepository.findAllByOrderByMaxDepthAsc();
 
-        int temporaryStartingOrder = 21;
-
         for (Item item : itemsToBePlanned) {
             List<OrderLineItem> orders = orderLineItemRepository.findByItemIdAndOrderStateOrderByCompleteDate( item.getId(), OrderState.OPEN );
+
 
             logger.info("Item: {} has {} orders", item, orders.size());
 
@@ -80,7 +83,6 @@ public class AutomatedPlanningService {
 
                 if ( balance < 0 ) {
                     OrderLineItem newOrder = new OrderLineItem(order);
-                    newOrder.setId(temporaryStartingOrder++);
                     newOrder.setQuantityOrdered(max(item.getMinimumOrderQuantity(), abs( balance) ));
                     newOrder.setActivityState(ActivityState.INSERT);
                     newOrder.setStartDate(null);
@@ -91,18 +93,30 @@ public class AutomatedPlanningService {
                     newOrders.add(newOrder);
                 }
             }
-            if ( newOrders.size() > 0 ) {
+            if (!newOrders.isEmpty()) {
                 textResponse.addText("    Projected balance of " + balance + " on " + newOrders.getLast().getCompleteDate(),
                         Optional.of(logger));
+                applyProposedChanges( newOrders );
             }
         }
+     }
+
+    private void applyProposedChanges( List<OrderLineItem> orders ) {
+
+        OrderLineItemRequest crudBatch = new OrderLineItemRequest(orders.toArray(new OrderLineItem[0]));
+        ResponsePackage<OrderLineItem> responsePackage = new ResponsePackage<>();
+
+        orderLineItemService.applyCrud(crudBatch, responsePackage);
+
+        logger.info( "errors reported when trying to create orders: ");
+        for( ErrorLine error : responsePackage.getErrors() ) { logger.info( error.getMessage() ); }
 //
 //        for ( OrderLineItem newOrder : newOrders ) {
 //            outputInfo( "New order: " + newOrder , textResponse );
 //        }
-     }
+        }
 
-    private void calculateMaxDepths(TextResponse textResponse) {
+        private void calculateMaxDepths(TextResponse textResponse) {
         outputInfo( "Resetting max depth...", textResponse);
 
         var numberOfResets = ddlRepository.resetMaxDepth();
@@ -117,5 +131,4 @@ public class AutomatedPlanningService {
             bomLogicService.updateMaxDepthOf( item.getId(), texts );
         }
     }
-
 }
