@@ -1,0 +1,53 @@
+{
+  "responseType" : null,
+  "errors" : [ ],
+  "data" : [ {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "Inventory Analysis for 0005: W-005,Axle     0.00 MAN   2   4     0.00     1.00"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "Opening Balance of 0.0 and there are 9 open orders"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "   1    5        0     6.00     0.00  2025-0901  2025-0913 OPEN MOHEAD NONE     6.00"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "   3    5        0   500.00     0.00  2025-0911  2025-0915 OPEN MOHEAD NONE   506.00"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "  12    5       11  -500.00     0.00  2025-0914  2025-0915 OPEN  MODET NONE     6.00"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "   5    5        0  1000.00     0.00  2025-1011  2025-1015 OPEN MOHEAD NONE  1006.00"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "  17    5       16 -1000.00     0.00  2025-1014  2025-1015 OPEN  MODET NONE     6.00"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "   7    5        0  1500.00     0.00  2025-1111  2025-1115 OPEN MOHEAD NONE  1506.00"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "  22    5       21 -1500.00     0.00  2025-1114  2025-1115 OPEN  MODET NONE     6.00"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "   9    5        0    50.00     0.00  2025-1211  2025-1215 OPEN MOHEAD NONE    56.00"
+  }, {
+    "id" : 0,
+    "activityState" : "NONE",
+    "message" : "  27    5       26   -50.00     0.00  2025-1214  2025-1215 OPEN  MODET NONE     6.00"
+  } ]
+}

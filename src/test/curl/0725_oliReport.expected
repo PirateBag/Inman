@@ -4,10 +4,10 @@
   "data" : [ {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "  14    2       0     7.00   0.00  2025-0801  2025-0811 PLANNED MOHEAD NONE"
+    "message" : "  14    2        0     7.00     0.00  2025-0801  2025-0811 PLANNED MOHEAD NONE"
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "  15    5       0     9.00   0.00  2025-0801  2025-0803 PLANNED MOHEAD NONE"
+    "message" : "  15    5        0     9.00     0.00  2025-0801  2025-0803 PLANNED MOHEAD NONE"
   } ]
 }

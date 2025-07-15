@@ -5,7 +5,6 @@ import com.inman.model.request.GenericSingleId;
 import com.inman.model.response.ResponseType;
 import com.inman.model.response.TextResponse;
 import com.inman.model.rest.ErrorLine;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class AutomatedPlanningController {
     public final static String AutomatedPlan_Url = "ap/basic";
+    public final static String InventoryBalanceProjection = "ap/inventoryBalanceProjection";
     Logger logger = LoggerFactory.getLogger(AutomatedPlanningController.class);
 
     AutomatedPlanningService automatedPlanningService;
@@ -36,6 +36,16 @@ public class AutomatedPlanningController {
         processPlanning(responsePackage);
         return ResponseEntity.badRequest().body( responsePackage );
     }
+
+    @CrossOrigin
+    @RequestMapping(value = InventoryBalanceProjection, method = RequestMethod.POST)
+    public ResponseEntity<?> apInventoryBalanceProjection (@RequestBody GenericSingleId genericSingleId  ) {
+        TextResponse responsePackage = new TextResponse();
+
+        automatedPlanningService.inventoryBalanceProjection( genericSingleId, responsePackage);
+        return ResponseEntity.badRequest().body( responsePackage );
+    }
+
 
     private void processPlanning(TextResponse responsePackage) {
         try {

@@ -1,6 +1,61 @@
 {
-  "timestamp" : "2025-07-14T20:33:31.717+00:00",
-  "status" : 404,
-  "error" : "Not Found",
-  "path" : "/oli/Crud"
+  "responseType" : "MULTILINE",
+  "errors" : [ {
+    "key" : 1,
+    "message" : "Added 5 lines to order 11"
+  }, {
+    "key" : 1,
+    "message" : "Added 5 lines to order 16"
+  }, {
+    "key" : 1,
+    "message" : "Added 5 lines to order 21"
+  }, {
+    "key" : 1,
+    "message" : "Added 5 lines to order 26"
+  } ],
+  "data" : [ {
+    "id" : 11,
+    "activityState" : "INSERT",
+    "itemId" : 3,
+    "quantityOrdered" : 500.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-0914",
+    "completeDate" : "2025-0915",
+    "parentOliId" : 0,
+    "orderState" : "OPEN",
+    "orderType" : "MOHEAD"
+  }, {
+    "id" : 16,
+    "activityState" : "INSERT",
+    "itemId" : 3,
+    "quantityOrdered" : 1000.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-1014",
+    "completeDate" : "2025-1015",
+    "parentOliId" : 0,
+    "orderState" : "OPEN",
+    "orderType" : "MOHEAD"
+  }, {
+    "id" : 21,
+    "activityState" : "INSERT",
+    "itemId" : 3,
+    "quantityOrdered" : 1500.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-1114",
+    "completeDate" : "2025-1115",
+    "parentOliId" : 0,
+    "orderState" : "OPEN",
+    "orderType" : "MOHEAD"
+  }, {
+    "id" : 26,
+    "activityState" : "INSERT",
+    "itemId" : 3,
+    "quantityOrdered" : 50.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-1214",
+    "completeDate" : "2025-1215",
+    "parentOliId" : 0,
+    "orderState" : "OPEN",
+    "orderType" : "MOHEAD"
+  } ]
 }

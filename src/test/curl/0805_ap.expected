@@ -155,35 +155,35 @@
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "     2   17       1  1000.00   0.00  2025-0827  2025-0901 OPEN     PO NONE : 1000.0000008.2"
+    "message" : "     2   17        1  1000.00     0.00  2025-0827  2025-0901 OPEN     PO NONE : 1000.0000008.2"
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "     4   17       3   750.00   0.00  2025-0911  2025-0915 OPEN  MODET NONE : 250.0000008.2"
+    "message" : "     4   17        3   750.00     0.00  2025-0911  2025-0915 OPEN  MODET NONE : 250.0000008.2"
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "     6   17       5  1500.00   0.00  2025-1011  2025-1015 OPEN  MODET NONE : -1250.0000008.2"
+    "message" : "     6   17        5  1500.00     0.00  2025-1011  2025-1015 OPEN  MODET NONE : -1250.0000008.2"
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : " +   6   17       5  1250.00   0.00       null  2025-1011 OPEN     PO INSERT"
+    "message" : " +   6   17        5  1250.00     0.00       null  2025-1011 OPEN     PO INSERT"
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "     8   17       7  2250.00   0.00  2025-1111  2025-1115 OPEN  MODET NONE : -2250.0000008.2"
+    "message" : "     8   17        7  2250.00     0.00  2025-1111  2025-1115 OPEN  MODET NONE : -2250.0000008.2"
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : " +   8   17       7  2250.00   0.00       null  2025-1111 OPEN     PO INSERT"
+    "message" : " +   8   17        7  2250.00     0.00       null  2025-1111 OPEN     PO INSERT"
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "    10   17       9    75.00   0.00  2025-1211  2025-1215 OPEN  MODET NONE : -75.0000008.2"
+    "message" : "    10   17        9    75.00     0.00  2025-1211  2025-1215 OPEN  MODET NONE : -75.0000008.2"
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : " +  10   17       9  1000.00   0.00       null  2025-1211 OPEN     PO INSERT"
+    "message" : " +  10   17        9  1000.00     0.00       null  2025-1211 OPEN     PO INSERT"
   }, {
     "id" : 0,
     "activityState" : "NONE",

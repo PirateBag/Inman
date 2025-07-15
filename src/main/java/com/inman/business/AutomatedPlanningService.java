@@ -1,6 +1,7 @@
 package com.inman.business;
 
 import com.inman.entity.*;
+import com.inman.model.request.GenericSingleId;
 import com.inman.model.request.OrderLineItemRequest;
 import com.inman.model.response.ResponsePackage;
 import com.inman.model.response.TextResponse;
@@ -64,7 +65,6 @@ public class AutomatedPlanningService {
         for (Item item : itemsToBePlanned) {
             List<OrderLineItem> orders = orderLineItemRepository.findByItemIdAndOrderStateOrderByCompleteDate( item.getId(), OrderState.OPEN );
 
-
             logger.info("Item: {} has {} orders", item, orders.size());
 
             double balance = item.getQuantityOnHand();
@@ -101,6 +101,22 @@ public class AutomatedPlanningService {
         }
      }
 
+    public void inventoryBalanceForItem( Item item, TextResponse textResponse  ) {
+
+        List<OrderLineItem> orders = orderLineItemRepository.findByItemIdAndOrderStateOrderByCompleteDate( item.getId(), OrderState.OPEN );
+        double balance = item.getQuantityOnHand();
+        textResponse.addText( "Inventory Analysis for " + item, Optional.of( logger )  );
+        textResponse.addText( "Opening Balance of " + balance +
+                " and there are " + orders.size() + " open orders", Optional.of( logger )  );
+        textResponse.addText( OrderLineItem.header + "  Balance", Optional.of( logger ) );
+
+        for ( OrderLineItem order : orders ) {
+            balance += order.getEffectiveQuantityOrdered();
+            textResponse.addText( String.format( "%s %8.2f", order.toStringWithSignedQuantity(), balance ), Optional.of( logger ) );
+        }
+    }
+
+
     private void applyProposedChanges( List<OrderLineItem> orders ) {
 
         OrderLineItemRequest crudBatch = new OrderLineItemRequest(orders.toArray(new OrderLineItem[0]));
@@ -131,4 +147,15 @@ public class AutomatedPlanningService {
             bomLogicService.updateMaxDepthOf( item.getId(), texts );
         }
     }
+
+    public void inventoryBalanceProjection(GenericSingleId genericSingleId, TextResponse textResponse) {
+
+        Optional<Item> item = itemRepository.findById( genericSingleId.getIdToSearchFor() );
+
+        if (item.isEmpty()) {
+            outputErrorAndThrow( "Item not found", textResponse  );
+        }
+        inventoryBalanceForItem(item.get(), textResponse  );
+    }
+
 }
