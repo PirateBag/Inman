@@ -7,7 +7,7 @@ Add all possible items in a single batch.
   { "summaryId" : "W-003", "description" : "Front Wheel Asmbly", "unitCost" : "0.0", "sourcing" : "MAN", "leadTime" : "1", "activityState" : "INSERT", "minimumOrderQuantity" : "1" },
   { "summaryId" : "W-004", "description" : "Rear Wheel Asmbly",  "unitCost" : "0.0", "sourcing" : "MAN", "leadTime" : "1", "activityState" : "INSERT", "minimumOrderQuantity" : "1" },
   { "summaryId" : "W-005", "description" : "Axle",               "unitCost" : "0.0", "sourcing" : "MAN",  "leadTime" : "4","activityState" : "INSERT", "minimumOrderQuantity" : "1" },
-  { "summaryId" : "W-006", "description" : "Red Wagon Body",     "unitCost" : "0.0", "sourcing" : "MAN", "leadTime" : "1", "activityState" : "INSERT", "minimumOrderQuantity" : "1" },
+  { "summaryId" : "W-006", "description" : "Decal",              "unitCost" : "0.25", "sourcing" : "PUR", "leadTime" : "5", "activityState" : "INSERT", "minimumOrderQuantity" : "1" },
   { "summaryId" : "W-007", "description" : "Washer",             "unitCost" : ".21", "sourcing" : "PUR", "leadTime" : "5", "activityState" : "INSERT", "minimumOrderQuantity" : "1000" },
   { "summaryId" : "W-008", "description" : "Threaded bolt",      "unitCost" : "0.6", "sourcing" : "PUR", "leadTime" : "5", "activityState" : "INSERT", "minimumOrderQuantity" : "500" },
   { "summaryId" : "W-009", "description" : "Nut",                "unitCost" : "0.17","sourcing" : "PUR", "leadTime" : "6", "activityState" : "INSERT", "minimumOrderQuantity" : "500" },
@@ -19,5 +19,5 @@ Add all possible items in a single batch.
   { "summaryId" : "W-015", "description" : "Rear Wheel bracket", "unitCost" : "1.0",  "sourcing" : "PUR", "leadTime" : "4","activityState" : "INSERT", "minimumOrderQuantity" : "50" },
   { "summaryId" : "W-016", "description" : "Axle Bracket Brace", "unitCost" : "0.75", "sourcing" : "PUR", "leadTime" : "6", "activityState" : "INSERT", "minimumOrderQuantity" : "50" },
   { "summaryId" : "W-017", "description" : "Rod Stock",          "unitCost" : "0.70","sourcing" : "PUR", "leadTime" : "5", "activityState" : "INSERT", "minimumOrderQuantity" : "1000" },
-  { "summaryId" : "W-018", "description" : "Carrige Bolt",       "unitCost" : "0.17", "sourcing" : "PUR", "leadTime" : "3", "activityState" : "INSERT", "minimumOrderQuantity" : "500" }
+  { "summaryId" : "W-018", "description" : "Carriage Bolt",      "unitCost" : "0.17", "sourcing" : "PUR", "leadTime" : "3", "activityState" : "INSERT", "minimumOrderQuantity" : "500" }
 ] }

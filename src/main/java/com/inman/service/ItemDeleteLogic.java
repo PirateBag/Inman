@@ -1,4 +1,4 @@
-package com.inman.business;
+package com.inman.service;
 
 import org.springframework.transaction.annotation.Transactional;
 

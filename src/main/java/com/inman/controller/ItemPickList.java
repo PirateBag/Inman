@@ -1,6 +1,6 @@
 package com.inman.controller;
 
-import com.inman.business.ItemPickListLogic;
+import com.inman.service.ItemPickListLogic;
 import com.inman.model.request.GenericSingleId;
 import com.inman.model.response.ItemPickListResponse;
 import org.springframework.beans.factory.annotation.Autowired;

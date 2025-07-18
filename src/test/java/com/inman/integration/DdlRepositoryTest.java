@@ -1,6 +1,6 @@
 package com.inman.integration;
 
-import com.inman.business.OrderLineItemService;
+import com.inman.service.OrderLineItemService;
 import com.inman.entity.ActivityState;
 import com.inman.entity.OrderLineItem;
 import com.inman.repository.DdlRepository;

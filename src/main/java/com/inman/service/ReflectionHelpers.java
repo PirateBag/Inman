@@ -1,4 +1,4 @@
-package com.inman.business;
+package com.inman.service;
 
 import java.lang.reflect.Field;
 import java.util.*;

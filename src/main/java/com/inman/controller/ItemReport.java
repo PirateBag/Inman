@@ -1,8 +1,8 @@
 package com.inman.controller;
 
-import com.inman.business.BomLogicService;
-import com.inman.business.Common;
-import com.inman.business.ItemReportService;
+import com.inman.service.BomLogicService;
+import com.inman.service.Common;
+import com.inman.service.ItemReportService;
 import com.inman.entity.BomPresent;
 import com.inman.entity.Item;
 import com.inman.model.request.ItemReportRequest;

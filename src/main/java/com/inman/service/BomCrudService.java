@@ -1,4 +1,4 @@
-package com.inman.business;
+package com.inman.service;
 
 import com.inman.entity.ActivityState;
 import com.inman.entity.BomPresent;
@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static com.inman.controller.Bom.UNIQUE_INDEX_OR_PRIMARY_KEY_VIOLATION;
 import static com.inman.controller.Utility.generateErrorMessageFrom;
 
 @Service

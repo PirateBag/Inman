@@ -1,14 +1,13 @@
 package com.inman.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.inman.business.ReflectionHelpers;
+import com.inman.service.ReflectionHelpers;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
 import java.util.Map;
-import java.util.Set;
 
 
 @Entity

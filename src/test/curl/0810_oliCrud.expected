@@ -1,0 +1,19 @@
+{
+  "responseType" : "MULTILINE",
+  "errors" : [ {
+    "key" : 1,
+    "message" : "Added 8 lines to order 31"
+  } ],
+  "data" : [ {
+    "id" : 31,
+    "activityState" : "INSERT",
+    "itemId" : 1,
+    "quantityOrdered" : 500.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-0913",
+    "completeDate" : "2025-0915",
+    "parentOliId" : 0,
+    "orderState" : "OPEN",
+    "orderType" : "MOHEAD"
+  } ]
+}

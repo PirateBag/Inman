@@ -1,6 +1,6 @@
 package com.inman.integration;
 
-import com.inman.business.OrderLineItemService;
+import com.inman.service.OrderLineItemService;
 import com.inman.entity.*;
 import com.inman.model.response.ResponsePackage;
 import org.junit.Test;

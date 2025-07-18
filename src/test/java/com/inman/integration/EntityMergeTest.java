@@ -1,6 +1,6 @@
 package com.inman.integration;
 
-import com.inman.business.EntityUtility;
+import com.inman.service.EntityUtility;
 import com.inman.entity.ActivityState;
 import com.inman.entity.Bom;
 import com.inman.entity.EntityMaster;

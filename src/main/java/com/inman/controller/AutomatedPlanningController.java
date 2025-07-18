@@ -1,6 +1,6 @@
 package com.inman.controller;
 
-import com.inman.business.AutomatedPlanningService;
+import com.inman.service.AutomatedPlanningService;
 import com.inman.model.request.GenericSingleId;
 import com.inman.model.response.ResponseType;
 import com.inman.model.response.TextResponse;
@@ -22,18 +22,11 @@ public class AutomatedPlanningController {
     AutomatedPlanningService automatedPlanningService;
 
     @CrossOrigin
-    @RequestMapping(value = AutomatedPlan_Url, method = RequestMethod.GET)
-    public ResponseEntity<?> apBasic (@RequestParam String typeOfPlanning  ) {
-        TextResponse responsePackage = new TextResponse();
-        processPlanning(responsePackage);
-        return ResponseEntity.badRequest().body( responsePackage );
-    }
-
-    @CrossOrigin
     @RequestMapping(value = AutomatedPlan_Url, method = RequestMethod.POST)
     public ResponseEntity<?> apBasic (@RequestBody GenericSingleId genericSingleId  ) {
         TextResponse responsePackage = new TextResponse();
-        processPlanning(responsePackage);
+
+        processPlanning( genericSingleId, responsePackage);
         return ResponseEntity.badRequest().body( responsePackage );
     }
 
@@ -46,10 +39,21 @@ public class AutomatedPlanningController {
         return ResponseEntity.badRequest().body( responsePackage );
     }
 
+    @CrossOrigin
+    @RequestMapping(value = InventoryBalanceProjection, method = RequestMethod.GET)
+    public ResponseEntity<?> apInventoryBalanceProjectionForGet (  @RequestParam int idToSearchFor) {
+        TextResponse responsePackage = new TextResponse();
 
-    private void processPlanning(TextResponse responsePackage) {
+        GenericSingleId genericSingleId = new GenericSingleId((long) idToSearchFor);
+
+        automatedPlanningService.inventoryBalanceProjection(genericSingleId, responsePackage);
+        return ResponseEntity.badRequest().body(responsePackage);
+    }
+
+
+    private void processPlanning( GenericSingleId genericSingleId, TextResponse responsePackage) {
         try {
-            automatedPlanningService.basic( "", responsePackage);
+            automatedPlanningService.basic ( genericSingleId, responsePackage);
             responsePackage.setResponseType(ResponseType.MULTILINE );
 
             if (responsePackage.getData().isEmpty()) {

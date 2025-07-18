@@ -1,8 +1,8 @@
 package com.inman.controller;
 
-import com.inman.business.BomCrudService;
-import com.inman.business.BomSearchLogic;
-import com.inman.business.BomLogicService;
+import com.inman.service.BomCrudService;
+import com.inman.service.BomSearchLogic;
+import com.inman.service.BomLogicService;
 import com.inman.entity.BomPresent;
 import com.inman.entity.Text;
 import com.inman.model.request.*;

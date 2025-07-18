@@ -18,13 +18,13 @@
     "activityState" : "INSERT",
     "parentId" : 1,
     "childId" : 6,
-    "quantityPer" : 1.0,
+    "quantityPer" : 2.0,
     "parentSummary" : "W-001",
     "parentDescription" : "36 In Red Wagon",
     "childSummary" : "W-006",
-    "childDescription" : "Red Wagon Body",
-    "unitCost" : 0.0,
-    "extendedCost" : 0.0
+    "childDescription" : "Decal",
+    "unitCost" : 0.25,
+    "extendedCost" : 0.5
   }, {
     "id" : 7,
     "activityState" : "INSERT",
@@ -214,7 +214,7 @@
     "parentSummary" : "W-004",
     "parentDescription" : "Rear Wheel Asmbly",
     "childSummary" : "W-018",
-    "childDescription" : "Carrige Bolt",
+    "childDescription" : "Carriage Bolt",
     "unitCost" : 0.17,
     "extendedCost" : 0.17
   } ]

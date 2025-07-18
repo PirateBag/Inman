@@ -1,4 +1,4 @@
-package com.inman.business;
+package com.inman.service;
 
 public class Common {
     public static String SPACES = "    ".repeat(11 );

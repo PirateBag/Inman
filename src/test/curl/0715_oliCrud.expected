@@ -38,7 +38,7 @@
     "id" : 10,
     "activityState" : "DELETE",
     "itemId" : 6,
-    "quantityOrdered" : 10.0,
+    "quantityOrdered" : 20.0,
     "quantityAssigned" : 0.0,
     "startDate" : "2025-0801",
     "completeDate" : "2025-0803",

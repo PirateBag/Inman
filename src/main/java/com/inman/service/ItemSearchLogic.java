@@ -1,4 +1,4 @@
-package com.inman.business;
+package com.inman.service;
 
 import java.util.List;
 import com.inman.entity.Item;

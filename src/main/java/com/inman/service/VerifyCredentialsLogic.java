@@ -1,4 +1,4 @@
-package com.inman.business;
+package com.inman.service;
 
 import com.inman.model.rest.StatusResponse;
 import com.inman.model.rest.VerifyCredentialsRequest;

@@ -16,7 +16,7 @@
   }, {
     "id" : 6,
     "activityState" : "NONE",
-    "external" : "W-006, Red Wagon Body"
+    "external" : "W-006, Decal"
   }, {
     "id" : 7,
     "activityState" : "NONE",
@@ -64,6 +64,6 @@
   }, {
     "id" : 18,
     "activityState" : "NONE",
-    "external" : "W-018, Carrige Bolt"
+    "external" : "W-018, Carriage Bolt"
   } ]
 }

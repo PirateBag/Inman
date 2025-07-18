@@ -1,9 +1,8 @@
 package com.inman.controller;
 
-import com.inman.business.*;
+import com.inman.service.*;
 import com.inman.entity.Item;
 import com.inman.entity.Text;
-import com.inman.model.MetaData;
 import com.inman.model.request.GenericSingleId;
 import com.inman.model.response.ItemResponse;
 import com.inman.model.response.ResponsePackage;

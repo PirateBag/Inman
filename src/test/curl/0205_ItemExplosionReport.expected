@@ -28,7 +28,7 @@
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "W-006       Red Wagon Body                        0.00  MAN        0      0.00     1.00        1"
+    "message" : "W-006       Decal                                 0.25  PUR        0      0.00     1.00        5"
   }, {
     "id" : 0,
     "activityState" : "NONE",
@@ -76,6 +76,6 @@
   }, {
     "id" : 0,
     "activityState" : "NONE",
-    "message" : "W-018       Carrige Bolt                          0.17  PUR        0      0.00   500.00        3"
+    "message" : "W-018       Carriage Bolt                         0.17  PUR        0      0.00   500.00        3"
   } ]
 }

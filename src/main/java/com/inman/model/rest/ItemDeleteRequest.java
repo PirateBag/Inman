@@ -1,7 +1,7 @@
 package com.inman.model.rest;
 
-import com.inman.business.Message;
-import com.inman.business.QueryParameterException;
+import com.inman.service.Message;
+import com.inman.service.QueryParameterException;
 
 public class ItemDeleteRequest {
 	public static final String deleteUrl = "item/delete";

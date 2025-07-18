@@ -1,6 +1,6 @@
 package com.inman.integration;
 
-import com.inman.business.ReflectionHelpers;
+import com.inman.service.ReflectionHelpers;
 import com.inman.entity.ActivityState;
 import com.inman.entity.OrderLineItem;
 import org.junit.Test;
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 import java.util.Map;
 
-import static com.inman.business.ReflectionHelpers.compareObjects;
+import static com.inman.service.ReflectionHelpers.compareObjects;
 import static org.junit.Assert.assertEquals;
 
 public class CompareObjecftsTest {

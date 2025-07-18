@@ -1,4 +1,4 @@
-package com.inman.business;
+package com.inman.service;
 
 import com.inman.entity.BomPresent;
 import com.inman.entity.Item;

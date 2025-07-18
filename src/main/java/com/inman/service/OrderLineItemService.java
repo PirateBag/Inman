@@ -1,4 +1,4 @@
-package com.inman.business;
+package com.inman.service;
 
 import com.inman.controller.Application;
 import com.inman.controller.Utility;
@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.*;
 
-import static com.inman.business.ReflectionHelpers.compareObjects;
+import static com.inman.service.ReflectionHelpers.compareObjects;
 import static com.inman.controller.OrderLineItemController.OrderLineItem_AllOrders;
 import static com.inman.controller.Utility.*;
 

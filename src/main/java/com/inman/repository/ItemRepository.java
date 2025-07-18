@@ -41,6 +41,8 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 	//  Delete all as a transaction.
 	void deleteAllInBatch();
 
-	List<Item> findAllByOrderByMaxDepthDesc();
+	@Query( "select i from Item i, OrderLineItem  oli where oli.itemId = i.id order by i.maxDepth, i.id, oli.completeDate ")
+	Item[] itemsByDepthAndId();
+
 	List<Item> findAllByOrderByMaxDepthAsc();
 }
