@@ -223,6 +223,7 @@ declare -a tests=(
 
 #    Create one order for W-001, and look for all the cascade order creation.
     "0810_oliCrud;oli/crud"
+    "0811_ap;ap/basic"
    )
 #   "stopTesting" \
 declare -i passed=0

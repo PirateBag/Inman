@@ -98,19 +98,28 @@ public class OrderLineItemService {
      *
      */
     private void addLineItemsToOrder( OrderLineItem parentOli , ResponsePackage<OrderLineItem> oliResponse) {
+        Optional<Item> item = Optional.ofNullable(itemRepository.findById(parentOli.getItemId()));
+
+        if ( item.isEmpty() ) {
+            outputErrorAndThrow( "Unable to find " + parentOli.getItemId(), oliResponse );
+        }
+
         BomPresent[] childrenOfItem = bomPresentRepository.findByParentId( parentOli.getItemId() );
         int count = 1;
         for ( BomPresent bomPresent : childrenOfItem ) {
             OrderLineItem oli = new OrderLineItem();
             oli.setItemId( bomPresent.getChildId() );
             oli.setQuantityOrdered( parentOli.getQuantityOrdered() * bomPresent.getQuantityPer() );
-            oli.setStartDate(  parentOli.getStartDate() );
-            oli.setCompleteDate( parentOli.getCompleteDate() );
+
+            oli.setCompleteDate( parentOli.getStartDate() );
+
+            LocalDate derviedStart = LocalDate.parse( parentOli.getStartDate(), DATE_FORMATTER).minusDays(item.get().getLeadTime());
+            oli.setStartDate( derviedStart.format(DATE_FORMATTER));
             oli.setParentOliId( parentOli.getId() );
             oli.setQuantityAssigned(  0.0 );
             oli.setActivityState( parentOli.getActivityState() );
             oli.setOrderState( parentOli.getOrderState() );
-            oli.setOrderType( OrderType.MODET );
+            oli.setOrderType( item.get().getSourcing().equals( Item.SOURCE_MAN ) ? OrderType.MODET : OrderType.PO );
             var updatedOli = orderLineItemRepository.save(oli);
             logger.info( updatedOli.toString()  );
             count++;
