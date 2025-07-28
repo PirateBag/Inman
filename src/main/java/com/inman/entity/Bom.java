@@ -1,5 +1,6 @@
 package com.inman.entity;
 
+import enums.CrudAction;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import org.jetbrains.annotations.NotNull;
@@ -20,12 +21,12 @@ public class Bom extends EntityMaster {
 		this.quantityPer = xQuantityPer;
 	}
 
-	public Bom( long id, long parentId, long childId, double quanittyPer, ActivityState activityState ) {
+	public Bom( long id, long parentId, long childId, double quanittyPer, CrudAction curdAction) {
 		this.id = id;
 		this.parentId = parentId;
 		this.childId = childId;
 		this.quantityPer = quanittyPer;
-		this.activityState = activityState;
+		this.crudAction = curdAction;
 	}
 
 	@Override
@@ -33,7 +34,7 @@ public class Bom extends EntityMaster {
 		Bom rValue = new Bom();
 		Bom oldValue = (Bom) source;
 		rValue.id = oldValue.getId();
-		rValue.activityState = oldValue.activityState;
+		rValue.crudAction = oldValue.crudAction;
 		rValue.parentId = oldValue.getParentId();
 		rValue.childId = oldValue.getChildId();
 		rValue.quantityPer = oldValue.getQuantityPer();
@@ -41,7 +42,7 @@ public class Bom extends EntityMaster {
 	}
 
 	public String toString() {
-		return String.format(formatter, id, parentId, childId, quantityPer, activityState);
+		return String.format(formatter, id, parentId, childId, quantityPer, crudAction);
 	}
 
 	public long getParentId() {

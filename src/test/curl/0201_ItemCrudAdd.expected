@@ -3,7 +3,7 @@
   "errors" : [ ],
   "data" : [ {
     "id" : 1,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "summaryId" : "W-001",
     "description" : "36 In Red Wagon",
     "unitCost" : 0.0,
@@ -14,7 +14,7 @@
     "minimumOrderQuantity" : 1.0
   }, {
     "id" : 2,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "summaryId" : "W-002",
     "description" : "Red Wagon Body",
     "unitCost" : 0.0,
@@ -25,7 +25,7 @@
     "minimumOrderQuantity" : 1.0
   }, {
     "id" : 3,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "summaryId" : "W-003",
     "description" : "Front Wheel Asmbly",
     "unitCost" : 0.0,
@@ -36,7 +36,7 @@
     "minimumOrderQuantity" : 1.0
   }, {
     "id" : 4,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "summaryId" : "W-004",
     "description" : "Rear Wheel Asmbly",
     "unitCost" : 0.0,
@@ -47,7 +47,7 @@
     "minimumOrderQuantity" : 1.0
   }, {
     "id" : 5,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "summaryId" : "W-005",
     "description" : "Axle",
     "unitCost" : 0.0,
@@ -58,7 +58,7 @@
     "minimumOrderQuantity" : 1.0
   }, {
     "id" : 6,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "summaryId" : "W-006",
     "description" : "Decal",
     "unitCost" : 0.25,
@@ -69,7 +69,7 @@
     "minimumOrderQuantity" : 1.0
   }, {
     "id" : 7,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "summaryId" : "W-007",
     "description" : "Washer",
     "unitCost" : 0.21,
@@ -80,7 +80,7 @@
     "minimumOrderQuantity" : 1000.0
   }, {
     "id" : 8,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "summaryId" : "W-008",
     "description" : "Threaded bolt",
     "unitCost" : 0.6,
@@ -91,7 +91,7 @@
     "minimumOrderQuantity" : 500.0
   }, {
     "id" : 9,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "summaryId" : "W-009",
     "description" : "Nut",
     "unitCost" : 0.17,
@@ -102,7 +102,7 @@
     "minimumOrderQuantity" : 500.0
   }, {
     "id" : 10,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "summaryId" : "W-010",
     "description" : "8 In Wheel",
     "unitCost" : 0.17,
@@ -113,7 +113,7 @@
     "minimumOrderQuantity" : 120.0
   }, {
     "id" : 11,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "summaryId" : "W-011",
     "description" : "Front Wheel Bracket",
     "unitCost" : 0.95,
@@ -124,7 +124,7 @@
     "minimumOrderQuantity" : 50.0
   }, {
     "id" : 12,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "summaryId" : "W-012",
     "description" : "Yoke",
     "unitCost" : 0.17,
@@ -135,7 +135,7 @@
     "minimumOrderQuantity" : 50.0
   }, {
     "id" : 13,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "summaryId" : "W-013",
     "description" : "Wagon Body",
     "unitCost" : 2.25,
@@ -146,7 +146,7 @@
     "minimumOrderQuantity" : 100.0
   }, {
     "id" : 14,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "summaryId" : "W-014",
     "description" : "Red Paint",
     "unitCost" : 20.0,
@@ -157,7 +157,7 @@
     "minimumOrderQuantity" : 4.0
   }, {
     "id" : 15,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "summaryId" : "W-015",
     "description" : "Rear Wheel bracket",
     "unitCost" : 1.0,
@@ -168,7 +168,7 @@
     "minimumOrderQuantity" : 50.0
   }, {
     "id" : 16,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "summaryId" : "W-016",
     "description" : "Axle Bracket Brace",
     "unitCost" : 0.75,
@@ -179,7 +179,7 @@
     "minimumOrderQuantity" : 50.0
   }, {
     "id" : 17,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "summaryId" : "W-017",
     "description" : "Rod Stock",
     "unitCost" : 0.7,
@@ -190,7 +190,7 @@
     "minimumOrderQuantity" : 1000.0
   }, {
     "id" : 18,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "summaryId" : "W-018",
     "description" : "Carriage Bolt",
     "unitCost" : 0.17,

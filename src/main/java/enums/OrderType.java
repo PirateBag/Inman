@@ -1,4 +1,4 @@
-package com.inman.entity;
+package enums;
 
 public enum OrderType {
     PO, MODET, MOHEAD

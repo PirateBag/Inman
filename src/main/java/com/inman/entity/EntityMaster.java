@@ -1,5 +1,6 @@
 package com.inman.entity;
 
+import enums.CrudAction;
 import jakarta.persistence.*;
 
 
@@ -10,7 +11,7 @@ public abstract class EntityMaster {
     long id;
 
     @Transient
-    ActivityState activityState = ActivityState.NONE;
+    CrudAction  crudAction = CrudAction.NONE;
 
     public EntityMaster() {
     }
@@ -23,12 +24,12 @@ public abstract class EntityMaster {
         return this.id;
     }
 
-    public void setActivityState(ActivityState xNewState) {
-        this.activityState = xNewState;
+    public void setCrudAction(CrudAction xNewState) {
+        this.crudAction = xNewState;
     }
 
-    public ActivityState getActivityState() {
-        return this.activityState;
+    public CrudAction getCrudAction() {
+        return this.crudAction;
     }
 
     public abstract EntityMaster copy( EntityMaster oldValue);

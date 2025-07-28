@@ -1,6 +1,6 @@
 package com.inman.service;
 
-import com.inman.entity.ActivityState;
+import enums.CrudAction;
 import com.inman.entity.BomPresent;
 import com.inman.entity.Item;
 import com.inman.model.request.BomPresentSearchRequest;
@@ -56,14 +56,14 @@ public class BomCrudService {
         int lineNumber = 0;
 
         for (BomPresent updatedBom : xBomPresentToUpdate) {
-            logger.info("Bom {},{} {}, {}", updatedBom.getParentId(), updatedBom.getActivityState(), updatedBom.getChildId(), updatedBom.getQuantityPer());
+            logger.info("Bom {},{} {}, {}", updatedBom.getParentId(), updatedBom.getCrudAction(), updatedBom.getChildId(), updatedBom.getQuantityPer());
 
-            switch ( updatedBom.getActivityState() ) {
+            switch ( updatedBom.getCrudAction() ) {
                 case CHANGE ->  change(updatedBom, bomResponse, lineNumber);
                 case INSERT ->  insert(updatedBom, bomResponse, lineNumber);
                 default ->  {
-                    logger.info( "Activity state " + updatedBom.getActivityState() + " not supported" );
-                    throw new RuntimeException( "Bom " + updatedBom.getParentId() + "," + updatedBom.getActivityState() );
+                    logger.info( "Activity state " + updatedBom.getCrudAction() + " not supported" );
+                    throw new RuntimeException( "Bom " + updatedBom.getParentId() + "," + updatedBom.getCrudAction() );
                 }
             }
             lineNumber++;
@@ -146,7 +146,7 @@ public class BomCrudService {
 
             bomRepository.save(oldBom.get());
             var refreshedBom = bomPresentRepository.findById(updatedBom.getId());
-            refreshedBom.setActivityState(ActivityState.CHANGE);
+            refreshedBom.setCrudAction(CrudAction.CHANGE);
             bomResponse.getData().add(refreshedBom);
         }
 
@@ -170,7 +170,7 @@ public class BomCrudService {
                 return;
             }
 
-            refreshedBom.setActivityState(ActivityState.INSERT);
+            refreshedBom.setCrudAction(CrudAction.INSERT);
             bomResponse.getData().add(refreshedBom);
             updateMaxDepthOf(updatedBom );
 

@@ -1,4 +1,4 @@
-package com.inman.entity;
+package enums;
 
 
 //PLANNED:  No children, order qty OK, assigned must be zero.  Can be deleted.  Does not impact planningb.

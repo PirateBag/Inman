@@ -15,7 +15,7 @@
   } ],
   "data" : [ {
     "id" : 11,
-    "activityState" : "INSERT",
+    "crudAction" : "INSERT",
     "itemId" : 3,
     "quantityOrdered" : 500.0,
     "quantityAssigned" : 0.0,
@@ -26,7 +26,7 @@
     "orderType" : "MOHEAD"
   }, {
     "id" : 16,
-    "activityState" : "INSERT",
+    "crudAction" : "INSERT",
     "itemId" : 3,
     "quantityOrdered" : 1000.0,
     "quantityAssigned" : 0.0,
@@ -37,7 +37,7 @@
     "orderType" : "MOHEAD"
   }, {
     "id" : 21,
-    "activityState" : "INSERT",
+    "crudAction" : "INSERT",
     "itemId" : 3,
     "quantityOrdered" : 1500.0,
     "quantityAssigned" : 0.0,
@@ -48,7 +48,7 @@
     "orderType" : "MOHEAD"
   }, {
     "id" : 26,
-    "activityState" : "INSERT",
+    "crudAction" : "INSERT",
     "itemId" : 3,
     "quantityOrdered" : 50.0,
     "quantityAssigned" : 0.0,

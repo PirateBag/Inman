@@ -3,1243 +3,1895 @@
   "errors" : [ ],
   "data" : [ {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0001: W-001,36 In Red Wagon     0.00 MAN   0   2     5.00     1.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "Opening Balance of 5.0 and there are 1 open orders"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  31    1        0   500.00     0.00  2025-0913  2025-0915 OPEN MOHEAD NONE   505.00"
+    "crudAction" : "NONE",
+    "message" : "  67    1        0   500.00     0.00  2025-0913  2025-0915 OPEN MOHEAD NONE   505.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0002: W-002,Red Wagon Body     0.00 MAN   1  10     0.00     1.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "Opening Balance of 0.0 and there are 1 open orders"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  32    2       31  -500.00     0.00  2025-0913  2025-0915 OPEN  MODET NONE  -500.00"
+    "crudAction" : "NONE",
+    "message" : "  68    2       67  -500.00     0.00  2025-0911  2025-0913 OPEN  MODET NONE  -500.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  32    2       31   500.00     0.00       null  2025-0913 OPEN MOHEAD INSERT"
+    "crudAction" : "NONE",
+    "message" : "  68    2       67   500.00     0.00       null  2025-0911 OPEN MOHEAD INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0003: W-003,Front Wheel Asmbly     0.00 MAN   1   1     0.00     1.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "Opening Balance of 0.0 and there are 5 open orders"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
+    "message" : "  69    3       67  -500.00     0.00  2025-0911  2025-0913 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  69    3       67   500.00     0.00       null  2025-0911 OPEN MOHEAD INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
     "message" : "  11    3        0   500.00     0.00  2025-0914  2025-0915 OPEN MOHEAD NONE   500.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  33    3       31  -500.00     0.00  2025-0913  2025-0915 OPEN  MODET NONE     0.00"
+    "crudAction" : "NONE",
+    "message" : "  16    3        0  1000.00     0.00  2025-1014  2025-1015 OPEN MOHEAD NONE  1500.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  16    3        0  1000.00     0.00  2025-1014  2025-1015 OPEN MOHEAD NONE  1000.00"
+    "crudAction" : "NONE",
+    "message" : "  21    3        0  1500.00     0.00  2025-1114  2025-1115 OPEN MOHEAD NONE  3000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  21    3        0  1500.00     0.00  2025-1114  2025-1115 OPEN MOHEAD NONE  2500.00"
+    "crudAction" : "NONE",
+    "message" : "  26    3        0    50.00     0.00  2025-1214  2025-1215 OPEN MOHEAD NONE  3050.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  26    3        0    50.00     0.00  2025-1214  2025-1215 OPEN MOHEAD NONE  2550.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0004: W-004,Rear Wheel Asmbly     0.00 MAN   1   1     0.00     1.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "Opening Balance of 0.0 and there are 1 open orders"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  34    4       31  -500.00     0.00  2025-0913  2025-0915 OPEN  MODET NONE  -500.00"
+    "crudAction" : "NONE",
+    "message" : "  70    4       67  -500.00     0.00  2025-0911  2025-0913 OPEN  MODET NONE  -500.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  34    4       31   500.00     0.00       null  2025-0913 OPEN MOHEAD INSERT"
+    "crudAction" : "NONE",
+    "message" : "  70    4       67   500.00     0.00       null  2025-0911 OPEN MOHEAD INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0006: W-006,Decal     0.25 PUR   1   5     0.00     1.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "Opening Balance of 0.0 and there are 1 open orders"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  35    6       31 -1000.00     0.00  2025-0913  2025-0915 OPEN  MODET NONE -1000.00"
+    "crudAction" : "NONE",
+    "message" : "  71    6       67 -1000.00     0.00  2025-0911  2025-0913 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  35    6       31  1000.00     0.00       null  2025-0913 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : "  71    6       67  1000.00     0.00       null  2025-0911 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0008: W-008,Threaded bolt     0.60 PUR   1   5     0.00   500.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "Opening Balance of 0.0 and there are 1 open orders"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  37    8       31 -2000.00     0.00  2025-0913  2025-0915 OPEN  MODET NONE -2000.00"
+    "crudAction" : "NONE",
+    "message" : "  73    8       67 -2000.00     0.00  2025-0911  2025-0913 OPEN  MODET NONE -2000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  37    8       31  2000.00     0.00       null  2025-0913 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : "  73    8       67  2000.00     0.00       null  2025-0911 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0005: W-005,Axle     0.00 MAN   2   4     0.00     1.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 12 open orders"
+    "crudAction" : "NONE",
+    "message" : "Opening Balance of 0.0 and there are 16 open orders"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
+    "message" : "  79    5       69  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  79    5       69   500.00     0.00       null  2025-0909 OPEN MOHEAD INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  85    5       69  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  85    5       69   500.00     0.00       null  2025-0909 OPEN MOHEAD INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  89    5       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  89    5       70   500.00     0.00       null  2025-0909 OPEN MOHEAD INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  98    5       69  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  98    5       69   500.00     0.00       null  2025-0909 OPEN MOHEAD INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 102    5       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 102    5       70   500.00     0.00       null  2025-0909 OPEN MOHEAD INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 111    5       69  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 111    5       69   500.00     0.00       null  2025-0909 OPEN MOHEAD INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 115    5       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 115    5       70   500.00     0.00       null  2025-0909 OPEN MOHEAD INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
     "message" : "   1    5        0     6.00     0.00  2025-0901  2025-0913 OPEN MOHEAD NONE     6.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  45    5       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -494.00"
+    "crudAction" : "NONE",
+    "message" : "  12    5       11   494.00     0.00  2025-0909  2025-0913 OPEN MOHEAD NONE   500.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  45    5       34   494.00     0.00       null  2025-0912 OPEN MOHEAD INSERT"
+    "crudAction" : "NONE",
+    "message" : "   3    5        0   500.00     0.00  2025-0911  2025-0915 OPEN MOHEAD NONE  1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  54    5       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
+    "crudAction" : "NONE",
+    "message" : "  17    5       16   500.00     0.00  2025-1009  2025-1013 OPEN MOHEAD NONE  1500.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  54    5       34   500.00     0.00       null  2025-0912 OPEN MOHEAD INSERT"
+    "crudAction" : "NONE",
+    "message" : "   5    5        0  1000.00     0.00  2025-1011  2025-1015 OPEN MOHEAD NONE  2500.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  63    5       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
+    "crudAction" : "NONE",
+    "message" : "  22    5       21   500.00     0.00  2025-1109  2025-1113 OPEN MOHEAD NONE  3000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  63    5       34   500.00     0.00       null  2025-0912 OPEN MOHEAD INSERT"
+    "crudAction" : "NONE",
+    "message" : "   7    5        0  1500.00     0.00  2025-1111  2025-1115 OPEN MOHEAD NONE  4500.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "   3    5        0   500.00     0.00  2025-0911  2025-0915 OPEN MOHEAD NONE   500.00"
+    "crudAction" : "NONE",
+    "message" : "  27    5       26   -50.00     0.00  2025-1213  2025-1214 OPEN  MODET NONE  4450.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  12    5       11  -500.00     0.00  2025-0914  2025-0915 OPEN  MODET NONE     0.00"
+    "crudAction" : "NONE",
+    "message" : "   9    5        0    50.00     0.00  2025-1211  2025-1215 OPEN MOHEAD NONE  4500.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "   5    5        0  1000.00     0.00  2025-1011  2025-1015 OPEN MOHEAD NONE  1000.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  17    5       16 -1000.00     0.00  2025-1014  2025-1015 OPEN  MODET NONE     0.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "   7    5        0  1500.00     0.00  2025-1111  2025-1115 OPEN MOHEAD NONE  1500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  22    5       21 -1500.00     0.00  2025-1114  2025-1115 OPEN  MODET NONE     0.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "   9    5        0    50.00     0.00  2025-1211  2025-1215 OPEN MOHEAD NONE    50.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  27    5       26   -50.00     0.00  2025-1214  2025-1215 OPEN  MODET NONE     0.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0007: W-007,Washer     0.21 PUR   2   5     0.00  1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "Opening Balance of 0.0 and there are 5 open orders"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  46    7       34 -1000.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE -1000.00"
+    "crudAction" : "NONE",
+    "message" : "  90    7       70 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  46    7       34  1000.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : "  90    7       70  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  55    7       34 -1000.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE -1000.00"
+    "crudAction" : "NONE",
+    "message" : " 103    7       70 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  55    7       34  1000.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 103    7       70  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  64    7       34 -1000.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE -1000.00"
+    "crudAction" : "NONE",
+    "message" : " 116    7       70 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  64    7       34  1000.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 116    7       70  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  73    7       34 -1000.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE -1000.00"
+    "crudAction" : "NONE",
+    "message" : " 129    7       70 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  73    7       34  1000.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 129    7       70  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  36    7       31 -4000.00     0.00  2025-0913  2025-0915 OPEN  MODET NONE -4000.00"
+    "crudAction" : "NONE",
+    "message" : "  72    7       67 -4000.00     0.00  2025-0911  2025-0913 OPEN  MODET NONE -4000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  36    7       31  4000.00     0.00       null  2025-0913 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : "  72    7       67  4000.00     0.00       null  2025-0911 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0009: W-009,Nut     0.17 PUR   2   6     0.00   500.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 10 open orders"
+    "crudAction" : "NONE",
+    "message" : "Opening Balance of 0.0 and there are 16 open orders"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  47    9       34 -1000.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE -1000.00"
+    "crudAction" : "NONE",
+    "message" : "  80    9       69 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  47    9       34  1000.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : "  80    9       69  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  56    9       34 -1000.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE -1000.00"
+    "crudAction" : "NONE",
+    "message" : "  86    9       69 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  56    9       34  1000.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : "  86    9       69  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  65    9       34 -1000.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE -1000.00"
+    "crudAction" : "NONE",
+    "message" : "  91    9       70 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  65    9       34  1000.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : "  91    9       70  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  74    9       34 -1000.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE -1000.00"
+    "crudAction" : "NONE",
+    "message" : "  99    9       69 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  74    9       34  1000.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : "  99    9       69  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  86    9       34 -1000.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE -1000.00"
+    "crudAction" : "NONE",
+    "message" : " 104    9       70 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  86    9       34  1000.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 104    9       70  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  13    9       11  1000.00     0.00  2025-0908  2025-0914 OPEN     PO NONE  1000.00"
+    "crudAction" : "NONE",
+    "message" : " 112    9       69 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  38    9       31 -2000.00     0.00  2025-0913  2025-0915 OPEN  MODET NONE -1000.00"
+    "crudAction" : "NONE",
+    "message" : " 112    9       69  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  38    9       31  1000.00     0.00       null  2025-0913 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 117    9       70 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  18    9       16  2000.00     0.00  2025-1008  2025-1014 OPEN     PO NONE  2000.00"
+    "crudAction" : "NONE",
+    "message" : " 117    9       70  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  23    9       21  3000.00     0.00  2025-1108  2025-1114 OPEN     PO NONE  5000.00"
+    "crudAction" : "NONE",
+    "message" : " 125    9       69 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  28    9       26   500.00     0.00  2025-1208  2025-1214 OPEN     PO NONE  5500.00"
+    "crudAction" : "NONE",
+    "message" : " 125    9       69  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
+    "message" : " 130    9       70 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 130    9       70  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 145    9       69 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 145    9       69  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 150    9       70 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 150    9       70  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  13    9       11  1000.00     0.00  2025-0907  2025-0913 OPEN     PO NONE  1000.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  74    9       67 -2000.00     0.00  2025-0911  2025-0913 OPEN  MODET NONE -1000.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  74    9       67  1000.00     0.00       null  2025-0911 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  18    9       16  2000.00     0.00  2025-1007  2025-1013 OPEN     PO NONE  2000.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  23    9       21  3000.00     0.00  2025-1107  2025-1113 OPEN     PO NONE  5000.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  28    9       26   500.00     0.00  2025-1207  2025-1213 OPEN     PO NONE  5500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0010: W-010,8 In Wheel     0.17 PUR   2  10     0.00   120.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "Opening Balance of 0.0 and there are 6 open orders"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  48   10       34 -1000.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE -1000.00"
+    "crudAction" : "NONE",
+    "message" : "  92   10       70 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  48   10       34  1000.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : "  92   10       70  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  57   10       34 -1000.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE -1000.00"
+    "crudAction" : "NONE",
+    "message" : " 105   10       70 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  57   10       34  1000.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 105   10       70  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  66   10       34 -1000.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE -1000.00"
+    "crudAction" : "NONE",
+    "message" : " 118   10       70 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  66   10       34  1000.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 118   10       70  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  75   10       34 -1000.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE -1000.00"
+    "crudAction" : "NONE",
+    "message" : " 131   10       70 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  75   10       34  1000.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 131   10       70  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  87   10       34 -1000.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE -1000.00"
+    "crudAction" : "NONE",
+    "message" : " 151   10       70 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  87   10       34  1000.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 151   10       70  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  99   10       34 -1000.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE -1000.00"
+    "crudAction" : "NONE",
+    "message" : " 171   10       70 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  99   10       34  1000.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 171   10       70  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0011: W-011,Front Wheel Bracket     0.95 PUR   2   2     0.00    50.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 4 open orders"
+    "crudAction" : "NONE",
+    "message" : "Opening Balance of 0.0 and there are 12 open orders"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  14   11       11  1000.00     0.00  2025-0912  2025-0914 OPEN     PO NONE  1000.00"
+    "crudAction" : "NONE",
+    "message" : "  81   11       69 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  19   11       16  2000.00     0.00  2025-1012  2025-1014 OPEN     PO NONE  3000.00"
+    "crudAction" : "NONE",
+    "message" : "  81   11       69  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  24   11       21  3000.00     0.00  2025-1112  2025-1114 OPEN     PO NONE  6000.00"
+    "crudAction" : "NONE",
+    "message" : "  87   11       69 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  29   11       26   100.00     0.00  2025-1212  2025-1214 OPEN     PO NONE  6100.00"
+    "crudAction" : "NONE",
+    "message" : "  87   11       69  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
+    "message" : " 100   11       69 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 100   11       69  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 113   11       69 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 113   11       69  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 126   11       69 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 126   11       69  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 146   11       69 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 146   11       69  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 166   11       69 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 166   11       69  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 186   11       69 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 186   11       69  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  14   11       11  1000.00     0.00  2025-0911  2025-0913 OPEN     PO NONE  1000.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  19   11       16  2000.00     0.00  2025-1011  2025-1013 OPEN     PO NONE  3000.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  24   11       21  3000.00     0.00  2025-1111  2025-1113 OPEN     PO NONE  6000.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  29   11       26   100.00     0.00  2025-1211  2025-1213 OPEN     PO NONE  6100.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0012: W-012,Yoke     0.17 PUR   2  10     0.00    50.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 4 open orders"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  15   12       11  1000.00     0.00  2025-0904  2025-0914 OPEN     PO NONE  1000.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  20   12       16  2000.00     0.00  2025-1004  2025-1014 OPEN     PO NONE  3000.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  25   12       21  3000.00     0.00  2025-1104  2025-1114 OPEN     PO NONE  6000.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  30   12       26   100.00     0.00  2025-1204  2025-1214 OPEN     PO NONE  6100.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "Inventory Analysis for 0013: W-013,Wagon Body     2.25 PUR   2  20     0.00   100.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 11 open orders"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  39   13       32  -500.00     0.00  2025-0903  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  39   13       32   500.00     0.00       null  2025-0903 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  41   13       32  -500.00     0.00  2025-0903  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  41   13       32   500.00     0.00       null  2025-0903 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  43   13       32  -500.00     0.00  2025-0903  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  43   13       32   500.00     0.00       null  2025-0903 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  52   13       32  -500.00     0.00  2025-0903  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  52   13       32   500.00     0.00       null  2025-0903 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  61   13       32  -500.00     0.00  2025-0903  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  61   13       32   500.00     0.00       null  2025-0903 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  70   13       32  -500.00     0.00  2025-0903  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  70   13       32   500.00     0.00       null  2025-0903 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  82   13       32  -500.00     0.00  2025-0903  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  82   13       32   500.00     0.00       null  2025-0903 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  94   13       32  -500.00     0.00  2025-0903  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  94   13       32   500.00     0.00       null  2025-0903 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 106   13       32  -500.00     0.00  2025-0903  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 106   13       32   500.00     0.00       null  2025-0903 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 118   13       32  -500.00     0.00  2025-0903  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 118   13       32   500.00     0.00       null  2025-0903 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 130   13       32  -500.00     0.00  2025-0903  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 130   13       32   500.00     0.00       null  2025-0903 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "Inventory Analysis for 0014: W-014,Red Paint    20.00 PUR   2   5     0.00     4.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 12 open orders"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  40   14       32  -125.00     0.00  2025-0903  2025-0913 OPEN  MODET NONE  -125.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  40   14       32   125.00     0.00       null  2025-0903 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  42   14       32  -125.00     0.00  2025-0903  2025-0913 OPEN  MODET NONE  -125.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  42   14       32   125.00     0.00       null  2025-0903 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  44   14       32  -125.00     0.00  2025-0903  2025-0913 OPEN  MODET NONE  -125.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  44   14       32   125.00     0.00       null  2025-0903 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  53   14       32  -125.00     0.00  2025-0903  2025-0913 OPEN  MODET NONE  -125.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  53   14       32   125.00     0.00       null  2025-0903 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  62   14       32  -125.00     0.00  2025-0903  2025-0913 OPEN  MODET NONE  -125.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  62   14       32   125.00     0.00       null  2025-0903 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  71   14       32  -125.00     0.00  2025-0903  2025-0913 OPEN  MODET NONE  -125.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  71   14       32   125.00     0.00       null  2025-0903 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  83   14       32  -125.00     0.00  2025-0903  2025-0913 OPEN  MODET NONE  -125.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  83   14       32   125.00     0.00       null  2025-0903 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  95   14       32  -125.00     0.00  2025-0903  2025-0913 OPEN  MODET NONE  -125.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  95   14       32   125.00     0.00       null  2025-0903 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 107   14       32  -125.00     0.00  2025-0903  2025-0913 OPEN  MODET NONE  -125.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 107   14       32   125.00     0.00       null  2025-0903 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 119   14       32  -125.00     0.00  2025-0903  2025-0913 OPEN  MODET NONE  -125.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 119   14       32   125.00     0.00       null  2025-0903 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 131   14       32  -125.00     0.00  2025-0903  2025-0913 OPEN  MODET NONE  -125.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 131   14       32   125.00     0.00       null  2025-0903 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 143   14       32  -125.00     0.00  2025-0903  2025-0913 OPEN  MODET NONE  -125.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 143   14       32   125.00     0.00       null  2025-0903 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "Inventory Analysis for 0015: W-015,Rear Wheel bracket     1.00 PUR   2   4     0.00    50.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 11 open orders"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  49   15       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  49   15       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  58   15       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  58   15       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  67   15       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  67   15       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  76   15       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  76   15       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  88   15       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  88   15       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 100   15       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 100   15       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 112   15       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 112   15       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 124   15       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 124   15       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 136   15       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 136   15       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 148   15       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 148   15       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 160   15       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 160   15       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "Inventory Analysis for 0016: W-016,Axle Bracket Brace     0.75 PUR   2   6     0.00    50.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 12 open orders"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  50   16       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  50   16       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  59   16       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  59   16       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  68   16       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  68   16       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  77   16       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  77   16       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  89   16       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  89   16       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 101   16       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 101   16       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 113   16       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 113   16       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 125   16       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 125   16       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 137   16       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 137   16       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 149   16       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 149   16       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 161   16       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 161   16       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 173   16       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 173   16       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
-    "message" : "Inventory Analysis for 0018: W-018,Carriage Bolt     0.17 PUR   2   3     0.00   500.00"
-  }, {
-    "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "Opening Balance of 0.0 and there are 13 open orders"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  51   18       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
+    "crudAction" : "NONE",
+    "message" : "  82   12       69 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  51   18       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : "  82   12       69  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  60   18       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
+    "crudAction" : "NONE",
+    "message" : "  88   12       69 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  60   18       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : "  88   12       69  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  69   18       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
+    "crudAction" : "NONE",
+    "message" : " 101   12       69 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  69   18       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 101   12       69  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  78   18       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
+    "crudAction" : "NONE",
+    "message" : " 114   12       69 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  78   18       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 114   12       69  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  90   18       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
+    "crudAction" : "NONE",
+    "message" : " 127   12       69 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  90   18       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 127   12       69  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 102   18       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
+    "crudAction" : "NONE",
+    "message" : " 147   12       69 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 102   18       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 147   12       69  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 114   18       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
+    "crudAction" : "NONE",
+    "message" : " 167   12       69 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 114   18       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 167   12       69  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 126   18       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
+    "crudAction" : "NONE",
+    "message" : " 187   12       69 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 126   18       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 187   12       69  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 138   18       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
+    "crudAction" : "NONE",
+    "message" : " 207   12       69 -1000.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE -1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 138   18       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 207   12       69  1000.00     0.00       null  2025-0909 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 150   18       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
+    "crudAction" : "NONE",
+    "message" : "  15   12       11  1000.00     0.00  2025-0903  2025-0913 OPEN     PO NONE  1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 150   18       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : "  20   12       16  2000.00     0.00  2025-1003  2025-1013 OPEN     PO NONE  3000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 162   18       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
+    "crudAction" : "NONE",
+    "message" : "  25   12       21  3000.00     0.00  2025-1103  2025-1113 OPEN     PO NONE  6000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 162   18       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : "  30   12       26   100.00     0.00  2025-1203  2025-1213 OPEN     PO NONE  6100.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 174   18       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
+    "crudAction" : "NONE",
+    "message" : "Inventory Analysis for 0013: W-013,Wagon Body     2.25 PUR   2  20     0.00   100.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 174   18       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : "Opening Balance of 0.0 and there are 11 open orders"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 186   18       34  -500.00     0.00  2025-0912  2025-0913 OPEN  MODET NONE  -500.00"
+    "crudAction" : "NONE",
+    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 186   18       34   500.00     0.00       null  2025-0912 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : "  75   13       68  -500.00     0.00  2025-0822  2025-0901 OPEN  MODET NONE  -500.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
+    "message" : "  75   13       68   500.00     0.00       null  2025-0822 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  77   13       68  -500.00     0.00  2025-0822  2025-0901 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  77   13       68   500.00     0.00       null  2025-0822 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  83   13       68  -500.00     0.00  2025-0822  2025-0901 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  83   13       68   500.00     0.00       null  2025-0822 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  96   13       68  -500.00     0.00  2025-0822  2025-0901 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  96   13       68   500.00     0.00       null  2025-0822 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 109   13       68  -500.00     0.00  2025-0822  2025-0901 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 109   13       68   500.00     0.00       null  2025-0822 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 122   13       68  -500.00     0.00  2025-0822  2025-0901 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 122   13       68   500.00     0.00       null  2025-0822 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 142   13       68  -500.00     0.00  2025-0822  2025-0901 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 142   13       68   500.00     0.00       null  2025-0822 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 162   13       68  -500.00     0.00  2025-0822  2025-0901 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 162   13       68   500.00     0.00       null  2025-0822 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 182   13       68  -500.00     0.00  2025-0822  2025-0901 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 182   13       68   500.00     0.00       null  2025-0822 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 202   13       68  -500.00     0.00  2025-0822  2025-0901 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 202   13       68   500.00     0.00       null  2025-0822 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 222   13       68  -500.00     0.00  2025-0822  2025-0901 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 222   13       68   500.00     0.00       null  2025-0822 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "Inventory Analysis for 0014: W-014,Red Paint    20.00 PUR   2   5     0.00     4.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "Opening Balance of 0.0 and there are 12 open orders"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  76   14       68  -125.00     0.00  2025-0822  2025-0901 OPEN  MODET NONE  -125.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  76   14       68   125.00     0.00       null  2025-0822 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  78   14       68  -125.00     0.00  2025-0822  2025-0901 OPEN  MODET NONE  -125.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  78   14       68   125.00     0.00       null  2025-0822 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  84   14       68  -125.00     0.00  2025-0822  2025-0901 OPEN  MODET NONE  -125.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  84   14       68   125.00     0.00       null  2025-0822 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  97   14       68  -125.00     0.00  2025-0822  2025-0901 OPEN  MODET NONE  -125.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  97   14       68   125.00     0.00       null  2025-0822 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 110   14       68  -125.00     0.00  2025-0822  2025-0901 OPEN  MODET NONE  -125.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 110   14       68   125.00     0.00       null  2025-0822 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 123   14       68  -125.00     0.00  2025-0822  2025-0901 OPEN  MODET NONE  -125.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 123   14       68   125.00     0.00       null  2025-0822 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 143   14       68  -125.00     0.00  2025-0822  2025-0901 OPEN  MODET NONE  -125.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 143   14       68   125.00     0.00       null  2025-0822 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 163   14       68  -125.00     0.00  2025-0822  2025-0901 OPEN  MODET NONE  -125.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 163   14       68   125.00     0.00       null  2025-0822 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 183   14       68  -125.00     0.00  2025-0822  2025-0901 OPEN  MODET NONE  -125.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 183   14       68   125.00     0.00       null  2025-0822 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 203   14       68  -125.00     0.00  2025-0822  2025-0901 OPEN  MODET NONE  -125.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 203   14       68   125.00     0.00       null  2025-0822 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 223   14       68  -125.00     0.00  2025-0822  2025-0901 OPEN  MODET NONE  -125.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 223   14       68   125.00     0.00       null  2025-0822 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 243   14       68  -125.00     0.00  2025-0822  2025-0901 OPEN  MODET NONE  -125.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 243   14       68   125.00     0.00       null  2025-0822 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "Inventory Analysis for 0015: W-015,Rear Wheel bracket     1.00 PUR   2   4     0.00    50.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "Opening Balance of 0.0 and there are 11 open orders"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  93   15       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  93   15       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 106   15       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 106   15       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 119   15       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 119   15       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 132   15       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 132   15       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 152   15       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 152   15       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 172   15       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 172   15       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 192   15       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 192   15       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 212   15       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 212   15       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 232   15       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 232   15       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 252   15       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 252   15       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 272   15       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 272   15       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "Inventory Analysis for 0016: W-016,Axle Bracket Brace     0.75 PUR   2   6     0.00    50.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "Opening Balance of 0.0 and there are 12 open orders"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  94   16       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  94   16       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 107   16       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 107   16       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 120   16       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 120   16       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 133   16       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 133   16       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 153   16       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 153   16       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 173   16       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 173   16       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 193   16       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 193   16       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 213   16       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 213   16       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 233   16       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 233   16       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 253   16       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 253   16       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 273   16       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 273   16       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 293   16       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 293   16       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "Inventory Analysis for 0018: W-018,Carriage Bolt     0.17 PUR   2   3     0.00   500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "Opening Balance of 0.0 and there are 13 open orders"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  95   18       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  95   18       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 108   18       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 108   18       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 121   18       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 121   18       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 134   18       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 134   18       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 154   18       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 154   18       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 174   18       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 174   18       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 194   18       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 194   18       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 214   18       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 214   18       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 234   18       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 234   18       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 254   18       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 254   18       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 274   18       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 274   18       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 294   18       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 294   18       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 314   18       70  -500.00     0.00  2025-0909  2025-0910 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 314   18       70   500.00     0.00       null  2025-0909 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0017: W-017,Rod Stock     0.70 PUR   3   5     0.00  1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 38 open orders"
+    "crudAction" : "NONE",
+    "message" : "Opening Balance of 0.0 and there are 118 open orders"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "   2   17        1  1000.00     0.00  2025-0827  2025-0901 OPEN     PO NONE  1000.00"
+    "crudAction" : "NONE",
+    "message" : "   2   17        1  1000.00     0.00  2025-0823  2025-0828 OPEN     PO NONE  1000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  79   17       45  -741.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE   259.00"
+    "crudAction" : "NONE",
+    "message" : "  34   17       12  1000.00     0.00  2025-0831  2025-0905 OPEN     PO NONE  2000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  80   17       54  -750.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE  -491.00"
+    "crudAction" : "NONE",
+    "message" : "  37   17       12  1000.00     0.00  2025-0831  2025-0905 OPEN     PO NONE  3000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  80   17       54  1000.00     0.00       null  2025-0908 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : "  43   17       12  1000.00     0.00  2025-0831  2025-0905 OPEN     PO NONE  4000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  81   17       63  -750.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE  -241.00"
+    "crudAction" : "NONE",
+    "message" : "  46   17       12  1000.00     0.00  2025-0831  2025-0905 OPEN     PO NONE  5000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  81   17       63  1000.00     0.00       null  2025-0908 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : "  49   17       12  1000.00     0.00  2025-0831  2025-0905 OPEN     PO NONE  6000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  91   17       45  -741.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE    18.00"
+    "crudAction" : "NONE",
+    "message" : "  55   17       12  1000.00     0.00  2025-0831  2025-0905 OPEN     PO NONE  7000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  92   17       54  -750.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE  -732.00"
+    "crudAction" : "NONE",
+    "message" : "  58   17       12  1000.00     0.00  2025-0831  2025-0905 OPEN     PO NONE  8000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  92   17       54  1000.00     0.00       null  2025-0908 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : "  61   17       12  1000.00     0.00  2025-0831  2025-0905 OPEN     PO NONE  9000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  93   17       63  -750.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE  -482.00"
+    "crudAction" : "NONE",
+    "message" : " 135   17       79  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  8250.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  93   17       63  1000.00     0.00       null  2025-0908 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 136   17       85  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  7500.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 103   17       45  -741.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE  -223.00"
+    "crudAction" : "NONE",
+    "message" : " 137   17       89  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  6750.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 103   17       45  1000.00     0.00       null  2025-0908 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 138   17       98  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  6000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 104   17       54  -750.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE    27.00"
+    "crudAction" : "NONE",
+    "message" : " 139   17      102  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  5250.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 105   17       63  -750.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE  -723.00"
+    "crudAction" : "NONE",
+    "message" : " 140   17      111  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  4500.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 105   17       63  1000.00     0.00       null  2025-0908 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 141   17      115  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  3750.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 115   17       45  -741.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE  -464.00"
+    "crudAction" : "NONE",
+    "message" : " 155   17       79  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  3000.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 115   17       45  1000.00     0.00       null  2025-0908 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 156   17       85  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  2250.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 116   17       54  -750.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE  -214.00"
+    "crudAction" : "NONE",
+    "message" : " 157   17       89  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  1500.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 116   17       54  1000.00     0.00       null  2025-0908 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 158   17       98  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE   750.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 117   17       63  -750.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE    36.00"
+    "crudAction" : "NONE",
+    "message" : " 159   17      102  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE     0.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 127   17       45  -741.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE  -705.00"
+    "crudAction" : "NONE",
+    "message" : " 160   17      111  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -750.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 127   17       45  1000.00     0.00       null  2025-0908 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 160   17      111  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 128   17       54  -750.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE  -455.00"
+    "crudAction" : "NONE",
+    "message" : " 161   17      115  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -500.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 128   17       54  1000.00     0.00       null  2025-0908 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 161   17      115  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 129   17       63  -750.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE  -205.00"
+    "crudAction" : "NONE",
+    "message" : " 175   17       79  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -250.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 129   17       63  1000.00     0.00       null  2025-0908 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 175   17       79  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 139   17       45  -741.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE    54.00"
+    "crudAction" : "NONE",
+    "message" : " 176   17       85  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE     0.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 140   17       54  -750.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE  -696.00"
+    "crudAction" : "NONE",
+    "message" : " 177   17       89  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -750.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 140   17       54  1000.00     0.00       null  2025-0908 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 177   17       89  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 141   17       63  -750.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE  -446.00"
+    "crudAction" : "NONE",
+    "message" : " 178   17       98  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -500.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 141   17       63  1000.00     0.00       null  2025-0908 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 178   17       98  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 151   17       45  -741.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE  -187.00"
+    "crudAction" : "NONE",
+    "message" : " 179   17      102  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -250.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 151   17       45  1000.00     0.00       null  2025-0908 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 179   17      102  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 152   17       54  -750.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE    63.00"
+    "crudAction" : "NONE",
+    "message" : " 180   17      111  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE     0.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 153   17       63  -750.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE  -687.00"
+    "crudAction" : "NONE",
+    "message" : " 181   17      115  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -750.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 153   17       63  1000.00     0.00       null  2025-0908 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 181   17      115  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 163   17       45  -741.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE  -428.00"
+    "crudAction" : "NONE",
+    "message" : " 195   17       79  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -500.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 163   17       45  1000.00     0.00       null  2025-0908 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 195   17       79  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 164   17       54  -750.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE  -178.00"
+    "crudAction" : "NONE",
+    "message" : " 196   17       85  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -250.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 164   17       54  1000.00     0.00       null  2025-0908 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 196   17       85  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 165   17       63  -750.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE    72.00"
+    "crudAction" : "NONE",
+    "message" : " 197   17       89  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE     0.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 175   17       45  -741.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE  -669.00"
+    "crudAction" : "NONE",
+    "message" : " 198   17       98  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -750.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 175   17       45  1000.00     0.00       null  2025-0908 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 198   17       98  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 176   17       54  -750.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE  -419.00"
+    "crudAction" : "NONE",
+    "message" : " 199   17      102  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -500.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 176   17       54  1000.00     0.00       null  2025-0908 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 199   17      102  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 177   17       63  -750.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE  -169.00"
+    "crudAction" : "NONE",
+    "message" : " 200   17      111  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -250.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 177   17       63  1000.00     0.00       null  2025-0908 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 200   17      111  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 187   17       45  -741.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE    90.00"
+    "crudAction" : "NONE",
+    "message" : " 201   17      115  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE     0.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 188   17       54  -750.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE  -660.00"
+    "crudAction" : "NONE",
+    "message" : " 215   17       79  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -750.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 188   17       54  1000.00     0.00       null  2025-0908 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 215   17       79  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 189   17       63  -750.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE  -410.00"
+    "crudAction" : "NONE",
+    "message" : " 216   17       85  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -500.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 189   17       63  1000.00     0.00       null  2025-0908 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 216   17       85  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 199   17       45  -741.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE  -151.00"
+    "crudAction" : "NONE",
+    "message" : " 217   17       89  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -250.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 199   17       45  1000.00     0.00       null  2025-0908 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 217   17       89  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 200   17       54  -750.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE    99.00"
+    "crudAction" : "NONE",
+    "message" : " 218   17       98  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE     0.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 201   17       63  -750.00     0.00  2025-0908  2025-0912 OPEN  MODET NONE  -651.00"
+    "crudAction" : "NONE",
+    "message" : " 219   17      102  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -750.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : " 201   17       63  1000.00     0.00       null  2025-0908 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 219   17      102  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "   4   17        3  -750.00     0.00  2025-0911  2025-0915 OPEN  MODET NONE  -401.00"
+    "crudAction" : "NONE",
+    "message" : " 220   17      111  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -500.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "   4   17        3  1000.00     0.00       null  2025-0911 OPEN     PO INSERT"
+    "crudAction" : "NONE",
+    "message" : " 220   17      111  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "   6   17        5  1250.00     0.00  2025-1006  2025-1011 OPEN     PO NONE  1849.00"
+    "crudAction" : "NONE",
+    "message" : " 221   17      115  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -250.00"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "   8   17        7  2250.00     0.00  2025-1106  2025-1111 OPEN     PO NONE  4099.00"
+    "crudAction" : "NONE",
+    "message" : " 221   17      115  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
-    "message" : "  10   17        9  1000.00     0.00  2025-1206  2025-1211 OPEN     PO NONE  5099.00"
+    "crudAction" : "NONE",
+    "message" : " 235   17       79  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE     0.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 236   17       85  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -750.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 236   17       85  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 237   17       89  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 237   17       89  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 238   17       98  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -250.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 238   17       98  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 239   17      102  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE     0.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 240   17      111  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -750.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 240   17      111  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 241   17      115  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 241   17      115  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 255   17       79  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -250.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 255   17       79  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 256   17       85  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE     0.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 257   17       89  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -750.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 257   17       89  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 258   17       98  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 258   17       98  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 259   17      102  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -250.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 259   17      102  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 260   17      111  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE     0.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 261   17      115  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -750.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 261   17      115  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 275   17       79  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 275   17       79  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 276   17       85  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -250.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 276   17       85  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 277   17       89  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE     0.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 278   17       98  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -750.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 278   17       98  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 279   17      102  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 279   17      102  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 280   17      111  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -250.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 280   17      111  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 281   17      115  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE     0.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 295   17       79  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -750.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 295   17       79  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 296   17       85  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 296   17       85  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 297   17       89  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -250.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 297   17       89  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 298   17       98  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE     0.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 299   17      102  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -750.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 299   17      102  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 300   17      111  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 300   17      111  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 301   17      115  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -250.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 301   17      115  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 315   17       79  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE     0.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 316   17       85  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -750.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 316   17       85  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 317   17       89  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 317   17       89  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 318   17       98  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -250.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 318   17       98  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 319   17      102  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE     0.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 320   17      111  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -750.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 320   17      111  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 321   17      115  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 321   17      115  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 335   17       79  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -250.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 335   17       79  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 336   17       85  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE     0.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 337   17       89  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -750.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 337   17       89  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 338   17       98  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 338   17       98  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 339   17      102  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -250.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 339   17      102  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 340   17      111  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE     0.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 341   17      115  -750.00     0.00  2025-0901  2025-0905 OPEN  MODET NONE  -750.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : " 341   17      115  1000.00     0.00       null  2025-0901 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  31   17       12  -741.00     0.00  2025-0905  2025-0909 OPEN  MODET NONE  -491.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  31   17       12  1000.00     0.00       null  2025-0905 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  40   17       12  -741.00     0.00  2025-0905  2025-0909 OPEN  MODET NONE  -232.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  40   17       12  1000.00     0.00       null  2025-0905 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  52   17       12  -741.00     0.00  2025-0905  2025-0909 OPEN  MODET NONE    27.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  64   17       12  -741.00     0.00  2025-0905  2025-0909 OPEN  MODET NONE  -714.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  64   17       12  1000.00     0.00       null  2025-0905 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "   4   17        3  -750.00     0.00  2025-0907  2025-0911 OPEN  MODET NONE  -464.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "   4   17        3  1000.00     0.00       null  2025-0907 OPEN     PO INSERT"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  35   17       17  1000.00     0.00  2025-0930  2025-1005 OPEN     PO NONE  1536.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  41   17       17  1000.00     0.00  2025-0930  2025-1005 OPEN     PO NONE  2536.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  44   17       17  1000.00     0.00  2025-0930  2025-1005 OPEN     PO NONE  3536.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  47   17       17  1000.00     0.00  2025-0930  2025-1005 OPEN     PO NONE  4536.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  53   17       17  1000.00     0.00  2025-0930  2025-1005 OPEN     PO NONE  5536.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  56   17       17  1000.00     0.00  2025-0930  2025-1005 OPEN     PO NONE  6536.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  59   17       17  1000.00     0.00  2025-0930  2025-1005 OPEN     PO NONE  7536.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "   6   17        5  1250.00     0.00  2025-1002  2025-1007 OPEN     PO NONE  8786.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  32   17       17  -750.00     0.00  2025-1005  2025-1009 OPEN  MODET NONE  8036.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  38   17       17  -750.00     0.00  2025-1005  2025-1009 OPEN  MODET NONE  7286.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  50   17       17  -750.00     0.00  2025-1005  2025-1009 OPEN  MODET NONE  6536.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  62   17       17  -750.00     0.00  2025-1005  2025-1009 OPEN  MODET NONE  5786.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  65   17       17  -750.00     0.00  2025-1005  2025-1009 OPEN  MODET NONE  5036.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  42   17       22  1000.00     0.00  2025-1031  2025-1105 OPEN     PO NONE  6036.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  45   17       22  1000.00     0.00  2025-1031  2025-1105 OPEN     PO NONE  7036.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  48   17       22  1000.00     0.00  2025-1031  2025-1105 OPEN     PO NONE  8036.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  54   17       22  1000.00     0.00  2025-1031  2025-1105 OPEN     PO NONE  9036.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  57   17       22  1000.00     0.00  2025-1031  2025-1105 OPEN     PO NONE 10036.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  60   17       22  1000.00     0.00  2025-1031  2025-1105 OPEN     PO NONE 11036.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "   8   17        7  2250.00     0.00  2025-1102  2025-1107 OPEN     PO NONE 13286.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  33   17       22  -750.00     0.00  2025-1105  2025-1109 OPEN  MODET NONE 12536.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  36   17       22  -750.00     0.00  2025-1105  2025-1109 OPEN  MODET NONE 11786.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  39   17       22  -750.00     0.00  2025-1105  2025-1109 OPEN  MODET NONE 11036.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  51   17       22  -750.00     0.00  2025-1105  2025-1109 OPEN  MODET NONE 10286.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  63   17       22  -750.00     0.00  2025-1105  2025-1109 OPEN  MODET NONE  9536.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  66   17       22  -750.00     0.00  2025-1105  2025-1109 OPEN  MODET NONE  8786.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  10   17        9  1000.00     0.00  2025-1202  2025-1207 OPEN     PO NONE  9786.00"
   } ]
 }

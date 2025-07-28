@@ -9,7 +9,7 @@
   } ],
   "data" : [ {
     "id" : 14,
-    "activityState" : "CHANGE",
+    "crudAction" : "CHANGE",
     "itemId" : 2,
     "quantityOrdered" : 6.0,
     "quantityAssigned" : 0.0,
@@ -20,7 +20,7 @@
     "orderType" : "MODET"
   }, {
     "id" : 15,
-    "activityState" : "CHANGE",
+    "crudAction" : "CHANGE",
     "itemId" : 5,
     "quantityOrdered" : 9.0,
     "quantityAssigned" : 0.0,

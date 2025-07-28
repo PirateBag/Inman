@@ -3,7 +3,7 @@
   "errors" : [ ],
   "data" : [ {
     "id" : 1,
-    "activityState" : "INSERT",
+    "crudAction" : "INSERT",
     "itemId" : 1,
     "quantityOrdered" : 1.0,
     "quantityAssigned" : 0.0,
@@ -14,7 +14,7 @@
     "orderType" : "MODET"
   }, {
     "id" : 2,
-    "activityState" : "INSERT",
+    "crudAction" : "INSERT",
     "itemId" : 2,
     "quantityOrdered" : 1.0,
     "quantityAssigned" : 0.0,

@@ -3,6 +3,7 @@ package com.inman.integration;
 import com.inman.service.OrderLineItemService;
 import com.inman.entity.*;
 import com.inman.model.response.ResponsePackage;
+import enums.CrudAction;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -24,7 +25,7 @@ public class OrderLineItemServiceTest {
         oldValue.setCompleteDate( "" );
         oldValue.setStartDate( "2025-0620" );
         oldValue.setParentOliId( 0 );
-        oldValue.setActivityState( ActivityState.CHANGE );
+        oldValue.setCrudAction( CrudAction.CHANGE );
 
     }
 
@@ -156,7 +157,7 @@ public class OrderLineItemServiceTest {
         oldValue.setCompleteDate( "" );
         oldValue.setStartDate( "2025-0620" );
         oldValue.setParentOliId( 0 );
-        oldValue.setActivityState( ActivityState.CHANGE );
+        oldValue.setCrudAction( CrudAction.CHANGE );
 
         newValue.setItemId( 17 );
         newValue.setQuantityOrdered( 10 );
@@ -164,7 +165,7 @@ public class OrderLineItemServiceTest {
         newValue.setCompleteDate( "" );
         newValue.setStartDate( "2025-0620" );
         newValue.setParentOliId( 0 );
-        newValue.setActivityState( ActivityState.CHANGE );
+        newValue.setCrudAction( CrudAction.CHANGE );
 
         var fieldsToChange = orderLineItemService.createMapOfChangedValues( oldValue, newValue );
         assertEquals( 0, fieldsToChange.size() );

@@ -3,7 +3,7 @@
   "errors" : [ ],
   "data" : [ {
     "id" : 1,
-    "activityState" : "INSERT",
+    "crudAction" : "INSERT",
     "parentId" : 1,
     "childId" : 2,
     "quantityPer" : 1.0,
@@ -15,7 +15,7 @@
     "extendedCost" : 0.0
   }, {
     "id" : 2,
-    "activityState" : "INSERT",
+    "crudAction" : "INSERT",
     "parentId" : 2,
     "childId" : 13,
     "quantityPer" : 1.0,

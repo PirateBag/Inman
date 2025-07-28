@@ -45,3 +45,13 @@ CREATE TABLE IF NOT EXISTS order_line_Item (
     quantity_ordered number (12,2) default 0.0,
 
     CONSTRAINT PK_ORDER_LINE_ITEM PRIMARY KEY ( ID ) );
+
+CREATE TABLE IF NOT EXISTS adjustment (
+    id int auto_increment,
+    item_id int,
+    order_id int,
+    order_type varchar(5),
+    effective_date varchar( 10 ),
+    adjustment_type varchar(4),
+    CONSTRAINT PK_ADJUSTMENT PRIMARY KEY ( ID ) );
+

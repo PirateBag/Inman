@@ -1,7 +1,7 @@
 package com.inman.integration;
 
+import enums.CrudAction;
 import com.inman.service.OrderLineItemService;
-import com.inman.entity.ActivityState;
 import com.inman.entity.OrderLineItem;
 import com.inman.repository.DdlRepository;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class DdlRepositoryTest {
         oldValue.setCompleteDate( "" );
         oldValue.setStartDate( "2025-0620" );
         oldValue.setParentOliId( 0 );
-        oldValue.setActivityState( ActivityState.CHANGE );
+        oldValue.setCrudAction( CrudAction.CHANGE );
 
     }
 
@@ -38,7 +38,7 @@ public class DdlRepositoryTest {
         oldValue.setCompleteDate( "" );
         oldValue.setStartDate( "2025-0620" );
         oldValue.setParentOliId( 0 );
-        oldValue.setActivityState( ActivityState.CHANGE );
+        oldValue.setCrudAction( CrudAction.CHANGE );
 
         newValue.setItemId( 17 );
         newValue.setQuantityOrdered( 10 );
@@ -46,7 +46,7 @@ public class DdlRepositoryTest {
         newValue.setCompleteDate( "" );
         newValue.setStartDate( "2025-0620" );
         newValue.setParentOliId( 0 );
-        newValue.setActivityState( ActivityState.CHANGE );
+        newValue.setCrudAction( CrudAction.CHANGE );
 
         var fieldsToChange = orderLineItemService.createMapOfChangedValues( oldValue, newValue );
         assertEquals( 0, fieldsToChange.size() );
@@ -60,7 +60,7 @@ public class DdlRepositoryTest {
         oldValue.setCompleteDate( "" );
         oldValue.setStartDate( "2025-0620" );
         oldValue.setParentOliId( 0 );
-        oldValue.setActivityState( ActivityState.CHANGE );
+        oldValue.setCrudAction( CrudAction.CHANGE );
 
         newValue.setItemId( 17 );
         newValue.setQuantityOrdered( 20 );
@@ -68,7 +68,7 @@ public class DdlRepositoryTest {
         newValue.setCompleteDate( "" );
         newValue.setStartDate( "2025-0620" );
         newValue.setParentOliId( 0 );
-        newValue.setActivityState( ActivityState.CHANGE );
+        newValue.setCrudAction( CrudAction.CHANGE );
 
         var fieldsToChange = orderLineItemService.createMapOfChangedValues( oldValue, newValue );
         assertEquals( 1, fieldsToChange.size() );
@@ -87,7 +87,7 @@ public class DdlRepositoryTest {
         oldValue.setCompleteDate( "" );
         oldValue.setStartDate( "2025-0620" );
         oldValue.setParentOliId( 0 );
-        oldValue.setActivityState( ActivityState.CHANGE );
+        oldValue.setCrudAction( CrudAction.CHANGE );
 
         newValue.setItemId( 17 );
         newValue.setQuantityOrdered( 20 );
@@ -95,7 +95,7 @@ public class DdlRepositoryTest {
         newValue.setCompleteDate( "2025-0705" );
         newValue.setStartDate( "2025-0620" );
         newValue.setParentOliId( 0 );
-        newValue.setActivityState( ActivityState.CHANGE );
+        newValue.setCrudAction( CrudAction.CHANGE );
 
         var fieldsToChange = orderLineItemService.createMapOfChangedValues( oldValue, newValue );
         assertEquals( 2, fieldsToChange.size() );

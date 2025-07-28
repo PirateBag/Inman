@@ -60,7 +60,7 @@ public class  Item extends EntityMaster {
 		var rValue = new Item();
 		Item item = (Item) entityMaster;
 		rValue.id = item.getId();
-		rValue.activityState = item.getActivityState();
+		rValue.crudAction = item.getCrudAction();
 		rValue.summaryId = item.getSummaryId();
 		rValue.description = item.getDescription();
 		rValue.unitCost = item.getUnitCost();

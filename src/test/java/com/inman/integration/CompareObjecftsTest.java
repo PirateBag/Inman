@@ -1,7 +1,7 @@
 package com.inman.integration;
 
+import enums.CrudAction;
 import com.inman.service.ReflectionHelpers;
-import com.inman.entity.ActivityState;
 import com.inman.entity.OrderLineItem;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,7 +40,7 @@ public class CompareObjecftsTest {
         oldValue.setCompleteDate( "" );
         oldValue.setStartDate( "2025-0620" );
         oldValue.setParentOliId( 0 );
-        oldValue.setActivityState( ActivityState.CHANGE );
+        oldValue.setCrudAction( CrudAction.CHANGE );
     }
 
 
@@ -52,7 +52,7 @@ public class CompareObjecftsTest {
         oldValue.setCompleteDate( "" );
         oldValue.setStartDate( "2025-0620" );
         oldValue.setParentOliId( 0 );
-        oldValue.setActivityState( ActivityState.CHANGE );
+        oldValue.setCrudAction( CrudAction.CHANGE );
 
         newValue.setItemId( 17 );
         newValue.setQuantityOrdered( 10 );
@@ -60,7 +60,7 @@ public class CompareObjecftsTest {
         newValue.setCompleteDate( "" );
         newValue.setStartDate( "2025-0620" );
         newValue.setParentOliId( 0 );
-        newValue.setActivityState( ActivityState.CHANGE );
+        newValue.setCrudAction( CrudAction.CHANGE );
 
         var fieldsToChange = compareObjects( oldValue, newValue );
         assertEquals( 0, fieldsToChange.size() );
@@ -76,7 +76,7 @@ public class CompareObjecftsTest {
         oldValue.setCompleteDate( "" );
         oldValue.setStartDate( "2025-0620" );
         oldValue.setParentOliId( 0 );
-        oldValue.setActivityState( ActivityState.CHANGE );
+        oldValue.setCrudAction( CrudAction.CHANGE );
 
         newValue.setItemId( 17 );
         newValue.setQuantityOrdered( 20 );
@@ -84,7 +84,7 @@ public class CompareObjecftsTest {
         newValue.setCompleteDate( "" );
         newValue.setStartDate( "2025-0620" );
         newValue.setParentOliId( 0 );
-        newValue.setActivityState( ActivityState.CHANGE );
+        newValue.setCrudAction( CrudAction.CHANGE );
 
         var fieldsToChange = compareObjects( oldValue, newValue );
         assertEquals( 1, fieldsToChange.size() );
@@ -101,7 +101,7 @@ public class CompareObjecftsTest {
         oldValue.setCompleteDate( "" );
         oldValue.setStartDate( "2025-0620" );
         oldValue.setParentOliId( 0 );
-        oldValue.setActivityState( ActivityState.CHANGE );
+        oldValue.setCrudAction( CrudAction.CHANGE );
 
         newValue.setItemId( 17 );
         newValue.setQuantityOrdered( 20 );
@@ -109,7 +109,7 @@ public class CompareObjecftsTest {
         newValue.setCompleteDate( "2025-0705" );
         newValue.setStartDate( "2025-0620" );
         newValue.setParentOliId( 0 );
-        newValue.setActivityState( ActivityState.CHANGE );
+        newValue.setCrudAction( CrudAction.CHANGE );
 
         var fieldsToChange = compareObjects( oldValue, newValue );
         assertEquals( 2, fieldsToChange.size() );
@@ -127,7 +127,7 @@ public class CompareObjecftsTest {
         assertEquals( 10, setOfFields.size() );
 
         String expected = """
-                activityState
+                curdAction
                 completeDate
                 id
                 itemId

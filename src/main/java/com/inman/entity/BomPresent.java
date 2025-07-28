@@ -27,7 +27,7 @@ public class BomPresent extends EntityMaster {
         BomPresent rValue = new BomPresent();
         BomPresent bomPresent = (BomPresent) oldValue;
         rValue.id = bomPresent.getId();
-        rValue.activityState = oldValue.getActivityState();
+        rValue.crudAction = oldValue.getCrudAction();
         rValue.parentId = bomPresent.getParentId();
         rValue.parentSummary = bomPresent.getParentSummary();
         rValue.parentDescription = bomPresent.getParentDescription();

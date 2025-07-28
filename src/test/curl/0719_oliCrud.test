@@ -10,10 +10,10 @@ Delete the children of order 2 (3, 4) before actually deleting 2.
 Create a new planned order consisting of items 2 and 5.
 
 ,
-        {  "activityState" : "INSERT",  "itemId" : "2", "parentOliId" : "0", "quantityOrdered" : "7", "quantityAssigned" : "0.0",
+        {  "crudAction" : "INSERT",  "itemId" : "2", "parentOliId" : "0", "quantityOrdered" : "7", "quantityAssigned" : "0.0",
         "startDate" : "2025-0801", "orderState" : "PLANNED",
         "orderType" : "MOHEAD" },
-        {  "activityState" : "INSERT",  "itemId" : "5", "parentOliId" : "0", "quantityOrdered" : "9", "quantityAssigned" : "0.0",
+        {  "crudAction" : "INSERT",  "itemId" : "5", "parentOliId" : "0", "quantityOrdered" : "9", "quantityAssigned" : "0.0",
         "startDate" : "2025-0801", "completeDate" : "2025-0803",  "orderState" : "PLANNED",
         "orderType" : "MOHEAD" }
 
@@ -21,26 +21,26 @@ Create a new planned order consisting of items 2 and 5.
 
 { "rows" : [
 
-        {  "activityState" : "DELETE",  "id" : 3, "itemId" : "3", "parentOliId" : "6", "quantityOrdered" : "10", "quantityAssigned" : "0.0",
+        {  "crudAction" : "DELETE",  "id" : 3, "itemId" : "3", "parentOliId" : "6", "quantityOrdered" : "10", "quantityAssigned" : "0.0",
         "startDate" : "2025-0801", "completeDate" : "2025-0803",  "orderState" : "CLOSED",
         "orderType" : "MODET" },
-        {  "activityState" : "DELETE",  "id" : 5, "itemId" : "5", "parentOliId" : "6", "quantityOrdered" : "10", "quantityAssigned" : "0.0",
+        {  "crudAction" : "DELETE",  "id" : 5, "itemId" : "5", "parentOliId" : "6", "quantityOrdered" : "10", "quantityAssigned" : "0.0",
         "startDate" : "2025-0801", "completeDate" : "2025-0803",  "orderState" : "CLOSED",
         "orderType" : "MODET" },
-        {  "activityState" : "DELETE",  "id" : 4, "itemId" : "4", "parentOliId" : "6", "quantityOrdered" : "10", "quantityAssigned" : "0.0",
+        {  "crudAction" : "DELETE",  "id" : 4, "itemId" : "4", "parentOliId" : "6", "quantityOrdered" : "10", "quantityAssigned" : "0.0",
         "startDate" : "2025-0801", "completeDate" : "2025-0803",  "orderState" : "CLOSED",
         "orderType" : "MODET" },
-        {  "activityState" : "DELETE",  "id" : 2, "itemId" : "2", "parentOliId" : "6", "quantityOrdered" : "10", "quantityAssigned" : "0.0",
+        {  "crudAction" : "DELETE",  "id" : 2, "itemId" : "2", "parentOliId" : "6", "quantityOrdered" : "10", "quantityAssigned" : "0.0",
         "startDate" : "2025-0801", "completeDate" : "2025-0803",  "orderState" : "CLOSED",
         "orderType" : "MODET" },
 
-        {  "activityState" : "DELETE",  "id" : 6, "itemId" : "6", "parentOliId" : "6", "quantityOrdered" : "80", "quantityAssigned" : "0.0",
+        {  "crudAction" : "DELETE",  "id" : 6, "itemId" : "6", "parentOliId" : "6", "quantityOrdered" : "80", "quantityAssigned" : "0.0",
         "startDate" : "2025-0801", "completeDate" : "2025-0803",  "orderState" : "CLOSED",
         "orderType" : "MODET" },
-        {  "activityState" : "INSERT",  "itemId" : "2", "parentOliId" : "0", "quantityOrdered" : "7", "quantityAssigned" : "0.0",
+        {  "crudAction" : "INSERT",  "itemId" : "2", "parentOliId" : "0", "quantityOrdered" : "7", "quantityAssigned" : "0.0",
         "startDate" : "2025-0801", "orderState" : "PLANNED",
         "orderType" : "MOHEAD" },
-        {  "activityState" : "INSERT",  "itemId" : "5", "parentOliId" : "0", "quantityOrdered" : "9", "quantityAssigned" : "0.0",
+        {  "crudAction" : "INSERT",  "itemId" : "5", "parentOliId" : "0", "quantityOrdered" : "9", "quantityAssigned" : "0.0",
         "startDate" : "2025-0801", "completeDate" : "2025-0803",  "orderState" : "PLANNED",
         "orderType" : "MOHEAD" }
 ] }

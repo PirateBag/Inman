@@ -3,21 +3,26 @@ package com.inman.controller;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.dao.DataIntegrityViolationException;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import static com.inman.controller.Bom.UNIQUE_INDEX_OR_PRIMARY_KEY_VIOLATION;
 
 public class Utility {
     public static String _DATE_FORMAT = "yyyy-MMdd";
-    public static DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern( _DATE_FORMAT ); // Define the format
+    public static DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(_DATE_FORMAT); // Define the format
 
     @NotNull
-    public static String normalize( String str ) {
-        if ( str == null ) { return ""; };
+    public static String normalize(String str) {
+        if (str == null) {
+            return "";
+        }
+        ;
         return str;
     }
 
-    public static boolean isNullOrEmpty( String str ) {
+    public static boolean isNullOrEmpty(String str) {
         return str == null || str.isEmpty();
     }
 
@@ -27,5 +32,15 @@ public class Utility {
             return UNIQUE_INDEX_OR_PRIMARY_KEY_VIOLATION;
         }
         return detailedMessage;
+    }
+
+    public static boolean isDateFormatValid(String date) {
+        try {
+            LocalDate.parse(date, DATE_FORMATTER);
+
+        } catch (DateTimeParseException dtpe) {
+            return false;
+        }
+        return true;
     }
 }

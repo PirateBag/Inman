@@ -6,7 +6,7 @@
   } ],
   "data" : [ {
     "id" : 6,
-    "activityState" : "CHANGE",
+    "crudAction" : "CHANGE",
     "itemId" : 1,
     "quantityOrdered" : 10.0,
     "quantityAssigned" : 0.0,

@@ -3,11 +3,11 @@
   "errors" : [ ],
   "data" : [ {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "OrdereLineItems deleted"
   }, {
     "id" : 0,
-    "activityState" : "NONE",
+    "crudAction" : "NONE",
     "message" : "Order Line Items PK reset"
   } ]
 }

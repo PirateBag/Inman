@@ -1,6 +1,6 @@
 package com.inman.controller;
 
-import com.inman.entity.ActivityState;
+import enums.CrudAction;
 import com.inman.entity.Item;
 import com.inman.model.request.ItemCrudBatch;
 import com.inman.model.response.ItemCrudBatchResponse;
@@ -31,17 +31,17 @@ public class ItemCrud {
 
         for (Item itemCrudToBeCrud : itemCrudBatch.updatedRows()) {
 
-            logger.info("{} on {}", itemCrudToBeCrud.getActivityState(), itemCrudToBeCrud);
+            logger.info("{} on {}", itemCrudToBeCrud.getCrudAction(), itemCrudToBeCrud);
 
-            if (itemCrudToBeCrud.getActivityState() == ActivityState.INSERT) {
+            if (itemCrudToBeCrud.getCrudAction() == CrudAction.INSERT) {
                 insertItem(itemCrudToBeCrud, itemCrudBatchResponse);
-            } else if (itemCrudToBeCrud.getActivityState() == ActivityState.DELETE ||
-                       itemCrudToBeCrud.getActivityState() == ActivityState.DELETE_SILENT) {
+            } else if (itemCrudToBeCrud.getCrudAction() == CrudAction.DELETE ||
+                       itemCrudToBeCrud.getCrudAction() == CrudAction.DELETE_SILENT) {
                 deleteItem(itemCrudToBeCrud, itemCrudBatchResponse);
-            } else if ( itemCrudToBeCrud.getActivityState() == ActivityState.CHANGE ) {
+            } else if ( itemCrudToBeCrud.getCrudAction() == CrudAction.CHANGE ) {
                 changeItem(itemCrudToBeCrud, itemCrudBatchResponse);
             } else {
-                logger.info("Item {} was ignored because ActivityState was {}", itemCrudToBeCrud.getSummaryId(), itemCrudToBeCrud.getActivityState());
+                logger.info("Item {} was ignored because CrudAction was {}", itemCrudToBeCrud.getSummaryId(), itemCrudToBeCrud.getCrudAction());
             }
         }
         return itemCrudBatchResponse;
@@ -97,7 +97,7 @@ private void changeItem(Item itemCrudToBeCrud,
             Item toBeDeletedItem = itemRepository.findBySummaryId(itemCrudToBeCrud.getSummaryId());
             if (toBeDeletedItem == null) {
 
-                 if ( itemCrudToBeCrud.getActivityState() == ActivityState.DELETE) {
+                 if ( itemCrudToBeCrud.getCrudAction() == CrudAction.DELETE) {
                     var message = "Unable to find item " + itemCrudToBeCrud.getSummaryId() + " in database.";
                     itemCrudBatchResponse.getErrors().add(new ErrorLine(1, message));
                     logger.info(message);
@@ -128,13 +128,13 @@ private void changeItem(Item itemCrudToBeCrud,
         String message;
 
         if (exception instanceof DataIntegrityViolationException) {
-            message = itemCrudSingle.getActivityState() + " failed on " + itemCrudSingle.getSummaryId() + ":" +
+            message = itemCrudSingle.getCrudAction() + " failed on " + itemCrudSingle.getSummaryId() + ":" +
                     itemCrudSingle.getDescription() + " due to " +
                     generateErrorMessageFrom((DataIntegrityViolationException) exception);
             logger.error(message);
             return new ErrorLine(1, message);
         }
-        message = itemCrudSingle.getActivityState() + " failed on " + itemCrudSingle.getSummaryId() + ":" +
+        message = itemCrudSingle.getCrudAction() + " failed on " + itemCrudSingle.getSummaryId() + ":" +
                 itemCrudSingle.getDescription() + " due to " +
                 exception.getMessage();
         logger.error(message);

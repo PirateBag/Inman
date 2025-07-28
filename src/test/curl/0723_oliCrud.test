@@ -11,10 +11,10 @@ Move 14 to Open and 15 to closed.
 
 { "rows" : [
 
-        {  "activityState" : "CHANGE",  "id" : 14, "itemId" : "2", "parentOliId" : "0", "quantityOrdered" : "6", "quantityAssigned" : "0.0",
+        {  "crudAction" : "CHANGE",  "id" : 14, "itemId" : "2", "parentOliId" : "0", "quantityOrdered" : "6", "quantityAssigned" : "0.0",
         "startDate" : "2025-0901", "completeDate" : "2025-0903",  "orderState" : "OPEN",
         "orderType" : "MOHEAD" },
-        {  "activityState" : "CHANGE",  "id" : 15, "itemId" : "5", "parentOliId" : "0", "quantityOrdered" : "9", "quantityAssigned" : "0.0",
+        {  "crudAction" : "CHANGE",  "id" : 15, "itemId" : "5", "parentOliId" : "0", "quantityOrdered" : "9", "quantityAssigned" : "0.0",
         "startDate" : "2025-0901", "completeDate" : "2025-0003",  "orderState" : "CLOSED",
         "orderType" : "MOHEAD" }
 ] }

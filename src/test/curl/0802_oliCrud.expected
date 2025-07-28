@@ -6,7 +6,7 @@
   } ],
   "data" : [ {
     "id" : 1,
-    "activityState" : "INSERT",
+    "crudAction" : "INSERT",
     "itemId" : 5,
     "quantityOrdered" : 6.0,
     "quantityAssigned" : 0.0,

@@ -1,7 +1,7 @@
 package com.inman.integration;
 
+import enums.CrudAction;
 import com.inman.service.EntityUtility;
-import com.inman.entity.ActivityState;
 import com.inman.entity.Bom;
 import com.inman.entity.EntityMaster;
 import org.junit.Test;
@@ -40,7 +40,7 @@ public class EntityMergeTest {
         EntityMaster[] inserts = new Bom[1];
         inserts[0] = new Bom( 1L, 2L, 1.0);
         inserts[0].setId( 1L );
-        inserts[0].setActivityState( ActivityState.INSERT );
+        inserts[0].setCrudAction( CrudAction.INSERT );
 
         EntityMaster[] expected = new Bom[1];
         System.arraycopy( inserts, 0, expected, 0, inserts.length );
@@ -54,13 +54,13 @@ public class EntityMergeTest {
     public void NonEmptyBaselineWithInserts() {
 
         EntityMaster[] nonEmptyBaseLine = new Bom[2];
-        nonEmptyBaseLine[ 0 ] = new Bom( 1, 1, 2, 1.0, ActivityState.NONE);
-        nonEmptyBaseLine[ 1 ] = new Bom( 2, 1, 2, 2.0, ActivityState.NONE  );
+        nonEmptyBaseLine[ 0 ] = new Bom( 1, 1, 2, 1.0, CrudAction.NONE);
+        nonEmptyBaseLine[ 1 ] = new Bom( 2, 1, 2, 2.0, CrudAction.NONE  );
 
 
         EntityMaster[] inserts = new Bom[2];
-        inserts[0] = new Bom( 100,1L, 3L, 10.0, ActivityState.INSERT );
-        inserts[1] = new Bom( 100,1L, 3L, 10.0, ActivityState.INSERT );
+        inserts[0] = new Bom( 100,1L, 3L, 10.0, CrudAction.INSERT );
+        inserts[1] = new Bom( 100,1L, 3L, 10.0, CrudAction.INSERT );
 
         EntityMaster[] expected = new EntityMaster[ nonEmptyBaseLine.length + inserts.length ];
 
@@ -76,13 +76,13 @@ public class EntityMergeTest {
     public void NonEmptyBaselineWithChangeAndInsert() {
 
         EntityMaster[] nonEmptyBaseLine = new Bom[2];
-        nonEmptyBaseLine[ 0 ] = new Bom( 1, 1, 2, 1.0, ActivityState.NONE);
-        nonEmptyBaseLine[ 1 ] = new Bom( 2, 1, 2, 2.0, ActivityState.NONE  );
+        nonEmptyBaseLine[ 0 ] = new Bom( 1, 1, 2, 1.0, CrudAction.NONE);
+        nonEmptyBaseLine[ 1 ] = new Bom( 2, 1, 2, 2.0, CrudAction.NONE  );
 
 
         EntityMaster[] changes = new Bom[2];
-        changes[0] = new Bom( 100,1L, 3L, 10.0, ActivityState.INSERT );
-        changes[1] = new Bom( 1,1L, 3L, 10.0, ActivityState.CHANGE );
+        changes[0] = new Bom( 100,1L, 3L, 10.0, CrudAction.INSERT );
+        changes[1] = new Bom( 1,1L, 3L, 10.0, CrudAction.CHANGE );
 
         EntityMaster[] expected = new EntityMaster[ nonEmptyBaseLine.length + changes.length - 1 ];
         expected[ 0 ] = changes[ 1 ];
@@ -98,9 +98,9 @@ public class EntityMergeTest {
     public void NonEmptyBaselineWithDelete() {
 
         EntityMaster[] originals = new Bom[3];
-        originals[ 0 ] = new Bom( 1, 1, 2, 1.0, ActivityState.NONE);
-        originals[ 1 ] = new Bom( 2, 1, 3, 2.0, ActivityState.NONE  );
-        originals[ 2] = new Bom( 3, 1, 4, 3.0, ActivityState.NONE  );
+        originals[ 0 ] = new Bom( 1, 1, 2, 1.0, CrudAction.NONE);
+        originals[ 1 ] = new Bom( 2, 1, 3, 2.0, CrudAction.NONE  );
+        originals[ 2] = new Bom( 3, 1, 4, 3.0, CrudAction.NONE  );
 
         /*
         Id, parent/child, qty
@@ -115,14 +115,14 @@ public class EntityMergeTest {
          */
 
         EntityMaster[] changes = new Bom[3];
-        changes[0] = new Bom( 100,1L, 5L, 50.0, ActivityState.INSERT );
-        changes[1] = new Bom( 1,1L, 2L, 10.0, ActivityState.CHANGE );
-        changes[2] = new Bom( 2,2L, 2L, 20.0, ActivityState.DELETE );
+        changes[0] = new Bom( 100,1L, 5L, 50.0, CrudAction.INSERT );
+        changes[1] = new Bom( 1,1L, 2L, 10.0, CrudAction.CHANGE );
+        changes[2] = new Bom( 2,2L, 2L, 20.0, CrudAction.DELETE );
 
         EntityMaster[] actual = EntityUtility.mergeUpdate( originals, changes );
 
         EntityMaster[] expected = new EntityMaster[ 3 ];
-        EntityUtility.setAllActivityStateToNone( changes );
+        EntityUtility.setAllCrudActionToNone( changes );
         expected[ 0 ] = changes[ 1 ];
         expected[ 1 ] = originals[ 2 ];
         expected[ 2 ] = changes[ 0 ];

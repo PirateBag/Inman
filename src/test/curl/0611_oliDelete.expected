@@ -3,7 +3,7 @@
   "errors" : [ ],
   "data" : [ {
     "id" : 1,
-    "activityState" : "DELETE",
+    "crudAction" : "DELETE",
     "itemId" : 1,
     "quantityOrdered" : 1.0,
     "quantityAssigned" : 0.0,

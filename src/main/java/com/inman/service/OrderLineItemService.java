@@ -9,6 +9,9 @@ import com.inman.model.rest.ErrorLine;
 import com.inman.repository.BomPresentRepository;
 import com.inman.repository.ItemRepository;
 import com.inman.repository.OrderLineItemRepository;
+import enums.CrudAction;
+import enums.OrderState;
+import enums.OrderType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,7 +120,7 @@ public class OrderLineItemService {
             oli.setStartDate( derviedStart.format(DATE_FORMATTER));
             oli.setParentOliId( parentOli.getId() );
             oli.setQuantityAssigned(  0.0 );
-            oli.setActivityState( parentOli.getActivityState() );
+            oli.setCrudAction( parentOli.getCrudAction() );
             oli.setOrderState( parentOli.getOrderState() );
             oli.setOrderType( item.get().getSourcing().equals( Item.SOURCE_MAN ) ? OrderType.MODET : OrderType.PO );
             var updatedOli = orderLineItemRepository.save(oli);
@@ -146,12 +149,12 @@ public class OrderLineItemService {
                 outputErrorAndThrow( "Deletion on " + orderLineItem + " failed because it has children.", oliResponse);
             }
 
-            orderLineItemFromRepository.get().setActivityState(orderLineItem.getActivityState());
+            orderLineItemFromRepository.get().setCrudAction(orderLineItem.getCrudAction());
             oliResponse.getData().add(orderLineItemFromRepository.get());
             orderLineItemRepository.deleteById( orderLineItem.getId());
 
         } catch (DataIntegrityViolationException dataIntegrityViolationException) {
-            message = "Unable to " + orderLineItem.getActivityState() + " " + orderLineItem + ":" +
+            message = "Unable to " + orderLineItem.getCrudAction() + " " + orderLineItem + ":" +
                     Utility.generateErrorMessageFrom(dataIntegrityViolationException);
             outputErrorAndThrow(message, oliResponse);
         }
@@ -191,7 +194,7 @@ public class OrderLineItemService {
 
             oliResponse.getData().add(orderLineItem  );
         } catch (DataIntegrityViolationException dataIntegrityViolationException) {
-            message = "Unable to " + orderLineItem.getActivityState() + " " + orderLineItem + ":" +
+            message = "Unable to " + orderLineItem.getCrudAction() + " " + orderLineItem + ":" +
                     Utility.generateErrorMessageFrom(dataIntegrityViolationException);
             outputErrorAndThrow(message, oliResponse);
         } catch (Exception e) {
@@ -373,17 +376,17 @@ public class OrderLineItemService {
     }
 
         for (OrderLineItem orderLineItem : crudBatch.rows()) {
-            logger.info("{} on {}", orderLineItem.getActivityState(), orderLineItem);
+            logger.info("{} on {}", orderLineItem.getCrudAction(), orderLineItem);
 
-            if (orderLineItem.getActivityState() == ActivityState.INSERT) {
+            if (orderLineItem.getCrudAction() == CrudAction.INSERT) {
                 insert(orderLineItem, responsePackage );
-            } else if (orderLineItem.getActivityState() == ActivityState.DELETE ) {
+            } else if (orderLineItem.getCrudAction() == CrudAction.DELETE ) {
                 delete(orderLineItem, responsePackage);
-            } else if ( orderLineItem.getActivityState() == ActivityState.CHANGE ) {
+            } else if ( orderLineItem.getCrudAction() == CrudAction.CHANGE ) {
                 //  change(orderLineItem, responsePackage);
                 changeViaJpa( orderLineItem, responsePackage);
             }  else {
-                logger.info("{} was ignored because of unknown ActivityState", orderLineItem);
+                logger.info("{} was ignored because of unknown CrudAction", orderLineItem);
             }
         }
         return responsePackage;

@@ -7,6 +7,9 @@ import com.inman.model.response.ResponsePackage;
 import com.inman.model.response.TextResponse;
 import com.inman.model.rest.ErrorLine;
 import com.inman.repository.*;
+import enums.CrudAction;
+import enums.OrderState;
+import enums.OrderType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,7 +117,7 @@ public class AutomatedPlanningService {
         if (newOrders != null && balance < 0) {
             OrderLineItem newOrder = new OrderLineItem(order);
             newOrder.setQuantityOrdered(max(item.getMinimumOrderQuantity(), abs(balance)));
-            newOrder.setActivityState(ActivityState.INSERT);
+            newOrder.setCrudAction(CrudAction.INSERT);
             newOrder.setStartDate(null);
             newOrder.setCompleteDate(order.getStartDate());
             newOrder.setOrderType(item.getSourcing().equals(Item.SOURCE_MAN) ? OrderType.MOHEAD : OrderType.PO);

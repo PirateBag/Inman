@@ -1,6 +1,6 @@
 Insert a subset of children for W-001
 === JSON ===
 { "updatedRows" : [
-  { "parentId" :  "1", "childId" :  "2",  "quantityPer" :  "1.00", "activityState" :  "INSERT" },
-  { "parentId" :  "2", "childId" :  "13", "quantityPer" :  "1.00", "activityState" :  "INSERT" }
+  { "parentId" :  "1", "childId" :  "2",  "quantityPer" :  "1.00", "crudAction" :  "INSERT" },
+  { "parentId" :  "2", "childId" :  "13", "quantityPer" :  "1.00", "crudAction" :  "INSERT" }
 ] }

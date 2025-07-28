@@ -1,33 +1,33 @@
 Prior tests (BomCrudTx3) added the following bill of material lines to W-001.:
-  { "parentId" :  "1", "childId" :  "2",  "quantityPer" :  "1.00", "activityState" :  "INSERT" },
-  { "parentId" :  "2", "childId" :  "13", "quantityPer" :  "1.00", "activityState" :  "INSERT" }
-  { "parentId" :  "1", "childId" :  "3",  "quantityPer" :  "1.00", "activityState" :  "INSERT" },
+  { "parentId" :  "1", "childId" :  "2",  "quantityPer" :  "1.00", "crudAction" :  "INSERT" },
+  { "parentId" :  "2", "childId" :  "13", "quantityPer" :  "1.00", "crudAction" :  "INSERT" }
+  { "parentId" :  "1", "childId" :  "3",  "quantityPer" :  "1.00", "crudAction" :  "INSERT" },
 Add all remaining bill of material lines.  Subsequent tests will verify the correct explosion and MaxDepth.
 ===JSON===
 
 { "updatedRows" : [
 
-  { "parentId" :  "1", "childId" :  "4", "quantityPer" :  "1.00", "activityState" :  "INSERT" },
-  { "parentId" :  "1", "childId" :  "6", "quantityPer" :  "2.00", "activityState" :  "INSERT" },
-  { "parentId" :  "1", "childId" :  "7", "quantityPer" :  "8.00", "activityState" :  "INSERT" },
-  { "parentId" :  "1", "childId" :  "8", "quantityPer" :  "4.00", "activityState" :  "INSERT" },
-  { "parentId" :  "1", "childId" :  "9", "quantityPer" :  "4.00", "activityState" :  "INSERT" },
+  { "parentId" :  "1", "childId" :  "4", "quantityPer" :  "1.00", "crudAction" :  "INSERT" },
+  { "parentId" :  "1", "childId" :  "6", "quantityPer" :  "2.00", "crudAction" :  "INSERT" },
+  { "parentId" :  "1", "childId" :  "7", "quantityPer" :  "8.00", "crudAction" :  "INSERT" },
+  { "parentId" :  "1", "childId" :  "8", "quantityPer" :  "4.00", "crudAction" :  "INSERT" },
+  { "parentId" :  "1", "childId" :  "9", "quantityPer" :  "4.00", "crudAction" :  "INSERT" },
 
-  { "parentId" :  "2", "childId" :  "14", "quantityPer" :  "0.25", "activityState" :  "INSERT" },
+  { "parentId" :  "2", "childId" :  "14", "quantityPer" :  "0.25", "crudAction" :  "INSERT" },
 
-  { "parentId" :  "3", "childId" :  "11", "quantityPer" :  "2.00", "activityState" :  "INSERT" },
-  { "parentId" :  "3", "childId" :  "12", "quantityPer" :  "2.00", "activityState" :  "INSERT" },
-  { "parentId" :  "3", "childId" :  "5", "quantityPer" :  "1.00", "activityState" :  "INSERT" },
-  { "parentId" :  "3", "childId" :  "9", "quantityPer" :  "2.00", "activityState" :  "INSERT" },
+  { "parentId" :  "3", "childId" :  "11", "quantityPer" :  "2.00", "crudAction" :  "INSERT" },
+  { "parentId" :  "3", "childId" :  "12", "quantityPer" :  "2.00", "crudAction" :  "INSERT" },
+  { "parentId" :  "3", "childId" :  "5", "quantityPer" :  "1.00", "crudAction" :  "INSERT" },
+  { "parentId" :  "3", "childId" :  "9", "quantityPer" :  "2.00", "crudAction" :  "INSERT" },
 
-  { "parentId" :  "5", "childId" :  "17", "quantityPer" :  "1.5", "activityState" :  "INSERT" },
+  { "parentId" :  "5", "childId" :  "17", "quantityPer" :  "1.5", "crudAction" :  "INSERT" },
 
-  { "parentId" :  "4", "childId" :  "15", "quantityPer" :  "1", "activityState" :  "INSERT" },
-  { "parentId" :  "4", "childId" :  "16", "quantityPer" :  "1", "activityState" :  "INSERT" },
-  { "parentId" :  "4", "childId" :  "5", "quantityPer" :  "1", "activityState" :  "INSERT" },
-  { "parentId" :  "4", "childId" :  "7", "quantityPer" :  "2", "activityState" :  "INSERT" },
-  { "parentId" :  "4", "childId" :  "9", "quantityPer" :  "2", "activityState" :  "INSERT" },
-  { "parentId" :  "4", "childId" :  "10", "quantityPer" :  "2", "activityState" :  "INSERT" },
-  { "parentId" :  "4", "childId" :  "18", "quantityPer" :  "1", "activityState" :  "INSERT" }
+  { "parentId" :  "4", "childId" :  "15", "quantityPer" :  "1", "crudAction" :  "INSERT" },
+  { "parentId" :  "4", "childId" :  "16", "quantityPer" :  "1", "crudAction" :  "INSERT" },
+  { "parentId" :  "4", "childId" :  "5", "quantityPer" :  "1", "crudAction" :  "INSERT" },
+  { "parentId" :  "4", "childId" :  "7", "quantityPer" :  "2", "crudAction" :  "INSERT" },
+  { "parentId" :  "4", "childId" :  "9", "quantityPer" :  "2", "crudAction" :  "INSERT" },
+  { "parentId" :  "4", "childId" :  "10", "quantityPer" :  "2", "crudAction" :  "INSERT" },
+  { "parentId" :  "4", "childId" :  "18", "quantityPer" :  "1", "crudAction" :  "INSERT" }
 
 ] }

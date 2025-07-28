@@ -7,10 +7,10 @@ be assigned to orders.l
 
 === JSON ===
 { "rows" : [
-    {  "activityState" : "INSERT", "itemId" : "1", "quantityOrdered" : "1", "quantityAssigned" : "0.0",
+    {  "crudAction" : "INSERT", "itemId" : "1", "quantityOrdered" : "1", "quantityAssigned" : "0.0",
         "startDate" : "2025-0701", "completeDate" : "", "orderState" : "PLANNED",
         "orderType" : "MODET" },
-    {  "activityState" : "INSERT",  "itemId" : "2", "quantityOrdered" : "1", "quantityAssigned" : "0.0",
+    {  "crudAction" : "INSERT",  "itemId" : "2", "quantityOrdered" : "1", "quantityAssigned" : "0.0",
                 "startDate" : "2025-0701", "completeDate" : "", "orderState" : "PLANNED",
                 "orderType" : "MODET" }
 ] }

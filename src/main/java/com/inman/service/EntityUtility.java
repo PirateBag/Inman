@@ -1,6 +1,6 @@
 package com.inman.service;
 
-import com.inman.entity.ActivityState;
+import enums.CrudAction;
 import com.inman.entity.EntityMaster;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,9 +33,9 @@ public class EntityUtility {
             }
 
 
-            switch (correspondingChange.getActivityState()) {
+            switch (correspondingChange.getCrudAction()) {
                 default:
-                    message = "Found a baseline entity with an unexpected activityState: " + baselineEntity.getId();
+                    message = "Found a baseline entity with an unexpected CrudAction: " + baselineEntity.getId();
                     logger.error(message);
                     throw new RuntimeException(message);
                 case NONE:
@@ -59,7 +59,7 @@ public class EntityUtility {
         //  Add in the changes that are inserts.
         for ( var change : changes ) {
             var copy = change.copy( change );
-            if ( change.getActivityState() == ActivityState.INSERT ) {
+            if ( change.getCrudAction() == CrudAction.INSERT ) {
                 logger.info("Inserting :{}", copy.getId());
                 listOfMergedEntities.add( change.copy( change ) );
             }
@@ -67,13 +67,13 @@ public class EntityUtility {
 
 
         var rValue = listOfMergedEntities.toArray(new EntityMaster[0]);
-        setAllActivityStateToNone( rValue );
+        setAllCrudActionToNone( rValue );
         return rValue;
     }
 
-    public static void setAllActivityStateToNone( EntityMaster[] entityMasters ) {
+    public static void setAllCrudActionToNone( EntityMaster[] entityMasters ) {
         for (var entityMaster : entityMasters ) {
-            entityMaster.setActivityState(ActivityState.NONE);
+            entityMaster.setCrudAction(CrudAction.NONE);
         }
     }
 
@@ -91,7 +91,7 @@ public class EntityUtility {
 
     public static boolean allAreActivityNone(EntityMaster[] source) {
         for ( var sourceElement : source ) {
-            if ( sourceElement.getActivityState() != ActivityState.NONE )
+            if ( sourceElement.getCrudAction() != CrudAction.NONE )
                 return false;
         }
     return true;

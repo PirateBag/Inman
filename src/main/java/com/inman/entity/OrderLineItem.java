@@ -2,6 +2,8 @@ package com.inman.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inman.service.ReflectionHelpers;
+import enums.OrderState;
+import enums.OrderType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import org.jetbrains.annotations.NotNull;
@@ -36,7 +38,7 @@ public class OrderLineItem extends EntityMaster {
 
 	public OrderLineItem( OrderLineItem orderLineItem ) {
 		this.id = orderLineItem.getId();
-		this.activityState = orderLineItem.getActivityState();
+		this.crudAction = orderLineItem.getCrudAction();
 		this.itemId = orderLineItem.getItemId();
 		this.quantityOrdered = orderLineItem.getQuantityOrdered();
 		this.quantityAssigned = orderLineItem.getQuantityAssigned();
@@ -103,12 +105,12 @@ public class OrderLineItem extends EntityMaster {
 
 	public String toString() {
 		return String.format( formatter,id, itemId, parentOliId, quantityOrdered, quantityAssigned,
-				startDate, completeDate, orderState, orderType, activityState );
+				startDate, completeDate, orderState, orderType, crudAction );
 	}
 
 	public String toStringWithSignedQuantity() {
 		return String.format( formatter,id, itemId, parentOliId, getEffectiveQuantityOrdered(), quantityAssigned,
-				startDate, completeDate, orderState, orderType, activityState );
+				startDate, completeDate, orderState, orderType, crudAction);
 	}
 
 	public long getParentOliId() {

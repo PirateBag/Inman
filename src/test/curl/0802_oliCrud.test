@@ -8,7 +8,7 @@ When both dates are ommitted, vomit.
 ===JSON===
 
 { "rows" : [
-        {  "activityState" : "INSERT",  "itemId" : "5", "parentOliId" : "0", "quantityOrdered" : "6", "quantityAssigned" : "0.0",
+        {  "crudAction" : "INSERT",  "itemId" : "5", "parentOliId" : "0", "quantityOrdered" : "6", "quantityAssigned" : "0.0",
         "startDate" : "2025-0901", "completeDate" : "2025-0913",  "orderState" : "OPEN",
         "orderType" : "MOHEAD" }
 ] }
