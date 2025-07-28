@@ -11,7 +11,12 @@ import jakarta.persistence.Table;
 @Table( name = "Adjustment"  )
 public class Adjustment extends EntityMaster {
 
-    private double adjustment;
+    public static final String HEADER_FORMAT =       "%8s -6s  -6s  %-4s  %9s  %4s";
+    public static final String LINE_FORMAT = "%8.2f  6d  6d  %4s  %9s  %4s ";
+    public static final String HEADDER = String.format( HEADER_FORMAT, "Amount", "Item", "Order", "Type", "Date", "AdTp" );
+
+
+    private double amount;
     private long itemId;
 
     private long orderId;
@@ -19,8 +24,8 @@ public class Adjustment extends EntityMaster {
     private String effectiveDate;  /* YYYY-MMDD */
     private AdjustmentType adjustmentType;
 
-    public Adjustment(double adjustment, long itemId, long orderId, OrderType orderType, String effectiveDate, AdjustmentType adjustmentType) {
-        this.adjustment = adjustment;
+    public Adjustment(double amount, long itemId, long orderId, OrderType orderType, String effectiveDate, AdjustmentType adjustmentType) {
+        this.amount = amount;
         this.itemId = itemId;
         this.orderId = orderId;
         this.orderType = orderType;
@@ -29,13 +34,13 @@ public class Adjustment extends EntityMaster {
         validate();
     }
 
-    public Adjustment() {
-
+    public String toString() {
+        return String.format( LINE_FORMAT, amount, itemId, orderId, orderType, effectiveDate, adjustmentType );
     }
 
     @JsonIgnore
     public void validate() {
-        if ( adjustment == 0.0 ) { throw new IllegalArgumentException( "Adjustment cannot be zero" ); }
+        if ( amount == 0.0 ) { throw new IllegalArgumentException( "Adjustment cannot be zero" ); }
         if ( itemId < 0 ) { throw new IllegalArgumentException( "ItemId cannot be negative" ); }
 
         if ( orderId < 0 && adjustmentType == AdjustmentType.XFER ) { throw new IllegalArgumentException( "OrderId cannot be negative when adjustment type is XFER" ); }
@@ -66,8 +71,8 @@ public class Adjustment extends EntityMaster {
         return itemId;
     }
 
-    public double getAdjustment() {
-        return adjustment;
+    public double getAmount() {
+        return amount;
     }
 
     public void validation() {

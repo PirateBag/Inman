@@ -48,10 +48,11 @@ CREATE TABLE IF NOT EXISTS order_line_Item (
 
 CREATE TABLE IF NOT EXISTS adjustment (
     id int auto_increment,
-    item_id int,
+    amount number( 12,2),
+    item_id int not null,
     order_id int,
     order_type varchar(5),
-    effective_date varchar( 10 ),
-    adjustment_type varchar(4),
+    effective_date varchar( 10 ) not null,
+    adjustment_type varchar(4) not null,
     CONSTRAINT PK_ADJUSTMENT PRIMARY KEY ( ID ) );
 

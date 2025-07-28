@@ -1,0 +1,42 @@
+package com.inman.controller;
+
+import com.inman.entity.Adjustment;
+import com.inman.model.request.AdjustmentCrudRequest;
+import com.inman.model.request.GenericSingleId;
+import com.inman.model.response.AdjustmentCrudResponse;
+import com.inman.model.response.ResponseType;
+import com.inman.model.response.TextResponse;
+import com.inman.model.rest.ErrorLine;
+import com.inman.service.AdjustmentService;
+import com.inman.service.AutomatedPlanningService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@Configuration
+@RestController
+public class AdjustmentController {
+    public final static String ADJUSTEMENT_CRUDD = "adjustment/crud";
+    Logger logger = LoggerFactory.getLogger(AdjustmentController.class);
+    AdjustmentService adjustmentService;
+
+
+    public AdjustmentController( AdjustmentService adjustmentService ) {
+        this.adjustmentService = adjustmentService;
+    }
+
+
+    @CrossOrigin
+    @RequestMapping(value = ADJUSTEMENT_CRUDD, method = RequestMethod.POST)
+    public ResponseEntity<?> apBasic (@RequestBody AdjustmentCrudRequest adjustmentCrudRequest  ) {
+        AdjustmentCrudResponse responsePackage = new AdjustmentCrudResponse();
+
+        adjustmentService.crud( adjustmentCrudRequest, responsePackage);
+        return ResponseEntity.badRequest().body( responsePackage );
+    }
+
+}
+

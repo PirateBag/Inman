@@ -1,6 +1,9 @@
 package com.inman.controller;
 
+import com.inman.model.response.ResponsePackage;
+import com.inman.model.rest.ErrorLine;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import java.time.LocalDate;
@@ -43,4 +46,16 @@ public class Utility {
         }
         return true;
     }
+
+    public static void outputInfo(String message, ResponsePackage<?> responsePackage, Logger logger) {
+        logger.info(message);
+        responsePackage.getErrors().add(new ErrorLine(1, message));
+    }
+
+    public static void outputErrorAndThrow(String message, ResponsePackage<?> responsePackage, Logger logger) {
+        logger.info(message);
+        responsePackage.getErrors().add(new ErrorLine(1, message));
+        throw new RuntimeException(message);
+    }
+
 }

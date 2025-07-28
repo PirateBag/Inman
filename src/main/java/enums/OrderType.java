@@ -1,5 +1,5 @@
 package enums;
 
 public enum OrderType {
-    PO, MODET, MOHEAD
+    PO, MODET, MOHEAD, NA
 }
