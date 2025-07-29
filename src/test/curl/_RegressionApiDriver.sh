@@ -33,14 +33,17 @@ declare -a tests=(
   "0311_ItemPickListForBom;itemPick/itemsForBom"
 
 #Test Create/Replace/Update on Items.
-  # Insert a new item W-101.
-  "0401_ItemInsertPositive;item/crud"
+  # Insert a new item W-101, but with a lead time of 0.  Should be an error.
+  "0401_ItemInsert_LeadTime;item/crud"
+
+  # Same as 0401, but with a lead time of 10.
+  "0402_ItemInsertPositive;item/crud"
+
   # Change W-101.
   "0403_ItemChangePositive;item/crud"
 
   # Report all items...
   "0405_ItemReportWithW-101;itemReport/showAllItems"
-
 
   # Remove W-001 item, and re-run original report.
   "0407_ItemDeletePositive;item/crud"

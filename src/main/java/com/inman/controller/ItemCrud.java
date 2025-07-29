@@ -15,6 +15,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.inman.controller.Messages.*;
+import static com.inman.controller.Utility.*;
+
 @Configuration
 @RestController
 public class ItemCrud {
@@ -26,12 +29,59 @@ public class ItemCrud {
     @Autowired
     ItemRepository itemRepository;
 
-    public ItemCrudBatchResponse go( ItemCrudBatch itemCrudBatch) {
-        ItemCrudBatchResponse itemCrudBatchResponse = new ItemCrudBatchResponse();
+    public void validateItemBasedOnAction( Item item, ItemCrudBatchResponse itemCrudBatchResponse ) {
+
+        if (  item.getCrudAction() == CrudAction.CHANGE || item.getCrudAction() == CrudAction.DELETE  ) {
+            if ( item.getId() < 1L && normalize( item.getSummaryId() ).length() < 3 ) {
+                outputErrorAndThrow( String.format( ID_OR_SUMMARYID_FOR_CHANGE, item.getId(), normalize( item.getSummaryId())),
+                        itemCrudBatchResponse, logger );
+            }
+        } else if ( item.getCrudAction() == CrudAction.INSERT && item.getId() != 0L ) {
+            outputErrorAndThrow( "Id must be zero for inserts.", itemCrudBatchResponse, logger );
+        }
+
+        if ( item.getCrudAction() == CrudAction.CHANGE
+        || item.getCrudAction() == CrudAction.INSERT ) {
+            if ( item.getSummaryId() == null || item.getSummaryId().length() < 3 ) {
+                outputErrorAndThrow( "Item summary null or too short", itemCrudBatchResponse, logger  );
+            }
+
+            if ( item.getDescription() == null || item.getDescription().length() < 3 ) {
+                outputErrorAndThrow( "Item description null or too short", itemCrudBatchResponse, logger );
+            }
+
+            item.setSourcing( Utility.normalize( item.getSourcing() ).toUpperCase() );
+            if ( !( item.getSourcing().equalsIgnoreCase( Item.SOURCE_PUR) || item.getSourcing().equalsIgnoreCase( Item.SOURCE_MAN ) ) ) {
+                outputErrorAndThrow( "Sourcing must be PUR or MAN", itemCrudBatchResponse, logger  );
+            }
+            /*  Need to think about these more.  maxDepth might be a pass through.
+            private int maxDepth = 0;
+            private double quantityOnHand;
+            private double minimumOrderQuantity;
+             */
+
+            if ( item.getLeadTime() < 1 ) {
+                outputErrorAndThrow( String.format( Messages.LEAD_TIME_LESS_THAN_1, item.getId(), item.getLeadTime() ),
+                        itemCrudBatchResponse, logger  );
+            }
+        }
+
+        if ( item.getCrudAction() != CrudAction.INSERT &&
+                item.getUnitCost() != 0.0 && item.getSourcing().equalsIgnoreCase( Item.SOURCE_MAN ) ) {
+            outputErrorAndThrow( "Unit cost must be zero when you insert a manufactured item", itemCrudBatchResponse, logger );
+        }
+    }
+
+    public ItemCrudBatchResponse go( ItemCrudBatch itemCrudBatch, ItemCrudBatchResponse itemCrudBatchResponse ) {
+        if ( Application.getTestName().contains( "XXX")) {
+            logger.info( "You are now 0403");
+        }
 
         for (Item itemCrudToBeCrud : itemCrudBatch.updatedRows()) {
 
             logger.info("{} on {}", itemCrudToBeCrud.getCrudAction(), itemCrudToBeCrud);
+
+            validateItemBasedOnAction(itemCrudToBeCrud, itemCrudBatchResponse);
 
             if (itemCrudToBeCrud.getCrudAction() == CrudAction.INSERT) {
                 insertItem(itemCrudToBeCrud, itemCrudBatchResponse);
@@ -69,23 +119,22 @@ public class ItemCrud {
             itemCrudBatchResponse.addError(error);
         }
     }
-private void changeItem(Item itemCrudToBeCrud,
+private void changeItem(Item updatedItem,
                         ItemCrudBatchResponse itemCrudBatchResponse) {
-    String message;
-     try {
-        var itemToBeModified = itemRepository.findBySummaryId(itemCrudToBeCrud.getSummaryId());
-        if (itemToBeModified == null) {
-            message = "Item " + itemCrudToBeCrud.getSummaryId() + " not found.";
-            itemCrudBatchResponse.getErrors().add(new ErrorLine(1, message));
-            logger.error(message);
-        } else {
 
-            itemRepository.save(itemToBeModified);
+        var priorItem = itemRepository.findBySummaryId(updatedItem.getSummaryId());
 
-            itemCrudBatchResponse.getData().add( itemToBeModified);
+        if (priorItem == null) {
+            outputErrorAndThrow( String.format( SUMMARY_ID_NOT_FOUND, updatedItem.getSummaryId() ), itemCrudBatchResponse, logger );
         }
+        if ( updatedItem.getId() != priorItem.getId() ) {
+            outputErrorAndThrow( String.format(  ITEM_IDS_MUST_BE_SAME, updatedItem.getId(), priorItem.getId() ), itemCrudBatchResponse, logger );
+        }
+        try {
+        itemRepository.save(updatedItem);
+        itemCrudBatchResponse.getData().add( updatedItem);
         } catch(Exception exception){
-            var error = translateExceptionToError(exception, itemCrudToBeCrud);
+            var error = translateExceptionToError(exception, updatedItem);
             itemCrudBatchResponse.addError(error);
         }
     }
@@ -144,15 +193,28 @@ private void changeItem(Item itemCrudToBeCrud,
     @CrossOrigin
     @RequestMapping(value = ItemCrudRequestURL, method = RequestMethod.POST)
     public ResponseEntity<?> itemCrudRequest(@RequestBody ItemCrudBatch itemCrudBatch) {
-        ItemCrudBatchResponse itemCrudBatchResponse = go( itemCrudBatch );
-        itemCrudBatchResponse.setResponseType(ResponseType.MULTILINE );
-        if (itemCrudBatchResponse.getData().isEmpty()) {
-            var message = "No items were processed, either due to errors or no actionable inputs.";
-            logger.info(message);
-            itemCrudBatchResponse.getErrors().add(new ErrorLine(1, message));
+
+        ItemCrudBatchResponse itemCrudBatchResponse = new ItemCrudBatchResponse();
+        try {
+            itemCrudBatchResponse = go(itemCrudBatch, itemCrudBatchResponse );
+            itemCrudBatchResponse.setResponseType(ResponseType.MULTILINE );
+            if (itemCrudBatchResponse.getData().isEmpty()) {
+                var message = "No items were processed, either due to errors or no actionable inputs.";
+                logger.info(message);
+                itemCrudBatchResponse.getErrors().add(new ErrorLine(1, message));
+            }
+        } catch (Exception exception) {
+            logger.info( exception.getMessage());
         }
         return ResponseEntity.ok().body(itemCrudBatchResponse);
+//        if (itemCrudBatchResponse.getData().isEmpty()) {
+//            var message = "No items were processed, either due to errors or no actionable inputs.";
+//            logger.info(message);
+//            itemCrudBatchResponse.getErrors().add(new ErrorLine(1, message));
+//        }
+        //  return ResponseEntity.ok().body(itemCrudBatchResponse);
     }
+
 
     public ItemCrud( @Autowired ItemRepository itemRepository ) {
         this.itemRepository = itemRepository;

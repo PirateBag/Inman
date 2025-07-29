@@ -5,11 +5,11 @@
     "id" : 19,
     "crudAction" : "NONE",
     "summaryId" : "W-101",
-    "description" : "Purple Wagon",
-    "unitCost" : 2.0,
+    "description" : "Blue Wagon",
+    "unitCost" : 1.0,
     "sourcing" : "PUR",
     "maxDepth" : 0,
-    "leadTime" : 5,
+    "leadTime" : 10,
     "quantityOnHand" : 0.0,
     "minimumOrderQuantity" : 0.0
   } ]

@@ -53,7 +53,7 @@ public class Utility {
     }
 
     public static void outputErrorAndThrow(String message, ResponsePackage<?> responsePackage, Logger logger) {
-        logger.info(message);
+        logger.error(message);
         responsePackage.getErrors().add(new ErrorLine(1, message));
         throw new RuntimeException(message);
     }
