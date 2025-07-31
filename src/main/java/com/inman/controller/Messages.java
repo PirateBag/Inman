@@ -18,4 +18,6 @@ public class Messages {
     public static final String QUANTITY_ORDERED_GT_0 = "Order quantity (%8.2f) for Item (%s) must be more than zero";
 
     public static final String QUANTITY_ASSIGNED_NON_0 = "Order assigned (%8.2f) for Item (%s) must be more than zero";
+
+    public static final String NO_DATA_TO_REPORT = "No data (%s) to report";
 }

@@ -222,6 +222,7 @@ declare -a tests=(
 
     # Item Adjustements...
     "0901_adjust;adjustment/crud"
+    "0903_adjustReportAll;adjustment/reportAll"
    )
 #   "stopTesting" \
 declare -i passed=0

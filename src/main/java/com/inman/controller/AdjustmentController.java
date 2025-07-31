@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class AdjustmentController {
     public final static String ADJUSTEMENT_CRUDD = "adjustment/crud";
+    public final static String ADJUSTEMENT_REPORT_ALL = "adjustment/reportAll";
     Logger logger = LoggerFactory.getLogger(AdjustmentController.class);
     AdjustmentService adjustmentService;
 
@@ -34,6 +35,16 @@ public class AdjustmentController {
 
         adjustmentService.crud( adjustmentCrudRequest, responsePackage);
         return ResponseEntity.badRequest().body( responsePackage );
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = ADJUSTEMENT_REPORT_ALL, method = RequestMethod.POST )
+    public ResponseEntity<?> apBasic (@RequestBody GenericSingleId genericSingleId  ) {
+        TextResponse textResponse = new TextResponse();
+
+        adjustmentService.reportAll(genericSingleId.getIdToSearchFor(), textResponse );
+
+        return ResponseEntity.badRequest().body( textResponse );
     }
 
 }
