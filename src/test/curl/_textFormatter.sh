@@ -1,5 +1,5 @@
 #!/bin/bash
-grep message | sed s/\"message\"\ \:// | sed s/\ \ \ \ \"// |
+grep message | sed s/\"message\"\ \:// | sed s/\ \ \ \ \"//
 
 #
 #if [[ -z $1 ]]; then

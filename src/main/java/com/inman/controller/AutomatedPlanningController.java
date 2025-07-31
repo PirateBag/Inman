@@ -25,7 +25,7 @@ public class AutomatedPlanningController {
     @RequestMapping(value = AutomatedPlan_Url, method = RequestMethod.POST)
     public ResponseEntity<?> apBasic (@RequestBody GenericSingleId genericSingleId  ) {
         TextResponse responsePackage = new TextResponse();
-
+        responsePackage.setResponseType( ResponseType.MULTILINE );
         processPlanning( genericSingleId, responsePackage);
         return ResponseEntity.badRequest().body( responsePackage );
     }
@@ -35,6 +35,8 @@ public class AutomatedPlanningController {
     public ResponseEntity<?> apInventoryBalanceProjection (@RequestBody GenericSingleId genericSingleId  ) {
         TextResponse responsePackage = new TextResponse();
 
+        responsePackage.setResponseType( ResponseType.MULTILINE );
+
         automatedPlanningService.inventoryBalanceProjection( genericSingleId, responsePackage);
         return ResponseEntity.badRequest().body( responsePackage );
     }
@@ -43,6 +45,7 @@ public class AutomatedPlanningController {
     @RequestMapping(value = InventoryBalanceProjection, method = RequestMethod.GET)
     public ResponseEntity<?> apInventoryBalanceProjectionForGet (  @RequestParam int idToSearchFor) {
         TextResponse responsePackage = new TextResponse();
+        responsePackage.setResponseType( ResponseType.MULTILINE );
 
         GenericSingleId genericSingleId = new GenericSingleId((long) idToSearchFor);
 

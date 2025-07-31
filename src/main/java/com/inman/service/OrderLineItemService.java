@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.*;
 
+import static com.inman.controller.Messages.*;
 import static com.inman.service.ReflectionHelpers.compareObjects;
 import static com.inman.controller.OrderLineItemController.OrderLineItem_AllOrders;
 import static com.inman.controller.Utility.*;
@@ -72,9 +73,8 @@ public class OrderLineItemService {
                 orderLineItem.setCompleteDate( derviedStartOrCompleted.format(DATE_FORMATTER));
                 logger.info("Derived completeDate from Start plus lead time." );
             }
-            if (validateOrderLineItemForMOInsertion(orderLineItem, oliResponse, item) > 0) {
-                outputInfo("Validation on " + orderLineItem + " failed", oliResponse);
-            }
+
+            validateOrderLineItemForMOInsertion(orderLineItem, oliResponse, item);
 
             updatedOrderLineItem = orderLineItemRepository.save(orderLineItem);
             logger.info("inserted adjusted: {}", updatedOrderLineItem);
@@ -289,32 +289,42 @@ public class OrderLineItemService {
     }
 
 
-    public int validateOrderLineItemForMOInsertion(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse, Item item) {
-        int numberOfMessages = 0;
-        if (item == null) {
-            outputInfo("Order references Item " + orderLineItem.getItemId() + " that cannot be found", oliResponse);
-            numberOfMessages++;
+    /**
+     * Validate a proposed MORDER for creation.
+     *
+     * @param orderLineItem
+     * @param oliResponse
+     * @param item
+     *
+     * Throws errors and logs as needed.
+     */
+    public void validateOrderLineItemForMOInsertion(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse, Item item ) {
 
-            //  Empty Item will break other tests.  Proceed no further.
-            return numberOfMessages;
+        if (item == null) {
+            Utility.outputErrorAndThrow( String.format( ORDER_ITEM_REF_NOT_FOUND, orderLineItem.getItemId() ), oliResponse, logger );
         }
 
-        if (item.getSourcing( ).compareTo(Item.SOURCE_MAN) != 0) {
-            outputInfo("Item is is not MANufactured: " + item, oliResponse);
-            numberOfMessages++;
+        //  Any type of item can appear as a MODET...
+        if ( orderLineItem.getOrderType() != OrderType.MODET ) {
+
+            //  But you can only put MAN items in a MOHEAD...
+            if (item.getSourcing().equals(Item.SOURCE_MAN) && orderLineItem.getOrderType() != OrderType.MOHEAD) {
+                Utility.outputErrorAndThrow(String.format(ITEM_MANUFACTURED, item.getSummaryId()), oliResponse, logger);
+            }
+
+            //  Or purchased items in a PO...
+            if (item.getSourcing().equals(Item.SOURCE_PUR) && orderLineItem.getOrderType() != OrderType.PO) {
+                Utility.outputErrorAndThrow(String.format(ITEM_PURCHASED, item.getSummaryId()), oliResponse, logger);
+            }
         }
 
         if (orderLineItem.getQuantityOrdered() <= 0.0) {
-            outputInfo("Order Quantity " + orderLineItem + " must be greater than 0.", oliResponse);
-            numberOfMessages++;
+           Utility.outputErrorAndThrow( String.format( QUANTITY_ORDERED_GT_0, orderLineItem.getQuantityOrdered(), item.getSummaryId() ), oliResponse, logger );
         }
 
         if (orderLineItem.getQuantityAssigned() != 0.0) {
-            outputInfo("Quantity Assigned must be zero.", oliResponse);
-            numberOfMessages++;
+            Utility.outputErrorAndThrow( String.format( QUANTITY_ASSIGNED_NON_0, orderLineItem.getQuantityOrdered(), item.getSummaryId() ), oliResponse, logger );
         }
-
-        return numberOfMessages;
     }
 
     /**

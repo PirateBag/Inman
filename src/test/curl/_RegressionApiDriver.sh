@@ -171,56 +171,48 @@ declare -a tests=(
 #    Create one orders for W-005 (which has one component, W-017)
     "0802_oliCrud;oli/crud"
 
+    # Plan all items, for which there is only those items related to
+    # order 1 building W-005.
     "0803_ap;ap/basic"
 
+    # Create more orders for W-005 over time...
+    # The prior PO purchjase for W-017 has been retained, but until we plan,
+    # there is a shortfall.
     "0804_oliCrud;oli/crud"
+#    1    5        0     6.00     0.00  2025-0901  2025-0913 OPEN MOHEAD NONE"
+#    4    5        0   500.00     0.00  2025-0911  2025-0915 OPEN MOHEAD NONE"
+#    6    5        0  1000.00     0.00  2025-1011  2025-1015 OPEN MOHEAD NONE"
+#    8    5        0  1500.00     0.00  2025-1111  2025-1115 OPEN MOHEAD NONE"
+#   10    5        0    50.00     0.00  2025-1211  2025-1215 OPEN MOHEAD NONE"
+#    3   17        0  1000.00     0.00  2025-0823  2025-0828 OPEN     PO NONE"
+#    2   17        1     9.00     0.00  2025-0828  2025-0901 OPEN  MODET NONE"
+#    5   17        4   750.00     0.00  2025-0907  2025-0911 OPEN  MODET NONE"
+#    7   17        6  1500.00     0.00  2025-1007  2025-1011 OPEN  MODET NONE"
+#    9   17        8  2250.00     0.00  2025-1107  2025-1111 OPEN  MODET NONE"
+#   11   17       10    75.00     0.00  2025-1207  2025-1211 OPEN  MODET NONE"
 
+
+    # Plan the orders...This should be a matter of purchasing W-017 to meet
+    # the MODETs balance requirements...
     "0805_ap;ap/basic"
-#We have outstanding, open orders for W-005 and its single component W-017.
-#         "   1    5       0     6.00   0.00  2025-0901  2025-0913 OPEN MOHEAD NONE"
-#         "   3    5       0   500.00   0.00  2025-0911  2025-0915 OPEN MOHEAD NONE"
-#         "   5    5       0  1000.00   0.00  2025-1011  2025-1015 OPEN MOHEAD NONE"
-#         "   7    5       0  1500.00   0.00  2025-1111  2025-1115 OPEN MOHEAD NONE"
-#         "   9    5       0    50.00   0.00  2025-1211  2025-1215 OPEN MOHEAD NONE"
-#         "   2   17       1  1000.00   0.00  2025-0827  2025-0901 OPEN     PO NONE"
-#         "   4   17       3   750.00   0.00  2025-0911  2025-0915 OPEN  MODET NONE"
-#         "   6   17       5  1250.00   0.00  2025-1006  2025-1011 OPEN     PO NONE"
-#         "   8   17       7  2250.00   0.00  2025-1106  2025-1111 OPEN     PO NONE"
-#         "  10   17       9  1000.00   0.00  2025-1206  2025-1211 OPEN     PO NONE"
+#    1    5        0     6.00     0.00  2025-0901  2025-0913 OPEN MOHEAD NONE"
+#    4    5        0   500.00     0.00  2025-0911  2025-0915 OPEN MOHEAD NONE"
+#    6    5        0  1000.00     0.00  2025-1011  2025-1015 OPEN MOHEAD NONE"
+#    8    5        0  1500.00     0.00  2025-1111  2025-1115 OPEN MOHEAD NONE"
+#   10    5        0    50.00     0.00  2025-1211  2025-1215 OPEN MOHEAD NONE"
+#    3   17        0  1000.00     0.00  2025-0823  2025-0828 OPEN     PO NONE"
+#    2   17        1     9.00     0.00  2025-0828  2025-0901 OPEN  MODET NONE"
+#    5   17        4   750.00     0.00  2025-0907  2025-0911 OPEN  MODET NONE"
+#   12   17        0  1259.00     0.00  2025-1002  2025-1007 OPEN     PO NONE"
+#    7   17        6  1500.00     0.00  2025-1007  2025-1011 OPEN  MODET NONE"
+#   13   17        0  2250.00     0.00  2025-1102  2025-1107 OPEN     PO NONE"
+#    9   17        8  2250.00     0.00  2025-1107  2025-1111 OPEN  MODET NONE"
+#   14   17        0  1000.00     0.00  2025-1202  2025-1207 OPEN     PO NONE"
+#   11   17       10    75.00     0.00  2025-1207  2025-1211 OPEN  MODET NONE"
 
+  #Create four orders for W-003, which is slightly more complicated.
   "0806_oliCrud;oli/crud"
   "0807_oliReport;oli/showAll"
-#
-#       "  11    3       0   500.00   0.00  2025-0914  2025-0915 OPEN MOHEAD NONE"
-#       "  16    3       0  1000.00   0.00  2025-1014  2025-1015 OPEN MOHEAD NONE"
-#       "  21    3       0  1500.00   0.00  2025-1114  2025-1115 OPEN MOHEAD NONE"
-#       "  26    3       0    50.00   0.00  2025-1214  2025-1215 OPEN MOHEAD NONE"
-#       "   1    5       0     6.00   0.00  2025-0901  2025-0913 OPEN MOHEAD NONE"
-#       "   3    5       0   500.00   0.00  2025-0911  2025-0915 OPEN MOHEAD NONE"
-#       "  12    5      11   500.00   0.00  2025-0914  2025-0915 OPEN  MODET NONE"
-#       "   5    5       0  1000.00   0.00  2025-1011  2025-1015 OPEN MOHEAD NONE"
-#       "  17    5      16  1000.00   0.00  2025-1014  2025-1015 OPEN  MODET NONE"
-#       "   7    5       0  1500.00   0.00  2025-1111  2025-1115 OPEN MOHEAD NONE"
-#       "  22    5      21  1500.00   0.00  2025-1114  2025-1115 OPEN  MODET NONE"
-#       "   9    5       0    50.00   0.00  2025-1211  2025-1215 OPEN MOHEAD NONE"
-#       "  27    5      26    50.00   0.00  2025-1214  2025-1215 OPEN  MODET NONE"
-#       "  13    9      11  1000.00   0.00  2025-0914  2025-0915 OPEN  MODET NONE"
-#       "  18    9      16  2000.00   0.00  2025-1014  2025-1015 OPEN  MODET NONE"
-#       "  23    9      21  3000.00   0.00  2025-1114  2025-1115 OPEN  MODET NONE"
-#       "  28    9      26   100.00   0.00  2025-1214  2025-1215 OPEN  MODET NONE"
-#       "  14   11      11  1000.00   0.00  2025-0914  2025-0915 OPEN  MODET NONE"
-#       "  19   11      16  2000.00   0.00  2025-1014  2025-1015 OPEN  MODET NONE"
-#       "  24   11      21  3000.00   0.00  2025-1114  2025-1115 OPEN  MODET NONE"
-#       "  29   11      26   100.00   0.00  2025-1214  2025-1215 OPEN  MODET NONE"
-#       "  15   12      11  1000.00   0.00  2025-0914  2025-0915 OPEN  MODET NONE"
-#       "  20   12      16  2000.00   0.00  2025-1014  2025-1015 OPEN  MODET NONE"
-#       "  25   12      21  3000.00   0.00  2025-1114  2025-1115 OPEN  MODET NONE"
-#       "  30   12      26   100.00   0.00  2025-1214  2025-1215 OPEN  MODET NONE"
-#       "   2   17       1  1000.00   0.00  2025-0827  2025-0901 OPEN     PO NONE"
-#       "   4   17       3   750.00   0.00  2025-0911  2025-0915 OPEN  MODET NONE"
-#       "   6   17       5  1250.00   0.00  2025-1006  2025-1011 OPEN     PO NONE"
-#       "   8   17       7  2250.00   0.00  2025-1106  2025-1111 OPEN     PO NONE"
-#       "  10   17       9  1000.00   0.00  2025-1206  2025-1211 OPEN     PO NONE"
     "0808_ap;ap/basic"
     "0809_ibp;ap/inventoryBalanceProjection"
 
@@ -228,11 +220,12 @@ declare -a tests=(
     "0810_oliCrud;oli/crud"
     "0811_ap;ap/basic"
 
-# Item Adjustements...
+    # Item Adjustements...
     "0901_adjust;adjustment/crud"
    )
 #   "stopTesting" \
 declare -i passed=0
+
 declare -i failed=0
 declare -i newBaseLines=0
 
@@ -304,7 +297,7 @@ do
       passed+=1
     else
       printf  $TestResultFormat "$test" "failed"
-      echo ${curlDriver} ${testName} ${testService}
+      echo diff ${curlDriver} ${testName} ${testService}
       echo -e "${RED}diff $testName.actual $testName.expected${NC}"
       cat $testName.actual
       failed+=1

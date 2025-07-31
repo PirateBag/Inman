@@ -23,11 +23,9 @@ public class AdjustmentController {
     Logger logger = LoggerFactory.getLogger(AdjustmentController.class);
     AdjustmentService adjustmentService;
 
-
     public AdjustmentController( AdjustmentService adjustmentService ) {
         this.adjustmentService = adjustmentService;
     }
-
 
     @CrossOrigin
     @RequestMapping(value = ADJUSTEMENT_CRUDD, method = RequestMethod.POST)

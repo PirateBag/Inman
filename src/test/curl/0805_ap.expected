@@ -8,23 +8,7 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Opening Balance of 5.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0002: W-002,Red Wagon Body     0.00 MAN   1  10     0.00     1.00"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
@@ -32,23 +16,7 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0004: W-004,Rear Wheel Asmbly     0.00 MAN   1   1     0.00     1.00"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
@@ -56,23 +24,11 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0008: W-008,Threaded bolt     0.60 PUR   1   5     0.00   500.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
+    "message" : ""
   }, {
     "id" : 0,
     "crudAction" : "NONE",
@@ -92,19 +48,19 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "   3    5        0   500.00     0.00  2025-0911  2025-0915 OPEN MOHEAD NONE   506.00"
+    "message" : "   4    5        0   500.00     0.00  2025-0911  2025-0915 OPEN MOHEAD NONE   506.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "   5    5        0  1000.00     0.00  2025-1011  2025-1015 OPEN MOHEAD NONE  1506.00"
+    "message" : "   6    5        0  1000.00     0.00  2025-1011  2025-1015 OPEN MOHEAD NONE  1506.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "   7    5        0  1500.00     0.00  2025-1111  2025-1115 OPEN MOHEAD NONE  3006.00"
+    "message" : "   8    5        0  1500.00     0.00  2025-1111  2025-1115 OPEN MOHEAD NONE  3006.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "   9    5        0    50.00     0.00  2025-1211  2025-1215 OPEN MOHEAD NONE  3056.00"
+    "message" : "  10    5        0    50.00     0.00  2025-1211  2025-1215 OPEN MOHEAD NONE  3056.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
@@ -112,23 +68,7 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0009: W-009,Nut     0.17 PUR   2   6     0.00   500.00"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
@@ -136,23 +76,7 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0011: W-011,Front Wheel Bracket     0.95 PUR   2   2     0.00    50.00"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
@@ -160,23 +84,7 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0013: W-013,Wagon Body     2.25 PUR   2  20     0.00   100.00"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
@@ -184,23 +92,7 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0015: W-015,Rear Wheel bracket     1.00 PUR   2   4     0.00    50.00"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
@@ -208,23 +100,11 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0018: W-018,Carriage Bolt     0.17 PUR   2   3     0.00   500.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
+    "message" : ""
   }, {
     "id" : 0,
     "crudAction" : "NONE",
@@ -232,7 +112,7 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 5 open orders"
+    "message" : "Opening Balance of 0.0 and there are 6 open orders"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
@@ -240,34 +120,38 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "   2   17        1  1000.00     0.00  2025-0823  2025-0828 OPEN     PO NONE  1000.00"
+    "message" : "   3   17        0  1000.00     0.00  2025-0823  2025-0828 OPEN     PO NONE  1000.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "   4   17        3  -750.00     0.00  2025-0907  2025-0911 OPEN  MODET NONE   250.00"
+    "message" : "   2   17        1    -9.00     0.00  2025-0828  2025-0901 OPEN  MODET NONE   991.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "   6   17        5 -1500.00     0.00  2025-1007  2025-1011 OPEN  MODET NONE -1250.00"
+    "message" : "   5   17        4  -750.00     0.00  2025-0907  2025-0911 OPEN  MODET NONE   241.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "   6   17        5  1250.00     0.00       null  2025-1007 OPEN     PO INSERT"
+    "message" : "   7   17        6 -1500.00     0.00  2025-1007  2025-1011 OPEN  MODET NONE -1259.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "   8   17        7 -2250.00     0.00  2025-1107  2025-1111 OPEN  MODET NONE -2250.00"
+    "message" : "   0   17        0  1259.00     0.00       null  2025-1007 OPEN     PO INSERT     0.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "   8   17        7  2250.00     0.00       null  2025-1107 OPEN     PO INSERT"
+    "message" : "   9   17        8 -2250.00     0.00  2025-1107  2025-1111 OPEN  MODET NONE -2250.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "  10   17        9   -75.00     0.00  2025-1207  2025-1211 OPEN  MODET NONE   -75.00"
+    "message" : "   0   17        0  2250.00     0.00       null  2025-1107 OPEN     PO INSERT     0.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "  10   17        9  1000.00     0.00       null  2025-1207 OPEN     PO INSERT"
+    "message" : "  11   17       10   -75.00     0.00  2025-1207  2025-1211 OPEN  MODET NONE   -75.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "   0   17        0  1000.00     0.00       null  2025-1207 OPEN     PO INSERT   925.00"
   } ]
 }

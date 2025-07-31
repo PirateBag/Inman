@@ -1,14 +1,18 @@
 {
-  "responseType" : null,
+  "responseType" : "MULTILINE",
   "errors" : [ ],
   "data" : [ {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : ""
+  }, {
     "id" : 0,
     "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0005: W-005,Axle     0.00 MAN   2   4     0.00     1.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 9 open orders"
+    "message" : "Opening Balance of 0.0 and there are 12 open orders"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
@@ -20,34 +24,46 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "  12    5       11   494.00     0.00  2025-0909  2025-0913 OPEN MOHEAD NONE   500.00"
+    "message" : "  35    5        0   494.00     0.00  2025-0909  2025-0913 OPEN MOHEAD NONE   500.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "   3    5        0   500.00     0.00  2025-0911  2025-0915 OPEN MOHEAD NONE  1000.00"
+    "message" : "  16    5       15  -500.00     0.00  2025-0913  2025-0914 OPEN  MODET NONE     0.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "  17    5       16   500.00     0.00  2025-1009  2025-1013 OPEN MOHEAD NONE  1500.00"
+    "message" : "   4    5        0   500.00     0.00  2025-0911  2025-0915 OPEN MOHEAD NONE   500.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "   5    5        0  1000.00     0.00  2025-1011  2025-1015 OPEN MOHEAD NONE  2500.00"
+    "message" : "  37    5        0   500.00     0.00  2025-1009  2025-1013 OPEN MOHEAD NONE  1000.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "  22    5       21   500.00     0.00  2025-1109  2025-1113 OPEN MOHEAD NONE  3000.00"
+    "message" : "  21    5       20 -1000.00     0.00  2025-1013  2025-1014 OPEN  MODET NONE     0.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "   7    5        0  1500.00     0.00  2025-1111  2025-1115 OPEN MOHEAD NONE  4500.00"
+    "message" : "   6    5        0  1000.00     0.00  2025-1011  2025-1015 OPEN MOHEAD NONE  1000.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "  27    5       26   -50.00     0.00  2025-1213  2025-1214 OPEN  MODET NONE  4450.00"
+    "message" : "  39    5        0   500.00     0.00  2025-1109  2025-1113 OPEN MOHEAD NONE  1500.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "   9    5        0    50.00     0.00  2025-1211  2025-1215 OPEN MOHEAD NONE  4500.00"
+    "message" : "  26    5       25 -1500.00     0.00  2025-1113  2025-1114 OPEN  MODET NONE     0.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "   8    5        0  1500.00     0.00  2025-1111  2025-1115 OPEN MOHEAD NONE  1500.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  31    5       30   -50.00     0.00  2025-1213  2025-1214 OPEN  MODET NONE  1450.00"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "  10    5        0    50.00     0.00  2025-1211  2025-1215 OPEN MOHEAD NONE  1500.00"
   } ]
 }

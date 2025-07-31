@@ -8,23 +8,7 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Opening Balance of 5.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0002: W-002,Red Wagon Body     0.00 MAN   1  10     0.00     1.00"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
@@ -32,23 +16,7 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0004: W-004,Rear Wheel Asmbly     0.00 MAN   1   1     0.00     1.00"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
@@ -56,23 +24,11 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0008: W-008,Threaded bolt     0.60 PUR   1   5     0.00   500.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
+    "message" : ""
   }, {
     "id" : 0,
     "crudAction" : "NONE",
@@ -96,23 +52,7 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0009: W-009,Nut     0.17 PUR   2   6     0.00   500.00"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
@@ -120,23 +60,7 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0011: W-011,Front Wheel Bracket     0.95 PUR   2   2     0.00    50.00"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
@@ -144,23 +68,7 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0013: W-013,Wagon Body     2.25 PUR   2  20     0.00   100.00"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
@@ -168,23 +76,7 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0015: W-015,Rear Wheel bracket     1.00 PUR   2   4     0.00    50.00"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
@@ -192,23 +84,11 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
     "message" : "Inventory Analysis for 0018: W-018,Carriage Bolt     0.17 PUR   2   3     0.00   500.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Opening Balance of 0.0 and there are 0 open orders"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  Id Item ParentId  Ordered Assigned      Start   Complete Stat   Type Acti  Balance"
+    "message" : ""
   }, {
     "id" : 0,
     "crudAction" : "NONE",
@@ -228,6 +108,6 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "   2   17        1  1000.00     0.00       null  2025-0828 OPEN     PO INSERT"
+    "message" : "   0   17        0  1000.00     0.00       null  2025-0828 OPEN     PO INSERT   991.00"
   } ]
 }

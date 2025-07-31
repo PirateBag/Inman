@@ -15,8 +15,8 @@ import java.util.Map;
 @Entity
 @Table( name = "OrderLineItem"  )
 public class OrderLineItem extends EntityMaster {
-	public static String formatter = "%4d %4d %8d %8.2f %8.2f %10s %10s %4s %6s %4s";
-	public static String header = String.format( "%4s %4s %7s %8s %8s %10s %10s %4s %6s %4s",
+	public static String formatter = "%4d %4d %8d %8.2f %8.2f %10s %10s %4s %6s %-4.44s";
+	public static String header = String.format( "%4s %4s %7s %8s %8s %10s %10s %4s %6s %-4.4s",
 			"Id", "Item", "ParentId", "Ordered", "Assigned", "Start", "Complete", "Stat", "Type", "Acti");
 	public static Map<String, Field> fieldNames;
 

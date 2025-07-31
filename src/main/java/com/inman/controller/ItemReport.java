@@ -45,6 +45,22 @@ public class ItemReport {
         this.itemReportService = itemReportService;
     }
 
+
+    @CrossOrigin
+    @RequestMapping(value = ItemReportRequest.EXPLOSION_URL, method = RequestMethod.GET,
+            consumes = "application/json",
+            produces = "application/json")
+    private TextResponse handleItemExplosionRequestByGet() {
+
+        ItemReportRequest request = new ItemReportRequest();
+        List<String> cummulativeResponse = generateItemExplosionReport( 1L, null, 0);
+
+        TextResponse rValue = new TextResponse(cummulativeResponse.toArray(new String[0]));
+        rValue.setResponseType(ResponseType.QUERY);
+        return rValue;
+    }
+
+
     @CrossOrigin
     @RequestMapping(value = ItemReportRequest.EXPLOSION_URL, method = RequestMethod.POST,
             consumes = "application/json",
@@ -99,6 +115,8 @@ public class ItemReport {
 
         return cumulativeResponse;
     }
+
+
 
     @CrossOrigin
     @RequestMapping(value = ItemReportRequest.BOM_RECURSION_CHECK_URL, method = RequestMethod.POST,
