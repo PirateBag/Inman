@@ -1,0 +1,3 @@
+Create a single adjustement of one item against W-0001.
+=== JSON ===
+{ "rows" : [ { "amount" : "7.00", "itemId" : "1", "orderId" : "3", "orderType" : "PO", "effectiveDate" : "2025-0728", "adjustmentType" : "XFER", "crudAction" : "INSERT" } ] }

@@ -10,7 +10,9 @@ public class Messages {
 
     public static final String ITEM_IDS_MUST_BE_SAME = "Item Ids must be the same for change/delete (%d and %d)";
 
-    public static final String ORDER_ITEM_REF_NOT_FOUND = "Order item ref with refId (%d) not found";
+    public static final String ITEM_REF_NOT_FOUND = "%s item ref (%d) not found";
+
+    public static final String ORDER_REF_NOT_FOUND = "%s item ref (%d) not found";
 
     public static final String ITEM_MANUFACTURED = "Item (%s) is manufactured and can't be purchased.";
     public static final String ITEM_PURCHASED = "Item (%s) is purchased and cannot be manufactured.";
@@ -20,4 +22,8 @@ public class Messages {
     public static final String QUANTITY_ASSIGNED_NON_0 = "Order assigned (%8.2f) for Item (%s) must be more than zero";
 
     public static final String NO_DATA_TO_REPORT = "No data (%s) to report";
+
+    public static final String ILLEGAL_STATE = "Illegal state %s";
+
+    public static final String ADJUST_ORDER_TYPE = "ITEM adjustment can't have an order type.  XFER must have an order. ";
 }

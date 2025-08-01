@@ -223,6 +223,14 @@ declare -a tests=(
     # Item Adjustements...
     "0901_adjust;adjustment/crud"
     "0903_adjustReportAll;adjustment/reportAll"
+
+    # Order+Item Adjustments
+    "0905_adjustmentOrder;adjustment/crud"
+
+    #Verify the Item Quantity for W-001
+    "0907_itemMaster;itemReport/showAllItems"
+    "0909_oliReport;oli/showAll"
+
    )
 #   "stopTesting" \
 declare -i passed=0

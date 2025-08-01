@@ -301,7 +301,7 @@ public class OrderLineItemService {
     public void validateOrderLineItemForMOInsertion(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse, Item item ) {
 
         if (item == null) {
-            Utility.outputErrorAndThrow( String.format( ORDER_ITEM_REF_NOT_FOUND, orderLineItem.getItemId() ), oliResponse, logger );
+            Utility.outputErrorAndThrow( String.format( ITEM_REF_NOT_FOUND, "Order", orderLineItem.getItemId() ), oliResponse, logger );
         }
 
         //  Any type of item can appear as a MODET...
