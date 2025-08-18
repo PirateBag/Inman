@@ -141,6 +141,12 @@ public class AdjustmentService {
                     response, logger);
         }
 
+        if ( adjustment.getItemId() != orderLineItem.get().getItemId() ) {
+            outputErrorAndThrow( ORDER_AND_ADJUSTMENT_DISAGREE_ITEM.formatted(
+                    orderLineItem.get().getId(), orderLineItem.get().getItemId(), adjustment.getItemId() ),
+                    response, logger );
+        }
+
         if ( adjustment.getOrderType() == OrderType.NA ) {
             outputErrorAndThrow(ADJUST_ORDER_TYPE, response, logger);
         }

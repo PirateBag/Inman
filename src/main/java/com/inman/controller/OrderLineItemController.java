@@ -46,8 +46,8 @@ public class OrderLineItemController {
     @RequestMapping(value = OrderLineItem_ShowAll, method = RequestMethod.GET,
             consumes = "application/json",
             produces = "application/json" )
-    public ResponseEntity<?> OrderLineItem_ShowAll(  ) {
-        TextResponse textResponse = orderLineItemService.orderReport( -1  );
+    public ResponseEntity<?> OrderLineItem_ShowAll( @RequestParam long idToSearchFor  ) {
+        TextResponse textResponse = orderLineItemService.orderReport( idToSearchFor );
 
         textResponse.setResponseType(ResponseType.MULTILINE );
         if (textResponse.getData().isEmpty()) {

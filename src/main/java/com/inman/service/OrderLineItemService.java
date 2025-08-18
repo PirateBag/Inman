@@ -30,6 +30,9 @@ import static com.inman.controller.Utility.*;
 
 @Service
 public class OrderLineItemService {
+
+    private static final int MAX_REPORT_LINES = 10;
+
     private static final Logger logger = LoggerFactory.getLogger(OrderLineItemService.class);
     private final ItemRepository itemRepository;
     private final OrderLineItemRepository orderLineItemRepository;
@@ -422,7 +425,7 @@ public class OrderLineItemService {
 
         if ( level == 0 ) {
             report = String.format( headerFormat, "Item", "Ordered", "Assigned", "Start", "Complete", "State", "Type" );
-            logger.info( report );
+            if ( textResponse.getData().size() < MAX_REPORT_LINES ) logger.info( report );
             textResponse.getData().add( new Text( report ) );
         }
 
@@ -445,12 +448,17 @@ public class OrderLineItemService {
 
             logger.info(OrderLineItem.header);
             for (com.inman.entity.OrderLineItem orderLineItem : reportList) {
-                logger.info(orderLineItem.toString());
+                if ( textResponse.getData().size() < MAX_REPORT_LINES )  logger.info(orderLineItem.toString());
                 textResponse.getData().add(new Text(orderLineItem.toString()));
             }
         } else {
             generateRecursiveOrderReport( orderId, textResponse, 0  );
         }
+
+        if ( textResponse.getData().size() >= MAX_REPORT_LINES ) {
+            logger.info( "Excess lines {} truncated at console.  " , textResponse.getData().size() - MAX_REPORT_LINES );
+        }
+
         return textResponse;
     }
 }

@@ -33,8 +33,13 @@ public class AdjustmentController {
     public ResponseEntity<?> apBasic (@RequestBody AdjustmentCrudRequest adjustmentCrudRequest  ) {
         AdjustmentCrudResponse responsePackage = new AdjustmentCrudResponse();
 
-        adjustmentService.crud( adjustmentCrudRequest, responsePackage);
-        return ResponseEntity.badRequest().body( responsePackage );
+        try {
+            adjustmentService.crud(adjustmentCrudRequest, responsePackage);
+            return ResponseEntity.ok().body( responsePackage );
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body( responsePackage );
+        }
+
     }
 
     @CrossOrigin

@@ -26,4 +26,6 @@ public class Messages {
     public static final String ILLEGAL_STATE = "Illegal state %s";
 
     public static final String ADJUST_ORDER_TYPE = "ITEM adjustment can't have an order type.  XFER must have an order. ";
+
+    public static final String ORDER_AND_ADJUSTMENT_DISAGREE_ITEM = "Order (%d) Item %d and Adjustment Item %d must specify same item.";
 }

@@ -8,7 +8,7 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "W-001       36 In Red Wagon                       0.00  MAN        0     14.00     1.00        2"
+    "message" : "W-001       36 In Red Wagon                       0.00  MAN        0      7.00     1.00        2"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
@@ -72,7 +72,7 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "W-017       Rod Stock                             0.70  PUR        3      0.00  1000.00        5"
+    "message" : "W-017       Rod Stock                             0.70  PUR        3      7.00  1000.00        5"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
