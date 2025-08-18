@@ -12,6 +12,7 @@ import com.inman.repository.OrderLineItemRepository;
 import enums.CrudAction;
 import enums.OrderState;
 import enums.OrderType;
+import enums.SourcingType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,7 +123,7 @@ public class OrderLineItemService {
             oli.setQuantityAssigned(  0.0 );
             oli.setCrudAction( parentOli.getCrudAction() );
             oli.setOrderState( parentOli.getOrderState() );
-            oli.setOrderType( item.get().getSourcing().equals( Item.SOURCE_MAN ) ? OrderType.MODET : OrderType.PO );
+            oli.setOrderType( item.get().getSourcing() == SourcingType.MAN ? OrderType.MODET : OrderType.PO );
             var updatedOli = orderLineItemRepository.save(oli);
             logger.info( updatedOli.toString()  );
             count++;
@@ -308,12 +309,12 @@ public class OrderLineItemService {
         if ( orderLineItem.getOrderType() != OrderType.MODET ) {
 
             //  But you can only put MAN items in a MOHEAD...
-            if (item.getSourcing().equals(Item.SOURCE_MAN) && orderLineItem.getOrderType() != OrderType.MOHEAD) {
+            if (item.getSourcing() == SourcingType.MAN && orderLineItem.getOrderType() != OrderType.MOHEAD) {
                 Utility.outputErrorAndThrow(String.format(ITEM_MANUFACTURED, item.getSummaryId()), oliResponse, logger);
             }
 
             //  Or purchased items in a PO...
-            if (item.getSourcing().equals(Item.SOURCE_PUR) && orderLineItem.getOrderType() != OrderType.PO) {
+            if (item.getSourcing() == SourcingType.PUR && orderLineItem.getOrderType() != OrderType.PO) {
                 Utility.outputErrorAndThrow(String.format(ITEM_PURCHASED, item.getSummaryId()), oliResponse, logger);
             }
         }

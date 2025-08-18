@@ -10,6 +10,7 @@ import com.inman.repository.*;
 import enums.CrudAction;
 import enums.OrderState;
 import enums.OrderType;
+import enums.SourcingType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,7 +130,7 @@ public class AutomatedPlanningService {
             newOrder.setCompleteDate( startDateOfParentOrder );
             newOrder.setParentOliId( 0L );
             newOrder.setOrderState( OrderState.OPEN );
-            newOrder.setOrderType(item.getSourcing().equals(Item.SOURCE_MAN) ? OrderType.MOHEAD : OrderType.PO);
+            newOrder.setOrderType(item.getSourcing() == SourcingType.MAN ? OrderType.MOHEAD : OrderType.PO);
 
             newOrders.add(newOrder);
             balanceAfterOrder = newOrder.getEffectiveQuantityOrdered() + balance;

@@ -13,18 +13,20 @@ import com.inman.repository.ItemRepository;
 import com.inman.repository.OrderLineItemRepository;
 import enums.AdjustmentType;
 import enums.OrderType;
-import org.aspectj.weaver.ast.Or;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import static com.inman.controller.Messages.*;
 import static com.inman.controller.Utility.*;
+import static java.lang.Math.round;
 
 @Service
 public class AdjustmentService {
@@ -156,10 +158,30 @@ public class AdjustmentService {
         || orderLineItem.get().getOrderType() == OrderType.MOHEAD ) {
             newQuantityOnHand = oldQuantityOnHand + adjustment.getAmount();
             newQuantityAssigned =oldQuantityAssigned + adjustment.getAmount();
-        } else {
+
+            if ( orderLineItem.get().getOrderType() == OrderType.MOHEAD ) {
+                var childrenOfMoHead = orderLineItemRepository.findByParentOliId( orderLineItem.get().getId() );
+                List<Adjustment> proposedAdjustments = new ArrayList<>();
+                var fractionOfOrder = Utility.round( adjustment.getAmount() / orderLineItem.get().getQuantityOrdered(), 1 );
+                for ( OrderLineItem child : childrenOfMoHead ) {
+                    Adjustment childAdjustment = new Adjustment( child.getQuantityOrdered()*fractionOfOrder,
+                            child.getItemId(), 0, child.getOrderType(), child.getCompleteDate(), AdjustmentType.XFER );
+                    proposedAdjustments.add( childAdjustment );
+                }
+
+                logger.info( "There are {} children and {} proposed adjustments.", childrenOfMoHead, proposedAdjustments );
+                logger.info( Adjustment.RAW_HEADDER );
+                for ( Adjustment proposedAdjustment : proposedAdjustments ) {
+                    logger.info( proposedAdjustment.toString() );
+                }
+            }
+
+
+
+        } else if ( orderLineItem.get().getOrderType() == OrderType.MODET ){
             newQuantityOnHand = oldQuantityOnHand - adjustment.getAmount();
             newQuantityAssigned =oldQuantityAssigned + adjustment.getAmount();
-        }
+        } else throw new UnsupportedOperationException( );
 
         logger.info( "Item QuantityOnHand adjusted from {} to {} and Order QuantityAssigned adjusted from {} to {}.",
                 oldQuantityOnHand, newQuantityOnHand, oldQuantityAssigned, newQuantityAssigned );

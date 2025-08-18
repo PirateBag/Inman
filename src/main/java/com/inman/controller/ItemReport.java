@@ -151,8 +151,19 @@ public class ItemReport {
     @RequestMapping(value = ItemReportRequest.SHOW_ALL_ITEMS_URL, method = RequestMethod.POST,
             consumes = "application/json",
             produces = "application/json")
-    private TextResponse showAllItems(@RequestBody ItemReportRequest itemReportRequest) {
+    private TextResponse showAllItemsPost(@RequestBody ItemReportRequest itemReportRequest) {
         var rValue = new TextResponse();
+        rValue.setResponseType(ResponseType.QUERY);
+        rValue.setData( itemReportService.generateAllItemReport( itemRepository ) );
+        return rValue;
+    }
+    @CrossOrigin
+    @RequestMapping(value = ItemReportRequest.SHOW_ALL_ITEMS_URL, method = RequestMethod.GET,
+            consumes = "application/json",
+            produces = "application/json")
+    private TextResponse showAllItemsGet( @RequestParam int itemToFind ) {
+        var rValue = new TextResponse();
+        ItemReportRequest itemReportRequest = new ItemReportRequest();
         rValue.setResponseType(ResponseType.QUERY);
         rValue.setData( itemReportService.generateAllItemReport( itemRepository ) );
         return rValue;

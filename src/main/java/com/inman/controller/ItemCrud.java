@@ -7,6 +7,7 @@ import com.inman.model.response.ItemCrudBatchResponse;
 import com.inman.model.response.ResponseType;
 import com.inman.model.rest.ErrorLine;
 import com.inman.repository.ItemRepository;
+import enums.SourcingType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,10 +51,6 @@ public class ItemCrud {
                 outputErrorAndThrow( "Item description null or too short", itemCrudBatchResponse, logger );
             }
 
-            item.setSourcing( Utility.normalize( item.getSourcing() ).toUpperCase() );
-            if ( !( item.getSourcing().equalsIgnoreCase( Item.SOURCE_PUR) || item.getSourcing().equalsIgnoreCase( Item.SOURCE_MAN ) ) ) {
-                outputErrorAndThrow( "Sourcing must be PUR or MAN", itemCrudBatchResponse, logger  );
-            }
             /*  Need to think about these more.  maxDepth might be a pass through.
             private int maxDepth = 0;
             private double quantityOnHand;
@@ -67,7 +64,7 @@ public class ItemCrud {
         }
 
         if ( item.getCrudAction() != CrudAction.INSERT &&
-                item.getUnitCost() != 0.0 && item.getSourcing().equalsIgnoreCase( Item.SOURCE_MAN ) ) {
+                item.getUnitCost() != 0.0 && item.getSourcing() == SourcingType.MAN  ) {
             outputErrorAndThrow( "Unit cost must be zero when you insert a manufactured item", itemCrudBatchResponse, logger );
         }
     }

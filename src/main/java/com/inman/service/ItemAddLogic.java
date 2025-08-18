@@ -15,11 +15,11 @@ public class ItemAddLogic {
 	@Transactional
 	public Item[] go(ItemRepository itemRepository, ItemAddRequest addItemRequest ) {
 		Item newItem = null;
-
-		var item = new Item(addItemRequest);
+		throw new UnsupportedOperationException();
+		/*var item = new Item(addItemRequest);
 		newItem = itemRepository.saveAndFlush(item);
 		Item [] items = new Item[ ] { newItem };
-		return items;
+		reurn items;  */
 	}
 
 	public ItemResponse persistItem(ItemRepository xItemRepository, ItemAddRequest xAddItemRequest )

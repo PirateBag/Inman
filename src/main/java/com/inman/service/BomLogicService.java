@@ -4,6 +4,7 @@ import com.inman.entity.Item;
 import com.inman.entity.Text;
 import com.inman.repository.BomPresentRepository;
 import com.inman.repository.ItemRepository;
+import enums.SourcingType;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.inman.entity.BomPresent;
 import org.slf4j.Logger;
@@ -89,7 +90,7 @@ public class BomLogicService {
         logger.info( "Item is: " + component  );
         updateThisComponentBasedOnParents(component, texts);
 
-        if (component.getSourcing().equals(Item.SOURCE_PUR)) {
+        if (component.getSourcing() == SourcingType.PUR ) {
             message = component + " is " + component.getSourcing() + ".  Stopping.";
             logger.info(message);
             return;

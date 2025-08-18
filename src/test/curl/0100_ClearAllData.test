@@ -2,6 +2,8 @@
 Clear the contents of the following tables:
   Item
   BOM
+  orderLineItem
+  Adjustment
 ```
 ==JSON==
 { "idToSearchFor" : "1" }

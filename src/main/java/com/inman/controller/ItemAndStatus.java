@@ -1,5 +1,6 @@
 package com.inman.controller;
 
+import com.inman.repository.*;
 import com.inman.service.*;
 import com.inman.entity.Item;
 import com.inman.entity.Text;
@@ -10,10 +11,6 @@ import com.inman.model.response.ResponseType;
 import com.inman.model.rest.*;
 import com.inman.prepare.BomPrepare;
 import com.inman.prepare.ItemPrepare;
-import com.inman.repository.BomRepository;
-import com.inman.repository.DdlRepository;
-import com.inman.repository.ItemRepository;
-import com.inman.repository.OrderLineItemRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +42,8 @@ public class ItemAndStatus {
 	private DdlRepository ddlRepository;
 
 	private OrderLineItemRepository orderLineItemRepository;
+    @Autowired
+    private AdjustmentRepository adjustmentRepository;
 
 	@Autowired
 	ItemAndStatus( OrderLineItemRepository orderLineItemRepository) {
@@ -258,13 +257,21 @@ public class ItemAndStatus {
 		orderLineItemRepository.deleteAllInBatch();
 		rValue.getData().add( new Text( "OrdereLineItems deleted" ) );
 
+		adjustmentRepository.deleteAllInBatch();
+		rValue.getData().add( new Text( "Adjustments deleted" ) );
 
 		ddlRepository.resetIdForTable( "Item" );
 		rValue.getData().add( new Text( "Items PK Reset" ) );
+
 		ddlRepository.resetIdForTable( "Bom" );
 		rValue.getData().add( new Text( "BOMs PK Reset" ) );
+
 		ddlRepository.resetIdForTable( "order_line_item" );
 		rValue.getData().add( new Text( "Order Line Items PK reset" ) );
+
+		ddlRepository.resetIdForTable( "adjustment" );
+		rValue.getData().add( new Text( "Adjustment PK reset" ) );
+
 		return rValue;
 	}
 }

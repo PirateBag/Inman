@@ -33,10 +33,12 @@ public class ItemUpdateLogic {
 		item.setSummaryId( updateItemRequest.getSummaryId() );
 		item.setDescription( updateItemRequest.getDescription() );
 		item.setUnitCost( updateItemRequest.getUnitCost() );
+		throw new UnsupportedOperationException();
+		/*
 		item.setSourcing( updateItemRequest.getSourcing() );
 		itemRepository.save( item );
 
-		itemResponse.getData().add( item );
-		return itemResponse;
+		itemResponse.getData().add( item );  */
+
 	}
 }

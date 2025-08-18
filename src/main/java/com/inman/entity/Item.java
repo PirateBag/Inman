@@ -2,6 +2,7 @@ package com.inman.entity;
 
 import com.inman.controller.Utility;
 import com.inman.model.rest.ItemAddRequest;
+import enums.SourcingType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -10,34 +11,20 @@ import org.jetbrains.annotations.NotNull;
 @Entity
 @Table( name = "Item" )
 public class  Item extends EntityMaster {
-	public static String toStringFormat = "%04d: %s,%s %8.2f %s %3d %3d %8.2f %8.2f";
-	@Column( unique = true )
-	private String summaryId;
-	
-	private String description;
-	
-	private double unitCost;
+    // Use private instead of public to hide the field within class
+    private static final String toStringFormat = "%04d: %s,%s %8.2f %s %3d %3d %8.2f %8.2f";
 
-	public static final String SOURCE_PUR = "PUR";
-	public static final String SOURCE_MAN = "MAN";
-	private String sourcing;
+    @Column(unique = true)
+    private String summaryId;
+    private String description;
+    private double unitCost;
+    private SourcingType sourcing;
+    private int maxDepth = 0;
+    private int leadTime = 0;
+    private double quantityOnHand;
+    private double minimumOrderQuantity;
 
-	private int maxDepth = 0;
-
-	private int leadTime = 0;
-
-	private double quantityOnHand;
-	private double minimumOrderQuantity;
-	
-	public Item(ItemAddRequest addItemRequest) {
-		this.summaryId = addItemRequest.getSummaryId();
-		this.description = addItemRequest.getDescription();
-		this.unitCost = addItemRequest.getUnitCost();
-		this.sourcing = addItemRequest.getSourcing();
-	}
-
-
-	public Item(String summaryId, String description, double unitCost, String sourcing, int leadTime, int maxDepth,
+	public Item(String summaryId, String description, double unitCost, SourcingType sourcing, int leadTime, int maxDepth,
 				double quantityOnHand, double minimumOrderQuantity ) {
 		this.summaryId = summaryId;
 		this.description = description;
@@ -51,8 +38,6 @@ public class  Item extends EntityMaster {
 
 	public Item() {
 	}
-
-
 
 	@Override
 
@@ -92,12 +77,6 @@ public class  Item extends EntityMaster {
 		this.unitCost = unitCost;
 	}
 
-	public String getSourcing( ) {
-		return Utility.normalize( sourcing );
-	}
-	public void setSourcing( String xSourcing ) {
-		this.sourcing = xSourcing;
-	}
 
 	public int getMaxDepth() { return maxDepth; }
 
@@ -118,6 +97,15 @@ public class  Item extends EntityMaster {
 	}
 	public double getQuantityOnHand() { return quantityOnHand; }
 	public void setQuantityOnHand( double quantityOnHand ) { this.quantityOnHand = quantityOnHand; }
+
+
+	public SourcingType getSourcing() {
+		return sourcing;
+	}
+
+	public void setSourcing(SourcingType sourcing) {
+		this.sourcing = sourcing;
+	}
 
 	public double getMinimumOrderQuantity() { return minimumOrderQuantity; }
 	public void setMinimumOrderQuantity(double minimumOrderQuantity) { this.minimumOrderQuantity = minimumOrderQuantity; }

@@ -6,6 +6,8 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.springframework.dao.DataIntegrityViolationException;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -58,4 +60,11 @@ public class Utility {
         throw new RuntimeException(message);
     }
 
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
 }

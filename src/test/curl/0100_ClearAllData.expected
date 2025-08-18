@@ -16,6 +16,10 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
+    "message" : "Adjustments deleted"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
     "message" : "Items PK Reset"
   }, {
     "id" : 0,
@@ -25,5 +29,9 @@
     "id" : 0,
     "crudAction" : "NONE",
     "message" : "Order Line Items PK reset"
+  }, {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "Adjustment PK reset"
   } ]
 }
