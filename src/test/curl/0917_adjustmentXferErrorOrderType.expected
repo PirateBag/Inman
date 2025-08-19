@@ -1,0 +1,8 @@
+{
+  "responseType" : null,
+  "errors" : [ {
+    "key" : 0,
+    "message" : "ITEM adjustment can't have an order type.  XFER must have an order. "
+  } ],
+  "data" : [ ]
+}
