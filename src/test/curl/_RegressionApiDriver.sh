@@ -231,6 +231,12 @@ declare -a tests=(
     "0907_itemMaster;itemReport/showAllItems"
     "0909_oliReport;oli/showAll"
 
+    # Test for some errors in requests.
+    "0911_adjustmentXferErrorItemOrder;adjustment/crud"
+    "0913_adjustmentXferErrorItemId;adjustment/crud"
+    "0915_adjustmentXferErrorOrderId;adjustment/crud"
+    "0917_adjustmentXferErrorOrderType;adjustment/crud"
+
    )
 #   "stopTesting" \
 declare -i passed=0

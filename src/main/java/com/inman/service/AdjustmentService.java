@@ -54,20 +54,15 @@ public class AdjustmentService {
     @Transactional
     public AdjustmentCrudResponse crud ( AdjustmentCrudRequest adjustmentCrudRequest, AdjustmentCrudResponse response ) {
 
-        int lineNumber = 0;
-
         for ( Adjustment adjustment : adjustmentCrudRequest.getRows() ) {
             logger.info("Adjustment {} ", adjustment.toString() );
-
-
             switch ( adjustment.getCrudAction() ) {
-                case INSERT ->  insert( adjustment, response, lineNumber);
+                case INSERT ->  insert( adjustment, response );
                 default -> {
                           Utility.outputErrorAndThrow("Crud Action " + adjustment.getCrudAction() + " not supported",
                             response, logger);
                 }
             }
-            lineNumber++;
         }
         logger.info("Update loop exited with " + response.getErrors().size() + " errors");
         if ( !response.getErrors().isEmpty()) {
@@ -76,12 +71,12 @@ public class AdjustmentService {
         return response;
     }
 
-    private void insert ( Adjustment adjustment, AdjustmentCrudResponse response , int lineNumber ) {
+    private void insert ( Adjustment adjustment, AdjustmentCrudResponse response ) {
         adjustment.validate();
 
         switch (adjustment.getAdjustmentType()) {
-            case ITEM -> insertItemAdjustment(adjustment, response, lineNumber);
-            case XFER -> insertOrderAdjustment(adjustment, response, lineNumber);
+            case ITEM -> insertItemAdjustment(adjustment, response );
+            case XFER -> insertOrderAdjustment(adjustment, response );
             default -> {
                 Utility.outputErrorAndThrow(ILLEGAL_STATE.formatted(adjustment.getAdjustmentType()),
                         response, logger);
@@ -97,7 +92,7 @@ public class AdjustmentService {
      *
      * Sideffects:  Item QuantityOnHand altered by adjustement and a new Adjustement is audited.
      */
-    private void insertItemAdjustment(  Adjustment adjustment, AdjustmentCrudResponse response , int lineNumber )
+    private void insertItemAdjustment(  Adjustment adjustment, AdjustmentCrudResponse response )
     {
         if ( adjustment.getOrderType() != OrderType.NA ) {
             outputErrorAndThrow("Order type " + adjustment.getOrderType() + " not supported", response, logger);
@@ -127,9 +122,9 @@ public class AdjustmentService {
      *
      * Side effects:  Item QuantityOnHand and Order QuantityAssigned updated in database.
      */
-    private void insertOrderAdjustment(  Adjustment adjustment, AdjustmentCrudResponse response , int lineNumber )
+    private void insertOrderAdjustment(  Adjustment adjustment, AdjustmentCrudResponse response )
     {
-        Item item = itemRepository.findById( adjustment.getItemId() );
+c        Item item = itemRepository.findById( adjustment.getItemId() );
         if ( item == null ) {
             outputErrorAndThrow(ITEM_REF_NOT_FOUND.formatted( "Adustment",  adjustment.getItemId() ),
                      response, logger);
