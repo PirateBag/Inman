@@ -2,7 +2,7 @@
   "responseType" : "MULTILINE",
   "errors" : [ {
     "key" : 1,
-    "message" : "Added 2 lines to order 1"
+    "message" : "Added 2 line items to order 1"
   } ],
   "data" : [ {
     "id" : 1,

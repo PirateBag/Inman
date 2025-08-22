@@ -143,4 +143,21 @@ public class OrderLineItem extends EntityMaster {
 		}
 		return fieldNames;
 	}
+
+	/**
+	 * Is the current order "congruent" with the proposed order?
+	 * True indicates that the proposed order can be merged by simply combining
+	 * order quantity
+	 *
+	 * Start date is not tested, what matters is the completed date.)
+	 *
+	 * @param orderLineItem
+	 * @return
+	 */
+	public boolean isCongruentWith( OrderLineItem orderLineItem ) {
+		return this.itemId == orderLineItem.getItemId() &&
+                this.completeDate.equals( orderLineItem.getCompleteDate()) &&
+                this.orderState == orderLineItem.getOrderState() &&
+                this.orderType == orderLineItem.getOrderType();
+	}
 }

@@ -1,12 +1,11 @@
 package com.inman.entity;
 
-import com.inman.controller.Utility;
-import com.inman.model.rest.ItemAddRequest;
 import enums.SourcingType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import org.jetbrains.annotations.NotNull;
+
 
 @Entity
 @Table( name = "Item" )

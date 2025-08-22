@@ -2,13 +2,13 @@
   "responseType" : null,
   "errors" : [ {
     "key" : 1,
-    "message" : "Added 3 lines to order 21"
+    "message" : "Added 3 line items to order 21"
   }, {
     "key" : 1,
-    "message" : "Added 3 lines to order 24"
+    "message" : "Added 3 line items to order 24"
   }, {
     "key" : 1,
-    "message" : "Added 3 lines to order 27"
+    "message" : "Added 3 line items to order 27"
   }, {
     "key" : 1,
     "message" : "A line item must have either startDate or completedDate"

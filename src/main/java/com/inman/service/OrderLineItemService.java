@@ -31,7 +31,7 @@ import static com.inman.controller.Utility.*;
 @Service
 public class OrderLineItemService {
 
-    private static final int MAX_REPORT_LINES = 10;
+    private static final int MAX_REPORT_LINES = 15;
 
     private static final Logger logger = LoggerFactory.getLogger(OrderLineItemService.class);
     private final ItemRepository itemRepository;
@@ -45,11 +45,6 @@ public class OrderLineItemService {
         this.itemRepository = itemRepository;
         this.orderLineItemRepository = orderLineItemRepository;
         this.bomPresentRepository = bomPresentRepository;
-    }
-
-    private void outputInfo(String message, ResponsePackage<?> responsePackage) {
-        logger.info(message);
-        responsePackage.getErrors().add(new ErrorLine(1, message));
     }
 
     private void outputErrorAndThrow(String message, ResponsePackage<?> responsePackage) {
@@ -79,8 +74,11 @@ public class OrderLineItemService {
             }
 
             validateOrderLineItemForMOInsertion(orderLineItem, oliResponse, item);
-
+            long oldOrderId = orderLineItem.getParentOliId();
             updatedOrderLineItem = orderLineItemRepository.save(orderLineItem);
+            if ( orderLineItem.getParentOliId() != oldOrderId ) {
+                logger.warn( "Panic button" );
+            }
             logger.info("inserted adjusted: {}", updatedOrderLineItem);
             oliResponse.getData().add(updatedOrderLineItem);
 
@@ -98,40 +96,49 @@ public class OrderLineItemService {
     }
 
     /**
-     * Add orderLineItems to the parent owner based on the BOM of the item associated with the parent.
+     * Add orderLineItems to the order based on the BOM of the item associated with the order.
      *
-     * @param parentOli parent of the newly inserted order.k
+     * @param parentOli   parent of the newly inserted order.
      * @param oliResponse final response message, modified by side effect.
-     *
      */
-    private void addLineItemsToOrder( OrderLineItem parentOli , ResponsePackage<OrderLineItem> oliResponse) {
-        Optional<Item> item = Optional.ofNullable(itemRepository.findById(parentOli.getItemId()));
-
-        if ( item.isEmpty() ) {
-            outputErrorAndThrow( "Unable to find " + parentOli.getItemId(), oliResponse );
+    private void addLineItemsToOrder(OrderLineItem parentOli, ResponsePackage<OrderLineItem> oliResponse) {
+        Item item = itemRepository.findById(parentOli.getItemId());
+        if (item == null ) {
+            outputErrorAndThrow("Unable to find item with ID " + parentOli.getItemId(), oliResponse);
         }
-
-        BomPresent[] childrenOfItem = bomPresentRepository.findByParentId( parentOli.getItemId() );
-        int count = 1;
-        for ( BomPresent bomPresent : childrenOfItem ) {
-            OrderLineItem oli = new OrderLineItem();
-            oli.setItemId( bomPresent.getChildId() );
-            oli.setQuantityOrdered( parentOli.getQuantityOrdered() * bomPresent.getQuantityPer() );
-
-            oli.setCompleteDate( parentOli.getStartDate() );
-
-            LocalDate derviedStart = LocalDate.parse( parentOli.getStartDate(), DATE_FORMATTER).minusDays(item.get().getLeadTime());
-            oli.setStartDate( derviedStart.format(DATE_FORMATTER));
-            oli.setParentOliId( parentOli.getId() );
-            oli.setQuantityAssigned(  0.0 );
-            oli.setCrudAction( parentOli.getCrudAction() );
-            oli.setOrderState( parentOli.getOrderState() );
-            oli.setOrderType( item.get().getSourcing() == SourcingType.MAN ? OrderType.MODET : OrderType.PO );
-            var updatedOli = orderLineItemRepository.save(oli);
-            logger.info( updatedOli.toString()  );
-            count++;
+        BomPresent[] childrenOfItem = bomPresentRepository.findByParentId(parentOli.getItemId());
+        int numberOfAddedItems = 1;
+        for (BomPresent bomPresent : childrenOfItem) {
+            assert item != null;
+            OrderLineItem oli = createOrderLineItem(parentOli, bomPresent, item );
+            OrderLineItem updatedOli = orderLineItemRepository.save(oli);
+            logger.info(updatedOli.toString());
+            numberOfAddedItems++;
         }
-        outputInfo( "Added " + count + " lines to order " + parentOli.getId()  , oliResponse);
+        outputInfo("Added " + numberOfAddedItems + " line items to order " + parentOli.getId(), oliResponse, logger);
+    }
+
+    /**
+     * Create a new OrderLineItem based on the parent OrderLineItem, BomPresent, and Item.
+     *
+     * @param parentOli  parent of the newly inserted order.
+     * @param bomPresent the bomPresent of the current item.
+     * @param item       the item corresponding to the parentOli itemId.
+     * @return a new OrderLineItem created from the given parameters.
+     */
+    private OrderLineItem createOrderLineItem(OrderLineItem parentOli, BomPresent bomPresent, Item item) {
+        OrderLineItem oli = new OrderLineItem();
+        oli.setItemId(bomPresent.getChildId());
+        oli.setQuantityOrdered(parentOli.getQuantityOrdered() * bomPresent.getQuantityPer());
+        oli.setCompleteDate(parentOli.getStartDate());
+        LocalDate derivedStart = LocalDate.parse(parentOli.getStartDate(), DATE_FORMATTER).minusDays(item.getLeadTime());
+        oli.setStartDate(derivedStart.format(DATE_FORMATTER));
+        oli.setParentOliId(parentOli.getId());
+        oli.setQuantityAssigned(0.0);
+        oli.setCrudAction(parentOli.getCrudAction());
+        oli.setOrderState(parentOli.getOrderState());
+        oli.setOrderType(item.getSourcing() == SourcingType.MAN ? OrderType.MODET : OrderType.PO);
+        return oli;
     }
 
     private void delete(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse) {
@@ -263,7 +270,7 @@ public class OrderLineItemService {
                 orderLineItemRepository.delete(oli);
                 count++;
             }
-            outputInfo( "Removed " + count + " lines from order " + newOli, oliResponse );
+            outputInfo( "Removed " + count + " lines from order " + newOli, oliResponse, logger );
     }
 
     private void throwErrorIfChildrenArePresent( OrderLineItem newOli, ResponsePackage<OrderLineItem> oliResponse) {
@@ -289,7 +296,7 @@ public class OrderLineItemService {
            orderLineItemRepository.save(oli);
            count++;
        }
-       outputInfo( "Updated " + count + " line items to state " + newOli.getOrderState(), oliResponse );
+       outputInfo( "Updated " + count + " line items to state " + newOli.getOrderState(), oliResponse, logger );
     }
 
 
@@ -361,7 +368,7 @@ public class OrderLineItemService {
 
         int countOfChanges = 0;
         if ( oldOli.getId() != newOli.getId() ) {
-            outputInfo( "Order Id is different",  oliResponse );
+            outputInfo( "Order Id is different",  oliResponse, logger );
         }
         if ( oldOli.getQuantityOrdered() != newOli.getQuantityOrdered() ) {
             countOfChanges++;
@@ -411,12 +418,12 @@ public class OrderLineItemService {
         Optional<OrderLineItem> oli = orderLineItemRepository.findById( orderId );
 
         if (oli.isEmpty() ) {
-            outputInfo( "Can't find order " + orderId, textResponse  );
+            outputInfo( "Can't find order " + orderId, textResponse, logger  );
             return;
         }
         Item item = itemRepository.findById( oli.get().getItemId());
         if ( item == null ) {
-            outputInfo( "Can't find item " + oli.get().getItemId() + " referenced by oli " + oli.get().getId(), textResponse  );
+            outputInfo( "Can't find item " + oli.get().getItemId() + " referenced by oli " + oli.get().getId(), textResponse, logger );
             return;
         }
 
@@ -429,7 +436,6 @@ public class OrderLineItemService {
             textResponse.getData().add( new Text( report ) );
         }
 
-
         report = String.format( lineFormat, Common.spacesForLevel( level) + item.getSummaryId(), oli.get().getQuantityOrdered(), oli.get().getQuantityAssigned(),
                 oli.get().getStartDate(), oli.get().getCompleteDate(), oli.get().getOrderState(), oli.get().getOrderType() );
         textResponse.getData().add( new Text( report ) );
@@ -438,6 +444,8 @@ public class OrderLineItemService {
         for ( OrderLineItem childOrderLineItem : childOrderLineItems ) {
             generateRecursiveOrderReport( childOrderLineItem.getId(), textResponse, level+1 );
         }
+
+
     }
 
 

@@ -2,10 +2,10 @@
   "responseType" : "MULTILINE",
   "errors" : [ {
     "key" : 1,
-    "message" : "Added 3 lines to order 14"
+    "message" : "Added 3 line items to order 14"
   }, {
     "key" : 1,
-    "message" : "Added 2 lines to order 15"
+    "message" : "Added 2 line items to order 15"
   } ],
   "data" : [ {
     "id" : 14,

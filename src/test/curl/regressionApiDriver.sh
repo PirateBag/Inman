@@ -96,6 +96,8 @@ declare -a tests=(
   # Generate a recurse report on MO 2.
   "0621_oliReport;oli/showAll"
 
+
+
   # Create new order for item 1 in "open" state.
   "0701_oliCrud;oli/crud"
 
@@ -145,6 +147,8 @@ declare -a tests=(
   # Create two new planned orders with BOMs and delete all the old orders.
   "0719_oliCrud;oli/crud"
   "0721_oliReport;oli/showAll"
+
+
 
 #
 #  We now have the following orders:
@@ -210,14 +214,25 @@ declare -a tests=(
 #   14   17        0  1000.00     0.00  2025-1202  2025-1207 OPEN     PO NONE"
 #   11   17       10    75.00     0.00  2025-1207  2025-1211 OPEN  MODET NONE"
 
+
   #Create four orders for W-003, which is slightly more complicated.
   "0806_oliCrud;oli/crud"
   "0807_oliReport;oli/showAll"
+
+  "stopTesting"
+
     "0808_ap;ap/basic"
+
+
     "0809_ibp;ap/inventoryBalanceProjection"
+
+
 
 #    Create one order for W-001, and look for all the cascade order creation.
     "0810_oliCrud;oli/crud"
+
+        "stopTesting"
+
     "0811_ap;ap/basic"
 
     # Item Adjustements...
@@ -237,15 +252,17 @@ declare -a tests=(
     "0915_adjustmentXferErrorOrderId;adjustment/crud"
     "0917_adjustmentXferErrorOrderType;adjustment/crud"
 
+    # The more complicated XFER adjustments to live orders.
+    "0921_adjustmentMohead;adjustment/crud"
+
    )
-#   "stopTesting" \
+#   "stopTesting"
 declare -i passed=0
 
 declare -i failed=0
 declare -i newBaseLines=0
 
 declare curlDriver=./_curlDriver.sh
-declare testToRequest=./_testToRequest.sh
 
 #    .---------- constant part!
 #    the code from above
@@ -319,7 +336,7 @@ do
 
       if [ -n "$1" ]; then
         echo Parameter passed
-        tests=( ${1} )
+        tests=( "${1}" )
         if [ $failed == "1" ] ; then
           cat $testName.expected
           diff $testName.actual $testName.expected

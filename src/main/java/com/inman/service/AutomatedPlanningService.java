@@ -67,7 +67,6 @@ public class AutomatedPlanningService {
             itemsToBePlanned = new ArrayList<>();
             Optional<Item> item = itemRepository.findById( genericSingleId.getIdToSearchFor() );
             if ( item.isPresent() ) {
-
                 itemsToBePlanned.add( item.get() );
             } else {
                 outputErrorAndThrow( "Item " + genericSingleId.getIdToSearchFor() + " not found", textResponse );
@@ -118,7 +117,7 @@ public class AutomatedPlanningService {
      * @param balance      current balance after applying all orders.
      * @return updated balance from any newly created orders.
      */
-    private double createNewOrderAsNeeded(Item item, TextResponse textResponse, ArrayList<OrderLineItem> newOrders, String startDateOfParentOrder, double balance ) {
+    private double createNewOrderAsNeeded(Item item, TextResponse textResponse, ArrayList<OrderLineItem> newOrders, String startDateOfParentOrder, double balance) {
         double balanceAfterOrder = balance;
         if (newOrders != null && balance < 0) {
             OrderLineItem newOrder = new OrderLineItem();
@@ -127,11 +126,21 @@ public class AutomatedPlanningService {
             newOrder.setItemId(item.getId());
             newOrder.setQuantityOrdered(max(item.getMinimumOrderQuantity(), abs(balance)));
             newOrder.setStartDate(null);
-            newOrder.setCompleteDate( startDateOfParentOrder );
-            newOrder.setParentOliId( 0L );
-            newOrder.setOrderState( OrderState.OPEN );
+            newOrder.setCompleteDate(startDateOfParentOrder);
+            newOrder.setParentOliId(0L);
+            newOrder.setOrderState(OrderState.OPEN);
             newOrder.setOrderType(item.getSourcing() == SourcingType.MAN ? OrderType.MOHEAD : OrderType.PO);
 
+            if (newOrders.size() > 1) {
+                OrderLineItem previousOrder = newOrders.get(newOrders.size() - 1);
+                if (newOrder.isCongruentWith(previousOrder)) {
+                    previousOrder.setQuantityOrdered(previousOrder.getQuantityOrdered() + newOrder.getQuantityOrdered());
+                    logger.info("Existing order (%d) has same completed date (%s), added %f to quantity ordered".formatted(
+                            previousOrder.getId(), previousOrder.getCompleteDate(), newOrder.getQuantityOrdered()));
+                    balanceAfterOrder = previousOrder.getEffectiveQuantityOrdered() + balance;
+                    return balanceAfterOrder;
+                }
+            }
             newOrders.add(newOrder);
             balanceAfterOrder = newOrder.getEffectiveQuantityOrdered() + balance;
             textResponse.addText(String.format("%s %8.2f", newOrder.toStringWithSignedQuantity(), balanceAfterOrder), Optional.of(logger));
@@ -147,11 +156,11 @@ public class AutomatedPlanningService {
 
         orderLineItemService.applyCrud(crudBatch, responsePackage);
 
-        if ( responsePackage.getErrors().size() > 0  ) {
-        logger.info("errors reported when trying to create orders: ");
-        for (ErrorLine error : responsePackage.getErrors()) {
-            logger.info(error.getMessage());
-        }
+        if (responsePackage.getErrors().size() > 0) {
+            logger.info("Messages when trying to create orders: ");
+            for (ErrorLine error : responsePackage.getErrors()) {
+                logger.info( "-" + error.getMessage());
+            }
         }
     }
 

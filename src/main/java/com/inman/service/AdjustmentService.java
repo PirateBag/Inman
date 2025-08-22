@@ -118,13 +118,12 @@ public class AdjustmentService {
      * Handle adjustements to inventory balances when items are transferred to or from orders.
      * @param adjustment
      * @param response
-     * @param lineNumber
      *
      * Side effects:  Item QuantityOnHand and Order QuantityAssigned updated in database.
      */
     private void insertOrderAdjustment(  Adjustment adjustment, AdjustmentCrudResponse response )
     {
-c        Item item = itemRepository.findById( adjustment.getItemId() );
+        Item item = itemRepository.findById( adjustment.getItemId() );
         if ( item == null ) {
             outputErrorAndThrow(ITEM_REF_NOT_FOUND.formatted( "Adustment",  adjustment.getItemId() ),
                      response, logger);
@@ -170,7 +169,7 @@ c        Item item = itemRepository.findById( adjustment.getItemId() );
                     proposedAdjustments.add( childAdjustment );
                 }
 
-                logger.info( "There are {} children and {} proposed adjustments.", childrenOfMoHead, proposedAdjustments );
+                logger.info( "There are {} children and {} proposed adjustments.", childrenOfMoHead.size(), proposedAdjustments.size() );
                 logger.info( Adjustment.RAW_HEADDER );
                 for ( Adjustment proposedAdjustment : proposedAdjustments ) {
                     logger.info( proposedAdjustment.toString() );
