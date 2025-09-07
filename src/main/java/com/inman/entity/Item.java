@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import org.jetbrains.annotations.NotNull;
 
+import static java.lang.Math.max;
+
 
 @Entity
 @Table( name = "Item" )
@@ -108,4 +110,8 @@ public class  Item extends EntityMaster {
 
 	public double getMinimumOrderQuantity() { return minimumOrderQuantity; }
 	public void setMinimumOrderQuantity(double minimumOrderQuantity) { this.minimumOrderQuantity = minimumOrderQuantity; }
+
+	public double applyOrderQuantityRules(double orderQuantity) {
+		return max( orderQuantity, this.minimumOrderQuantity );
+	}
 }

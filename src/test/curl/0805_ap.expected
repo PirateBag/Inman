@@ -152,6 +152,6 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "   0   17        0  1000.00     0.00       null  2025-1207 OPEN     PO INSERT   925.00"
+    "message" : "   0   17        0    75.00     0.00       null  2025-1207 OPEN     PO INSERT     0.00"
   } ]
 }

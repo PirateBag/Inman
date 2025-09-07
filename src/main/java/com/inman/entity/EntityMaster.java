@@ -33,4 +33,6 @@ public abstract class EntityMaster {
     }
 
     public abstract EntityMaster copy( EntityMaster oldValue);
+
+
 }

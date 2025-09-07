@@ -219,14 +219,9 @@ declare -a tests=(
   "0806_oliCrud;oli/crud"
   "0807_oliReport;oli/showAll"
 
+  "0808_ap;ap/basic"
+  "0809_ibp;ap/inventoryBalanceProjection"
   "stopTesting"
-
-    "0808_ap;ap/basic"
-
-
-    "0809_ibp;ap/inventoryBalanceProjection"
-
-
 
 #    Create one order for W-001, and look for all the cascade order creation.
     "0810_oliCrud;oli/crud"
