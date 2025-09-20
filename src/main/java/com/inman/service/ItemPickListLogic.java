@@ -46,10 +46,8 @@ public class ItemPickListLogic {
     public ItemPickListResponse getItemsForBom(GenericSingleId genericSingleId) {
         var itemPickListResponseWithAll = new ItemPickListResponse();
 
-        assert genericSingleId.getIdToSearchFor()  != null;
-        assert genericSingleId.getIdToSearchFor() > 0L;
 
-        logger.info( "getItemsForBom for item {}", genericSingleId.getIdToSearchFor() );
+        logger.info( "getItemsForBom for item {}", genericSingleId.idToSearchFor() );
         itemPickListResponseWithAll = getAll();
 
         var allPickItems = itemPickListResponseWithAll.getData();
@@ -57,13 +55,13 @@ public class ItemPickListLogic {
         showProgress( "Pick Items prior to any filtering.:  ", allPickItems );
         //  Remove the input parameter from the output.
         var filteredPickItems = allPickItems.stream()
-               .filter(pick -> pick.getId() != genericSingleId.getIdToSearchFor() )
+               .filter(pick -> pick.getId() != genericSingleId.idToSearchFor() )
                         .toList();
 
         showProgress( "Pick Items after removing parent:  ", filteredPickItems );
 
         //  Collect the Ids of the components of the input parameter.
-        BomPresent[] boms = bomPresentRepository.findByParentId( genericSingleId.getIdToSearchFor() );
+        BomPresent[] boms = bomPresentRepository.findByParentId( genericSingleId.idToSearchFor() );
 
         showProgress("Component Ids  ", boms );
 
@@ -106,14 +104,12 @@ public class ItemPickListLogic {
     }
 
     public ItemPickListResponse getOneItem(GenericSingleId genericSingleId) {
-        assert genericSingleId.getIdToSearchFor() != null;
-        assert genericSingleId.getIdToSearchFor() > 0L;
         ItemPickListResponse itemPickListResponse = getAll();
 
         var allPicks = itemPickListResponse.getData();
         ArrayList<Pick> theOne = new ArrayList<>();
         for (Pick pick : allPicks) {
-            if (pick.getId() == genericSingleId.getIdToSearchFor()) {
+            if (pick.getId() == genericSingleId.idToSearchFor()) {
                 theOne.add( pick );
                 itemPickListResponse.setData( theOne);
                 break;

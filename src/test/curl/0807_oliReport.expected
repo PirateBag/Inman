@@ -8,18 +8,6 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "  20    3        0  1000.00     0.00  2025-1014  2025-1015 OPEN MOHEAD NONE"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  25    3        0  1500.00     0.00  2025-1114  2025-1115 OPEN MOHEAD NONE"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  30    3        0    50.00     0.00  2025-1214  2025-1215 OPEN MOHEAD NONE"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
     "message" : "   1    5        0     6.00     0.00  2025-0901  2025-0913 OPEN MOHEAD NONE"
   }, {
     "id" : 0,
@@ -32,23 +20,11 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "  21    5       20  1000.00     0.00  2025-1013  2025-1014 OPEN  MODET NONE"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
     "message" : "   6    5        0  1000.00     0.00  2025-1011  2025-1015 OPEN MOHEAD NONE"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "  26    5       25  1500.00     0.00  2025-1113  2025-1114 OPEN  MODET NONE"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
     "message" : "   8    5        0  1500.00     0.00  2025-1111  2025-1115 OPEN MOHEAD NONE"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  31    5       30    50.00     0.00  2025-1213  2025-1214 OPEN  MODET NONE"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
@@ -60,47 +36,11 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "  22    9       20  2000.00     0.00  2025-1013  2025-1014 OPEN  MODET NONE"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  27    9       25  3000.00     0.00  2025-1113  2025-1114 OPEN  MODET NONE"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  32    9       30   100.00     0.00  2025-1213  2025-1214 OPEN  MODET NONE"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
     "message" : "  18   11       15  1000.00     0.00  2025-0913  2025-0914 OPEN  MODET NONE"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "  23   11       20  2000.00     0.00  2025-1013  2025-1014 OPEN  MODET NONE"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  28   11       25  3000.00     0.00  2025-1113  2025-1114 OPEN  MODET NONE"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  33   11       30   100.00     0.00  2025-1213  2025-1214 OPEN  MODET NONE"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
     "message" : "  19   12       15  1000.00     0.00  2025-0913  2025-0914 OPEN  MODET NONE"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  24   12       20  2000.00     0.00  2025-1013  2025-1014 OPEN  MODET NONE"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  29   12       25  3000.00     0.00  2025-1113  2025-1114 OPEN  MODET NONE"
-  }, {
-    "id" : 0,
-    "crudAction" : "NONE",
-    "message" : "  34   12       30   100.00     0.00  2025-1213  2025-1214 OPEN  MODET NONE"
   }, {
     "id" : 0,
     "crudAction" : "NONE",

@@ -113,7 +113,7 @@ public class Bom {
 
 		ArrayList<Text> texts = new ArrayList<>();
 
-		bomLogicService.updateMaxDepthOf( itemToRefresh.getIdToSearchFor(), texts );
+		bomLogicService.updateMaxDepthOf( itemToRefresh.idToSearchFor(), texts );
 		texts.add( new Text( "Report Comppleted" ) );
 		rValue.setData( texts );
 		rValue.setResponseType(ResponseType.QUERY);

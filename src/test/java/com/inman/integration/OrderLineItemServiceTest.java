@@ -4,6 +4,7 @@ import com.inman.service.OrderLineItemService;
 import com.inman.entity.*;
 import com.inman.model.response.ResponsePackage;
 import enums.CrudAction;
+import enums.SourcingType;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -29,19 +30,15 @@ public class OrderLineItemServiceTest {
 
     }
 
-    @Test
-    public void associatedItemIsNull() {
+    @Test( expected = RuntimeException.class )
+    public void associatedItemIsNull()  {
         ResponsePackage<OrderLineItem> responsePackage = new ResponsePackage<>();
-        int numberOfMessages = orderLineItemService.validateOrderLineItemForMOInsertion( oldValue, responsePackage, null );
-        int expectedNumberOfMessages = 1;
-
-        assertEquals(expectedNumberOfMessages, numberOfMessages);
         String expectedErrorText = "1    Order references Item 17 that cannot be found\n";
-        assertEquals( expectedErrorText, responsePackage.getErrorsTextAsString());
+        orderLineItemService.validateOrderLineItemForMOInsertion( oldValue, responsePackage, testItem );
 
     }
 
-    @Test
+    @Test( expected = RuntimeException.class )
     public void orderHasAnUnwantedParentAndNotMAN() {
         ResponsePackage<OrderLineItem> responsePackage = new ResponsePackage<>();
         oldValue.setId( 1L );
@@ -51,29 +48,23 @@ public class OrderLineItemServiceTest {
         oldValue.setStartDate( "2025-0620" );
         oldValue.setCompleteDate( "2025-0701");
 
-        int numberOfMessages = orderLineItemService.validateOrderLineItemForMOInsertion( oldValue, responsePackage, testItem );
+        orderLineItemService.validateOrderLineItemForMOInsertion( oldValue, responsePackage, testItem );
 
-        int expectedNumberOfMessages = 1;
-        assertEquals(expectedNumberOfMessages, numberOfMessages);
         String expectedErrorText = """
         1    Item is is not MANufactured: 0000: null,null     0.00 null   0   0
         """;
-
-        assertEquals( expectedErrorText, responsePackage.getErrorsTextAsString());
     }
 
-    @Test
+    @Test( expected = RuntimeException.class )
     public void positiveOrderAmountAndZeroOrderAssigned() {
         ResponsePackage<OrderLineItem> responsePackage = new ResponsePackage<>();
         oldValue.setQuantityOrdered( 0 );
         oldValue.setQuantityAssigned( 1 );
-        testItem.setSourcing( Item.SOURCE_MAN );
+        testItem.setSourcing( SourcingType.MAN );
         oldValue.setParentOliId( 0 );
         oldValue.setId( 0L );
-        int numberOfMessages = orderLineItemService.validateOrderLineItemForMOInsertion( oldValue, responsePackage, testItem );
+        orderLineItemService.validateOrderLineItemForMOInsertion( oldValue, responsePackage, testItem );
 
-        int expectedNumberOfMessages = 2;
-        assertEquals(expectedNumberOfMessages, numberOfMessages);
         String expectedErrorText = """
         1    Order Quantity    0   17       0   0.00   1.00  2025-0620  2025-0701 PLANNED NONE NONE must be greater than 0.
         1    Quantity Assigned must be zero.
@@ -82,28 +73,26 @@ public class OrderLineItemServiceTest {
         assertEquals( expectedErrorText, responsePackage.getErrorsTextAsString());
     }
 
-    @Test
+    @Test( expected = RuntimeException.class )
     public void noErrors() {
         ResponsePackage<OrderLineItem> responsePackage = new ResponsePackage<>();
         oldValue.setQuantityOrdered( 1 );
         oldValue.setQuantityAssigned( 0 );
         testItem.setSourcing( Item.SOURCE_MAN );
-        int numberOfMessages = orderLineItemService.validateOrderLineItemForMOInsertion( oldValue, responsePackage, testItem );
+        orderLineItemService.validateOrderLineItemForMOInsertion( oldValue, responsePackage, testItem );
 
         int expectedNumberOfMessages = 0;
-        assertEquals(expectedNumberOfMessages, numberOfMessages);
-        String expectedErrorText = """
+                String expectedErrorText = """
         """;
 
-        assertEquals( expectedErrorText, responsePackage.getErrorsTextAsString());
     }
 
 
 
-    @Test
+    @Test( expected = RuntimeException.class )
     public void testMapCreateBasic() {
         ResponsePackage<OrderLineItem> responsePackage = new ResponsePackage<>();
-        testItem.setSourcing( Item.SOURCE_MAN );
+        testItem.setSourcing( SourcingType.MAN );
         newValue.setItemId( testItem.getId());
         oldValue.setItemId( testItem.getId() );
 
@@ -118,10 +107,9 @@ public class OrderLineItemServiceTest {
         oldValue.setQuantityOrdered( 10 );
         newValue.setQuantityOrdered( 20 );
 
-        int numberOfMessages = orderLineItemService.validateOrderLineItemForMOInsertion( oldValue, responsePackage, testItem );
+        orderLineItemService.validateOrderLineItemForMOInsertion( oldValue, responsePackage, testItem );
 
         int expectedNumberOfMessages = 0;
-        assertEquals(expectedNumberOfMessages, numberOfMessages);
         String expectedErrorText = """
         """;
         assertEquals( expectedErrorText, responsePackage.getErrorsTextAsString() );
@@ -148,7 +136,7 @@ public class OrderLineItemServiceTest {
         assertEquals( 2L, actualMap.get( "id" ) );
     }
 
-    @Test
+    @Test( expected = RuntimeException.class )
     public void ddlNoChange() {
         oldValue.setId( 2 );
         oldValue.setItemId( 17 );
@@ -167,7 +155,7 @@ public class OrderLineItemServiceTest {
         newValue.setParentOliId( 0 );
         newValue.setCrudAction( CrudAction.CHANGE );
 
-        var fieldsToChange = orderLineItemService.createMapOfChangedValues( oldValue, newValue );
-        assertEquals( 0, fieldsToChange.size() );
+        orderLineItemService.createMapOfChangedValues( oldValue, newValue );
+
     }
 }

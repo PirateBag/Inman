@@ -1,17 +1,12 @@
 package com.inman.controller;
 
-import com.inman.entity.Adjustment;
 import com.inman.model.request.AdjustmentCrudRequest;
 import com.inman.model.request.GenericSingleId;
 import com.inman.model.response.AdjustmentCrudResponse;
-import com.inman.model.response.ResponseType;
 import com.inman.model.response.TextResponse;
-import com.inman.model.rest.ErrorLine;
 import com.inman.service.AdjustmentService;
-import com.inman.service.AutomatedPlanningService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +42,7 @@ public class AdjustmentController {
     public ResponseEntity<?> apBasic (@RequestBody GenericSingleId genericSingleId  ) {
         TextResponse textResponse = new TextResponse();
 
-        adjustmentService.reportAll(genericSingleId.getIdToSearchFor(), textResponse );
+        adjustmentService.reportAll(genericSingleId.idToSearchFor(), textResponse );
 
         return ResponseEntity.badRequest().body( textResponse );
     }

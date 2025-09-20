@@ -1,12 +1,15 @@
 package com.inman.service;
 
+import com.inman.controller.Application;
 import com.inman.entity.Item;
 import com.inman.entity.OrderLineItem;
+import com.inman.entity.Text;
 import com.inman.model.request.GenericSingleId;
 import com.inman.model.request.OrderLineItemRequest;
 import com.inman.model.response.ResponsePackage;
 import com.inman.model.response.TextResponse;
 import com.inman.model.rest.ErrorLine;
+import com.inman.repository.DdlRepository;
 import com.inman.repository.ItemRepository;
 import com.inman.repository.OrderLineItemRepository;
 import enums.CrudAction;
@@ -16,6 +19,7 @@ import enums.SourcingType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
@@ -26,6 +30,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import static com.inman.controller.Messages.ITEM_REF_NOT_FOUND;
+import static com.inman.controller.Utility.*;
 import static java.lang.Math.abs;
 
 @Service
@@ -34,52 +40,64 @@ public class AutomatedPlanningService {
     static Logger logger = LoggerFactory.getLogger(AutomatedPlanningService.class);
     private final ItemRepository itemRepository;
     private final OrderLineItemRepository orderLineItemRepository;
+    private final DdlRepository ddlRepository;
     private final OrderLineItemService orderLineItemService;
-
-        private void outputErrorAndThrow(String message, ResponsePackage<?> responsePackage) {
-        logger.info(message);
-        responsePackage.getErrors().add(new ErrorLine(1, message));
-        throw new RuntimeException(message);
-    }
+    private final BomLogicService bomLogicService;
 
     @Autowired
     public AutomatedPlanningService(
                                     ItemRepository itemRepository,
                                     OrderLineItemRepository orderLineItemRepository,
-                                    OrderLineItemService orderLineItemService) {
+                                    OrderLineItemService orderLineItemService,
+                                    DdlRepository ddlRepository,
+                                    BomLogicService bomLogicService) {
 
 
         this.itemRepository = itemRepository;
         this.orderLineItemRepository = orderLineItemRepository;
         this.orderLineItemService = orderLineItemService;
+        this.ddlRepository = ddlRepository;
+        this.bomLogicService = bomLogicService;
     }
 
     @Transactional
     public void basic( GenericSingleId genericSingleId, TextResponse textResponse) {
-        ArrayList<OrderLineItem> newOrders = new ArrayList<>();
+        if ( Application.getTestName().contains( "0803")) {
+            logger.info( "abcdef");
+        }
+
         List<Item> itemsToBePlanned;
-        if ( genericSingleId.getIdToSearchFor() == -1 ) {
+        if ( genericSingleId.idToSearchFor() == -1 ) {
+            //  calculateMaxDepths( textResponse );
             itemsToBePlanned = itemRepository.findAllByOrderByMaxDepthAsc();
         } else {
             itemsToBePlanned = new ArrayList<>();
-            Optional<Item> item = itemRepository.findById( genericSingleId.getIdToSearchFor() );
+            Optional<Item> item = Optional.ofNullable(itemRepository.findById(genericSingleId.idToSearchFor()));
             if ( item.isPresent() ) {
                 itemsToBePlanned.add( item.get() );
             } else {
-                outputErrorAndThrow( "Item " + genericSingleId.getIdToSearchFor() + " not found", textResponse );
+                outputErrorAndThrow( ITEM_REF_NOT_FOUND.formatted( "Item Id Parameter", genericSingleId.idToSearchFor() ),
+                        textResponse, logger );
             }
         }
 
         for (Item item : itemsToBePlanned) {
+            if ( item.getId() == 17 ) {
+                logger.info( "Your mother");
+            }
+            ArrayList<OrderLineItem> newOrders = new ArrayList<>();
             inventoryBalanceForItem(item, textResponse, newOrders);
 
-            if ( item.getId() == 5 ) {
-                logger.info( "Some 5 is coming");
+            if (!newOrders.isEmpty()) {
+                if ( normalize( genericSingleId.options() ).length() != 0 )  {
+                    textResponse.addText("Applying proposed changes", Optional.of(logger));
+                    applyProposedChanges(newOrders);
+                } else {
+                    textResponse.addText("Applying consolidated  changes", Optional.of(logger));
+                    List<OrderLineItem> consolidatedOrders = consolidateProposedChanges(newOrders, item);
+                    applyProposedChanges(consolidatedOrders);
+                }
             }
-
-            List<OrderLineItem> consolidatedOrders = consolidateProposedChanges( newOrders, item );
-
-            applyProposedChanges(consolidatedOrders );
         }
     }
 
@@ -93,6 +111,11 @@ public class AutomatedPlanningService {
      */
     public void inventoryBalanceForItem(Item item, TextResponse textResponse, ArrayList<OrderLineItem> newOrders) {
         List<OrderLineItem> orders = orderLineItemRepository.findByItemIdAndOrderStateOrderByCompleteDate(item.getId(), OrderState.OPEN);
+
+        if (Application.getTestName().contains( "0805") && item.getId() == 12  ) {
+            logger.info("Applying proposed changes");
+        }
+
         double balance = item.getQuantityOnHand();
         if (!orders.isEmpty()) {
             textResponse.addText("", Optional.of(logger));
@@ -103,6 +126,8 @@ public class AutomatedPlanningService {
                     " and there are " + orders.size() + " open orders", Optional.of(logger));
             textResponse.addText(OrderLineItem.header + "  Balance", Optional.of(logger));
         }
+
+
         for (OrderLineItem order : orders) {
             balance += order.getEffectiveQuantityOrdered();
             textResponse.addText(String.format("%s %8.2f", order.toStringWithSignedQuantity(), balance), Optional.of(logger));
@@ -112,49 +137,63 @@ public class AutomatedPlanningService {
     }
 
     /**
-     * Optionally (if the new orders is non-null) create new order to ensure the balance stays above 0.
-     *
-     * @param item         which owns the order.
-     * @param textResponse in/out overall response message.
-     * @param newOrders    in/out collection of new orders if needed.  When null this function is a noop.
-     * @param startDateOfParentOrder        Make sure that this component supply arrives before the order starts.
-     * @param balance      current balance after applying all orders.
-     * @return updated balance from any newly created orders.
+     * Refactored method.
+     * This method now calls the new helper method createOrderAndUpdateBalance.
      */
-    private double createNewOrderAsNeeded(Item item, TextResponse textResponse, ArrayList<OrderLineItem> newOrders, String startDateOfParentOrder, double balance) {
-
-        if (newOrders == null || balance >= 0.0 ) {
+    private double createNewOrderAsNeeded(Item item, TextResponse textResponse,
+                                          ArrayList<OrderLineItem> newOrders,
+                                          String startDateOfParentOrder, double balance) {
+        if (newOrders == null || balance >= 0.0) {
             return balance;
         }
+        if (item.getId() == 5) {
+            logger.info("Number 5.");
+        }
+        // Call to the new helper method.
+        var result = createOrderAndUpdateBalance(item, startDateOfParentOrder, balance);
+        OrderLineItem newOrder = result.getFirst();
+        balance = result.getSecond();
+        newOrders.add(newOrder);
+        textResponse.addText(String.format("%s %8.2f", newOrder.toStringWithSignedQuantity(), balance), Optional.of(logger));
+        return balance;
+    }
 
+    // This is a new helper method that we extract from the original one.
+    private Pair<OrderLineItem, Double> createOrderAndUpdateBalance(Item item,
+                                                                    String startDateOfParentOrder,
+                                                                    double balance) {
         OrderLineItem newOrder = new OrderLineItem();
-
         newOrder.setCrudAction(CrudAction.INSERT);
         newOrder.setItemId(item.getId());
-        newOrder.setQuantityOrdered( abs(balance) );
+        newOrder.setQuantityOrdered(abs(balance));
         newOrder.setStartDate(null);
         newOrder.setCompleteDate(startDateOfParentOrder);
         newOrder.setParentOliId(0L);
         newOrder.setOrderState(OrderState.OPEN);
         newOrder.setOrderType(item.getSourcing() == SourcingType.MAN ? OrderType.MOHEAD : OrderType.PO);
-        newOrders.add(newOrder);
         balance = newOrder.getEffectiveQuantityOrdered() + balance;
-        textResponse.addText(String.format("%s %8.2f", newOrder.toStringWithSignedQuantity(), balance), Optional.of(logger));
-        return balance;
+        return Pair.of( newOrder, balance);
     }
 
 
     private void applyProposedChanges(List<OrderLineItem> orders) {
 
+        if (Application.getTestName().contains( "0805") ) {
+            logger.info("Applying proposed changes");
+        }
         OrderLineItemRequest crudBatch = new OrderLineItemRequest(orders.toArray(new OrderLineItem[0]));
         ResponsePackage<OrderLineItem> responsePackage = new ResponsePackage<>();
 
-        orderLineItemService.applyCrud(crudBatch, responsePackage);
+        try {
+            orderLineItemService.applyCrud(crudBatch, responsePackage);
+        } catch (Exception e) {
+            logger.error("Error applying proposed changes: %s".formatted(e.getMessage()));
+        }
 
         if (!responsePackage.getErrors().isEmpty()) {
             logger.info("Messages when trying to create orders: ");
             for (ErrorLine error : responsePackage.getErrors()) {
-                logger.info( "-" + error.getMessage());
+                logger.info("-%s".formatted(error.getMessage()));
             }
         }
     }
@@ -163,7 +202,8 @@ public class AutomatedPlanningService {
         MultiValueMap<String,OrderLineItem> proposedChanges = new LinkedMultiValueMap<>();
 
         for (OrderLineItem order : orders) {
-            if ( order.getOrderType() == OrderType.PO ) {
+            if ( order.getOrderType() == OrderType.PO
+            || order.getOrderType() == OrderType.MOHEAD ) {
                 proposedChanges.add(order.getCompleteDate(), order);
             }
         }
@@ -180,42 +220,44 @@ public class AutomatedPlanningService {
 
             for ( OrderLineItem oneOfTheOrdersOnCompletionDate : ordersWithSameCompletedDate ) {
                 orderQuantity += oneOfTheOrdersOnCompletionDate.getQuantityOrdered();
-                logger.info( "  oneOfTheOrders " + oneOfTheOrdersOnCompletionDate );
+                logger.info("  oneOfTheOrders {}", oneOfTheOrdersOnCompletionDate);
             }
             orderQuantity = item.applyOrderQuantityRules( orderQuantity );
             consolidatedOrderLine.setQuantityOrdered( orderQuantity );
             consolidatedOrders.add( consolidatedOrderLine );
-            logger.info( "Final Consolidated Order " + consolidatedOrderLine );
+            logger.info("Final Consolidated Order {}", consolidatedOrderLine);
         }
         return consolidatedOrders;
     }
 
-//    private void calculateMaxDepths(TextResponse textResponse) {
-//        outputInfo("Resetting max depth...", textResponse);
-//
-//        var numberOfResets = ddlRepository.resetMaxDepth();
-//
-//        ArrayList<Text> texts = new ArrayList<>();
-//        textResponse.addText(numberOfResets + " items were reset", Optional.of(logger));
-//
-//        List<Item> items = itemRepository.findAll();
-//
-//        for (Item item : items) {
-//            logger.info("Processing item {}:{}", item.getId(), item.getSummaryId());
-//            bomLogicService.updateMaxDepthOf(item.getId(), texts);
-//        }
-//    }
+    private void calculateMaxDepths(TextResponse textResponse) {
+        outputInfo("Resetting max depth", textResponse, logger );
+
+        var numberOfResets = ddlRepository.resetMaxDepth();
+
+        ArrayList<Text> texts = new ArrayList<>();
+        textResponse.addText(numberOfResets + " items were reset", Optional.of(logger));
+
+        List<Item> items = itemRepository.findAll();
+
+        for (Item item : items) {
+            logger.info("Processing item {}:{}", item.getId(), item.getSummaryId());
+            bomLogicService.updateMaxDepthOf(item.getId(), texts);
+        }
+    }
 
     public void inventoryBalanceProjection(GenericSingleId genericSingleId, TextResponse textResponse) {
 
         Item[] items;
-        if (genericSingleId.getIdToSearchFor() < 0) {
+        if (genericSingleId.idToSearchFor() < 0) {
             items = itemRepository.itemsByDepthAndId();
         } else {
             items = new Item[1];
-            Optional<Item> singleItem = itemRepository.findById(genericSingleId.getIdToSearchFor());
+            Optional<Item> singleItem = Optional.ofNullable(itemRepository.findById(genericSingleId.idToSearchFor()));
             if (singleItem.isEmpty() ) {
-                outputErrorAndThrow("ItemId " + genericSingleId.getIdToSearchFor() + " not found ", textResponse);
+                outputErrorAndThrow( ITEM_REF_NOT_FOUND.formatted( "IBP Parameter", genericSingleId.idToSearchFor() ),
+                        textResponse, logger);
+                return;
             }
             items[ 0 ] = singleItem.get();
         }

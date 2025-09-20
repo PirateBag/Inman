@@ -56,7 +56,15 @@ public class OrderLineItemService {
     private void insert(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse ) {
         String message;
         OrderLineItem updatedOrderLineItem;
+
+        if ( orderLineItem.getItemId() == 12 )
+        {
+            logger.info( "Something evil");
+        }
+
         try {
+
+
             Item item = itemRepository.findById(orderLineItem.getItemId());
 
             LocalDate derviedStartOrCompleted ;
@@ -110,8 +118,18 @@ public class OrderLineItemService {
         int numberOfAddedItems = 1;
         for (BomPresent bomPresent : childrenOfItem) {
             assert item != null;
+
+
+
             OrderLineItem oli = createOrderLineItem(parentOli, bomPresent, item );
+
+            if ( oli.getParentOliId() == 15 && oli.getItemId() ==12 ) {
+                logger.info( "veil 12 15");
+            }
+
             OrderLineItem updatedOli = orderLineItemRepository.save(oli);
+
+
             logger.info(updatedOli.toString());
             numberOfAddedItems++;
         }
@@ -398,6 +416,12 @@ public class OrderLineItemService {
 
         for (OrderLineItem orderLineItem : crudBatch.rows()) {
             logger.info("{} on {}", orderLineItem.getCrudAction(), orderLineItem);
+
+            if ( orderLineItem.getItemId() ==12
+                &&
+            orderLineItem.getCompleteDate().contains("2025-0914") ) {
+                logger.info("are you kiddin gme?");
+            }
 
             if (orderLineItem.getCrudAction() == CrudAction.INSERT) {
                 insert(orderLineItem, responsePackage );

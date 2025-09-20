@@ -9,8 +9,6 @@ import com.inman.model.response.ItemResponse;
 import com.inman.model.response.ResponsePackage;
 import com.inman.model.response.ResponseType;
 import com.inman.model.rest.*;
-import com.inman.prepare.BomPrepare;
-import com.inman.prepare.ItemPrepare;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,18 +70,8 @@ public class ItemAndStatus {
     }
     
     @CrossOrigin
-    @RequestMapping( PrepareResponse.rootUrl )
-    public PrepareResponse prepare( ) {
-    	
-    	ItemPrepare itemPrepare = new ItemPrepare();
-    	return itemPrepare.go( itemRepository );
-    }
-    
-    @CrossOrigin
     @RequestMapping( value = SearchItemRequest.singleUrl, method=RequestMethod.GET )
     public @ResponseBody Item[] searchItem(@PathVariable long itemId ) {
-
-		makeSureBasicContentIsReady();
 
 		ItemSearchLogic itemSearch = new ItemSearchLogic();
     	return itemSearch.findById( itemRepository, itemId );
@@ -94,8 +82,6 @@ public class ItemAndStatus {
     		consumes = "application/json",
     		produces = "application/json")
     public ResponseEntity<?> searchItemExpGeneric( @RequestBody SearchItemRequest request ) {
-
-		makeSureBasicContentIsReady();
 
 		ResponsePackage responsePackage = new ItemResponse( ResponseType.QUERY );
     	
@@ -141,9 +127,6 @@ public class ItemAndStatus {
     public ResponseEntity<?> itemAdd(
     		@RequestBody ItemAddRequest itemAddRequest )
     {
-		makeSureBasicContentIsReady();
-
-
 		var responsePackage = itemAddLogic.persistItem( itemRepository, itemAddRequest );
 
     	return ResponseEntity.ok().body( responsePackage );
@@ -153,8 +136,6 @@ public class ItemAndStatus {
     @RequestMapping( value = ItemDeleteRequest.deleteUrl, method=RequestMethod.GET )
     public ResponseEntity<?> itemDelete(
     		@RequestParam( "id") String id ) {
-
-		makeSureBasicContentIsReady();
 
 		ItemResponse responsePackage = new ItemResponse( ResponseType.DELETE );
     	ItemDeleteRequest itemDeleteRequest = null;
@@ -208,14 +189,6 @@ public class ItemAndStatus {
 
     	return responsePackage;
     }
-	private void makeSureBasicContentIsReady() {
-		if ( !Application.isPrepared() ) {
-
-			new ItemPrepare().go( itemRepository );
-			new BomPrepare().go( bomRepository );
-			Application.setIsPrepared( true );
-		}
-	}
 
 	@CrossOrigin
 	@RequestMapping( value = ItemAndStatus.CLEAR_ALL_DATA, method=RequestMethod.POST )
@@ -223,9 +196,9 @@ public class ItemAndStatus {
 	{
 		ResponsePackage<Text> responsePackage;
 
-		if ( genericSingleId.getIdToSearchFor() == 1L ) {
+		if ( genericSingleId.idToSearchFor() == 1L ) {
 			responsePackage = clearAllData(itemRepository);
-		} else 	if ( genericSingleId.getIdToSearchFor() == 2L ) {
+		} else 	if ( genericSingleId.idToSearchFor() == 2L ) {
 			responsePackage = clearAllOrders(itemRepository);
 		} else {
 			responsePackage = new ResponsePackage<>();

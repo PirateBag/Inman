@@ -179,6 +179,8 @@ declare -a tests=(
     # order 1 building W-005.
     "0803_ap;ap/basic"
 
+    "stopTesting"
+
     # Create more orders for W-005 over time...
     # The prior PO purchjase for W-017 has been retained, but until we plan,
     # there is a shortfall.
@@ -215,22 +217,23 @@ declare -a tests=(
 #   11   17       10    75.00     0.00  2025-1207  2025-1211 OPEN  MODET NONE"
 
 
+
+
+
   #Create four orders for W-003, which is slightly more complicated.
+
   "0806_oliCrud;oli/crud"
   "0807_oliReport;oli/showAll"
-
-  "0808_ap;ap/basic"
+    "0808_ap;ap/basic"
   "0809_ibp;ap/inventoryBalanceProjection"
-  "stopTesting"
+
 
 #    Create one order for W-001, and look for all the cascade order creation.
     "0810_oliCrud;oli/crud"
-
-        "stopTesting"
-
     "0811_ap;ap/basic"
+    "stopTesting"
 
-    # Item Adjustements...
+    # Item Balance Adjustments...
     "0901_adjust;adjustment/crud"
     "0903_adjustReportAll;adjustment/reportAll"
 

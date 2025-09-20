@@ -73,7 +73,6 @@ public class ItemCrud {
         if ( Application.getTestName().contains( "XXX")) {
             logger.info( "You are now 0403");
         }
-
         for (Item itemCrudToBeCrud : itemCrudBatch.updatedRows()) {
 
             logger.info("{} on {}", itemCrudToBeCrud.getCrudAction(), itemCrudToBeCrud);

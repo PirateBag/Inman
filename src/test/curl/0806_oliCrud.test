@@ -1,11 +1,4 @@
 
-===JSON===
-
-{ "rows" : [
-        {  "crudAction" : "INSERT",  "itemId" : "3", "parentOliId" : "0", "quantityOrdered" : "500", "quantityAssigned" : "0.0",
-        "completeDate" : "2025-0915",  "orderState" : "OPEN",
-        "orderType" : "MOHEAD" },
-
         {  "crudAction" : "INSERT",  "itemId" : "3", "parentOliId" : "0", "quantityOrdered" : "1000", "quantityAssigned" : "0.0",
         "completeDate" : "2025-1015", "orderState" : "OPEN",
         "orderType" : "MOHEAD" },
@@ -16,5 +9,12 @@
 
         {  "crudAction" : "INSERT",  "itemId" : "3", "parentOliId" : "0", "quantityOrdered" : "50", "quantityAssigned" : "0.0",
         "completeDate" : "2025-1215",  "orderState" : "OPEN",
+        "orderType" : "MOHEAD" }
+
+===JSON===
+
+{ "rows" : [
+        {  "crudAction" : "INSERT",  "itemId" : "3", "parentOliId" : "0", "quantityOrdered" : "500", "quantityAssigned" : "0.0",
+        "completeDate" : "2025-0915",  "orderState" : "OPEN",
         "orderType" : "MOHEAD" }
 ] }

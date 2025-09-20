@@ -3,11 +3,6 @@ package com.inman.integration;
 import com.inman.entity.Item;
 import com.inman.model.response.ItemResponse;
 import com.inman.model.response.ResponseType;
-import com.inman.prepare.ItemPrepare;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.Arrays;
 
 import static org.junit.Assert.assertTrue;
 

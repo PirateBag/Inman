@@ -27,8 +27,20 @@ public class AutomatedPlanningController {
         TextResponse responsePackage = new TextResponse();
         responsePackage.setResponseType( ResponseType.MULTILINE );
         processPlanning( genericSingleId, responsePackage);
-        return ResponseEntity.badRequest().body( responsePackage );
+        return ResponseEntity.ok().body( responsePackage );
     }
+    @CrossOrigin
+    @RequestMapping(value = AutomatedPlan_Url, method = RequestMethod.GET)
+    public ResponseEntity<?> apBasicForGet (  @RequestParam int idToSearchFor) {
+        TextResponse responsePackage = new TextResponse();
+        responsePackage.setResponseType( ResponseType.MULTILINE );
+
+        GenericSingleId genericSingleId = new GenericSingleId((long) idToSearchFor, GenericSingleId.OPTION_NONE );
+        processPlanning( genericSingleId, responsePackage);
+        return ResponseEntity.ok().body(responsePackage);
+    }
+
+
 
     @CrossOrigin
     @RequestMapping(value = InventoryBalanceProjection, method = RequestMethod.POST)
@@ -47,7 +59,7 @@ public class AutomatedPlanningController {
         TextResponse responsePackage = new TextResponse();
         responsePackage.setResponseType( ResponseType.MULTILINE );
 
-        GenericSingleId genericSingleId = new GenericSingleId((long) idToSearchFor);
+        GenericSingleId genericSingleId = new GenericSingleId( idToSearchFor, GenericSingleId.OPTION_NONE );
 
         automatedPlanningService.inventoryBalanceProjection(genericSingleId, responsePackage);
         return ResponseEntity.badRequest().body(responsePackage);

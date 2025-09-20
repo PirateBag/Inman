@@ -31,7 +31,7 @@ public class OrderLineItemController {
             consumes = "application/json",
             produces = "application/json" )
     public ResponseEntity<?> OrderLineItem_ShowAll( @RequestBody GenericSingleId genericSingleId  ) {
-        TextResponse textResponse = orderLineItemService.orderReport(genericSingleId.getIdToSearchFor()  );
+        TextResponse textResponse = orderLineItemService.orderReport(genericSingleId.idToSearchFor()  );
 
         textResponse.setResponseType(ResponseType.MULTILINE );
         if (textResponse.getData().isEmpty()) {
