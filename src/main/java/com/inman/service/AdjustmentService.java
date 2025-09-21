@@ -1,6 +1,6 @@
 package com.inman.service;
 
-import com.inman.controller.Messages;
+import com.inman.controller.Application;
 import com.inman.controller.Utility;
 import com.inman.entity.Adjustment;
 import com.inman.entity.Item;
@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.inman.controller.Messages.*;
-import static com.inman.controller.Utility.*;
-import static java.lang.Math.round;
+import static com.inman.controller.Utility.outputErrorAndThrow;
+import static com.inman.controller.Utility.outputInfo;
 
 @Service
 public class AdjustmentService {
@@ -88,7 +88,6 @@ public class AdjustmentService {
      * Handle adjustements to inventory items only unrelated to orders.
      * @param adjustment
      * @param response
-     * @param lineNumber
      *
      * Sideffects:  Item QuantityOnHand altered by adjustement and a new Adjustement is audited.
      */
@@ -123,6 +122,9 @@ public class AdjustmentService {
      */
     private void insertOrderAdjustment(  Adjustment adjustment, AdjustmentCrudResponse response )
     {
+        if (Application.getTestName().contains( "0921")) {
+            logger.info("blah");
+        }
         Item item = itemRepository.findById( adjustment.getItemId() );
         if ( item == null ) {
             outputErrorAndThrow(ITEM_REF_NOT_FOUND.formatted( "Adustment",  adjustment.getItemId() ),
@@ -131,8 +133,8 @@ public class AdjustmentService {
 
         Optional<OrderLineItem> orderLineItem = orderLineItemRepository.findById( adjustment.getOrderId() );
         if ( orderLineItem.isEmpty() ) {
-            outputErrorAndThrow(ORDER_REF_NOT_FOUND.formatted( "Adustment",  adjustment.getItemId() ),
-                    response, logger);
+            outputErrorAndThrow(ORDER_REF_NOT_FOUND.formatted(  adjustment.getItemId(), adjustment.getOrderId(), "OrderAdjustment" ),
+                   response, logger);
         }
 
         if ( adjustment.getItemId() != orderLineItem.get().getItemId() ) {
@@ -165,7 +167,7 @@ public class AdjustmentService {
                 var fractionOfOrder = Utility.round( adjustment.getAmount() / orderLineItem.get().getQuantityOrdered(), 1 );
                 for ( OrderLineItem child : childrenOfMoHead ) {
                     Adjustment childAdjustment = new Adjustment( child.getQuantityOrdered()*fractionOfOrder,
-                            child.getItemId(), 0, child.getOrderType(), child.getCompleteDate(), AdjustmentType.XFER );
+                            child.getItemId(), child.getId(), child.getOrderType(), adjustment.getEffectiveDate(), AdjustmentType.XFER );
                     proposedAdjustments.add( childAdjustment );
                 }
 
@@ -175,9 +177,6 @@ public class AdjustmentService {
                     logger.info( proposedAdjustment.toString() );
                 }
             }
-
-
-
         } else if ( orderLineItem.get().getOrderType() == OrderType.MODET ){
             newQuantityOnHand = oldQuantityOnHand - adjustment.getAmount();
             newQuantityAssigned =oldQuantityAssigned + adjustment.getAmount();

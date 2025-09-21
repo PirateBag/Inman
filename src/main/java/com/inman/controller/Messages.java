@@ -12,7 +12,7 @@ public class Messages {
 
     public static final String ITEM_REF_NOT_FOUND = "%s item ref (%d) not found";
 
-    public static final String ORDER_REF_NOT_FOUND = "%s item ref (%d) not found";
+    public static final String ORDER_REF_NOT_FOUND = "Item (%d) referenced by Order (%d) in %s not found";
 
     public static final String ITEM_MANUFACTURED = "Item (%s) is manufactured and can't be purchased.";
     public static final String ITEM_PURCHASED = "Item (%s) is purchased and cannot be manufactured.";

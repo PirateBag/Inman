@@ -2,7 +2,7 @@
   "responseType" : null,
   "errors" : [ {
     "key" : 0,
-    "message" : "Adustment item ref (17) not found"
+    "message" : "Item (17) referenced by Order (9999) in OrderAdjustment not found"
   } ],
   "data" : [ ]
 }

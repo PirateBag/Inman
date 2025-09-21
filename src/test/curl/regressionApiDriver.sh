@@ -235,8 +235,7 @@ declare -a tests=(
     # Item Balance Adjustments...
     "0901_adjust;adjustment/crud"
     "0903_adjustReportAll;adjustment/reportAll"
-    "stopTesting"
-    
+
     # Order+Item Adjustments
     "0905_adjustmentOrder;adjustment/crud"
 
@@ -252,6 +251,8 @@ declare -a tests=(
 
     # The more complicated XFER adjustments to live orders.
     "0921_adjustmentMohead;adjustment/crud"
+    "0923_itemMaster;itemReport/showAllItems"
+    "0925_oliReport;oli/showAll"
 
    )
 #   "stopTesting"

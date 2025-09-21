@@ -1,8 +1,5 @@
 {
   "responseType" : null,
-  "errors" : [ {
-    "key" : 0,
-    "message" : "Adustment item ref (0) not found"
-  } ],
+  "errors" : [ ],
   "data" : [ ]
 }
