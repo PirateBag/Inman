@@ -1,6 +1,6 @@
 package com.inman.model.rest;
 
-import com.inman.service.Message;
+import com.inman.controller.Messages;
 import com.inman.service.QueryParameterException;
 
 public class ItemDeleteRequest {
@@ -21,7 +21,7 @@ public class ItemDeleteRequest {
 		}
 
 		if ( numberOfParameters != numberOfExpectedParameters ) {
-			throw new QueryParameterException( String.format( Message.WRONG_NUMBER_OF_PARAMETERS, 2, numberOfExpectedParameters ) );
+			throw new QueryParameterException( Messages.WRONG_NUMBER_OF_PARAMETERS.formatted(2, numberOfExpectedParameters  ) );
 		}
 	}
 	

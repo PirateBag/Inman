@@ -89,7 +89,7 @@ public class ItemAndStatus {
     		ItemSearchLogic itemSearch = new ItemSearchLogic();
     		Item[] items = itemSearch.bySearchItemRequest( itemRepository, request );
     		if ( items.length == 0 ) {
-    			responsePackage.addError( new ErrorLine( 0, "0", Message.NO_DATA_FOR_PARAMETERS ));
+    			responsePackage.addError( new ErrorLine( 0, "0", Messages.NO_DATA_FOR_PARAMETERS ));
     		}
     		responsePackage.getData().add( items[ 0 ] );
     	} catch ( Exception e ) {
@@ -111,7 +111,7 @@ public class ItemAndStatus {
 		try {
 			Item[] items = itemRepository.findAll().toArray(new Item[0]);
 			if ( items.length == 0 ) {
-				responsePackage.addError( new ErrorLine( 0, "0", Message.NO_DATA_FOR_PARAMETERS ));
+				responsePackage.addError( new ErrorLine( 0, "0", Messages.NO_DATA_FOR_PARAMETERS ));
 			}
 
 			responsePackage.getData().add( items[ 0 ] );
@@ -145,7 +145,7 @@ public class ItemAndStatus {
     		Item [] items = itemDeleteLogic.go( itemRepository, itemDeleteRequest );
     		if ( items.length != 0 ) {
     			responsePackage.addError( new ErrorLine( 0, "0", 
-    					String.format( Message.WRONG_NUMBER_OF_PARAMETERS, 0, items.length )) );
+    					String.format( Messages.WRONG_NUMBER_OF_PARAMETERS, 0, items.length )) );
     		}
     		responsePackage.getData().add( items[ 0 ] );
     		

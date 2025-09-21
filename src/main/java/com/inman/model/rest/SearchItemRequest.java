@@ -1,6 +1,6 @@
 package com.inman.model.rest;
 
-import com.inman.service.Message;
+import com.inman.controller.Messages;
 import com.inman.service.QueryParameterException;
 
 public class SearchItemRequest {
@@ -39,7 +39,7 @@ public class SearchItemRequest {
 		}
 		
 		if ( numberOfParameters > 1 ) {
-			throw new QueryParameterException( Message.ITEM_SEARCH_PARAMETERS );
+			throw new QueryParameterException( Messages.ITEM_SEARCH_PARAMETERS );
 		}
 	}
 	

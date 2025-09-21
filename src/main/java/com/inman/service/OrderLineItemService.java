@@ -1,10 +1,14 @@
 package com.inman.service;
 
-import com.inman.controller.Application;
+import com.inman.controller.Messages;
 import com.inman.controller.Utility;
-import com.inman.entity.*;
+import com.inman.entity.BomPresent;
+import com.inman.entity.Item;
+import com.inman.entity.OrderLineItem;
+import com.inman.entity.Text;
 import com.inman.model.request.OrderLineItemRequest;
-import com.inman.model.response.*;
+import com.inman.model.response.ResponsePackage;
+import com.inman.model.response.TextResponse;
 import com.inman.model.rest.ErrorLine;
 import com.inman.repository.BomPresentRepository;
 import com.inman.repository.ItemRepository;
@@ -21,17 +25,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.TreeMap;
 
 import static com.inman.controller.Messages.*;
-import static com.inman.service.ReflectionHelpers.compareObjects;
 import static com.inman.controller.OrderLineItemController.OrderLineItem_AllOrders;
 import static com.inman.controller.Utility.*;
+import static com.inman.service.ReflectionHelpers.compareObjects;
 
 @Service
 public class OrderLineItemService {
 
-    private static final int MAX_REPORT_LINES = 15;
+    private static final int MAX_REPORT_LINES = 5;
 
     private static final Logger logger = LoggerFactory.getLogger(OrderLineItemService.class);
     private final ItemRepository itemRepository;
@@ -57,14 +64,7 @@ public class OrderLineItemService {
         String message;
         OrderLineItem updatedOrderLineItem;
 
-        if ( orderLineItem.getItemId() == 12 )
-        {
-            logger.info( "Something evil");
-        }
-
         try {
-
-
             Item item = itemRepository.findById(orderLineItem.getItemId());
 
             LocalDate derviedStartOrCompleted ;
@@ -82,11 +82,7 @@ public class OrderLineItemService {
             }
 
             validateOrderLineItemForMOInsertion(orderLineItem, oliResponse, item);
-            long oldOrderId = orderLineItem.getParentOliId();
             updatedOrderLineItem = orderLineItemRepository.save(orderLineItem);
-            if ( orderLineItem.getParentOliId() != oldOrderId ) {
-                logger.warn( "Panic button" );
-            }
             logger.info("inserted adjusted: {}", updatedOrderLineItem);
             oliResponse.getData().add(updatedOrderLineItem);
 
@@ -119,17 +115,8 @@ public class OrderLineItemService {
         for (BomPresent bomPresent : childrenOfItem) {
             assert item != null;
 
-
-
             OrderLineItem oli = createOrderLineItem(parentOli, bomPresent, item );
-
-            if ( oli.getParentOliId() == 15 && oli.getItemId() ==12 ) {
-                logger.info( "veil 12 15");
-            }
-
             OrderLineItem updatedOli = orderLineItemRepository.save(oli);
-
-
             logger.info(updatedOli.toString());
             numberOfAddedItems++;
         }
@@ -166,7 +153,8 @@ public class OrderLineItemService {
             if (orderLineItemFromRepository.isPresent()) {
                 orderLineItemRepository.delete(orderLineItemFromRepository.get());
             } else {
-                outputErrorAndThrow("Unable to find " + orderLineItem, oliResponse);
+
+                outputErrorAndThrow(Messages.ITEM_REF_NOT_FOUND.formatted( "OrderLineItem:Delete",orderLineItem.getItemId()), oliResponse);
             }
 
             if ( orderLineItem.getOrderState() == OrderState.OPEN ) {
@@ -241,9 +229,9 @@ public class OrderLineItemService {
      * close->plan:  delete child items.
      * close->open update children with new order state
      *
-     * @param oldOli
-     * @param newOli
-     * @param oliResponse
+     * @param oldOli the OLI to be changed.
+     * @param newOli new value of the oli.
+     * @param oliResponse i/o parameter:  response message under contruction.
      */
     private void updateChildrenOfOrder(OrderLineItem oldOli, OrderLineItem newOli, ResponsePackage<OrderLineItem> oliResponse) {
         if ( oldOli.getOrderState() == newOli.getOrderState() ) {
@@ -276,8 +264,6 @@ public class OrderLineItemService {
                 updateLineItemsWithNewState( newOli, oliResponse );
             }
         }
-
-
     }
 
     private void deleteChildLineItems(OrderLineItem newOli, ResponsePackage<OrderLineItem> oliResponse) {
@@ -410,18 +396,8 @@ public class OrderLineItemService {
     @Transactional
     public ResponsePackage<OrderLineItem> applyCrud(OrderLineItemRequest crudBatch,
                                                     ResponsePackage<OrderLineItem> responsePackage ) {
-        if (Application.isTestName("0719_oliCrud")) {
-            logger.info("You have arrived at " + Application.getTestName());
-    }
-
         for (OrderLineItem orderLineItem : crudBatch.rows()) {
             logger.info("{} on {}", orderLineItem.getCrudAction(), orderLineItem);
-
-            if ( orderLineItem.getItemId() ==12
-                &&
-            orderLineItem.getCompleteDate().contains("2025-0914") ) {
-                logger.info("are you kiddin gme?");
-            }
 
             if (orderLineItem.getCrudAction() == CrudAction.INSERT) {
                 insert(orderLineItem, responsePackage );

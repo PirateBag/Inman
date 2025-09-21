@@ -1,6 +1,5 @@
 package com.inman.service;
 
-import com.inman.controller.Application;
 import com.inman.entity.Item;
 import com.inman.entity.OrderLineItem;
 import com.inman.entity.Text;
@@ -62,9 +61,6 @@ public class AutomatedPlanningService {
 
     @Transactional
     public void basic( GenericSingleId genericSingleId, TextResponse textResponse) {
-        if ( Application.getTestName().contains( "0803")) {
-            logger.info( "abcdef");
-        }
 
         List<Item> itemsToBePlanned;
         if ( genericSingleId.idToSearchFor() == -1 ) {
@@ -82,18 +78,13 @@ public class AutomatedPlanningService {
         }
 
         for (Item item : itemsToBePlanned) {
-            if ( item.getId() == 17 ) {
-                logger.info( "Your mother");
-            }
             ArrayList<OrderLineItem> newOrders = new ArrayList<>();
             inventoryBalanceForItem(item, textResponse, newOrders);
 
             if (!newOrders.isEmpty()) {
                 if ( normalize( genericSingleId.options() ).length() != 0 )  {
-                    textResponse.addText("Applying proposed changes", Optional.of(logger));
                     applyProposedChanges(newOrders);
                 } else {
-                    textResponse.addText("Applying consolidated  changes", Optional.of(logger));
                     List<OrderLineItem> consolidatedOrders = consolidateProposedChanges(newOrders, item);
                     applyProposedChanges(consolidatedOrders);
                 }
@@ -111,10 +102,6 @@ public class AutomatedPlanningService {
      */
     public void inventoryBalanceForItem(Item item, TextResponse textResponse, ArrayList<OrderLineItem> newOrders) {
         List<OrderLineItem> orders = orderLineItemRepository.findByItemIdAndOrderStateOrderByCompleteDate(item.getId(), OrderState.OPEN);
-
-        if (Application.getTestName().contains( "0805") && item.getId() == 12  ) {
-            logger.info("Applying proposed changes");
-        }
 
         double balance = item.getQuantityOnHand();
         if (!orders.isEmpty()) {
@@ -146,10 +133,7 @@ public class AutomatedPlanningService {
         if (newOrders == null || balance >= 0.0) {
             return balance;
         }
-        if (item.getId() == 5) {
-            logger.info("Number 5.");
-        }
-        // Call to the new helper method.
+
         var result = createOrderAndUpdateBalance(item, startDateOfParentOrder, balance);
         OrderLineItem newOrder = result.getFirst();
         balance = result.getSecond();
@@ -178,9 +162,6 @@ public class AutomatedPlanningService {
 
     private void applyProposedChanges(List<OrderLineItem> orders) {
 
-        if (Application.getTestName().contains( "0805") ) {
-            logger.info("Applying proposed changes");
-        }
         OrderLineItemRequest crudBatch = new OrderLineItemRequest(orders.toArray(new OrderLineItem[0]));
         ResponsePackage<OrderLineItem> responsePackage = new ResponsePackage<>();
 
@@ -217,15 +198,12 @@ public class AutomatedPlanningService {
             OrderLineItem consolidatedOrderLine = new OrderLineItem( ordersWithSameCompletedDate.get( 0 ) );
             consolidatedOrderLine.setQuantityOrdered( 0.0f );
 
-
             for ( OrderLineItem oneOfTheOrdersOnCompletionDate : ordersWithSameCompletedDate ) {
                 orderQuantity += oneOfTheOrdersOnCompletionDate.getQuantityOrdered();
-                logger.info("  oneOfTheOrders {}", oneOfTheOrdersOnCompletionDate);
             }
             orderQuantity = item.applyOrderQuantityRules( orderQuantity );
             consolidatedOrderLine.setQuantityOrdered( orderQuantity );
             consolidatedOrders.add( consolidatedOrderLine );
-            logger.info("Final Consolidated Order {}", consolidatedOrderLine);
         }
         return consolidatedOrders;
     }
@@ -268,7 +246,6 @@ public class AutomatedPlanningService {
             }
         }
     }
-
 }
 
 

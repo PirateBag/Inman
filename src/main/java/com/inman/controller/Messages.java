@@ -28,4 +28,9 @@ public class Messages {
     public static final String ADJUST_ORDER_TYPE = "ITEM adjustment can't have an order type.  XFER must have an order type. ";
 
     public static final String ORDER_AND_ADJUSTMENT_DISAGREE_ITEM = "Order (%d) Item %d and Adjustment Item %d must specify same item.";
+
+    public final static String ITEM_SEARCH_PARAMETERS = "Provide no parameters to see all, or only one parameter to filter on that attribute.";
+    public final static String NO_DATA_FOR_PARAMETERS = "These Query Parameters did not match any data";
+    public final static String WRONG_NUMBER_OF_PARAMETERS = "Inman expected $1%d parameters but only $2%d parameters were observed";
+
 }
