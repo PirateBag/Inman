@@ -1,6 +1,5 @@
 package com.inman.service;
 
-import com.inman.controller.Application;
 import com.inman.controller.Utility;
 import com.inman.entity.Adjustment;
 import com.inman.entity.Item;
@@ -20,10 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static com.inman.controller.Messages.*;
 import static com.inman.controller.Utility.outputErrorAndThrow;
@@ -57,10 +53,11 @@ public class AdjustmentService {
 
         for ( Adjustment adjustment : adjustmentCrudRequest.rows() ) {
             logger.info("Adjustment {} ", adjustment.toString() );
-            switch ( adjustment.getCrudAction() ) {
-                case INSERT ->  insert( adjustment, response );
-                default -> Utility.outputErrorAndThrow("Crud Action " + adjustment.getCrudAction() + " not supported",
-                  response, logger);
+            if (Objects.requireNonNull(adjustment.getCrudAction()) == CrudAction.INSERT) {
+                insert(adjustment, response);
+            } else {
+                outputErrorAndThrow("Crud Action " + adjustment.getCrudAction() + " not supported",
+                        response, logger);
             }
         }
         logger.info("Update loop exited with {} errors", response.getErrors().size() );
@@ -81,11 +78,11 @@ public class AdjustmentService {
     }
 
     /**
-     * Handle adjustements to inventory items only unrelated to orders.
-     * @param adjustment
-     * @param response
+     * Handle adjustments to inventory items only unrelated to orders.
+     * @param adjustment involving an item and an order line item.
+     * @param response with errors and messages.
      *
-     * Sideffects:  Item QuantityOnHand altered by adjustement and a new Adjustement is audited.
+     * Side effects:  Item QuantityOnHand altered by adjustment and a new Adjustment is audited.
      */
     private void insertItemAdjustment(  Adjustment adjustment, AdjustmentCrudResponse response )
     {
@@ -95,7 +92,7 @@ public class AdjustmentService {
 
         Item item = itemRepository.findById( adjustment.getItemId() );
         if ( item == null ) {
-            outputErrorAndThrow("Item " + adjustment.getItemId() + " not found", response, logger);
+            outputErrorAndThrow(ITEM_REF_NOT_FOUND.formatted( "InsertItemAdjustment", adjustment.getItemId() ), response, logger);
         }
 
         assert item != null;
@@ -106,11 +103,11 @@ public class AdjustmentService {
         logger.info( "Updated balance of {} from {} to {}", item.getSummaryId(), oldBalance, newBalance );
         itemRepository.save( item );
         adjustmentRepository.save( adjustment );
-        logger.info( "Item balance updated:  " + item  );
+        logger.info(STR."Item balance updated:  \{item}");
     }
 
     /**
-     * Handle adjustements to inventory balances when items are transferred to or from orders.
+     * Handle adjustments to inventory balances when items are transferred to or from orders.
      * @param adjustment
      * @param response
      *
@@ -118,9 +115,6 @@ public class AdjustmentService {
      */
     private void insertOrderAdjustment(  Adjustment adjustment, AdjustmentCrudResponse response )
     {
-        if (Application.getTestName().contains( "0921")) {
-            logger.info("blah");
-        }
         Item item = itemRepository.findById( adjustment.getItemId() );
         if ( item == null ) {
             outputErrorAndThrow(ITEM_REF_NOT_FOUND.formatted( "Adustment",  adjustment.getItemId() ),
@@ -174,7 +168,7 @@ public class AdjustmentService {
                     logger.info( proposedAdjustment.toString() );
                 }
 
-                var adjustChildrenRequest = new AdjustmentCrudRequest( proposedAdjustments.toArray( new Adjustment[proposedAdjustments.size()] ) );
+                var adjustChildrenRequest = new AdjustmentCrudRequest( proposedAdjustments.toArray(new Adjustment[0]) );
                 crud( adjustChildrenRequest, response );
 
                 logger.info( "Completed Recursive Adjustments.");

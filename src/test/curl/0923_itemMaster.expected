@@ -56,11 +56,11 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "W-013       Wagon Body                            2.25  PUR        2      0.00   100.00       20"
+    "message" : "W-013       Wagon Body                            2.25  PUR        2    -50.00   100.00       20"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "W-014       Red Paint                            20.00  PUR        2      0.00     4.00        5"
+    "message" : "W-014       Red Paint                            20.00  PUR        2    -12.50     4.00        5"
   }, {
     "id" : 0,
     "crudAction" : "NONE",

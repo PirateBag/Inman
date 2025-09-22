@@ -1,6 +1,7 @@
 package com.inman.controller;
 
 import com.inman.model.request.AdjustmentCrudRequest;
+import com.inman.model.request.GenericSingleId;
 import com.inman.model.response.AdjustmentCrudResponse;
 import com.inman.model.response.TextResponse;
 import com.inman.service.AdjustmentService;
@@ -33,7 +34,18 @@ public class AdjustmentController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body( responsePackage );
         }
+    }
 
+
+
+    @CrossOrigin
+    @RequestMapping(value = ADJUSTEMENT_REPORT_ALL, method = RequestMethod.POST )
+    public ResponseEntity<?> adjustment_show_put (@RequestBody GenericSingleId genericSingleId ) {
+        TextResponse textResponse = new TextResponse();
+
+        adjustmentService.reportAll( genericSingleId.idToSearchFor(), textResponse );
+
+        return ResponseEntity.ok().body( textResponse );
     }
 
     @CrossOrigin
