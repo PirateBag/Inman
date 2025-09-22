@@ -1,7 +1,6 @@
 package com.inman.controller;
 
 import com.inman.model.request.AdjustmentCrudRequest;
-import com.inman.model.request.GenericSingleId;
 import com.inman.model.response.AdjustmentCrudResponse;
 import com.inman.model.response.TextResponse;
 import com.inman.service.AdjustmentService;
@@ -25,7 +24,7 @@ public class AdjustmentController {
 
     @CrossOrigin
     @RequestMapping(value = ADJUSTEMENT_CRUDD, method = RequestMethod.POST)
-    public ResponseEntity<?> apBasic (@RequestBody AdjustmentCrudRequest adjustmentCrudRequest  ) {
+    public ResponseEntity<?> adjustment_show_post (@RequestBody AdjustmentCrudRequest adjustmentCrudRequest  ) {
         AdjustmentCrudResponse responsePackage = new AdjustmentCrudResponse();
 
         try {
@@ -38,13 +37,13 @@ public class AdjustmentController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = ADJUSTEMENT_REPORT_ALL, method = RequestMethod.POST )
-    public ResponseEntity<?> apBasic (@RequestBody GenericSingleId genericSingleId  ) {
+    @RequestMapping(value = ADJUSTEMENT_REPORT_ALL, method = RequestMethod.GET )
+    public ResponseEntity<?> adjustment_show_get (@RequestParam long idToReport   ) {
         TextResponse textResponse = new TextResponse();
 
-        adjustmentService.reportAll(genericSingleId.idToSearchFor(), textResponse );
+        adjustmentService.reportAll(idToReport, textResponse );
 
-        return ResponseEntity.badRequest().body( textResponse );
+        return ResponseEntity.ok().body( textResponse );
     }
 
 }

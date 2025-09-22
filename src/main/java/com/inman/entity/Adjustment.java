@@ -3,6 +3,7 @@ package com.inman.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inman.controller.Utility;
 import enums.AdjustmentType;
+import enums.CrudAction;
 import enums.OrderType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -24,13 +25,14 @@ public class Adjustment extends EntityMaster {
     private String effectiveDate;  /* YYYY-MMDD */
     private AdjustmentType adjustmentType;
 
-    public Adjustment(double amount, long itemId, long orderId, OrderType orderType, String effectiveDate, AdjustmentType adjustmentType) {
+    public Adjustment(double amount, long itemId, long orderId, OrderType orderType, String effectiveDate, AdjustmentType adjustmentType, CrudAction crudAction ) {
         this.amount = amount;
         this.itemId = itemId;
         this.orderId = orderId;
         this.orderType = orderType;
         this.effectiveDate = effectiveDate;
         this.adjustmentType = adjustmentType;
+        this.crudAction = crudAction;
         validate();
     }
 

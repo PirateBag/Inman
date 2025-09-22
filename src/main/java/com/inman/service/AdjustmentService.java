@@ -12,6 +12,7 @@ import com.inman.repository.AdjustmentRepository;
 import com.inman.repository.ItemRepository;
 import com.inman.repository.OrderLineItemRepository;
 import enums.AdjustmentType;
+import enums.CrudAction;
 import enums.OrderType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,23 +53,20 @@ public class AdjustmentService {
     }
 
     @Transactional
-    public AdjustmentCrudResponse crud ( AdjustmentCrudRequest adjustmentCrudRequest, AdjustmentCrudResponse response ) {
+    public void  crud ( AdjustmentCrudRequest adjustmentCrudRequest, AdjustmentCrudResponse response ) {
 
-        for ( Adjustment adjustment : adjustmentCrudRequest.getRows() ) {
+        for ( Adjustment adjustment : adjustmentCrudRequest.rows() ) {
             logger.info("Adjustment {} ", adjustment.toString() );
             switch ( adjustment.getCrudAction() ) {
                 case INSERT ->  insert( adjustment, response );
-                default -> {
-                          Utility.outputErrorAndThrow("Crud Action " + adjustment.getCrudAction() + " not supported",
-                            response, logger);
-                }
+                default -> Utility.outputErrorAndThrow("Crud Action " + adjustment.getCrudAction() + " not supported",
+                  response, logger);
             }
         }
-        logger.info("Update loop exited with " + response.getErrors().size() + " errors");
+        logger.info("Update loop exited with {} errors", response.getErrors().size() );
         if ( !response.getErrors().isEmpty()) {
             outputErrorAndThrow( "At least one error occurred", response, logger  );
         }
-        return response;
     }
 
     private void insert ( Adjustment adjustment, AdjustmentCrudResponse response ) {
@@ -77,10 +75,8 @@ public class AdjustmentService {
         switch (adjustment.getAdjustmentType()) {
             case ITEM -> insertItemAdjustment(adjustment, response );
             case XFER -> insertOrderAdjustment(adjustment, response );
-            default -> {
-                Utility.outputErrorAndThrow(ILLEGAL_STATE.formatted(adjustment.getAdjustmentType()),
-                        response, logger);
-            }
+            default -> Utility.outputErrorAndThrow(ILLEGAL_STATE.formatted(adjustment.getAdjustmentType()),
+                    response, logger);
         }
     }
 
@@ -110,7 +106,7 @@ public class AdjustmentService {
         logger.info( "Updated balance of {} from {} to {}", item.getSummaryId(), oldBalance, newBalance );
         itemRepository.save( item );
         adjustmentRepository.save( adjustment );
-        logger.info( "Item balance updated:  " + item, response, logger );
+        logger.info( "Item balance updated:  " + item  );
     }
 
     /**
@@ -167,7 +163,8 @@ public class AdjustmentService {
                 var fractionOfOrder = Utility.round( adjustment.getAmount() / orderLineItem.get().getQuantityOrdered(), 1 );
                 for ( OrderLineItem child : childrenOfMoHead ) {
                     Adjustment childAdjustment = new Adjustment( child.getQuantityOrdered()*fractionOfOrder,
-                            child.getItemId(), child.getId(), child.getOrderType(), adjustment.getEffectiveDate(), AdjustmentType.XFER );
+                            child.getItemId(), child.getId(),child.getOrderType(), adjustment.getEffectiveDate(), AdjustmentType.XFER,
+                            CrudAction.INSERT );
                     proposedAdjustments.add( childAdjustment );
                 }
 
@@ -176,6 +173,11 @@ public class AdjustmentService {
                 for ( Adjustment proposedAdjustment : proposedAdjustments ) {
                     logger.info( proposedAdjustment.toString() );
                 }
+
+                var adjustChildrenRequest = new AdjustmentCrudRequest( proposedAdjustments.toArray( new Adjustment[proposedAdjustments.size()] ) );
+                crud( adjustChildrenRequest, response );
+
+                logger.info( "Completed Recursive Adjustments.");
             }
         } else if ( orderLineItem.get().getOrderType() == OrderType.MODET ){
             newQuantityOnHand = oldQuantityOnHand - adjustment.getAmount();
@@ -190,23 +192,6 @@ public class AdjustmentService {
         itemRepository.save( item );
         orderLineItemRepository.save( orderLineItem.get() );
         adjustmentRepository.save( adjustment );
-    }
-
-
-
-    public void sleep(long id, TextResponse textResponse ) {
-        Collection<Adjustment> adjustments = adjustmentRepository.findAll();
-
-        if ( adjustments.isEmpty() ) {
-            outputInfo( NO_DATA_TO_REPORT.formatted( "All Adjustments" ), textResponse, logger );
-        }
-
-        for ( Adjustment adjustment : adjustments ) {
-            if ( textResponse.getData().isEmpty() ) {
-                textResponse.addText( Adjustment.RAW_HEADDER, Optional.of( logger ) );
-            }
-            textResponse.addText( adjustment.toString(), Optional.of( logger ) );
-        }
     }
 
     public void reportAll(long id, TextResponse textResponse ) {

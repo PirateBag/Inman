@@ -58,6 +58,7 @@ public class  Item extends EntityMaster {
 		return rValue;
 	}
 
+	@NotNull
 	public String getSummaryId() {
 		return summaryId == null ? "" : summaryId;
 	}
