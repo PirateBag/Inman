@@ -78,7 +78,7 @@ public class OrderLineItemServiceTest {
         ResponsePackage<OrderLineItem> responsePackage = new ResponsePackage<>();
         oldValue.setQuantityOrdered( 1 );
         oldValue.setQuantityAssigned( 0 );
-        testItem.setSourcing( Item.SOURCE_MAN );
+        testItem.setSourcing( SourcingType.MAN );
         orderLineItemService.validateOrderLineItemForMOInsertion( oldValue, responsePackage, testItem );
 
         int expectedNumberOfMessages = 0;

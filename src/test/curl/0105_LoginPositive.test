@@ -1,0 +1,6 @@
+Add all possible items in a single batch.
+
+===  JSON  ===
+{ "userName" : "fred",
+  "password" : "dilban"
+}

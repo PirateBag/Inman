@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @Configuration
 @RestController
 public class ItemAndStatus {
-	static Logger logger = LoggerFactory.getLogger("controller: " + ItemAndStatus.class);
+	static Logger logger = LoggerFactory.getLogger( ItemAndStatus.class);
 	static Logger dividerLogger = LoggerFactory.getLogger(" ");
 	public static final String CLEAR_ALL_DATA = "clearAllData";
 
@@ -55,18 +55,6 @@ public class ItemAndStatus {
     	StatusResponse statusResponse = new StatusResponse();
     	statusResponse.setStatus( StatusResponse.INMAN_OK );
     	return statusResponse;
-    }
-    
-    @CrossOrigin
-    @RequestMapping( value = VerifyCredentialsRequest.rootUrl,method = RequestMethod.POST,
-    		consumes = "application/json",
-    		produces = "application/json" )
-    public VerifyCredentialsResponse verifyCredentials( @RequestBody VerifyCredentialsRequest request) {
-    	
-    	VerifyCredentialsLogic verifyCredentialsLogic = new VerifyCredentialsLogic();
-    	
-    			
-    	return verifyCredentialsLogic.handle( request );
     }
     
     @CrossOrigin
