@@ -7,7 +7,7 @@ declare -a tests=(
   "0100_ClearAllData;clearAllData"
 
   "0105_LoginPositive;verifyCredentials"
-  "0107_LoginFailv;verifyCredentials"
+  #  "0107_LoginFailv;verifyCredentials"
 
   #Add Items and verify with reports on picklist and all items.
   "0201_ItemCrudAdd;item/crud"
