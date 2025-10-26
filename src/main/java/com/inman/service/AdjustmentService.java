@@ -103,7 +103,7 @@ public class AdjustmentService {
         logger.info( "Updated balance of {} from {} to {}", item.getSummaryId(), oldBalance, newBalance );
         itemRepository.save( item );
         adjustmentRepository.save( adjustment );
-        logger.info(STR."Item balance updated:  \{item}");
+        logger.info( "Item balance updated:  {item}");
     }
 
     /**

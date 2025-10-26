@@ -14,13 +14,13 @@ public class VerifyCredentialsService {
 	VerifyCredentialsResponse verifyCredentialsResponse;
 
 	if ( request.userName().equals("fred") && request.password().equals("dilban") ) {
-		verifyCredentialsResponse = new VerifyCredentialsResponse( VerifyCredentialsResponse.DEFAULT_TOKEN,
+		verifyCredentialsResponse = new VerifyCredentialsResponse( request.userName(), VerifyCredentialsResponse.DEFAULT_TOKEN,
 				VerifyCredentialsResponse.DEFAULT_TOKEN );
-		logger.info(STR."User \{request.userName()} has been credentialed.");
+		logger.info("User {} has been credentialed.", request.userName());
 	} else {
-		verifyCredentialsResponse = new VerifyCredentialsResponse( VerifyCredentialsResponse.NO_TOKEN,
+		verifyCredentialsResponse = new VerifyCredentialsResponse( request.userName(), VerifyCredentialsResponse.NO_TOKEN,
 				VerifyCredentialsResponse.NO_TOKEN );
-		logger.info( "User " + request.userName() + " failed to provide valid credentials.");
+        logger.info("User {} failed to provide valid credentials.", request.userName());
 	}
 
 	return verifyCredentialsResponse;

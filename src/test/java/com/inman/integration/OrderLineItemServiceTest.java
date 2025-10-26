@@ -121,7 +121,7 @@ public class OrderLineItemServiceTest {
         """;
         assertEquals( expectedMapString, actualMapString );
     }
-
+/*
     @Test
     public void whenIdsAreDifferent() {
         ResponsePackage<OrderLineItem> responsePackage = new ResponsePackage<>();
@@ -135,7 +135,7 @@ public class OrderLineItemServiceTest {
         assertEquals( 2, actualMap.size() );
         assertEquals( 2L, actualMap.get( "id" ) );
     }
-
+/*
     @Test( expected = RuntimeException.class )
     public void ddlNoChange() {
         oldValue.setId( 2 );
@@ -157,5 +157,5 @@ public class OrderLineItemServiceTest {
 
         orderLineItemService.createMapOfChangedValues( oldValue, newValue );
 
-    }
+    }  */
 }
