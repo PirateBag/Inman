@@ -14,6 +14,11 @@ declare -a tests=(
   "0203_ItemPickList;itemPick/all"
   "0205_ItemExplosionReport;itemReport/showAllItems"
 
+  # Item Query Tests using Crud protocols
+  "0211_ItemCrudQueryAll;item/crudQuery"
+
+  "0213_ItemCrudQueryWagons;item/crudQuery"
+
 #  Add some BOM line items to W-001
 #  Test that transactions failed and rolled back.
   #Insert W-001 W-002,

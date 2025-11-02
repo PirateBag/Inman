@@ -8,7 +8,7 @@ public class SearchItemRequest {
 	public static final String queryUrl = "item/query";
 	public static final String allUrl = "item/all";
 	
-	Long itemId;
+	Long id;
 	String summaryId;
 	String description;
 	
@@ -18,9 +18,9 @@ public class SearchItemRequest {
 	public SearchItemRequest( String itemId, String summaryId, String description ) throws QueryParameterException {
 		int numberOfParameters = 0;
 		if ( itemId == null || itemId.length() == 0 ) {
-			this.itemId = (long) 0;
+			this.id = (long) 0;
 		} else {
-			this.itemId = Long.valueOf( itemId );
+			this.id = Long.valueOf( itemId );
 			numberOfParameters++;
 		}
 		
@@ -43,11 +43,11 @@ public class SearchItemRequest {
 		}
 	}
 	
-	public long getItemId() {
-		return itemId;
+	public long getId() {
+		return id;
 	}
 	public void setItemId(long itemId) {
-		this.itemId = itemId;
+		this.id = itemId;
 	}
 	public String getSummaryId() {
 		return summaryId;

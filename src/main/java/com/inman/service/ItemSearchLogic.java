@@ -1,9 +1,10 @@
 package com.inman.service;
 
-import java.util.List;
 import com.inman.entity.Item;
 import com.inman.model.rest.SearchItemRequest;
 import com.inman.repository.ItemRepository;
+
+import java.util.List;
 
 
 public class ItemSearchLogic {
@@ -20,8 +21,8 @@ public class ItemSearchLogic {
 	}
 	public Item[] bySearchItemRequest(ItemRepository itemRepository, SearchItemRequest searchItemRequest) {
 		
-		if ( searchItemRequest.getItemId() != 0 ) {
-			return findById( itemRepository, searchItemRequest.getItemId() );
+		if ( searchItemRequest.getId() != 0 ) {
+			return findById( itemRepository, searchItemRequest.getId() );
 		}
 
 		if ( searchItemRequest.getSummaryId() != null ) {

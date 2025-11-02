@@ -1,17 +1,19 @@
 package com.inman.repository;
 
+import com.inman.entity.Item;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.inman.entity.Item;
-
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public interface ItemRepository extends JpaRepository<Item, Long> {
+public interface ItemRepository extends JpaRepository<Item, Long>, JpaSpecificationExecutor<Item> {
 
 	Item findById( long id  );
 	Item findBySummaryId( String SummaryId );
@@ -20,6 +22,8 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 	@Override
 	@NotNull
 	List<Item> findAll();
+
+    ArrayList<Item> findAll(Specification<Item> itemSpecifications);
 
 	@NotNull
 	List<Item> findAllByOrderBySummaryIdAsc();

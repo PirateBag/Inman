@@ -39,7 +39,9 @@ public class ItemAndStatus {
 	@Autowired
 	private DdlRepository ddlRepository;
 
-	private OrderLineItemRepository orderLineItemRepository;
+	@Autowired
+    private OrderLineItemRepository orderLineItemRepository;
+
     @Autowired
     private AdjustmentRepository adjustmentRepository;
 
@@ -71,7 +73,7 @@ public class ItemAndStatus {
     		produces = "application/json")
     public ResponseEntity<?> searchItemExpGeneric( @RequestBody SearchItemRequest request ) {
 
-		ResponsePackage responsePackage = new ItemResponse( ResponseType.QUERY );
+		ResponsePackage<Item> responsePackage = new ItemResponse( ResponseType.QUERY );
     	
     	try {
     		ItemSearchLogic itemSearch = new ItemSearchLogic();
@@ -145,15 +147,6 @@ public class ItemAndStatus {
     	}
     	return ResponseEntity.ok().body( responsePackage );
     }
-//
-//    @CrossOrigin
-//    @RequestMapping( value = StatusResponse.metaDataUrl,
-//    				method=RequestMethod.GET )
-//    public StatusResponse metaData() throws ClassNotFoundException {
-//    	StatusResponse statusResponse = new StatusResponse();
-//    	statusResponse.setStatus( MetaData.show( Item.class.getCanonicalName() ) );
-//    	return statusResponse;
-//    }
 
 	@CrossOrigin
 	@RequestMapping( value = StatusResponse.toLog, method=RequestMethod.GET )

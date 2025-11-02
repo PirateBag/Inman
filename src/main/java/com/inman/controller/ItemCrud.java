@@ -1,33 +1,38 @@
 package com.inman.controller;
 
-import enums.CrudAction;
 import com.inman.entity.Item;
 import com.inman.model.request.ItemCrudBatch;
 import com.inman.model.response.ItemCrudBatchResponse;
 import com.inman.model.response.ResponseType;
 import com.inman.model.rest.ErrorLine;
 import com.inman.repository.ItemRepository;
+import com.inman.repository.ItemSpecifications;
+import enums.CrudAction;
 import enums.SourcingType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 import static com.inman.controller.Messages.*;
-import static com.inman.controller.Utility.*;
+import static com.inman.controller.Utility.normalize;
+import static com.inman.controller.Utility.outputErrorAndThrow;
 
 @Configuration
 @RestController
 public class ItemCrud {
     public static final String UNIQUE_INDEX_OR_PRIMARY_KEY_VIOLATION = "Unique index or primary key violation";
     public static final String ItemCrudRequestURL = "item/crud";
+    public static final String ItemCrudQuery = "item/crudQuery";
 
     static Logger logger = LoggerFactory.getLogger("controller: " + ItemCrud.class);
 
-    @Autowired
     ItemRepository itemRepository;
 
     public void validateItemBasedOnAction( Item item, ItemCrudBatchResponse itemCrudBatchResponse ) {
@@ -51,12 +56,6 @@ public class ItemCrud {
                 outputErrorAndThrow( "Item description null or too short", itemCrudBatchResponse, logger );
             }
 
-            /*  Need to think about these more.  maxDepth might be a pass through.
-            private int maxDepth = 0;
-            private double quantityOnHand;
-            private double minimumOrderQuantity;
-             */
-
             if ( item.getLeadTime() < 1 ) {
                 outputErrorAndThrow( String.format( Messages.LEAD_TIME_LESS_THAN_1, item.getId(), item.getLeadTime() ),
                         itemCrudBatchResponse, logger  );
@@ -70,11 +69,7 @@ public class ItemCrud {
     }
 
     public ItemCrudBatchResponse go( ItemCrudBatch itemCrudBatch, ItemCrudBatchResponse itemCrudBatchResponse ) {
-        if ( Application.getTestName().contains( "XXX")) {
-            logger.info( "You are now 0403");
-        }
         for (Item itemCrudToBeCrud : itemCrudBatch.updatedRows()) {
-
             logger.info("{} on {}", itemCrudToBeCrud.getCrudAction(), itemCrudToBeCrud);
 
             validateItemBasedOnAction(itemCrudToBeCrud, itemCrudBatchResponse);
@@ -203,12 +198,41 @@ private void changeItem(Item updatedItem,
             logger.info( exception.getMessage());
         }
         return ResponseEntity.ok().body(itemCrudBatchResponse);
-//        if (itemCrudBatchResponse.getData().isEmpty()) {
-//            var message = "No items were processed, either due to errors or no actionable inputs.";
-//            logger.info(message);
-//            itemCrudBatchResponse.getErrors().add(new ErrorLine(1, message));
-//        }
-        //  return ResponseEntity.ok().body(itemCrudBatchResponse);
+    }
+
+
+
+    public ItemCrudBatchResponse query( ItemCrudBatch itemCrudBatch, ItemCrudBatchResponse itemCrudBatchResponse ) {
+        ArrayList<Item> queryResults;
+        if ( itemCrudBatch.updatedRows().length == 0 ) {
+            queryResults = (ArrayList<Item>) itemRepository.findAll();
+        } else {
+            Specification<Item> dynamicQuery = ItemSpecifications.withDynamicQuery( itemCrudBatch.updatedRows()[0] );
+            queryResults = itemRepository.findAll( dynamicQuery );
+        }
+
+        logger.info("Query had {} rows", queryResults.size() );
+        itemCrudBatchResponse.setData( queryResults);
+        return itemCrudBatchResponse;
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = ItemCrudQuery, method = RequestMethod.POST)
+    public ResponseEntity<?> itemCrudQuery(@RequestBody ItemCrudBatch itemQueryParameters ) {
+
+        ItemCrudBatchResponse queryResults = new ItemCrudBatchResponse();
+        try {
+            queryResults = query( itemQueryParameters, queryResults );
+            queryResults.setResponseType(ResponseType.MULTILINE );
+            if (queryResults.getData().isEmpty()) {
+                var message = "No items were processed, either due to errors or no actionable inputs.";
+                logger.info(message);
+                queryResults.getErrors().add(new ErrorLine(1, message));
+            }
+        } catch (Exception exception) {
+            logger.info( exception.getMessage());
+        }
+        return ResponseEntity.ok().body(queryResults);
     }
 
 
