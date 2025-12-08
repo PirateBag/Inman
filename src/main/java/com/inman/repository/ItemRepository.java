@@ -16,8 +16,6 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<Item, Long>, JpaSpecificationExecutor<Item> {
 
 	Item findById( long id  );
-	Item findBySummaryId( String SummaryId );
-	Item deleteBySummaryId( String SummaryId );
 
 	@Override
 	@NotNull
@@ -26,17 +24,13 @@ public interface ItemRepository extends JpaRepository<Item, Long>, JpaSpecificat
     ArrayList<Item> findAll(Specification<Item> itemSpecifications);
 
 	@NotNull
-	List<Item> findAllByOrderBySummaryIdAsc();
+	List<Item> findAllByOrderByDescription();
 
-	@Query( "select i from Item i where summaryId like :summaryId")
-	Item[] byleadingSummaryId(
-		@Param( "summaryId" ) String xSummaryId );
-	
 	@Query( "select i from Item i where description like :description")
 	Item[] byDescription(
 			@Param( "description" ) String description);
 
-	@Query( "select i.id, i.summaryId, i.description from Item i")
+	@Query( "select i.id, description from Item i")
 	Item[] pickList();
 
 	@Query( "select b.parentId from Item i,Bom b where b.childId=i.id and i.id = :itemId")

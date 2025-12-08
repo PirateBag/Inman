@@ -324,21 +324,21 @@ public class OrderLineItemService {
 
             //  But you can only put MAN items in a MOHEAD...
             if (item.getSourcing() == SourcingType.MAN && orderLineItem.getOrderType() != OrderType.MOHEAD) {
-                Utility.outputErrorAndThrow(String.format(ITEM_MANUFACTURED, item.getSummaryId()), oliResponse, logger);
+                Utility.outputErrorAndThrow(String.format(ITEM_MANUFACTURED, item.getDescription()), oliResponse, logger);
             }
 
             //  Or purchased items in a PO...
             if (item.getSourcing() == SourcingType.PUR && orderLineItem.getOrderType() != OrderType.PO) {
-                Utility.outputErrorAndThrow(String.format(ITEM_PURCHASED, item.getSummaryId()), oliResponse, logger);
+                Utility.outputErrorAndThrow(String.format(ITEM_PURCHASED, item.getDescription()), oliResponse, logger);
             }
         }
 
         if (orderLineItem.getQuantityOrdered() <= 0.0) {
-           Utility.outputErrorAndThrow( String.format( QUANTITY_ORDERED_GT_0, orderLineItem.getQuantityOrdered(), item.getSummaryId() ), oliResponse, logger );
+           Utility.outputErrorAndThrow( String.format( QUANTITY_ORDERED_GT_0, orderLineItem.getQuantityOrdered(), item.getDescription() ), oliResponse, logger );
         }
 
         if (orderLineItem.getQuantityAssigned() != 0.0) {
-            Utility.outputErrorAndThrow( String.format( QUANTITY_ASSIGNED_NON_0, orderLineItem.getQuantityOrdered(), item.getSummaryId() ), oliResponse, logger );
+            Utility.outputErrorAndThrow( String.format( QUANTITY_ASSIGNED_NON_0, orderLineItem.getQuantityOrdered(), item.getDescription() ), oliResponse, logger );
         }
     }
 
@@ -436,7 +436,7 @@ public class OrderLineItemService {
             textResponse.getData().add( new Text( report ) );
         }
 
-        report = String.format( lineFormat, Common.spacesForLevel( level) + item.getSummaryId(), oli.get().getQuantityOrdered(), oli.get().getQuantityAssigned(),
+        report = String.format( lineFormat, Common.spacesForLevel( level) + item.getDescription(), oli.get().getQuantityOrdered(), oli.get().getQuantityAssigned(),
                 oli.get().getStartDate(), oli.get().getCompleteDate(), oli.get().getOrderState(), oli.get().getOrderType() );
         textResponse.getData().add( new Text( report ) );
 

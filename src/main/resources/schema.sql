@@ -1,6 +1,5 @@
 create table if not exists Item (
     Id int auto_increment,
-    summary_Id varchar( 10 ) unique not null,
     description varchar(30 ) not null,
 
     /*  "PUR" or "MAN" */
@@ -28,8 +27,8 @@ create table if not exists Bom (
 );
 
 create view if not exists  bom_Present as
-    select b.id, b.QUANTITY_PER, b.parent_id, p.summary_id parent_summary, p.description parent_description,
-    b.child_id, c.summary_id child_summary, c.description child_description, c.max_depth as max_depth,
+    select b.id, b.QUANTITY_PER, b.parent_id, p.description parent_description,
+    b.child_id, c.description child_description, c.max_depth as max_depth,
     c.unit_cost unit_cost, c.unit_cost * b.quantity_per extended_cost
     from item p, item c, bom b where b.parent_id = p.id and b.child_id = c.id;
 
@@ -55,4 +54,3 @@ CREATE TABLE IF NOT EXISTS adjustment (
     effective_date varchar( 10 ) not null,
     adjustment_type varchar(4) not null,
     CONSTRAINT PK_ADJUSTMENT PRIMARY KEY ( ID ) );
-

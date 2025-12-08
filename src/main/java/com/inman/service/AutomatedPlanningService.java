@@ -219,7 +219,7 @@ public class AutomatedPlanningService {
         List<Item> items = itemRepository.findAll();
 
         for (Item item : items) {
-            logger.info("Processing item {}:{}", item.getId(), item.getSummaryId());
+            logger.info("Processing item {}:{}", item.getId(), item.getDescription());
             bomLogicService.updateMaxDepthOf(item.getId(), texts);
         }
     }

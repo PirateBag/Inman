@@ -100,7 +100,7 @@ public class AdjustmentService {
         double oldBalance = item.getQuantityOnHand();
         double newBalance = oldBalance + adjustment.getAmount();
         item.setQuantityOnHand( newBalance );
-        logger.info( "Updated balance of {} from {} to {}", item.getSummaryId(), oldBalance, newBalance );
+        logger.info( "Updated balance of {} from {} to {}", item.getDescription(), oldBalance, newBalance );
         itemRepository.save( item );
         adjustmentRepository.save( adjustment );
         logger.info( "Item balance updated:  {item}");
@@ -212,7 +212,7 @@ public class AdjustmentService {
             textResponse.addText( EXTENDED_LINE_FORMAT.formatted(
                     adjustment.getAmount(), adjustment.getItemId(), adjustment.getOrderId(),
                     adjustment.getOrderType(),
-                    adjustment.getEffectiveDate(), adjustment.getAdjustmentType(), item.getSummaryId(), item.getQuantityOnHand() ), Optional.of( logger ));
+                    adjustment.getEffectiveDate(), adjustment.getAdjustmentType(), item.getDescription(), item.getQuantityOnHand() ), Optional.of( logger ));
         }
     }
 }

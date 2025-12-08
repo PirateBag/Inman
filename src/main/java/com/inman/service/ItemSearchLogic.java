@@ -25,10 +25,6 @@ public class ItemSearchLogic {
 			return findById( itemRepository, searchItemRequest.getId() );
 		}
 
-		if ( searchItemRequest.getSummaryId() != null ) {
-			return itemRepository.byleadingSummaryId( searchItemRequest.getSummaryId() );
-		}
-		
 		if ( searchItemRequest.getDescription() != null ) {
 			return itemRepository.byDescription( searchItemRequest.getDescription() );
 		}

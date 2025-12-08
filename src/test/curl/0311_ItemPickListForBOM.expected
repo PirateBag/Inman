@@ -4,66 +4,66 @@
   "data" : [ {
     "id" : 3,
     "crudAction" : "NONE",
-    "external" : "W-003, Front Wheel Asmbly"
+    "external" : "Front Wheel Asmbly"
   }, {
     "id" : 4,
     "crudAction" : "NONE",
-    "external" : "W-004, Rear Wheel Asmbly"
+    "external" : "Rear Wheel Asmbly"
   }, {
     "id" : 5,
     "crudAction" : "NONE",
-    "external" : "W-005, Axle"
+    "external" : "Axle"
   }, {
     "id" : 6,
     "crudAction" : "NONE",
-    "external" : "W-006, Decal"
+    "external" : "Decal"
   }, {
     "id" : 7,
     "crudAction" : "NONE",
-    "external" : "W-007, Washer"
+    "external" : "Washer"
   }, {
     "id" : 8,
     "crudAction" : "NONE",
-    "external" : "W-008, Threaded bolt"
+    "external" : "Threaded bolt"
   }, {
     "id" : 9,
     "crudAction" : "NONE",
-    "external" : "W-009, Nut"
+    "external" : "Nut"
   }, {
     "id" : 10,
     "crudAction" : "NONE",
-    "external" : "W-010, 8 In Wheel"
+    "external" : "8 In Wheel"
   }, {
     "id" : 11,
     "crudAction" : "NONE",
-    "external" : "W-011, Front Wheel Bracket"
+    "external" : "Front Wheel Bracket"
   }, {
     "id" : 12,
     "crudAction" : "NONE",
-    "external" : "W-012, Yoke"
+    "external" : "Yoke"
   }, {
     "id" : 13,
     "crudAction" : "NONE",
-    "external" : "W-013, Wagon Body"
+    "external" : "Wagon Body"
   }, {
     "id" : 14,
     "crudAction" : "NONE",
-    "external" : "W-014, Red Paint"
+    "external" : "Red Paint"
   }, {
     "id" : 15,
     "crudAction" : "NONE",
-    "external" : "W-015, Rear Wheel bracket"
+    "external" : "Rear Wheel bracket"
   }, {
     "id" : 16,
     "crudAction" : "NONE",
-    "external" : "W-016, Axle Bracket Brace"
+    "external" : "Axle Bracket Brace"
   }, {
     "id" : 17,
     "crudAction" : "NONE",
-    "external" : "W-017, Rod Stock"
+    "external" : "Rod Stock"
   }, {
     "id" : 18,
     "crudAction" : "NONE",
-    "external" : "W-018, Carriage Bolt"
+    "external" : "Carriage Bolt"
   } ]
 }

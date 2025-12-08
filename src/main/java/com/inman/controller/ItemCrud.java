@@ -38,8 +38,8 @@ public class ItemCrud {
     public void validateItemBasedOnAction( Item item, ItemCrudBatchResponse itemCrudBatchResponse ) {
 
         if (  item.getCrudAction() == CrudAction.CHANGE || item.getCrudAction() == CrudAction.DELETE  ) {
-            if ( item.getId() < 1L && normalize( item.getSummaryId() ).length() < 3 ) {
-                outputErrorAndThrow( String.format( ID_OR_SUMMARYID_FOR_CHANGE, item.getId(), normalize( item.getSummaryId())),
+            if ( item.getId() < 1L && normalize( item.getDescription() ).length() < 3 ) {
+                outputErrorAndThrow( String.format( ID_OR_SUMMARYID_FOR_CHANGE, item.getId(), normalize( item.getDescription())),
                         itemCrudBatchResponse, logger );
             }
         } else if ( item.getCrudAction() == CrudAction.INSERT && item.getId() != 0L ) {
@@ -48,10 +48,6 @@ public class ItemCrud {
 
         if ( item.getCrudAction() == CrudAction.CHANGE
         || item.getCrudAction() == CrudAction.INSERT ) {
-            if ( item.getSummaryId() == null || item.getSummaryId().length() < 3 ) {
-                outputErrorAndThrow( "Item summary null or too short", itemCrudBatchResponse, logger  );
-            }
-
             if ( item.getDescription() == null || item.getDescription().length() < 3 ) {
                 outputErrorAndThrow( "Item description null or too short", itemCrudBatchResponse, logger );
             }
@@ -82,7 +78,7 @@ public class ItemCrud {
             } else if ( itemCrudToBeCrud.getCrudAction() == CrudAction.CHANGE ) {
                 changeItem(itemCrudToBeCrud, itemCrudBatchResponse);
             } else {
-                logger.info("Item {} was ignored because CrudAction was {}", itemCrudToBeCrud.getSummaryId(), itemCrudToBeCrud.getCrudAction());
+                logger.info("Item {} was ignored because CrudAction was {}", itemCrudToBeCrud.getDescription(), itemCrudToBeCrud.getCrudAction());
             }
         }
         return itemCrudBatchResponse;
@@ -91,16 +87,16 @@ public class ItemCrud {
     private void insertItem(Item itemCrudToBeCrud,
                             ItemCrudBatchResponse itemCrudBatchResponse) {
         String message;
-        Item itemToBeInserted = new Item(itemCrudToBeCrud.getSummaryId(), itemCrudToBeCrud.getDescription(),
+        Item itemToBeInserted = new Item( itemCrudToBeCrud.getDescription(),
                 itemCrudToBeCrud.getUnitCost(), itemCrudToBeCrud.getSourcing(), itemCrudToBeCrud.getLeadTime(), itemCrudToBeCrud.getMaxDepth(),
                 itemCrudToBeCrud.getQuantityOnHand(),  itemCrudToBeCrud.getMinimumOrderQuantity() );
 
 
         try {
             itemRepository.save(itemToBeInserted);
-            var refreshedItem = itemRepository.findBySummaryId(itemToBeInserted.getSummaryId());
+            var refreshedItem = itemRepository.findById(itemToBeInserted.getId());
             if (refreshedItem == null) {
-                message = "Item " + itemToBeInserted.getSummaryId() + " cant be re-retrieved after seemingly successful insert.";
+                message = "Item " + itemToBeInserted.getDescription() + " cant be re-retrieved after seemingly successful insert.";
                 itemCrudBatchResponse.getErrors().add(new ErrorLine(1, message));
                 logger.error(message);
             }
@@ -113,10 +109,10 @@ public class ItemCrud {
 private void changeItem(Item updatedItem,
                         ItemCrudBatchResponse itemCrudBatchResponse) {
 
-        var priorItem = itemRepository.findBySummaryId(updatedItem.getSummaryId());
+        var priorItem = itemRepository.findById(updatedItem.getId());
 
         if (priorItem == null) {
-            outputErrorAndThrow( String.format( SUMMARY_ID_NOT_FOUND, updatedItem.getSummaryId() ), itemCrudBatchResponse, logger );
+            outputErrorAndThrow( String.format( SUMMARY_ID_NOT_FOUND, updatedItem.getId() ), itemCrudBatchResponse, logger );
         }
         if ( updatedItem.getId() != priorItem.getId() ) {
             outputErrorAndThrow( String.format(  ITEM_IDS_MUST_BE_SAME, updatedItem.getId(), priorItem.getId() ), itemCrudBatchResponse, logger );
@@ -134,15 +130,15 @@ private void changeItem(Item updatedItem,
     private void deleteItem(Item itemCrudToBeCrud,
                             ItemCrudBatchResponse itemCrudBatchResponse) {
         try {
-            Item toBeDeletedItem = itemRepository.findBySummaryId(itemCrudToBeCrud.getSummaryId());
+            Item toBeDeletedItem = itemRepository.findById(itemCrudToBeCrud.getId());
             if (toBeDeletedItem == null) {
 
                  if ( itemCrudToBeCrud.getCrudAction() == CrudAction.DELETE) {
-                    var message = "Unable to find item " + itemCrudToBeCrud.getSummaryId() + " in database.";
+                    var message = "Unable to find item " + itemCrudToBeCrud.getId() + " in database.";
                     itemCrudBatchResponse.getErrors().add(new ErrorLine(1, message));
                     logger.info(message);
                  } else {
-                     var message = "Silent delete on " + itemCrudToBeCrud.getSummaryId() + " in database.";
+                     var message = "Silent delete on " + itemCrudToBeCrud.getId() + " in database.";
                      itemCrudBatchResponse.getData().add( itemCrudToBeCrud );
                      logger.info(message);
                  }
@@ -168,13 +164,13 @@ private void changeItem(Item updatedItem,
         String message;
 
         if (exception instanceof DataIntegrityViolationException) {
-            message = itemCrudSingle.getCrudAction() + " failed on " + itemCrudSingle.getSummaryId() + ":" +
+            message = itemCrudSingle.getCrudAction() + " failed on " + itemCrudSingle.getId() + ":" +
                     itemCrudSingle.getDescription() + " due to " +
                     generateErrorMessageFrom((DataIntegrityViolationException) exception);
             logger.error(message);
             return new ErrorLine(1, message);
         }
-        message = itemCrudSingle.getCrudAction() + " failed on " + itemCrudSingle.getSummaryId() + ":" +
+        message = itemCrudSingle.getCrudAction() + " failed on " + itemCrudSingle.getId() + ":" +
                 itemCrudSingle.getDescription() + " due to " +
                 exception.getMessage();
         logger.error(message);

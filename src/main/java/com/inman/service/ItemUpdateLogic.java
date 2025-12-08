@@ -30,7 +30,6 @@ public class ItemUpdateLogic {
 		}
 
         logger.info("Successfully retrieved {} for update", item.getId());
-		item.setSummaryId( updateItemRequest.getSummaryId() );
 		item.setDescription( updateItemRequest.getDescription() );
 		item.setUnitCost( updateItemRequest.getUnitCost() );
 		throw new UnsupportedOperationException();

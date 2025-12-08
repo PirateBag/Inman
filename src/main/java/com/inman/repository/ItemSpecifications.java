@@ -21,12 +21,6 @@ public class ItemSpecifications {
                 return cb.conjunction(); // Returns all items if null
             }
 
-            // Search by summaryId (partial match, case-insensitive)
-            if (searchCriteria.getSummaryId() != null && !searchCriteria.getSummaryId().isEmpty()) {
-                predicates.add(cb.like(cb.lower(root.get("summaryId")),
-                        "%" + searchCriteria.getSummaryId().toLowerCase() + "%"));
-            }
-
             // Search by description (partial match, case-insensitive)
             if (searchCriteria.getDescription() != null && !searchCriteria.getDescription().isEmpty()) {
                 predicates.add(cb.like(cb.lower(root.get("description")),
@@ -45,12 +39,12 @@ public class ItemSpecifications {
 
             // Search by leadTime (exact match if > 0)
             if (searchCriteria.getLeadTime() > 0) {
-                predicates.add(cb.equal(root.get("leadTime"), searchCriteria.getLeadTime()));
+                predicates.add(cb.greaterThanOrEqualTo(root.get("leadTime"), searchCriteria.getLeadTime()));
             }
 
             // Search by maxDepth (exact match if > 0)
-            if (searchCriteria.getMaxDepth() > 0) {
-                predicates.add(cb.equal(root.get("maxDepth"), searchCriteria.getMaxDepth()));
+            if (searchCriteria.getMaxDepth() >= 0) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get("maxDepth"), searchCriteria.getMaxDepth()));
             }
 
             // Search by quantityOnHand (exact match if > 0)

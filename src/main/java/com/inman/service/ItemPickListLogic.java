@@ -34,7 +34,7 @@ public class ItemPickListLogic {
 
         for (Item item : items) {
             Pick pick = new Pick();
-            pick.setExternal( item.getSummaryId() + ", " + item.getDescription() );
+            pick.setExternal(  item.getDescription() );
             pick.setId( item.getId() );
             itemPickListResponse.getData().add( pick );
 

@@ -10,10 +10,7 @@ public class BomPresent extends EntityMaster {
     protected long childId;
     protected double quantityPer;
 
-    protected String parentSummary;
     protected String parentDescription;
-
-    protected String childSummary;
     protected String childDescription;
     protected double unitCost;
 
@@ -29,19 +26,13 @@ public class BomPresent extends EntityMaster {
         rValue.id = bomPresent.getId();
         rValue.crudAction = oldValue.getCrudAction();
         rValue.parentId = bomPresent.getParentId();
-        rValue.parentSummary = bomPresent.getParentSummary();
         rValue.parentDescription = bomPresent.getParentDescription();
         rValue.childId = bomPresent.getChildId();
-        rValue.childSummary = bomPresent.getChildSummary();
         rValue.quantityPer = bomPresent.getQuantityPer();
         rValue.unitCost = bomPresent.getUnitCost();
         return rValue;
     }
 
-    public String getParentSummary( ) { return this.parentSummary; }
-    public void setParentSummary( String xParentSummary ) { this.parentSummary = xParentSummary; }
-
-    public String getChildSummary( ) { return this.childSummary; }
 
     public long getChildId() { return childId; }
     public void setChildId( long xChildId ) { childId = xChildId;  }
@@ -59,10 +50,6 @@ public class BomPresent extends EntityMaster {
 
     public double getExtendedCost( ) { return quantityPer * unitCost; }
 
-    public void setChildSummary(Object xDatum) {
-        this.childSummary = (String) xDatum;
-    }
-
     public void setChildDescription(Object xDatum) {
         this.childDescription = (String) xDatum;
     }
@@ -71,6 +58,6 @@ public class BomPresent extends EntityMaster {
     public void setParentDescription( String parentDescription ) { this.parentDescription = parentDescription; }
 
     public String toString() {
-        return String.format( "%-10s %-10s %6.3f %8.3f ", parentSummary, childSummary, quantityPer, unitCost );
+        return String.format( "%-30s %-30s %6.3f %8.3f ", parentDescription, childDescription, quantityPer, unitCost );
     }
 }

@@ -13,10 +13,9 @@ import static java.lang.Math.max;
 @Table( name = "Item" )
 public class  Item extends EntityMaster {
     // Use private instead of public to hide the field within class
-    private static final String toStringFormat = "%04d: %s,%s %8.2f %s %3d %3d %8.2f %8.2f";
+    private static final String toStringFormat = "%04d: %s %8.2f %s %3d %3d %8.2f %8.2f";
 
     @Column(unique = true)
-    private String summaryId;
     private String description;
     private double unitCost;
     private SourcingType sourcing;
@@ -25,9 +24,9 @@ public class  Item extends EntityMaster {
     private double quantityOnHand;
     private double minimumOrderQuantity;
 
-	public Item(String summaryId, String description, double unitCost, SourcingType sourcing, int leadTime, int maxDepth,
+	public Item(String description, double unitCost, SourcingType sourcing, int leadTime, int maxDepth,
 				double quantityOnHand, double minimumOrderQuantity ) {
-		this.summaryId = summaryId;
+
 		this.description = description;
 		this.unitCost = unitCost;
 		this.sourcing = sourcing;
@@ -47,7 +46,6 @@ public class  Item extends EntityMaster {
 		Item item = (Item) entityMaster;
 		rValue.id = item.getId();
 		rValue.crudAction = item.getCrudAction();
-		rValue.summaryId = item.getSummaryId();
 		rValue.description = item.getDescription();
 		rValue.unitCost = item.getUnitCost();
 		rValue.sourcing = item.getSourcing();
@@ -59,12 +57,7 @@ public class  Item extends EntityMaster {
 	}
 
 	@NotNull
-	public String getSummaryId() {
-		return summaryId == null ? "" : summaryId;
-	}
-	public void setSummaryId(String summaryId) {
-		this.summaryId = summaryId;
-	}
+
 	public String getDescription() {
 		return description;
 	}
@@ -95,7 +88,7 @@ public class  Item extends EntityMaster {
 	}
 
 	public String toString(){
-		return toStringFormat.formatted( id, summaryId, description, unitCost, sourcing, maxDepth, leadTime, quantityOnHand, minimumOrderQuantity );
+		return toStringFormat.formatted( id, description, unitCost, sourcing, maxDepth, leadTime, quantityOnHand, minimumOrderQuantity );
 	}
 	public double getQuantityOnHand() { return quantityOnHand; }
 	public void setQuantityOnHand( double quantityOnHand ) { this.quantityOnHand = quantityOnHand; }
