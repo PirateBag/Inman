@@ -4,7 +4,6 @@
   "data" : [ {
     "id" : 19,
     "crudAction" : "NONE",
-    "summaryId" : "W-101",
     "description" : "Purple Wagon",
     "unitCost" : 2.0,
     "sourcing" : "PUR",

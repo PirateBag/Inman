@@ -4,27 +4,27 @@
   "data" : [ {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Inventory Analysis for 0001: W-001,36 In Red Wagon     0.00 MAN   0   2     5.00     1.00"
+    "message" : "Inventory Analysis for 0001: 36 In Red Wagon     0.00 MAN   0   2     5.00     1.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Inventory Analysis for 0002: W-002,Red Wagon Body     0.00 MAN   1  10     0.00     1.00"
+    "message" : "Inventory Analysis for 0002: Red Wagon Body     0.00 MAN   1  10     0.00     1.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Inventory Analysis for 0003: W-003,Front Wheel Asmbly     0.00 MAN   1   1     0.00     1.00"
+    "message" : "Inventory Analysis for 0003: Front Wheel Asmbly     0.00 MAN   1   1     0.00     1.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Inventory Analysis for 0004: W-004,Rear Wheel Asmbly     0.00 MAN   1   1     0.00     1.00"
+    "message" : "Inventory Analysis for 0004: Rear Wheel Asmbly     0.00 MAN   1   1     0.00     1.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Inventory Analysis for 0006: W-006,Decal     0.25 PUR   1   5     0.00     1.00"
+    "message" : "Inventory Analysis for 0006: Decal     0.25 PUR   1   5     0.00     1.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Inventory Analysis for 0008: W-008,Threaded bolt     0.60 PUR   1   5     0.00   500.00"
+    "message" : "Inventory Analysis for 0008: Threaded bolt     0.60 PUR   1   5     0.00   500.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
@@ -32,7 +32,7 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Inventory Analysis for 0005: W-005,Axle     0.00 MAN   2   4     0.00     1.00"
+    "message" : "Inventory Analysis for 0005: Axle     0.00 MAN   2   4     0.00     1.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
@@ -64,43 +64,43 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Inventory Analysis for 0007: W-007,Washer     0.21 PUR   2   5     0.00  1000.00"
+    "message" : "Inventory Analysis for 0007: Washer     0.21 PUR   2   5     0.00  1000.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Inventory Analysis for 0009: W-009,Nut     0.17 PUR   2   6     0.00   500.00"
+    "message" : "Inventory Analysis for 0009: Nut     0.17 PUR   2   6     0.00   500.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Inventory Analysis for 0010: W-010,8 In Wheel     0.17 PUR   2  10     0.00   120.00"
+    "message" : "Inventory Analysis for 0010: 8 In Wheel     0.17 PUR   2  10     0.00   120.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Inventory Analysis for 0011: W-011,Front Wheel Bracket     0.95 PUR   2   2     0.00    50.00"
+    "message" : "Inventory Analysis for 0011: Front Wheel Bracket     0.95 PUR   2   2     0.00    50.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Inventory Analysis for 0012: W-012,Yoke     0.17 PUR   2  10     0.00    50.00"
+    "message" : "Inventory Analysis for 0012: Yoke     0.17 PUR   2  10     0.00    50.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Inventory Analysis for 0013: W-013,Wagon Body     2.25 PUR   2  20     0.00   100.00"
+    "message" : "Inventory Analysis for 0013: Wagon Body     2.25 PUR   2  20     0.00   100.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Inventory Analysis for 0014: W-014,Red Paint    20.00 PUR   2   5     0.00     4.00"
+    "message" : "Inventory Analysis for 0014: Red Paint    20.00 PUR   2   5     0.00     4.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Inventory Analysis for 0015: W-015,Rear Wheel bracket     1.00 PUR   2   4     0.00    50.00"
+    "message" : "Inventory Analysis for 0015: Rear Wheel bracket     1.00 PUR   2   4     0.00    50.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Inventory Analysis for 0016: W-016,Axle Bracket Brace     0.75 PUR   2   6     0.00    50.00"
+    "message" : "Inventory Analysis for 0016: Axle Bracket Brace     0.75 PUR   2   6     0.00    50.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Inventory Analysis for 0018: W-018,Carriage Bolt     0.17 PUR   2   3     0.00   500.00"
+    "message" : "Inventory Analysis for 0018: Carriage Bolt     0.17 PUR   2   3     0.00   500.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
@@ -108,7 +108,7 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "Inventory Analysis for 0017: W-017,Rod Stock     0.70 PUR   3   5     0.00  1000.00"
+    "message" : "Inventory Analysis for 0017: Rod Stock     0.70 PUR   3   5     0.00  1000.00"
   }, {
     "id" : 0,
     "crudAction" : "NONE",

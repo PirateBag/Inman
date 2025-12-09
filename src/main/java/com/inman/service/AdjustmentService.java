@@ -34,10 +34,10 @@ public class AdjustmentService {
     private final AdjustmentRepository adjustmentRepository;
     private final OrderLineItemRepository orderLineItemRepository;
 
-    public static final String EXTENDED_HEADER_FORMAT =       "%8s    %-6s %-6s  %-4s  %9s  %4s    %10s  %9s";
-    public static final String EXTENDED_LINE_FORMAT =         "%8.2f  %6d  %6d   %-4s  %9s  %4s    %10s  %9.2f";
+    public static final String EXTENDED_HEADER_FORMAT =       "%8s    %-6s %-6s  %-4s  %9s  %4s  %-30s  %9s";
+    public static final String EXTENDED_LINE_FORMAT =         "%8.2f  %6d  %6d   %-4s  %9s  %4s  %-30s  %9.2f";
     public static final String EXTENDED_OVER_HEADER =                                  "  --------             Adjustment        -------       ----  Item  ----";
-    public static final String EXTENDED_HEADER = String.format(EXTENDED_HEADER_FORMAT, "Amount", "Item", "Order", "Type", "Date", "AdTp", "Summary", "Balance" );
+    public static final String EXTENDED_HEADER = String.format(EXTENDED_HEADER_FORMAT, "Amount", "Item", "Order", "Type", "Date", "AdTp", "Description", "Balance" );
 
 
     @Autowired
@@ -82,7 +82,7 @@ public class AdjustmentService {
      * @param adjustment involving an item and an order line item.
      * @param response with errors and messages.
      *
-     * Side effects:  Item QuantityOnHand altered by adjustment and a new Adjustment is audited.
+     * Side effects: Item QuantityOnHand altered by adjustment and a new Adjustment is audited.
      */
     private void insertItemAdjustment(  Adjustment adjustment, AdjustmentCrudResponse response )
     {
@@ -111,13 +111,13 @@ public class AdjustmentService {
      * @param adjustment
      * @param response
      *
-     * Side effects:  Item QuantityOnHand and Order QuantityAssigned updated in database.
+     * Side effects: Item QuantityOnHand and Order QuantityAssigned updated in the database.
      */
     private void insertOrderAdjustment(  Adjustment adjustment, AdjustmentCrudResponse response )
     {
         Item item = itemRepository.findById( adjustment.getItemId() );
         if ( item == null ) {
-            outputErrorAndThrow(ITEM_REF_NOT_FOUND.formatted( "Adustment",  adjustment.getItemId() ),
+            outputErrorAndThrow(ITEM_REF_NOT_FOUND.formatted( "Adjustment",  adjustment.getItemId() ),
                      response, logger);
         }
 

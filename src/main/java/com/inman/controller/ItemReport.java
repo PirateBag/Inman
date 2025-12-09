@@ -76,12 +76,12 @@ public class ItemReport {
     private List<String> generateItemExplosionReport(long itemId,
                                                      List<String> cumulativeResponse,
                                                      long parentLevel) {
-        String lineContents = "%-30s  %10.2f  %3s  %10d";
-        String lineHeader = "%%-30s  %10s  %3s  %10s";
+        String lineContents = "%5d %-30s  %10.2f  %3s  %10d";
+        String lineHeader =   "%5s %-30s  %10s  %3s  %10s";
 
         if (cumulativeResponse == null) {
             cumulativeResponse = new LinkedList<>();
-            var message = String.format(lineHeader,
+            var message = String.format(lineHeader, "Id",
                      "Description", "Unit Cost", "Sourcing", "Depth");
             cumulativeResponse.add(message);
             logger.info(message);
@@ -97,6 +97,7 @@ public class ItemReport {
         }
 
         var message = Common.spacesForLevel(parentLevel) + String.format(lineContents,
+                item.getId(),
                 item.getDescription(),
                 item.getUnitCost(),
                 item.getSourcing(),

@@ -4,18 +4,18 @@
   "data" : [ {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "%-30s  Description  Unit Cost    Sourcing"
+    "message" : "   Id Description                      Unit Cost  Sourcing       Depth"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "36 In Red Wagon                       0.00  MAN           0"
+    "message" : "    1 36 In Red Wagon                       0.00  MAN           0"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "   Red Wagon Body                        0.00  MAN           1"
+    "message" : "       2 Red Wagon Body                        0.00  MAN           1"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "       Wagon Body                            2.25  PUR           2"
+    "message" : "          13 Wagon Body                            2.25  PUR           2"
   } ]
 }

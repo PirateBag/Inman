@@ -8,10 +8,10 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "  Amount    Item   Order   Type       Date  AdTp       Summary    Balance"
+    "message" : "  Amount    Item   Order   Type       Date  AdTp  Description                       Balance"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "    1.00       1       0   NA    2025-0728  ITEM         W-001       7.00"
+    "message" : "    1.00       1       0   NA    2025-0728  ITEM  36 In Red Wagon                      7.00"
   } ]
 }
