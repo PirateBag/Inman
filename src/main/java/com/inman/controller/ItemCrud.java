@@ -187,6 +187,7 @@ private void changeItem(Item updatedItem,
             itemCrudBatchResponse.setResponseType(ResponseType.MULTILINE );
             if (itemCrudBatchResponse.getData().isEmpty()) {
                 var message = "No items were processed, either due to errors or no actionable inputs.";
+
                 logger.info(message);
                 itemCrudBatchResponse.getErrors().add(new ErrorLine(1, message));
             }

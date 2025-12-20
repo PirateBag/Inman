@@ -56,6 +56,10 @@ public class ItemSpecifications {
             if (searchCriteria.getMinimumOrderQuantity() > 0) {
                 predicates.add(cb.equal(root.get("minimumOrderQuantity"), searchCriteria.getMinimumOrderQuantity()));
             }
+
+            if (predicates.isEmpty()) {
+                return cb.conjunction();
+            }
             return cb.and(predicates.toArray(new Predicate[0]));
         };
     }
