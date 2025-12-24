@@ -1,5 +1,6 @@
 package com.inman.controller;
 
+import com.inman.model.request.ItemCrudBatch;
 import com.inman.service.BomLogicService;
 import com.inman.service.Common;
 import com.inman.service.ItemReportService;
@@ -24,6 +25,7 @@ import java.util.List;
 @Configuration
 @RestController
 public class ItemReport {
+    public static final String ITEMS_CRUD_MASTER_URL = "itemReportCrud/master";
 
     @Autowired
     private ItemRepository itemRepository;
@@ -168,6 +170,24 @@ public class ItemReport {
         rValue.setData( itemReportService.generateAllItemReport( itemRepository ) );
         return rValue;
     }
+
+    @CrossOrigin
+    @RequestMapping(value = ITEMS_CRUD_MASTER_URL, method = RequestMethod.POST,
+            consumes = "application/json",
+            produces = "application/json")
+    private TextResponse showAllItemsGet(@RequestBody ItemCrudBatch itemQueryParameters  ) {
+        var rValue = new TextResponse();
+        ItemReportRequest itemReportRequest = new ItemReportRequest();
+        rValue.setResponseType(ResponseType.QUERY);
+
+        if ( itemQueryParameters.updatedRows().length == 0 ) {
+            rValue.setData(itemReportService.generateAllItemReport(itemRepository));
+        } else {
+            rValue.addError( new ErrorLine( 0, "0", "No parameters allowed for this request." ));
+        }
+        return rValue;
+    }
+
 
 }
 

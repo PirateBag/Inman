@@ -22,7 +22,7 @@ public class ItemSpecifications {
             }
 
             // Search by description (partial match, case-insensitive)
-            if (searchCriteria.getDescription() != null && !searchCriteria.getDescription().isEmpty()) {
+            if (!searchCriteria.getDescription().isEmpty()) {
                 predicates.add(cb.like(cb.lower(root.get("description")),
                         "%" + searchCriteria.getDescription().toLowerCase() + "%"));
             }

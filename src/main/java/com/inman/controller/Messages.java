@@ -33,4 +33,6 @@ public class Messages {
     public final static String NO_DATA_FOR_PARAMETERS = "These Query Parameters did not match any data";
     public final static String WRONG_NUMBER_OF_PARAMETERS = "Inman expected $1%d parameters but only $2%d parameters were observed";
 
+    public final static String ID_MUST_BE_ZERO_FOR_INSERTS = "Id must be zero for inserts.";
+
 }

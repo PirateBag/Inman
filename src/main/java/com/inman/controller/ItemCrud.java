@@ -21,8 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 
 import static com.inman.controller.Messages.*;
-import static com.inman.controller.Utility.normalize;
-import static com.inman.controller.Utility.outputErrorAndThrow;
+import static com.inman.controller.Utility.*;
 
 @Configuration
 @RestController
@@ -43,12 +42,13 @@ public class ItemCrud {
                         itemCrudBatchResponse, logger );
             }
         } else if ( item.getCrudAction() == CrudAction.INSERT && item.getId() != 0L ) {
-            outputErrorAndThrow( "Id must be zero for inserts.", itemCrudBatchResponse, logger );
+            outputInfo( ID_MUST_BE_ZERO_FOR_INSERTS, itemCrudBatchResponse, logger );
+            item.setId(0L);
         }
 
         if ( item.getCrudAction() == CrudAction.CHANGE
         || item.getCrudAction() == CrudAction.INSERT ) {
-            if ( item.getDescription() == null || item.getDescription().length() < 3 ) {
+            if ( item.getDescription().length() < 3 ) {
                 outputErrorAndThrow( "Item description null or too short", itemCrudBatchResponse, logger );
             }
 
@@ -187,7 +187,6 @@ private void changeItem(Item updatedItem,
             itemCrudBatchResponse.setResponseType(ResponseType.MULTILINE );
             if (itemCrudBatchResponse.getData().isEmpty()) {
                 var message = "No items were processed, either due to errors or no actionable inputs.";
-
                 logger.info(message);
                 itemCrudBatchResponse.getErrors().add(new ErrorLine(1, message));
             }

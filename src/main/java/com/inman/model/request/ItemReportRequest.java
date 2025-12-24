@@ -2,6 +2,7 @@ package com.inman.model.request;
 
 public class ItemReportRequest {
 	public static final String SHOW_ALL_ITEMS_URL = "itemReport/showAllItems";
+
 	public static final String EXPLOSION_URL = "itemReport/explosion";
     public static final String BOM_RECURSION_CHECK_URL = "itemReport/bomRecursionCheck";
 	public static final String WHERE_USED_REPORT_URL = "itemReport/whereUsedReport";

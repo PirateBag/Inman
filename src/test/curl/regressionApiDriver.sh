@@ -19,6 +19,10 @@ declare -a tests=(
 
   "0213_ItemCrudQueryWagons;item/crudQuery"
 
+  # Test the ItemCrud interface to The Master Item report.
+  "0221_ItemReportCrudQueryAll;itemReportCrud/master"
+  "stopTesting"
+
 #  Add some BOM line items to W-001
 #  Test that transactions failed and rolled back.
   #Insert W-001 W-002,
