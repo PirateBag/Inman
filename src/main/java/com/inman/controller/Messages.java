@@ -6,8 +6,6 @@ public class Messages {
 
     public static final String ID_OR_SUMMARYID_FOR_CHANGE = "Id (%s) or Summary Id (%s) must indicate an item for Change or delete.";
 
-    public static final String SUMMARY_ID_NOT_FOUND = "Item with SummaryId (%s) not found";
-
     public static final String ITEM_IDS_MUST_BE_SAME = "Item Ids must be the same for change/delete (%d and %d)";
 
     public static final String ITEM_REF_NOT_FOUND = "%s item ref (%d) not found";
@@ -34,5 +32,7 @@ public class Messages {
     public final static String WRONG_NUMBER_OF_PARAMETERS = "Inman expected $1%d parameters but only $2%d parameters were observed";
 
     public final static String ID_MUST_BE_ZERO_FOR_INSERTS = "Id must be zero for inserts.";
+
+    public static final String UNIT_COST_MUST_BE_ZERO = "Unit cost cannot be set for a MAN item.";
 
 }

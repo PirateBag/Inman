@@ -30,6 +30,7 @@ public class ItemCrud {
     public static final String ItemCrudRequestURL = "item/crud";
     public static final String ItemCrudQuery = "item/crudQuery";
 
+
     static Logger logger = LoggerFactory.getLogger("controller: " + ItemCrud.class);
 
     ItemRepository itemRepository;
@@ -58,9 +59,8 @@ public class ItemCrud {
             }
         }
 
-        if ( item.getCrudAction() != CrudAction.INSERT &&
-                item.getUnitCost() != 0.0 && item.getSourcing() == SourcingType.MAN  ) {
-            outputErrorAndThrow( "Unit cost must be zero when you insert a manufactured item", itemCrudBatchResponse, logger );
+        if ( item.getCrudAction() == CrudAction.INSERT && item.getUnitCost() != 0.0 && item.getSourcing() == SourcingType.MAN  ) {
+            outputErrorAndThrow(UNIT_COST_MUST_BE_ZERO, itemCrudBatchResponse, logger );
         }
     }
 
@@ -112,7 +112,7 @@ private void changeItem(Item updatedItem,
         var priorItem = itemRepository.findById(updatedItem.getId());
 
         if (priorItem == null) {
-            outputErrorAndThrow( String.format( SUMMARY_ID_NOT_FOUND, updatedItem.getId() ), itemCrudBatchResponse, logger );
+            outputErrorAndThrow( String.format( ITEM_REF_NOT_FOUND, "ChangeItem", updatedItem.getId() ), itemCrudBatchResponse, logger );
         }
         if ( updatedItem.getId() != priorItem.getId() ) {
             outputErrorAndThrow( String.format(  ITEM_IDS_MUST_BE_SAME, updatedItem.getId(), priorItem.getId() ), itemCrudBatchResponse, logger );

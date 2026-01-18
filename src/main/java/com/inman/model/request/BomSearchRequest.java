@@ -1,10 +1,10 @@
 package com.inman.model.request;
 
 public class BomSearchRequest {
-	public static final String FIND_BY_PARENT = "bom/findByParent";
 	public static final String findByParent = "bom/findByParent";
 	public static final String findById = "bom/findById";
 	public static final String all = "bom/all";
+	public static final String findUsingItemParameters = "bom/findItemParameters";
 
 	Long idToSearchFor;
 

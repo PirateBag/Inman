@@ -28,7 +28,7 @@ public class ItemReportService {
 
         List<Item> items = itemRepository.findAll();
 
-        if ( items.isEmpty() )        {
+        if ( items.isEmpty() ) {
             message = "There are no items";
             reportOutput.add( new Text( message ));
             logger.error(message);

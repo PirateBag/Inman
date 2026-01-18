@@ -1,8 +1,5 @@
 package com.inman.controller;
 
-import com.inman.service.BomCrudService;
-import com.inman.service.BomSearchLogic;
-import com.inman.service.BomLogicService;
 import com.inman.entity.BomPresent;
 import com.inman.entity.Text;
 import com.inman.model.request.*;
@@ -12,6 +9,9 @@ import com.inman.model.response.TextResponse;
 import com.inman.repository.BomPresentRepository;
 import com.inman.repository.BomRepository;
 import com.inman.repository.ItemRepository;
+import com.inman.service.BomCrudService;
+import com.inman.service.BomLogicService;
+import com.inman.service.BomSearchLogic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +67,7 @@ public class Bom {
 		}
 
 		BomResponse responsePackage = new BomResponse();
-		responsePackage.setData((ArrayList<BomPresent>) Arrays.asList(boms));
+		responsePackage.setData(new ArrayList<>(Arrays.asList(boms)));
 
 		return ResponseEntity.ok().body(responsePackage);
 	}
@@ -75,21 +75,21 @@ public class Bom {
 	@CrossOrigin
 	@RequestMapping(value = BomSearchRequest.findByParent, method = RequestMethod.POST)
 	public ResponseEntity<?> bomFindByParent(@RequestBody BomSearchRequest xBomSearchRequest) {
-
-		BomPresent[] boms = bomPresentRepository.findByParentId(xBomSearchRequest.getIdToSearchFor().intValue());
-		BomResponse responsePackage = new BomResponse();
-		responsePackage.setData((ArrayList<BomPresent>) Arrays.asList(boms));
-		responsePackage.setResponseType(ResponseType.QUERY);
-		return ResponseEntity.ok().body(responsePackage);
+		return commonFindUsingItemParameters( xBomSearchRequest.getIdToSearchFor() );
 	}
 
-
 	@CrossOrigin
-	@RequestMapping(value = BomCrudBatch.updateUrl, method = RequestMethod.POST)
-	public ResponseEntity<BomResponse> bomUpdateArray(@RequestBody BomPresent[] xComponents) {
-		BomResponse responsePackage = bomCrudService.applyBomUpdates(bomRepository, bomPresentRepository, xComponents);
-		return ResponseEntity.ok().body(responsePackage);
+	@RequestMapping(value = BomSearchRequest.findUsingItemParameters, method = RequestMethod.POST)
+	public ResponseEntity<?> bomFindUsingItemParametersPost(@RequestBody ItemCrudBatch itemCrudBatch ) {
+		return commonFindUsingItemParameters( itemCrudBatch.updatedRows()[ 0 ].getId() );
+	}
 
+	private ResponseEntity<?> commonFindUsingItemParameters( Long idToSearchFor ) {
+		BomResponse responsePackage = new BomResponse();
+		BomPresent[] boms = bomPresentRepository.findByParentId( idToSearchFor );
+		responsePackage.setData(new ArrayList<>(Arrays.asList(boms)));
+		responsePackage.setResponseType(ResponseType.QUERY);
+		return ResponseEntity.ok().body(responsePackage);
 	}
 
 	@CrossOrigin
