@@ -30,7 +30,7 @@ import static com.inman.controller.Utility.generateErrorMessageFrom;
 @Service
 public class BomCrudService {
 
-    static Logger logger = LoggerFactory.getLogger("controller: " + com.inman.controller.Bom.class);
+    static Logger logger = LoggerFactory.getLogger( BomCrudService.class );
 
     BomPresentRepository bomPresentRepository;
     ItemRepository itemRepository;
@@ -71,14 +71,13 @@ public class BomCrudService {
 
         logger.info("Update loop exited with " + bomResponse.getErrors().size() + " errors");
         if (!bomResponse.getErrors().isEmpty()) {
-            logger.info("Ideally throwing exception");
+            for (ErrorLine error : bomResponse.getErrors())
+                logger.info("Ideally throwing exception" + error.getMessage());
+
             throw new RuntimeException("at least one error occurred");
         }
         return bomResponse;
     }
-
-
-
 
     private void updateMaxDepthOf(BomPresent updatedBom ) {
         Item component = itemRepository.findById(updatedBom.getChildId());
@@ -86,12 +85,12 @@ public class BomCrudService {
 
         if (component.getMaxDepth() <= parent.getMaxDepth()) {
             int newMaxDepth = parent.getMaxDepth() + 1;
-            logger.info("{} depth changing from {} to {}" + 1, component.getId(), component.getMaxDepth(), parent.getMaxDepth());
+            logger.info("Depth change {} component is at or lower {} than parent {}.", component.getId(), component.getMaxDepth(), parent.getMaxDepth());
             component.setMaxDepth(newMaxDepth);
             itemRepository.save(component);
             return;
         }
-        logger.info("{} depth not changing {} to {}" + 1, component.getId(), component.getMaxDepth(), parent.getMaxDepth());
+        logger.info("No change in depth {} component is deeper {} than parent {}.", component.getId(), component.getMaxDepth(), parent.getMaxDepth());
     }
 
 
@@ -114,18 +113,6 @@ public class BomCrudService {
     }
 
 
-	/*
-	@CrossOrigin
-	@RequestMapping( value = BomUpdate.INVALID_COMPONENTS_URL, method=RequestMethod.POST )
-	public ResponseEntity<?> bomFindInvalidComponents( @RequestBody BomPresent[] proposedComponents  )
-	{
-		ResponsePackage responsePackage = bomNavigation.isItemIdInWhereUsed( proposedComponents );
-
-		return ResponseEntity.ok().body( responsePackage );
-	}
-	*/
-
-
     private void change(BomPresent updatedBom, BomResponse bomResponse, int lineNumber) {
         var oldBom = bomRepository.findById(updatedBom.getId());
         String message = "";
@@ -139,7 +126,6 @@ public class BomCrudService {
         if (updatedBom.getQuantityPer() == oldBom.get().getQuantityPer()) {
             message = "Bom " + updatedBom.getId() + " quantityPer field did not change.";
             logger.warn(message);
-            bomResponse.addError(new ErrorLine(lineNumber, "0001", message));
         } else {
             logger.info("Bom " + updatedBom.getId() + " quantityPer was updated from " + oldBom.get().getQuantityPer() + " to " + updatedBom.getQuantityPer());
             oldBom.get().setQuantityPer(updatedBom.getQuantityPer());

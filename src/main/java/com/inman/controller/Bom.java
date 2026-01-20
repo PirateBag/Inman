@@ -52,7 +52,7 @@ public class Bom {
 		this.bomLogicService = bomLogicService;
 	}
 
-	static Logger logger = LoggerFactory.getLogger("controller: " + Bom.class);
+	static Logger logger = LoggerFactory.getLogger( Bom.class);
 
 	@CrossOrigin
 	@RequestMapping(value = BomPresentSearchRequest.all, method = RequestMethod.POST)
@@ -99,7 +99,7 @@ public class Bom {
 		try {
 			responsePackage = bomCrudService.applyBomUpdates(bomRepository, bomPresentRepository, bomCrudBatch.getUpdatedRows());
 		} catch ( RuntimeException runtimeException ) {
-			logger.error( "Encountered RuntimeException in service, look for rollback.");
+			logger.error( "Encountered RuntimeException " + runtimeException + "look for rollback.");
 		}
 		return ResponseEntity.ok().body(responsePackage);
 	}
