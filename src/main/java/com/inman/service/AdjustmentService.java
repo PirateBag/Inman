@@ -23,7 +23,7 @@ import java.util.*;
 
 import static com.inman.controller.Messages.*;
 import static com.inman.controller.Utility.outputErrorAndThrow;
-import static com.inman.controller.Utility.outputInfo;
+import static com.inman.controller.LoggingUtility.outputInfo;
 
 @Service
 public class AdjustmentService {
@@ -72,7 +72,7 @@ public class AdjustmentService {
         switch (adjustment.getAdjustmentType()) {
             case ITEM -> insertItemAdjustment(adjustment, response );
             case XFER -> insertOrderAdjustment(adjustment, response );
-            default -> Utility.outputErrorAndThrow(ILLEGAL_STATE.formatted(adjustment.getAdjustmentType()),
+            default -> outputErrorAndThrow(ILLEGAL_STATE.formatted(adjustment.getAdjustmentType()),
                     response, logger);
         }
     }
@@ -108,8 +108,8 @@ public class AdjustmentService {
 
     /**
      * Handle adjustments to inventory balances when items are transferred to or from orders.
-     * @param adjustment
-     * @param response
+     * @param adjustment order to process.
+     * @param response the resulting response.
      *
      * Side effects: Item QuantityOnHand and Order QuantityAssigned updated in the database.
      */
@@ -137,11 +137,11 @@ public class AdjustmentService {
             outputErrorAndThrow(ADJUST_ORDER_TYPE, response, logger);
         }
 
-        double oldQuantityOnHand = item.getQuantityOnHand();
+        double oldQuantityOnHand = (item != null ? item.getQuantityOnHand() : 0.0);
         double oldQuantityAssigned =  orderLineItem.get().getQuantityAssigned();
 
-        double newQuantityOnHand = 0.0;
-        double newQuantityAssigned = 0.0;
+        double newQuantityOnHand;
+        double newQuantityAssigned;
 
         /* PO's and MOHEAD's add to the quantity for an item.
         MODETs use up quantity from the item.
@@ -163,7 +163,7 @@ public class AdjustmentService {
                 }
 
                 logger.info( "There are {} children and {} proposed adjustments.", childrenOfMoHead.size(), proposedAdjustments.size() );
-                logger.info( Adjustment.RAW_HEADDER );
+                logger.info( Adjustment.RAW_HEADER );
                 for ( Adjustment proposedAdjustment : proposedAdjustments ) {
                     logger.info( proposedAdjustment.toString() );
                 }

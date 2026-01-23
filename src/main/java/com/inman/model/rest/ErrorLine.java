@@ -1,9 +1,18 @@
 package com.inman.model.rest;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.http.HttpStatus;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ErrorLine {
 	private int key;
 	private String message;
-	
+    private HttpStatus status;
+
+    public HttpStatus getStatus() {
+        return status;
+    }
+
 	public ErrorLine( int key, String code, String message ) {
 		this.key = key;
 		this.message = message;
@@ -13,6 +22,11 @@ public class ErrorLine {
 		this.key = key;
 		this.message = message;
 	}
+
+    public ErrorLine( HttpStatus status, String message ) {
+        this.status = status;
+        this.message = message;
+    }
 
 	public ErrorLine() {
 		
@@ -31,5 +45,7 @@ public class ErrorLine {
 		this.message = message;
 	}
 	
-	
+	public String toString() {
+        return "%d %s".formatted(key, message);
+    }
 }

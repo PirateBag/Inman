@@ -29,6 +29,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import static com.inman.controller.LoggingUtility.outputInfo;
 import static com.inman.controller.Messages.ITEM_REF_NOT_FOUND;
 import static com.inman.controller.Utility.*;
 import static java.lang.Math.abs;

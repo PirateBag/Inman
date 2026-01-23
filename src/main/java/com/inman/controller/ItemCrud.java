@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
+import static com.inman.controller.LoggingUtility.outputInfo;
 import static com.inman.controller.Messages.*;
 import static com.inman.controller.Utility.*;
 
@@ -29,7 +30,6 @@ public class ItemCrud {
     public static final String UNIQUE_INDEX_OR_PRIMARY_KEY_VIOLATION = "Unique index or primary key violation";
     public static final String ItemCrudRequestURL = "item/crud";
     public static final String ItemCrudQuery = "item/crudQuery";
-
 
     static Logger logger = LoggerFactory.getLogger("controller: " + ItemCrud.class);
 

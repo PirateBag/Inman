@@ -1,5 +1,4 @@
 package com.inman.service;
-
 import enums.CrudAction;
 import com.inman.entity.BomPresent;
 import com.inman.entity.Item;
@@ -14,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static com.inman.controller.Messages.*;
 import static com.inman.controller.Utility.generateErrorMessageFrom;
 
 @Service
@@ -49,35 +50,6 @@ public class BomCrudService {
     }
 
 
-    @Transactional
-    public BomResponse applyBomUpdates(BomRepository xBomRepository, BomPresentRepository bomPresentRepository, BomPresent[] xBomPresentToUpdate) {
-        var bomResponse = new BomResponse();
-        bomResponse.setResponseType(ResponseType.CHANGE);
-        int lineNumber = 0;
-
-        for (BomPresent updatedBom : xBomPresentToUpdate) {
-            logger.info("Bom {},{} {}, {}", updatedBom.getParentId(), updatedBom.getCrudAction(), updatedBom.getChildId(), updatedBom.getQuantityPer());
-
-            switch ( updatedBom.getCrudAction() ) {
-                case CHANGE ->  change(updatedBom, bomResponse, lineNumber);
-                case INSERT ->  insert(updatedBom, bomResponse, lineNumber);
-                default ->  {
-                    logger.info( "Activity state " + updatedBom.getCrudAction() + " not supported" );
-                    throw new RuntimeException( "Bom " + updatedBom.getParentId() + "," + updatedBom.getCrudAction() );
-                }
-            }
-            lineNumber++;
-        }
-
-        logger.info("Update loop exited with " + bomResponse.getErrors().size() + " errors");
-        if (!bomResponse.getErrors().isEmpty()) {
-            for (ErrorLine error : bomResponse.getErrors())
-                logger.info("Ideally throwing exception" + error.getMessage());
-
-            throw new RuntimeException("at least one error occurred");
-        }
-        return bomResponse;
-    }
 
     private void updateMaxDepthOf(BomPresent updatedBom ) {
         Item component = itemRepository.findById(updatedBom.getChildId());
@@ -91,6 +63,43 @@ public class BomCrudService {
             return;
         }
         logger.info("No change in depth {} component is deeper {} than parent {}.", component.getId(), component.getMaxDepth(), parent.getMaxDepth());
+    }
+    @Transactional
+    /**
+     * Depending on the type of crudAction, process each element of the array to be updated.
+     *  BomResponse is an I/O parameter which will be filled in with error and return values.  A return value was not used due to the
+     * need to throw exceptions to cause rollbacks.
+     * xBomPresentToUpdate is an array of updates to be executed.
+     * Returns void as the outcome are the side-effect changes to bomResponse.
+     */
+    public void applyBomUpdates( BomResponse bomResponse, BomPresent[] xBomPresentToUpdate ) {
+        bomResponse.setResponseType(ResponseType.CHANGE);
+        for (BomPresent updatedBom : xBomPresentToUpdate) {
+            logger.info("Bom {},{} {}, {}", updatedBom.getParentId(), updatedBom.getCrudAction(), updatedBom.getChildId(), updatedBom.getQuantityPer());
+
+            switch (updatedBom.getCrudAction()) {
+                case CHANGE -> change(updatedBom, bomResponse);
+                case INSERT -> insert(updatedBom, bomResponse);
+                default -> {
+                    var message = String.format(ILLEGAL_STATE_MESSAGE.text(), "BOM " + updatedBom.getCrudAction() + updatedBom.getId());
+                    logger.error(message);
+                    bomResponse.addError(new ErrorLine(ILLEGAL_STATE_MESSAGE.httpStatus(), message));
+                    throw new RuntimeException(message);
+                }
+            }
+        }
+
+        logger.info("Update loop exited with " + bomResponse.getErrors().size() + " errors");
+        RuntimeException runtimeException = null;
+        for (ErrorLine errorLine : bomResponse.getErrors()) {
+            logger.info("Error: " + errorLine.toString() );
+            if (errorLine.getStatus() != HttpStatus.OK ) {
+                runtimeException = new RuntimeException( errorLine.getMessage() );
+            }
+        }
+        if (runtimeException != null) {
+            throw  runtimeException;
+        }
     }
 
 
@@ -113,18 +122,19 @@ public class BomCrudService {
     }
 
 
-    private void change(BomPresent updatedBom, BomResponse bomResponse, int lineNumber) {
+    private void change(BomPresent updatedBom, BomResponse bomResponse ) {
         var oldBom = bomRepository.findById(updatedBom.getId());
-        String message = "";
+        String message;
         if (oldBom.isEmpty()) {
-            message = "Unable to retrieve the original Bom instance for id " + updatedBom.getId();
-            bomResponse.addError(new ErrorLine(lineNumber, "0001", message));
+            message = String.format( ORIGINAL_NOT_FOUND.text(), "BOM", updatedBom.getId() );
+            bomResponse.addError(new ErrorLine( ORIGINAL_NOT_FOUND.httpStatus(), message));
             logger.error(message);
             throw new RuntimeException(message);
         }
 
         if (updatedBom.getQuantityPer() == oldBom.get().getQuantityPer()) {
-            message = "Bom " + updatedBom.getId() + " quantityPer field did not change.";
+            message = String.format( QUANTITY_PER_DID_NOT_CHANGE.text(), "BOM",  updatedBom.getId() );
+            bomResponse.addError(new ErrorLine( QUANTITY_PER_DID_NOT_CHANGE.httpStatus(), message));
             logger.warn(message);
         } else {
             logger.info("Bom " + updatedBom.getId() + " quantityPer was updated from " + oldBom.get().getQuantityPer() + " to " + updatedBom.getQuantityPer());
@@ -139,10 +149,10 @@ public class BomCrudService {
         updateMaxDepthOf(updatedBom );
     }
 
-    private void insert(BomPresent updatedBom, BomResponse bomResponse, int lineNumber) {
-        String message;
+    private void insert(BomPresent updatedBom, BomResponse bomResponse ) {
+
         com.inman.entity.Bom bomToBeInserted = new com.inman.entity.Bom(updatedBom.getParentId(), updatedBom.getChildId(), updatedBom.getQuantityPer());
-        com.inman.entity.Bom insertedBom = null;
+        com.inman.entity.Bom insertedBom;
         try {
             bomLogicService.isItemIdInWhereUsed(updatedBom.getParentId(),
                     bomToBeInserted.getChildId());
@@ -150,22 +160,21 @@ public class BomCrudService {
             logger.info( "insertedBom" + insertedBom );
             var refreshedBom = bomPresentRepository.byParentIdChildId(insertedBom.getParentId(), bomToBeInserted.getChildId());
             if (refreshedBom == null) {
-                message = "Bom " + insertedBom.getId() + " unable to re-retrieve inserted BOM ";
+                var message = RERETRIEVE.text().formatted( "Bom", insertedBom.getId() );
                 logger.error(message);
-                bomResponse.addError(new ErrorLine(lineNumber, message));
+                bomResponse.addError(new ErrorLine(RERETRIEVE.httpStatus(), message));
                 return;
             }
-
             refreshedBom.setCrudAction(CrudAction.INSERT);
             bomResponse.getData().add(refreshedBom);
             updateMaxDepthOf(updatedBom );
 
         } catch (DataIntegrityViolationException dataIntegrityViolationException) {
-            message = "Unable to insert " + bomToBeInserted.getParentId() + ":" +
-                    bomToBeInserted.getChildId() + " due to " +
-                    generateErrorMessageFrom(dataIntegrityViolationException);
+           var message = DATA_INTEGRITY.text().formatted(  bomToBeInserted.getParentId() +
+                    bomToBeInserted.getChildId(), generateErrorMessageFrom(dataIntegrityViolationException) );
             logger.error(message);
-            bomResponse.addError(new ErrorLine(lineNumber, message));
+            bomResponse.addError(new ErrorLine(DATA_INTEGRITY.httpStatus(), message));
+            throw  dataIntegrityViolationException;
         }
     }
 }

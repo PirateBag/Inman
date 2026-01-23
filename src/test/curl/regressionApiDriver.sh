@@ -43,6 +43,9 @@ declare -a tests=(
   # child inserted into W-002
   "0311_ItemPickListForBom;itemPick/itemsForBom"
 
+  # Verify that a 400 error was returned.
+  "0351_BomCrud_NoData;bom/crud"
+
 #Test Create/Replace/Update on Items.
   # Insert a new item W-101, but with a lead time of 0.  Should be an error.
   "0401_ItemInsert_LeadTime;item/crud"

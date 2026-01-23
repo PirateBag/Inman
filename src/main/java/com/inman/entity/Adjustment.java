@@ -14,7 +14,7 @@ public class Adjustment extends EntityMaster {
 
     public static final String RAW_HEADER_FORMAT =       "%8s    %-6s %-6s  %-4s  %9s  %4s";
     public static final String RAW_LINE_FORMAT =         "%8.2f  %6d  %6d   %-4s  %9s  %4s ";
-    public static final String RAW_HEADDER = String.format(RAW_HEADER_FORMAT, "Amount", "Item", "Order", "Type", "Date", "AdTp" );
+    public static final String RAW_HEADER = String.format(RAW_HEADER_FORMAT, "Amount", "Item", "Order", "Type", "Date", "AdTp" );
 
 
     private double amount;
@@ -49,7 +49,7 @@ public class Adjustment extends EntityMaster {
 
         if ( effectiveDate == null ) { throw new IllegalArgumentException( "EffectiveDate cannot be null" ); }
 
-        Utility.isDateFormatValid( effectiveDate );
+        Utility.throwIfDateInvalid( effectiveDate );
     }
 
     public Adjustment() {}
@@ -78,11 +78,6 @@ public class Adjustment extends EntityMaster {
         return amount;
     }
 
-    public void validation() {
-
-
-
-    }
     @Override
     public EntityMaster copy(EntityMaster oldValue) {
         return null;

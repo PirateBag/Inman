@@ -1,5 +1,5 @@
 {
-  "responseType" : null,
+  "responseType" : "CHANGE",
   "errors" : [ ],
   "data" : [ ]
 }

@@ -7,11 +7,8 @@ import com.inman.model.response.BomResponse;
 import com.inman.model.response.ResponseType;
 import com.inman.model.response.TextResponse;
 import com.inman.repository.BomPresentRepository;
-import com.inman.repository.BomRepository;
-import com.inman.repository.ItemRepository;
 import com.inman.service.BomCrudService;
 import com.inman.service.BomLogicService;
-import com.inman.service.BomSearchLogic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,19 +25,8 @@ import java.util.Arrays;
 public class Bom {
 	public static final String UNIQUE_INDEX_OR_PRIMARY_KEY_VIOLATION = "Unique index or primary key violation";
 
-	@Autowired
-	BomPresentRepository bomPresentRepository;
+    BomPresentRepository bomPresentRepository;
 
-	@Autowired
-	BomSearchLogic bomSearchLogic;
-
-	@Autowired
-	BomRepository bomRepository;
-
-	@Autowired
-	ItemRepository itemRepository;
-
-	@Autowired
 	BomLogicService bomLogicService;
 
 	BomCrudService bomCrudService;
@@ -96,10 +82,11 @@ public class Bom {
 	@RequestMapping(value = BomCrudBatch.bomCrud, method = RequestMethod.POST)
 	public ResponseEntity<BomResponse> bomUpdateArray(@RequestBody BomCrudBatch bomCrudBatch) {
 		BomResponse responsePackage = new BomResponse();
-		try {
-			responsePackage = bomCrudService.applyBomUpdates(bomRepository, bomPresentRepository, bomCrudBatch.getUpdatedRows());
+    	try {
+			bomCrudService.applyBomUpdates( responsePackage, bomCrudBatch.getUpdatedRows());
 		} catch ( RuntimeException runtimeException ) {
 			logger.error( "Encountered RuntimeException " + runtimeException + "look for rollback.");
+            return ResponseEntity.badRequest().body(responsePackage);
 		}
 		return ResponseEntity.ok().body(responsePackage);
 	}
@@ -114,7 +101,7 @@ public class Bom {
 		ArrayList<Text> texts = new ArrayList<>();
 
 		bomLogicService.updateMaxDepthOf( itemToRefresh.idToSearchFor(), texts );
-		texts.add( new Text( "Report Comppleted" ) );
+		texts.add( new Text( "Report Completed" ) );
 		rValue.setData( texts );
 		rValue.setResponseType(ResponseType.QUERY);
 		return rValue;

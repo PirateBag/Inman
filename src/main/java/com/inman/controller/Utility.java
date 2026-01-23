@@ -23,7 +23,6 @@ public class Utility {
         if (str == null) {
             return "";
         }
-        ;
         return str;
     }
 
@@ -39,17 +38,11 @@ public class Utility {
         return detailedMessage;
     }
 
-    public static boolean isDateFormatValid(String date) {
-        try {
-            LocalDate.parse(date, DATE_FORMATTER);
-
-        } catch (DateTimeParseException dtpe) {
-            return false;
-        }
-        return true;
+    public static void throwIfDateInvalid(String date) {
+        LocalDate.parse(date, DATE_FORMATTER);
     }
 
-    public static void outputInfo(String message, ResponsePackage<?> responsePackage, Logger logger) {
+    public static void xxxxoutputInfo(String message, ResponsePackage<?> responsePackage, Logger logger) {
         logger.info(message);
         responsePackage.getErrors().add(new ErrorLine(1, message));
     }
