@@ -1,8 +1,9 @@
 {
   "responseType" : null,
   "errors" : [ {
-    "key" : 1,
-    "message" : "Delete on open order is prohibited."
+    "key" : 0,
+    "message" : "Delete on open order is prohibited.",
+    "status" : "BAD_REQUEST"
   } ],
   "data" : [ ]
 }

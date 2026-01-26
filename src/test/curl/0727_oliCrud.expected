@@ -1,12 +1,6 @@
 {
   "responseType" : "MULTILINE",
-  "errors" : [ {
-    "key" : 1,
-    "message" : "Added 3 line items to order 14"
-  }, {
-    "key" : 1,
-    "message" : "Added 2 line items to order 15"
-  } ],
+  "errors" : [ ],
   "data" : [ {
     "id" : 14,
     "crudAction" : "CHANGE",

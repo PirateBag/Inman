@@ -1,5 +1,6 @@
 package com.inman.service;
 
+import com.inman.controller.LoggingUtility;
 import com.inman.controller.Utility;
 import com.inman.entity.Adjustment;
 import com.inman.entity.Item;
@@ -16,6 +17,7 @@ import enums.OrderType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +25,6 @@ import java.util.*;
 
 import static com.inman.controller.Messages.*;
 import static com.inman.controller.Utility.outputErrorAndThrow;
-import static com.inman.controller.LoggingUtility.outputInfo;
 
 @Service
 public class AdjustmentService {
@@ -192,7 +193,7 @@ public class AdjustmentService {
         Collection<Adjustment> adjustments = adjustmentRepository.findAll();
 
         if ( adjustments.isEmpty() ) {
-            outputInfo( NO_DATA_TO_REPORT.formatted( "All Adjustments" ), textResponse, logger );
+            LoggingUtility.outputInfoToResponse( HttpStatus.OK, NO_DATA_TO_REPORT.formatted( "All Adjustments" ), textResponse );
         }
 
         for ( Adjustment adjustment : adjustments ) {

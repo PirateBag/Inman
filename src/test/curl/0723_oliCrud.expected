@@ -1,11 +1,9 @@
 {
   "responseType" : null,
   "errors" : [ {
-    "key" : 1,
-    "message" : "Added 3 line items to order 14"
-  }, {
-    "key" : 1,
-    "message" : "Cannot change state on order 15 from planned to close.  Try delete. "
+    "key" : 0,
+    "message" : "Cannot change state on order 15 from planned to close.  Try delete. ",
+    "status" : "BAD_REQUEST"
   } ],
   "data" : [ {
     "id" : 14,

@@ -1,5 +1,6 @@
 package com.inman.service;
 
+import com.inman.controller.LoggingUtility;
 import com.inman.controller.Messages;
 import com.inman.controller.Utility;
 import com.inman.entity.BomPresent;
@@ -9,7 +10,6 @@ import com.inman.entity.Text;
 import com.inman.model.request.OrderLineItemRequest;
 import com.inman.model.response.ResponsePackage;
 import com.inman.model.response.TextResponse;
-import com.inman.model.rest.ErrorLine;
 import com.inman.repository.BomPresentRepository;
 import com.inman.repository.ItemRepository;
 import com.inman.repository.OrderLineItemRepository;
@@ -17,10 +17,9 @@ import enums.CrudAction;
 import enums.OrderState;
 import enums.OrderType;
 import enums.SourcingType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +29,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
 
-import static com.inman.controller.LoggingUtility.outputInfo;
+import static com.inman.controller.LoggingUtility.*;
+import static com.inman.controller.LoggingUtility.outputErrorAndThrow;
 import static com.inman.controller.Messages.*;
 import static com.inman.controller.OrderLineItemController.OrderLineItem_AllOrders;
 import static com.inman.controller.Utility.*;
@@ -40,8 +40,6 @@ import static com.inman.service.ReflectionHelpers.compareObjects;
 public class OrderLineItemService {
 
     private static final int MAX_REPORT_LINES = 5;
-
-    private static final Logger logger = LoggerFactory.getLogger(OrderLineItemService.class);
     private final ItemRepository itemRepository;
     private final OrderLineItemRepository orderLineItemRepository;
     private final BomPresentRepository bomPresentRepository;
@@ -55,11 +53,6 @@ public class OrderLineItemService {
         this.bomPresentRepository = bomPresentRepository;
     }
 
-    private void outputErrorAndThrow(String message, ResponsePackage<?> responsePackage) {
-        logger.info(message);
-        responsePackage.getErrors().add(new ErrorLine(1, message));
-        throw new RuntimeException(message);
-    }
 
     private void insert(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse ) {
         String message;
@@ -71,20 +64,20 @@ public class OrderLineItemService {
             LocalDate derviedStartOrCompleted ;
 
             if ( isNullOrEmpty( orderLineItem.getStartDate() ) && isNullOrEmpty( orderLineItem.getCompleteDate() ) ) {
-                outputErrorAndThrow( "A line item must have either startDate or completedDate", oliResponse );
+                LoggingUtility.outputErrorAndThrow( HttpStatus.BAD_REQUEST, "An order line item must have either startDate or completedDate", oliResponse );
             } else if ( isNullOrEmpty( orderLineItem.getStartDate()  ) ) {
                 derviedStartOrCompleted = LocalDate.parse(orderLineItem.getCompleteDate(), DATE_FORMATTER).minusDays(item.getLeadTime());
                orderLineItem.setStartDate( derviedStartOrCompleted.format(DATE_FORMATTER));
-                logger.info("Derived start from completed less lead time." );
+                outputInfoToLog( "Derived start from completed less lead time." );
             } if ( isNullOrEmpty( orderLineItem.getCompleteDate() ) ) {
                 derviedStartOrCompleted = LocalDate.parse(orderLineItem.getStartDate(), DATE_FORMATTER).plusDays(item.getLeadTime());
                 orderLineItem.setCompleteDate( derviedStartOrCompleted.format(DATE_FORMATTER));
-                logger.info("Derived completeDate from Start plus lead time." );
+                outputInfoToLog("Derived completeDate from Start plus lead time." );
             }
 
             validateOrderLineItemForMOInsertion(orderLineItem, oliResponse, item);
             updatedOrderLineItem = orderLineItemRepository.save(orderLineItem);
-            logger.info("inserted adjusted: {}", updatedOrderLineItem);
+            outputInfoToLog("inserted adjusted:" + updatedOrderLineItem);
             oliResponse.getData().add(updatedOrderLineItem);
 
             if ( orderLineItem.getOrderState() == OrderState.OPEN ) {
@@ -93,10 +86,10 @@ public class OrderLineItemService {
         } catch (DataIntegrityViolationException dataIntegrityViolationException) {
             message = "Unable to insert " + orderLineItem + ":" +
                     Utility.generateErrorMessageFrom(dataIntegrityViolationException);
-            outputErrorAndThrow(message, oliResponse);
-        } catch (RuntimeException runtimeException) {
-            outputErrorAndThrow( "Unable to insert " + orderLineItem + ":" + runtimeException.getMessage(), oliResponse);
-        }
+            outputErrorAndThrow(HttpStatus.BAD_REQUEST, message, oliResponse);
+        } /*catch (RuntimeException runtimeException) {
+            outputErrorAndThrow( HttpStatus.BAD_REQUEST, "Unable to insert " + orderLineItem + ":" + runtimeException.getMessage(), oliResponse);
+        }  */
 
     }
 
@@ -109,7 +102,7 @@ public class OrderLineItemService {
     private void addLineItemsToOrder(OrderLineItem parentOli, ResponsePackage<OrderLineItem> oliResponse) {
         Item item = itemRepository.findById(parentOli.getItemId());
         if (item == null ) {
-            outputErrorAndThrow("Unable to find item with ID " + parentOli.getItemId(), oliResponse);
+            outputErrorAndThrow(HttpStatus.BAD_REQUEST,"Unable to find item with ID " + parentOli.getItemId(), oliResponse);
         }
         BomPresent[] childrenOfItem = bomPresentRepository.findByParentId(parentOli.getItemId());
         int numberOfAddedItems = 1;
@@ -118,10 +111,10 @@ public class OrderLineItemService {
 
             OrderLineItem oli = createOrderLineItem(parentOli, bomPresent, item );
             OrderLineItem updatedOli = orderLineItemRepository.save(oli);
-            logger.info(updatedOli.toString());
+            outputInfoToLog(  "Added OLI " + updatedOli.toString() + " to order " + parentOli.getId() );
             numberOfAddedItems++;
         }
-        outputInfo("Added " + numberOfAddedItems + " line items to order " + parentOli.getId(), oliResponse, logger);
+        outputInfoToLog( "Added " + numberOfAddedItems + " line items to order " + parentOli.getId() );
     }
 
     /**
@@ -155,16 +148,16 @@ public class OrderLineItemService {
                 orderLineItemRepository.delete(orderLineItemFromRepository.get());
             } else {
 
-                outputErrorAndThrow(Messages.ITEM_REF_NOT_FOUND.formatted( "OrderLineItem:Delete",orderLineItem.getItemId()), oliResponse);
+                outputErrorAndThrow( HttpStatus.BAD_REQUEST, Messages.ITEM_REF_NOT_FOUND.formatted( "OrderLineItem:Delete",orderLineItem.getItemId()), oliResponse);
             }
 
             if ( orderLineItem.getOrderState() == OrderState.OPEN ) {
-                outputErrorAndThrow( "Delete on open order is prohibited.", oliResponse );
+                outputErrorAndThrow(  HttpStatus.BAD_REQUEST, "Delete on open order is prohibited.", oliResponse );
             }
 
             List<OrderLineItem> childrenOfOrder = orderLineItemRepository.findByParentOliId( orderLineItem.getId() );
             if (!childrenOfOrder.isEmpty()) {
-                outputErrorAndThrow( "Deletion on " + orderLineItem + " failed because it has children.", oliResponse);
+                outputErrorAndThrow( HttpStatus.BAD_REQUEST, "Deletion on " + orderLineItem + " failed because it has children.", oliResponse);
             }
 
             orderLineItemFromRepository.get().setCrudAction(orderLineItem.getCrudAction());
@@ -174,7 +167,7 @@ public class OrderLineItemService {
         } catch (DataIntegrityViolationException dataIntegrityViolationException) {
             message = "Unable to " + orderLineItem.getCrudAction() + " " + orderLineItem + ":" +
                     Utility.generateErrorMessageFrom(dataIntegrityViolationException);
-            outputErrorAndThrow(message, oliResponse);
+            outputErrorAndThrow(HttpStatus.BAD_REQUEST, message, oliResponse);
         }
     }
 
@@ -188,21 +181,21 @@ public class OrderLineItemService {
                 Optional<OrderLineItem> oldOrderLineFromRepository = orderLineItemRepository.findById(orderLineItem.getId());
 
                 if (oldOrderLineFromRepository.isEmpty()) {
-                    outputErrorAndThrow("Unable to find order " + orderLineItem, oliResponse);
+                    outputErrorAndThrow( HttpStatus.BAD_REQUEST,"Unable to find order " + orderLineItem, oliResponse);
                 }
 
                 // Make a copy of the old item...
                 oldOrderLineItem = new OrderLineItem(oldOrderLineFromRepository.get());
             }
             var changeMap = ReflectionHelpers.compareObjects( oldOrderLineItem, orderLineItem );
-            logger.info("Number Of Changes: {}", changeMap.size() );
+            outputInfoToLog( "Number Of Changes: " + changeMap.size() );
             if ( changeMap.isEmpty() ) {
-                outputErrorAndThrow("Order does not appear to be changed:  " + orderLineItem, oliResponse);
+                outputErrorAndThrow(HttpStatus.BAD_REQUEST,"Order does not appear to be changed:  " + orderLineItem, oliResponse);
             }
 
             if ( oldOrderLineItem.getOrderState() == OrderState.OPEN
                 && orderLineItem.getItemId() != oldOrderLineItem.getItemId()) {
-                        outputErrorAndThrow("Item Changed in Open order.  Try delete/insert instead", oliResponse);
+                        outputErrorAndThrow(HttpStatus.BAD_REQUEST,"Item Changed in Open order.  Try delete/insert instead", oliResponse);
                 }
 
             orderLineItemRepository.save(orderLineItem);
@@ -214,9 +207,9 @@ public class OrderLineItemService {
         } catch (DataIntegrityViolationException dataIntegrityViolationException) {
             message = "Unable to " + orderLineItem.getCrudAction() + " " + orderLineItem + ":" +
                     Utility.generateErrorMessageFrom(dataIntegrityViolationException);
-            outputErrorAndThrow(message, oliResponse);
+            outputErrorAndThrow(HttpStatus.BAD_REQUEST,message, oliResponse);
         } catch (Exception e) {
-            logger.error("Unexpected exception {}", e.getMessage());
+            outputInfoToLog("Unexpected exception " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -244,7 +237,7 @@ public class OrderLineItemService {
                 addLineItemsToOrder( newOli,  oliResponse);
             }
             if ( newOli.getOrderState() == OrderState.CLOSED ) {
-                outputErrorAndThrow( "Cannot change state on order " + newOli.getId() + " from planned to close.  Try delete. " , oliResponse );
+                outputErrorAndThrow(  HttpStatus.BAD_REQUEST,"Cannot change state on order " + newOli.getId() + " from planned to close.  Try delete. " , oliResponse );
             }
         }
 
@@ -275,15 +268,15 @@ public class OrderLineItemService {
                 orderLineItemRepository.delete(oli);
                 count++;
             }
-            outputInfo( "Removed " + count + " lines from order " + newOli, oliResponse, logger );
+            outputInfoToLog(  "Removed " + count + " lines from order " + newOli );
     }
 
     private void throwErrorIfChildrenArePresent( OrderLineItem newOli, ResponsePackage<OrderLineItem> oliResponse) {
         List<OrderLineItem>  lineItems = orderLineItemRepository.findByParentOliId( newOli.getId() );
         if ( lineItems.isEmpty() ) {
-            logger.info( "Order " + newOli.getId() + " has no children to block this activity" );
+            outputInfoToLog( "Order " + newOli.getId() + " has no children to block this activity" );
         }
-        outputErrorAndThrow( "Order " + newOli.getId() + " is being updated to planned, but has " + lineItems.size() + " children and the operation is cancelled", oliResponse);
+        outputErrorAndThrow( HttpStatus.BAD_REQUEST, "Order " + newOli.getId() + " is being updated to planned, but has " + lineItems.size() + " children and the operation is cancelled", oliResponse);
     }
 
 
@@ -301,7 +294,7 @@ public class OrderLineItemService {
            orderLineItemRepository.save(oli);
            count++;
        }
-       outputInfo( "Updated " + count + " line items to state " + newOli.getOrderState(), oliResponse, logger );
+       outputInfoToLog( count + " line items to state " + newOli.getOrderState() );
     }
 
 
@@ -317,7 +310,7 @@ public class OrderLineItemService {
     public void validateOrderLineItemForMOInsertion(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse, Item item ) {
 
         if (item == null) {
-            Utility.outputErrorAndThrow( String.format( ITEM_REF_NOT_FOUND, "Order", orderLineItem.getItemId() ), oliResponse, logger );
+            outputErrorAndThrow( HttpStatus.BAD_REQUEST, String.format( ITEM_REF_NOT_FOUND, "Order", orderLineItem.getItemId() ), oliResponse );
         }
 
         //  Any type of item can appear as a MODET...
@@ -325,21 +318,21 @@ public class OrderLineItemService {
 
             //  But you can only put MAN items in a MOHEAD...
             if (item.getSourcing() == SourcingType.MAN && orderLineItem.getOrderType() != OrderType.MOHEAD) {
-                Utility.outputErrorAndThrow(String.format(ITEM_MANUFACTURED, item.getDescription()), oliResponse, logger);
+                outputErrorAndThrow( HttpStatus.BAD_REQUEST, String.format(ITEM_MANUFACTURED, item.getDescription()), oliResponse );
             }
 
             //  Or purchased items in a PO...
             if (item.getSourcing() == SourcingType.PUR && orderLineItem.getOrderType() != OrderType.PO) {
-                Utility.outputErrorAndThrow(String.format(ITEM_PURCHASED, item.getDescription()), oliResponse, logger);
+                outputErrorAndThrow( HttpStatus.BAD_REQUEST, ITEM_PURCHASED.formatted( item.getDescription() ), oliResponse );
             }
         }
 
         if (orderLineItem.getQuantityOrdered() <= 0.0) {
-           Utility.outputErrorAndThrow( String.format( QUANTITY_ORDERED_GT_0, orderLineItem.getQuantityOrdered(), item.getDescription() ), oliResponse, logger );
+           outputErrorAndThrow( HttpStatus.BAD_REQUEST, String.format(QUANTITY_ORDERED_GT_0, orderLineItem.getQuantityOrdered(), item.getDescription() ), oliResponse );
         }
 
         if (orderLineItem.getQuantityAssigned() != 0.0) {
-            Utility.outputErrorAndThrow( String.format( QUANTITY_ASSIGNED_NON_0, orderLineItem.getQuantityOrdered(), item.getDescription() ), oliResponse, logger );
+            outputErrorAndThrow( HttpStatus.BAD_REQUEST, QUANTITY_ASSIGNED_NON_0.formatted( orderLineItem.getQuantityOrdered(), item.getDescription() ), oliResponse );
         }
     }
 
@@ -373,7 +366,7 @@ public class OrderLineItemService {
 
         int countOfChanges = 0;
         if ( oldOli.getId() != newOli.getId() ) {
-            outputInfo( "Order Id is different",  oliResponse, logger );
+            outputInfoToLog(  "Order Id is different"  );
         }
         if ( oldOli.getQuantityOrdered() != newOli.getQuantityOrdered() ) {
             countOfChanges++;
@@ -398,7 +391,7 @@ public class OrderLineItemService {
     public ResponsePackage<OrderLineItem> applyCrud(OrderLineItemRequest crudBatch,
                                                     ResponsePackage<OrderLineItem> responsePackage ) {
         for (OrderLineItem orderLineItem : crudBatch.rows()) {
-            logger.info("{} on {}", orderLineItem.getCrudAction(), orderLineItem);
+            outputInfoToLog( "%s on %s".formatted( orderLineItem.getCrudAction(), orderLineItem ));
 
             if (orderLineItem.getCrudAction() == CrudAction.INSERT) {
                 insert(orderLineItem, responsePackage );
@@ -408,7 +401,7 @@ public class OrderLineItemService {
                 //  change(orderLineItem, responsePackage);
                 changeViaJpa( orderLineItem, responsePackage);
             }  else {
-                logger.info("{} was ignored because of unknown CrudAction", orderLineItem);
+                outputInfoToLog( orderLineItem + " was ignored because of unknown CrudAction" );
             }
         }
         return responsePackage;
@@ -419,12 +412,12 @@ public class OrderLineItemService {
         Optional<OrderLineItem> oli = orderLineItemRepository.findById( orderId );
 
         if (oli.isEmpty() ) {
-            outputInfo( "Can't find order " + orderId, textResponse, logger  );
+            outputInfoToResponse( HttpStatus.BAD_REQUEST, "Can't find order %d ".formatted( orderId ), textResponse );
             return;
         }
         Item item = itemRepository.findById( oli.get().getItemId());
         if ( item == null ) {
-            outputInfo( "Can't find item " + oli.get().getItemId() + " referenced by oli " + oli.get().getId(), textResponse, logger );
+            outputInfoToResponse( HttpStatus.OK, "Can't find item " + oli.get().getItemId() + " referenced by oli " + oli.get().getId(), textResponse );
             return;
         }
 
@@ -433,7 +426,7 @@ public class OrderLineItemService {
 
         if ( level == 0 ) {
             report = String.format( headerFormat, "Item", "Ordered", "Assigned", "Start", "Complete", "State", "Type" );
-            if ( textResponse.getData().size() < MAX_REPORT_LINES ) logger.info( report );
+            if ( textResponse.getData().size() < MAX_REPORT_LINES ) outputInfoToLog( report );
             textResponse.getData().add( new Text( report ) );
         }
 
@@ -455,9 +448,9 @@ public class OrderLineItemService {
         if (orderId == OrderLineItem_AllOrders ) {
             List<OrderLineItem> reportList = orderLineItemRepository.getOliOrderByItemIdAndCompleteDate();
 
-            logger.info(OrderLineItem.header);
+            outputInfoToLog( OrderLineItem.header);
             for (com.inman.entity.OrderLineItem orderLineItem : reportList) {
-                if ( textResponse.getData().size() < MAX_REPORT_LINES )  logger.info(orderLineItem.toString());
+                if ( textResponse.getData().size() < MAX_REPORT_LINES )  outputInfoToLog(orderLineItem.toString());
                 textResponse.getData().add(new Text(orderLineItem.toString()));
             }
         } else {
@@ -465,7 +458,7 @@ public class OrderLineItemService {
         }
 
         if ( textResponse.getData().size() >= MAX_REPORT_LINES ) {
-            logger.info( "Excess lines {} truncated at console.  " , textResponse.getData().size() - MAX_REPORT_LINES );
+            outputInfoToLog( "Excess lines %d truncated at console.  ".formatted( textResponse.getData().size() - MAX_REPORT_LINES  ) );
         }
 
         return textResponse;

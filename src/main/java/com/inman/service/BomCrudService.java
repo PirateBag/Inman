@@ -67,10 +67,10 @@ public class BomCrudService {
     @Transactional
     /**
      * Depending on the type of crudAction, process each element of the array to be updated.
-     *  BomResponse is an I/O parameter which will be filled in with error and return values.  A return value was not used due to the
+     *  BomResponse is an I/O parameter that will be filled in with error and return values.  A return value was not used due to the
      * need to throw exceptions to cause rollbacks.
      * xBomPresentToUpdate is an array of updates to be executed.
-     * Returns void as the outcome are the side-effect changes to bomResponse.
+     * Returns void as the outcome is the side effect changes to bomResponse.
      */
     public void applyBomUpdates( BomResponse bomResponse, BomPresent[] xBomPresentToUpdate ) {
         bomResponse.setResponseType(ResponseType.CHANGE);

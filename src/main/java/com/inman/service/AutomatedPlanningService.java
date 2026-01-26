@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
@@ -29,9 +30,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import static com.inman.controller.LoggingUtility.outputInfo;
+import static com.inman.controller.LoggingUtility.outputInfoToResponse;
 import static com.inman.controller.Messages.ITEM_REF_NOT_FOUND;
-import static com.inman.controller.Utility.*;
+import static com.inman.controller.Utility.normalize;
+import static com.inman.controller.Utility.outputErrorAndThrow;
 import static java.lang.Math.abs;
 
 @Service
@@ -210,7 +212,7 @@ public class AutomatedPlanningService {
     }
 
     private void calculateMaxDepths(TextResponse textResponse) {
-        outputInfo("Resetting max depth", textResponse, logger );
+        outputInfoToResponse(HttpStatus.OK, "Resetting max depth", textResponse );
 
         var numberOfResets = ddlRepository.resetMaxDepth();
 

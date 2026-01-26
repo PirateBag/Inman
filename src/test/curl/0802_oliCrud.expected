@@ -1,9 +1,6 @@
 {
   "responseType" : "MULTILINE",
-  "errors" : [ {
-    "key" : 1,
-    "message" : "Added 2 line items to order 1"
-  } ],
+  "errors" : [ ],
   "data" : [ {
     "id" : 1,
     "crudAction" : "INSERT",

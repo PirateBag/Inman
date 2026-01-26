@@ -33,9 +33,12 @@ public class Bom {
 
 	@Autowired
 	public Bom(BomCrudService bomCrudService,
-			   BomLogicService bomLogicService) {
+			   BomLogicService bomLogicService,
+			   BomPresentRepository bomPresentRepository
+	) {
 		this.bomCrudService = bomCrudService;
 		this.bomLogicService = bomLogicService;
+		this.bomPresentRepository = bomPresentRepository;
 	}
 
 	static Logger logger = LoggerFactory.getLogger( Bom.class);

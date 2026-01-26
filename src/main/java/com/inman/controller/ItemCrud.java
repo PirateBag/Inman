@@ -15,14 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
-import static com.inman.controller.LoggingUtility.outputInfo;
 import static com.inman.controller.Messages.*;
-import static com.inman.controller.Utility.*;
+import static com.inman.controller.Utility.normalize;
+import static com.inman.controller.Utility.outputErrorAndThrow;
 
 @Configuration
 @RestController
@@ -43,7 +44,7 @@ public class ItemCrud {
                         itemCrudBatchResponse, logger );
             }
         } else if ( item.getCrudAction() == CrudAction.INSERT && item.getId() != 0L ) {
-            outputInfo( ID_MUST_BE_ZERO_FOR_INSERTS, itemCrudBatchResponse, logger );
+            LoggingUtility.outputErrorAndThrow(  HttpStatus.OK, ID_MUST_BE_ZERO_FOR_INSERTS, itemCrudBatchResponse );
             item.setId(0L);
         }
 

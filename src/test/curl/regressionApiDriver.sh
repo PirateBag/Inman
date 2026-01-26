@@ -180,7 +180,7 @@ declare -a tests=(
   "0729_oliReport;oli/showAll"
 
   # Verify the date setting logic in INSERT orders.
-  "0731_oliCrud;oli/crud"
+   "0731_oliCrud;oli/crud"
 
 #####################  Automated Planning  ################
     # Remove just the orders and reset the id to 1.

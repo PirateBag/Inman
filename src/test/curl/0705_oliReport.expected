@@ -1,8 +1,9 @@
 {
   "responseType" : "MULTILINE",
   "errors" : [ {
-    "key" : 1,
-    "message" : "Can't find order 666"
+    "key" : 0,
+    "message" : "Can't find order 666 ",
+    "status" : "BAD_REQUEST"
   }, {
     "key" : 1,
     "message" : "No items were processed, either due to errors or no actionable inputs."

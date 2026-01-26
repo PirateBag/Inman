@@ -1,9 +1,6 @@
 {
   "responseType" : "MULTILINE",
-  "errors" : [ {
-    "key" : 1,
-    "message" : "Updated 7 line items to state CLOSED"
-  } ],
+  "errors" : [ ],
   "data" : [ {
     "id" : 6,
     "crudAction" : "CHANGE",

@@ -1,18 +1,6 @@
 {
   "responseType" : "MULTILINE",
-  "errors" : [ {
-    "key" : 1,
-    "message" : "Added 2 line items to order 4"
-  }, {
-    "key" : 1,
-    "message" : "Added 2 line items to order 6"
-  }, {
-    "key" : 1,
-    "message" : "Added 2 line items to order 8"
-  }, {
-    "key" : 1,
-    "message" : "Added 2 line items to order 10"
-  } ],
+  "errors" : [ ],
   "data" : [ {
     "id" : 4,
     "crudAction" : "INSERT",
