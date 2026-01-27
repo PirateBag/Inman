@@ -10,7 +10,6 @@ public class LoggingUtility {
     // Returns a logger for the calling class
     public static Logger getLogger() {
         String className = Thread.currentThread().getStackTrace()[3].getClassName();
-        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
         return LoggerFactory.getLogger(className);
     }
 
@@ -19,12 +18,12 @@ public class LoggingUtility {
     }
 
     public static void outputInfoToResponse(HttpStatus httpStatus, String message, ResponsePackage<?> responsePackage) {
-        LoggingUtility.getLogger().info(message);
+        getLogger().warn(message);
         responsePackage.getErrors().add(new ErrorLine(httpStatus, message));
     }
 
     public static void outputErrorAndThrow(HttpStatus httpStatus, String message, ResponsePackage<?> responsePackage ) {
-        LoggingUtility.getLogger().info(message);
+        getLogger().error(message);
         responsePackage.getErrors().add(new ErrorLine( httpStatus, message));
         throw new RuntimeException(message);
     }

@@ -47,6 +47,7 @@ public record  Messages( HttpStatus httpStatus, String text ) {
     public static final String UNIT_COST_MUST_BE_ZERO = "Unit cost cannot be set for a MAN item.";
 
     public static final Messages QUANTITY_PER_DID_NOT_CHANGE = new Messages( HttpStatus.OK, "The quantityPer of %s with an ID of %d did not change." );
+    public static final Messages QUANTITY_PER_UPDATED = new Messages( HttpStatus.OK, "BOM (%d) quantityPer was updated from  %f to %f." );
 
     public static final Messages RERETRIEVE = new Messages( HttpStatus.NOT_FOUND, "Unable to re-retrive %s with an Id of (%d)"  );
 

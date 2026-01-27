@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static com.inman.controller.LoggingUtility.outputInfoToLog;
+import static com.inman.controller.LoggingUtility.outputInfoToResponse;
 import static com.inman.controller.Messages.*;
 import static com.inman.controller.Utility.generateErrorMessageFrom;
 
@@ -137,13 +139,16 @@ public class BomCrudService {
             bomResponse.addError(new ErrorLine( QUANTITY_PER_DID_NOT_CHANGE.httpStatus(), message));
             logger.warn(message);
         } else {
-            logger.info("Bom " + updatedBom.getId() + " quantityPer was updated from " + oldBom.get().getQuantityPer() + " to " + updatedBom.getQuantityPer());
+            final String updateMessage = QUANTITY_PER_UPDATED.text().formatted( updatedBom.getId(), oldBom.get().getQuantityPer(), updatedBom.getQuantityPer() );
             oldBom.get().setQuantityPer(updatedBom.getQuantityPer());
 
             bomRepository.save(oldBom.get());
             var refreshedBom = bomPresentRepository.findById(updatedBom.getId());
+            outputInfoToLog(  "Refreshed BOM is " + refreshedBom.toString());
+            outputInfoToLog(  "old refreshed BOM is " + oldBom.get().toString());
             refreshedBom.setCrudAction(CrudAction.CHANGE);
             bomResponse.getData().add(refreshedBom);
+            outputInfoToResponse( HttpStatus.OK, updateMessage, bomResponse );
         }
 
         updateMaxDepthOf(updatedBom );
