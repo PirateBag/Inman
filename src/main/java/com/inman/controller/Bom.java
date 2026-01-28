@@ -33,6 +33,7 @@ public class Bom {
 
 	@Autowired
 	public Bom(BomCrudService bomCrudService,
+
 			   BomLogicService bomLogicService,
 			   BomPresentRepository bomPresentRepository
 	) {

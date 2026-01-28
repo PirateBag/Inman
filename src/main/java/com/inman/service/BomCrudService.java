@@ -9,6 +9,8 @@ import com.inman.model.rest.ErrorLine;
 import com.inman.repository.BomPresentRepository;
 import com.inman.repository.BomRepository;
 import com.inman.repository.ItemRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,9 @@ public class BomCrudService {
     ItemRepository itemRepository;
     BomRepository bomRepository;
     BomLogicService bomLogicService;
+
+    @PersistenceContext
+    EntityManager entityManager;
 
     @Autowired
     public BomCrudService(BomPresentRepository bomPresentRepository,
@@ -142,8 +147,9 @@ public class BomCrudService {
             final String updateMessage = QUANTITY_PER_UPDATED.text().formatted( updatedBom.getId(), oldBom.get().getQuantityPer(), updatedBom.getQuantityPer() );
             oldBom.get().setQuantityPer(updatedBom.getQuantityPer());
 
-            bomRepository.save(oldBom.get());
+            bomRepository.saveAndFlush(oldBom.get());
             var refreshedBom = bomPresentRepository.findById(updatedBom.getId());
+            entityManager.refresh(refreshedBom);
             outputInfoToLog(  "Refreshed BOM is " + refreshedBom.toString());
             outputInfoToLog(  "old refreshed BOM is " + oldBom.get().toString());
             refreshedBom.setCrudAction(CrudAction.CHANGE);
@@ -157,19 +163,18 @@ public class BomCrudService {
     private void insert(BomPresent updatedBom, BomResponse bomResponse ) {
 
         com.inman.entity.Bom bomToBeInserted = new com.inman.entity.Bom(updatedBom.getParentId(), updatedBom.getChildId(), updatedBom.getQuantityPer());
-        com.inman.entity.Bom insertedBom;
         try {
             bomLogicService.isItemIdInWhereUsed(updatedBom.getParentId(),
                     bomToBeInserted.getChildId());
-            insertedBom = bomRepository.save(bomToBeInserted);
-            logger.info( "insertedBom" + insertedBom );
-            var refreshedBom = bomPresentRepository.byParentIdChildId(insertedBom.getParentId(), bomToBeInserted.getChildId());
+            com.inman.entity.Bom insertedBom = bomRepository.saveAndFlush(bomToBeInserted);
+            var refreshedBom = bomPresentRepository.byParentIdChildId(bomToBeInserted.getParentId(), bomToBeInserted.getChildId());
             if (refreshedBom == null) {
                 var message = RERETRIEVE.text().formatted( "Bom", insertedBom.getId() );
                 logger.error(message);
                 bomResponse.addError(new ErrorLine(RERETRIEVE.httpStatus(), message));
                 return;
             }
+            entityManager.refresh(refreshedBom);
             refreshedBom.setCrudAction(CrudAction.INSERT);
             bomResponse.getData().add(refreshedBom);
             updateMaxDepthOf(updatedBom );
