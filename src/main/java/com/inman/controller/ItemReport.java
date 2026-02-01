@@ -34,6 +34,7 @@ public class ItemReport {
     private BomPresentRepository bomPresentRepository;
 
     static Logger logger = LoggerFactory.getLogger("controller: " + ItemReport.class);
+
     @Autowired
     private BomLogicService bomLogicService;
 

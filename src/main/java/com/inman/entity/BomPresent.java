@@ -58,6 +58,6 @@ public class BomPresent extends EntityMaster {
     public void setParentDescription( String parentDescription ) { this.parentDescription = parentDescription; }
 
     public String toString() {
-        return String.format( "%-30s %-30s %6.3f %8.3f ", parentDescription, childDescription, quantityPer, unitCost );
+        return String.format( "%-30s %-30s %6.3f %8.3f", parentDescription, childDescription, quantityPer, unitCost );
     }
 }
