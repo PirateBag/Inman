@@ -53,4 +53,8 @@ public record  Messages( HttpStatus httpStatus, String text ) {
 
     public static final Messages DATA_INTEGRITY = new Messages( HttpStatus.BAD_REQUEST, "Validation on insert BOM parent %d: child %d because %s " );
 
+    public static final Messages ROW_UPDATED = new Messages( HttpStatus.OK, "%s, Id %d has been %sd." );
+
+    public static final Messages BOM_NOT_FOUND = new Messages( HttpStatus.BAD_REQUEST, "Unable to find BOM Id %d." );
+
 }

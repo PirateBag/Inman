@@ -1,0 +1,9 @@
+{
+  "responseType" : "CHANGE",
+  "errors" : [ {
+    "key" : 0,
+    "message" : "BOM, Id 9 has been DELETEd.",
+    "status" : "OK"
+  } ],
+  "data" : [ ]
+}

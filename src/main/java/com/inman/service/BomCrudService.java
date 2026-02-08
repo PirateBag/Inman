@@ -1,5 +1,5 @@
 package com.inman.service;
-import enums.CrudAction;
+
 import com.inman.entity.BomPresent;
 import com.inman.entity.Item;
 import com.inman.model.request.BomPresentSearchRequest;
@@ -9,6 +9,7 @@ import com.inman.model.rest.ErrorLine;
 import com.inman.repository.BomPresentRepository;
 import com.inman.repository.BomRepository;
 import com.inman.repository.ItemRepository;
+import enums.CrudAction;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.slf4j.Logger;
@@ -27,8 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static com.inman.controller.LoggingUtility.outputInfoToLog;
-import static com.inman.controller.LoggingUtility.outputInfoToResponse;
+import static com.inman.controller.LoggingUtility.*;
 import static com.inman.controller.Messages.*;
 import static com.inman.controller.Utility.generateErrorMessageFrom;
 
@@ -87,8 +87,9 @@ public class BomCrudService {
             switch (updatedBom.getCrudAction()) {
                 case CHANGE -> change(updatedBom, bomResponse);
                 case INSERT -> insert(updatedBom, bomResponse);
+                case DELETE -> delete(updatedBom, bomResponse);
                 default -> {
-                    var message = String.format(ILLEGAL_STATE_MESSAGE.text(), "BOM " + updatedBom.getCrudAction() + updatedBom.getId());
+                    var message = String.format(ILLEGAL_STATE_MESSAGE.text(), "BOM " + updatedBom.getCrudAction() + " " + updatedBom.getId());
                     logger.error(message);
                     bomResponse.addError(new ErrorLine(ILLEGAL_STATE_MESSAGE.httpStatus(), message));
                     throw new RuntimeException(message);
@@ -158,6 +159,18 @@ public class BomCrudService {
         }
 
         updateMaxDepthOf(updatedBom );
+    }
+
+    private void delete(BomPresent updatedBom, BomResponse bomResponse ) {
+        if ( bomRepository.existsById( updatedBom.getId() ) ) {
+            bomRepository.deleteById(updatedBom.getId());
+            updateMaxDepthOf(updatedBom );
+            outputInfoToResponse( HttpStatus.OK, ROW_UPDATED.text().formatted( "BOM", updatedBom.getId (), updatedBom.getCrudAction()  ), bomResponse );
+            updateMaxDepthOf(updatedBom );
+            return;
+        }
+
+        outputErrorAndThrow( HttpStatus.BAD_REQUEST, BOM_NOT_FOUND.text().formatted( updatedBom.getId() ), bomResponse );
     }
 
     private void insert(BomPresent updatedBom, BomResponse bomResponse ) {

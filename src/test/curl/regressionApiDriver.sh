@@ -110,8 +110,6 @@ declare -a tests=(
   # Generate a recurse report on MO 2.
   "0621_oliReport;oli/showAll"
 
-
-
   # Create new order for item 1 in "open" state.
   "0701_oliCrud;oli/crud"
 
@@ -267,6 +265,10 @@ declare -a tests=(
     "0921_adjustmentMohead;adjustment/crud"
     "0923_itemMaster;itemReport/showAllItems"
     "0925_oliReport;oli/showAll"
+
+    #Tests placed at end so they don't change the various transaction test results.
+    "1001_BomCrudDelete_NoData;bom/crud"
+    "1003_BomCrudDelete_Positive;bom/crud"
 
    )
 #   "stopTesting"
