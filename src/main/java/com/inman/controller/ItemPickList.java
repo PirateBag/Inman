@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.inman.controller.LoggingUtility.outputInfoToLog;
+
 
 @Configuration
 @RestController
@@ -22,7 +24,7 @@ public class ItemPickList {
 	public ResponseEntity<ItemPickListResponse> allItemPickList( )
 	{
 		ItemPickListResponse responsePackage = itemPickListLogic.getAll( ) ;
-
+		outputInfoToLog( "Return all items with a length of " + responsePackage.getData().size() );
 		return ResponseEntity.ok().body( responsePackage );
 	}
 
@@ -32,7 +34,7 @@ public class ItemPickList {
 	public ResponseEntity<ItemPickListResponse> itemsForBom( @RequestBody GenericSingleId genericSingleId)
 	{
 		ItemPickListResponse responsePackage = itemPickListLogic.getItemsForBom(genericSingleId) ;
-
+		outputInfoToLog( "Return BOM items with a length of " + responsePackage.getData().size() );
 		return ResponseEntity.ok().body( responsePackage );
 	}
 
@@ -41,8 +43,9 @@ public class ItemPickList {
 			produces = "application/json")
 	public ResponseEntity<ItemPickListResponse> getOneItem( @RequestBody GenericSingleId genericSingleId)
 	{
-		ItemPickListResponse responsePackage = itemPickListLogic.getOneItem(genericSingleId) ;
 
+		ItemPickListResponse responsePackage = itemPickListLogic.getOneItem(genericSingleId) ;
+		outputInfoToLog( "Return one with a length of " + responsePackage.getData().size() );
 		return ResponseEntity.ok().body( responsePackage );
 	}
 }
