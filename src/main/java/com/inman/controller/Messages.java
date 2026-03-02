@@ -57,4 +57,6 @@ public record  Messages( HttpStatus httpStatus, String text ) {
 
     public static final Messages BOM_NOT_FOUND = new Messages( HttpStatus.BAD_REQUEST, "Unable to find BOM Id %d." );
 
+    public static final Messages PARENT_NOT_FOUND = new Messages( HttpStatus.BAD_REQUEST, "Unable to find parent Id %d." );
+
 }

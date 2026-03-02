@@ -1,14 +1,17 @@
 package com.inman.service;
 
+import com.inman.controller.Messages;
+import com.inman.entity.BomPresent;
 import com.inman.entity.Item;
 import com.inman.entity.Text;
+import com.inman.model.response.ResponsePackage;
 import com.inman.repository.BomPresentRepository;
 import com.inman.repository.ItemRepository;
 import enums.SourcingType;
-import org.springframework.beans.factory.annotation.Autowired;
-import com.inman.entity.BomPresent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +19,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
+
+import static com.inman.controller.LoggingUtility.outputInfoToLog;
+import static com.inman.controller.LoggingUtility.outputInfoToResponse;
 
 @Service
 public class BomLogicService {
@@ -28,16 +34,28 @@ public class BomLogicService {
     public BomLogicService(ItemRepository itemRepository, BomPresentRepository bomPresentRepository) {
         this.itemRepository = itemRepository;
         this.bomPresentRepository = bomPresentRepository;
-
     }
 
-    public boolean isItemIdInWhereUsed(long newProposedNewChild, long parentId) {
+    /**
+     *
+     * @param newProposedNewChild
+     * @param parentId
+     * @param bomResponse
+     * @return true if the the proposed child is already used on a parent.
+     */
+    public boolean isItemIdInWhereUsed(long newProposedNewChild, long parentId, ResponsePackage<?> bomResponse ) {
         logger.info("Searching for parents of " + parentId + " in " + newProposedNewChild);
+
+        if (parentId == newProposedNewChild) {
+            outputInfoToResponse( HttpStatus.BAD_REQUEST, Messages.DATA_INTEGRITY.text().formatted(parentId, newProposedNewChild, "Parent and Child can't be the same" ), bomResponse);
+            return true;
+        }
+
         BomPresent[] parents = bomPresentRepository.findByChildId(parentId);
 
         if (parents.length == 0) {
-            logger.info("No parents of " + newProposedNewChild);
-            return false;
+            outputInfoToLog( "There are no BOMs that have %d as a child." + parentId);
+            return true;
         }
 
         for (BomPresent bom : parents) {
@@ -46,7 +64,7 @@ public class BomLogicService {
                 logger.info("Found parent: " + bom.getParentId() + " exiting.");
                 return true;
             }
-            return isItemIdInWhereUsed(newProposedNewChild, bom.getParentId());
+            return isItemIdInWhereUsed(newProposedNewChild, bom.getParentId(), bomResponse );
         }
         return false;
     }

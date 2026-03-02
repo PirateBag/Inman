@@ -178,7 +178,7 @@ public class BomCrudService {
         com.inman.entity.Bom bomToBeInserted = new com.inman.entity.Bom(updatedBom.getParentId(), updatedBom.getChildId(), updatedBom.getQuantityPer());
         try {
             bomLogicService.isItemIdInWhereUsed(updatedBom.getParentId(),
-                    bomToBeInserted.getChildId());
+                    bomToBeInserted.getChildId(), bomResponse );
             com.inman.entity.Bom insertedBom = bomRepository.saveAndFlush(bomToBeInserted);
             var refreshedBom = bomPresentRepository.byParentIdChildId(bomToBeInserted.getParentId(), bomToBeInserted.getChildId());
             if (refreshedBom == null) {

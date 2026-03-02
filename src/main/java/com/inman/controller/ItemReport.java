@@ -130,7 +130,7 @@ public class ItemReport {
         rValue.setResponseType(ResponseType.QUERY);
 
         var isItemIdInWhereUsed = bomLogicService.isItemIdInWhereUsed(itemReportRequest.getChildId(),
-                itemReportRequest.getParentId() );
+                itemReportRequest.getParentId(), rValue );
 
         if ( itemReportRequest.getChildId() != itemReportRequest.getParentId() ) {
             var message = "Parent and proposed child are same item.  " + itemReportRequest.getChildId() ;
