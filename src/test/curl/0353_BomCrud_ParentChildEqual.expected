@@ -2,7 +2,7 @@
   "responseType" : "CHANGE",
   "errors" : [ {
     "key" : 0,
-    "message" : "On insert BOM, proposed child (2) for parent(1) already exists.",
+    "message" : "On insert BOM Item Id (2) can't be same as Child Item Id (2).   ",
     "status" : "BAD_REQUEST"
   } ],
   "data" : [ ]

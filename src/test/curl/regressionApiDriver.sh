@@ -46,11 +46,10 @@ declare -a tests=(
   # Verify that a 400 error was returned.
   "0351_BomCrud_NoData;bom/crud"
 
-    # Insertion of a row with same parent and child should fail...
-    "0353_BomCrud_NoData;bom/crud"
+   # Insertion of a row with same parent and child should fail...
+  "0353_BomCrud_ParentChildEqual;bom/crud"
 
-
-#Test Create/Replace/Update on Items.
+  #Test Create/Replace/Update on Items.
   # Insert a new item W-101, but with a lead time of 0.  Should be an error.
   "0401_ItemInsert_LeadTime;item/crud"
 

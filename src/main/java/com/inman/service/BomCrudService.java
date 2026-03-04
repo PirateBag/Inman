@@ -30,7 +30,6 @@ import java.util.Arrays;
 
 import static com.inman.controller.LoggingUtility.*;
 import static com.inman.controller.Messages.*;
-import static com.inman.controller.Utility.generateErrorMessageFrom;
 
 @Service
 public class BomCrudService {
@@ -174,13 +173,22 @@ public class BomCrudService {
     }
 
     private void insert(BomPresent updatedBom, BomResponse bomResponse ) {
+        if ( updatedBom.getParentId() == updatedBom.getChildId() ) {
+            outputErrorAndThrow( PARENT_CHILD_SAME.httpStatus(), PARENT_CHILD_SAME.text().formatted( updatedBom.getParentId(), updatedBom.getChildId() ), bomResponse );
+        }
 
         com.inman.entity.Bom bomToBeInserted = new com.inman.entity.Bom(updatedBom.getParentId(), updatedBom.getChildId(), updatedBom.getQuantityPer());
         try {
             bomLogicService.isItemIdInWhereUsed(updatedBom.getParentId(),
                     bomToBeInserted.getChildId(), bomResponse );
+            if ( bomResponse.getErrors().size() > 0 ) {
+                throw new RuntimeException(bomResponse.getErrorsTextAsString() );
+            }
+            bomLogicService.areAnyOfTheSiblingsAlreadyTheSame(bomToBeInserted.getChildId(), updatedBom.getParentId(), bomResponse );
+
             com.inman.entity.Bom insertedBom = bomRepository.saveAndFlush(bomToBeInserted);
             var refreshedBom = bomPresentRepository.byParentIdChildId(bomToBeInserted.getParentId(), bomToBeInserted.getChildId());
+
             if (refreshedBom == null) {
                 var message = RERETRIEVE.text().formatted( "Bom", insertedBom.getId() );
                 logger.error(message);
@@ -193,11 +201,8 @@ public class BomCrudService {
             updateMaxDepthOf(updatedBom );
 
         } catch (DataIntegrityViolationException dataIntegrityViolationException) {
-           var message = DATA_INTEGRITY.text().formatted(  bomToBeInserted.getParentId() +
-                    bomToBeInserted.getChildId(), generateErrorMessageFrom(dataIntegrityViolationException) );
-            logger.error(message);
-            bomResponse.addError(new ErrorLine(DATA_INTEGRITY.httpStatus(), message));
-            throw  dataIntegrityViolationException;
+            outputErrorAndThrow( DUPLICATE_SIBLING.httpStatus(),
+                    DUPLICATE_SIBLING.text().formatted( bomToBeInserted.getChildId(), bomToBeInserted.getParentId() ), bomResponse);
         }
     }
 }

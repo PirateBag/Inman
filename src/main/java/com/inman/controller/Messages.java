@@ -51,7 +51,8 @@ public record  Messages( HttpStatus httpStatus, String text ) {
 
     public static final Messages RERETRIEVE = new Messages( HttpStatus.NOT_FOUND, "Unable to re-retrive %s with an Id of (%d)"  );
 
-    public static final Messages DATA_INTEGRITY = new Messages( HttpStatus.BAD_REQUEST, "Validation on insert BOM parent %d: child %d because %s " );
+    public static final Messages PARENT_CHILD_SAME = new Messages( HttpStatus.BAD_REQUEST, "On insert BOM Item Id (%d) can't be same as Child Item Id (%d).   " );
+    public static final Messages DUPLICATE_SIBLING = new Messages( HttpStatus.BAD_REQUEST, "On insert BOM, proposed child (%d) for parent(%d) already exists." );
 
     public static final Messages ROW_UPDATED = new Messages( HttpStatus.OK, "%s, Id %d has been %sd." );
 
