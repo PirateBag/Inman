@@ -1,0 +1,45 @@
+{
+  "responseType" : "QUERY",
+  "errors" : [ ],
+  "data" : [ {
+    "id" : 12,
+    "crudAction" : "NONE",
+    "parentId" : 3,
+    "childId" : 5,
+    "quantityPer" : 1.0,
+    "parentDescription" : "Front Wheel Asmbly",
+    "childDescription" : "Axle",
+    "unitCost" : 0.0,
+    "extendedCost" : 0.0
+  }, {
+    "id" : 13,
+    "crudAction" : "NONE",
+    "parentId" : 3,
+    "childId" : 9,
+    "quantityPer" : 2.0,
+    "parentDescription" : "Front Wheel Asmbly",
+    "childDescription" : "Nut",
+    "unitCost" : 0.17,
+    "extendedCost" : 0.34
+  }, {
+    "id" : 10,
+    "crudAction" : "NONE",
+    "parentId" : 3,
+    "childId" : 11,
+    "quantityPer" : 2.0,
+    "parentDescription" : "Front Wheel Asmbly",
+    "childDescription" : "Front Wheel Bracket",
+    "unitCost" : 0.95,
+    "extendedCost" : 1.9
+  }, {
+    "id" : 11,
+    "crudAction" : "NONE",
+    "parentId" : 3,
+    "childId" : 12,
+    "quantityPer" : 2.0,
+    "parentDescription" : "Front Wheel Asmbly",
+    "childDescription" : "Yoke",
+    "unitCost" : 0.17,
+    "extendedCost" : 0.34
+  } ]
+}

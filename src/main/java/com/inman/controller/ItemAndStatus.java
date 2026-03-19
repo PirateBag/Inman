@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 @Configuration
 @RestController
 public class ItemAndStatus {
-	static Logger logger = LoggerFactory.getLogger( ItemAndStatus.class);
 	static Logger dividerLogger = LoggerFactory.getLogger(" ");
 	public static final String CLEAR_ALL_DATA = "clearAllData";
 

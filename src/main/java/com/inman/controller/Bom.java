@@ -65,18 +65,24 @@ public class Bom {
 	@CrossOrigin
 	@RequestMapping(value = BomSearchRequest.findByParent, method = RequestMethod.POST)
 	public ResponseEntity<?> bomFindByParent(@RequestBody BomSearchRequest xBomSearchRequest) {
-		return commonFindUsingItemParameters( xBomSearchRequest.getIdToSearchFor() );
+		return commonFindUsingItemParameters( bomPresentRepository.findByParentId( xBomSearchRequest.getIdToSearchFor() ) );
 	}
+
+	@CrossOrigin
+	@RequestMapping(value = BomSearchRequest.findByChild, method = RequestMethod.POST)
+	public ResponseEntity<?> bomFindByChild(@RequestBody BomSearchRequest xBomSearchRequest) {
+		return commonFindUsingItemParameters( bomPresentRepository.findByChildId( xBomSearchRequest.getIdToSearchFor() ) );
+	}
+
 
 	@CrossOrigin
 	@RequestMapping(value = BomSearchRequest.findUsingItemParameters, method = RequestMethod.POST)
 	public ResponseEntity<?> bomFindUsingItemParametersPost(@RequestBody ItemCrudBatch itemCrudBatch ) {
-		return commonFindUsingItemParameters( itemCrudBatch.updatedRows()[ 0 ].getId() );
+		return commonFindUsingItemParameters( bomPresentRepository.findByParentId( itemCrudBatch.updatedRows()[ 0 ].getId() ) );
 	}
 
-	private ResponseEntity<?> commonFindUsingItemParameters( Long idToSearchFor ) {
+	private ResponseEntity<?> commonFindUsingItemParameters( BomPresent[] boms ) {
 		BomResponse responsePackage = new BomResponse();
-		BomPresent[] boms = bomPresentRepository.findByParentId( idToSearchFor );
 		responsePackage.setData(new ArrayList<>(Arrays.asList(boms)));
 		responsePackage.setResponseType(ResponseType.QUERY);
 		return ResponseEntity.ok().body(responsePackage);

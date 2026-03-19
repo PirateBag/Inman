@@ -70,14 +70,14 @@ declare -a tests=(
   "0501_BomCrudAdd;bom/crud"
 
   # Adjust maxdepth for newly inserted items.
-  "0503_MaxDepth;itemReport/whereUsedReport"
+  "0503_MaxDepth;itemReport/calculateMaxDepth"
 
   # Rerun the item detail report to review new depth settings for 003, 004, and 005.
   "0505_IERfor003to005X;itemReport/showAllItems"
 
   # Re-calculate max depth from the, W-013..
   # There should be no change from the Max Depth calculation on 003
-  "0507_MaxDepthFor014;itemReport/whereUsedReport"
+  "0507_MaxDepthFor014;itemReport/calculateMaxDepth"
 
   # Repeat 0505...
   "0509_IER;itemReport/showAllItems"
@@ -272,6 +272,10 @@ declare -a tests=(
     #Tests placed at end so they don't change the various transaction test results.
     "1001_BomCrudDelete_NoData;bom/crud"
     "1003_BomCrudDelete_Positive;bom/crud"
+
+    # Return Objects, not text of compnents and where used:
+    "1005_BomComponents;bom/findByParent"
+    "1007_BomWhereUsed;bom/findByChild"
 
    )
 #   "stopTesting"
