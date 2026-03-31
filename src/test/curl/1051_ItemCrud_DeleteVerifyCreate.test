@@ -1,0 +1,5 @@
+Add all possible items in a single batch.
+===  JSON  ===
+{ "updatedRows" : [
+    { "description" : "A deletable Item", "unitCost" : "0.0", "sourcing" : "PUR", "leadTime" : "1", "crudAction" : "INSERT", "minimumOrderQuantity" : "1" }
+] }

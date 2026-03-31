@@ -60,4 +60,6 @@ public record  Messages( HttpStatus httpStatus, String text ) {
 
     public static final Messages PARENT_NOT_FOUND = new Messages( HttpStatus.BAD_REQUEST, "Unable to find parent Id %d." );
 
+    public static final Messages ERROR_RELATED_COUNT  = new Messages( HttpStatus.BAD_REQUEST, "Item %3d cannot be deleted: referenced in %4d BOM parents, %4d BOM children, %4d adjustments, %4d order line items" );
+    public static final Messages STATUS_RELATED_COUNT = new Messages( HttpStatus.OK,          "Item %3d is referenced in                 %4d BOM parents, %4d BOM children, %4d adjustments, %4d order line items" );
 }

@@ -8,8 +8,7 @@ import org.springframework.stereotype.Repository;
 public interface BomRepository extends JpaRepository<Bom, Long> {
 
 	public void deleteAllInBatch();
-	/*List<BomPresent> findByParent(
-			@Param( "parentId" ) Optional<Long> parentId );
 
-	 */
+	long countByParentId(long id);
+	long countByChildId(long id);
 	}

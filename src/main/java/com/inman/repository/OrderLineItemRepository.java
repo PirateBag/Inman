@@ -22,4 +22,5 @@ public interface OrderLineItemRepository extends JpaRepository<OrderLineItem, Lo
     @Query( "select oli from OrderLineItem oli order by oli.itemId, oli.completeDate, oli.parentOliId desc" )
     List<OrderLineItem>  getOliOrderByItemIdAndCompleteDate();
 
- }
+    long countByItemId(long id);
+}

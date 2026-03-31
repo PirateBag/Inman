@@ -1,11 +1,8 @@
 package com.inman.repository;
 
 import com.inman.entity.Adjustment;
-import com.inman.entity.Item;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,5 +19,7 @@ public interface AdjustmentRepository extends JpaRepository<Adjustment, Long> {
 
 	//  Delete all as a transaction.
 	void deleteAllInBatch();
+
+	public long countByItemId(long id);
 }
 

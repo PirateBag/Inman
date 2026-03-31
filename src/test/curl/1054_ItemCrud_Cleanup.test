@@ -1,0 +1,5 @@
+Cleanup the inserted item from the verify test.
+===  JSON  ===
+{ "updatedRows" : [
+    { "id": "20", "summaryId" : "W-003", "description" : "A deletable item", "unitCost" : "0.0", "sourcing" : "MAN", "leadTime" : "1", "crudAction" : "DELETE", "minimumOrderQuantity" : "1" }
+] }

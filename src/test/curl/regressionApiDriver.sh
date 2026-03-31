@@ -277,6 +277,17 @@ declare -a tests=(
     "1005_BomComponents;bom/findByParent"
     "1007_BomWhereUsed;bom/findByChild"
 
+
+    # Insert a deletable item.
+    "1051_ItemCrud_DeleteVerifyCreate;item/crud"
+
+    # Test verify delete item logic
+    "1053_ItemCrud_DeleteVerify;item/verify"
+
+
+    # Make sure everything is back to original state.
+    "1054_ItemCrud_Cleanup;item/crud"
+    "1055_ItemMaster;itemReport/showAllItems"
    )
 #   "stopTesting"
 declare -i passed=0

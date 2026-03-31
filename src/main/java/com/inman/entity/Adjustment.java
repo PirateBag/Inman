@@ -82,4 +82,6 @@ public class Adjustment extends EntityMaster {
     public EntityMaster copy(EntityMaster oldValue) {
         return null;
     }
+
+
 }

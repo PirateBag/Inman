@@ -5,8 +5,7 @@ import com.inman.model.request.ItemCrudBatch;
 import com.inman.model.response.ItemCrudBatchResponse;
 import com.inman.model.response.ResponseType;
 import com.inman.model.rest.ErrorLine;
-import com.inman.repository.ItemRepository;
-import com.inman.repository.ItemSpecifications;
+import com.inman.repository.*;
 import enums.CrudAction;
 import enums.SourcingType;
 import org.slf4j.Logger;
@@ -30,11 +29,15 @@ import static com.inman.controller.Utility.outputErrorAndThrow;
 public class ItemCrud {
     public static final String UNIQUE_INDEX_OR_PRIMARY_KEY_VIOLATION = "Unique index or primary key violation";
     public static final String ItemCrudRequestURL = "item/crud";
+    public static final String ItemCrudVerifyURL = "item/verify";
     public static final String ItemCrudQuery = "item/crudQuery";
 
     static Logger logger = LoggerFactory.getLogger("controller: " + ItemCrud.class);
 
     ItemRepository itemRepository;
+    BomRepository bomRepository;
+    OrderLineItemRepository orderLineItemRepository;
+    AdjustmentRepository adjustmentRepository;
 
     public void validateItemBasedOnAction( Item item, ItemCrudBatchResponse itemCrudBatchResponse ) {
 
@@ -85,6 +88,38 @@ public class ItemCrud {
         return itemCrudBatchResponse;
     }
 
+    public boolean isSingleItemDeleteValid( Item item, ItemCrudBatchResponse itemCrudBatchResponse ) {
+        boolean isDeleteValid = true;
+        LoggingUtility.outputInfoToLog("Verifying item %d, %s".formatted(item.getId(), item.getDescription()));
+
+        var refreshedItem = itemRepository.findById(item.getId());
+        if (refreshedItem == null) {
+            LoggingUtility.outputInfoToResponse(HttpStatus.ACCEPTED, ITEM_REF_NOT_FOUND.formatted("verifyForDelete", item.getId()), itemCrudBatchResponse);
+        }
+
+        long countOfParent = bomRepository.countByParentId(item.getId());
+        long countOfChild = bomRepository.countByChildId(item.getId());
+        long countOfOfAdjustment = adjustmentRepository.countByItemId(item.getId());
+        long countOfOrderLineItem = orderLineItemRepository.countByItemId(item.getId());
+
+        if (countOfParent > 0 || countOfChild > 0 || countOfOfAdjustment > 0 || countOfOrderLineItem > 0) {
+            LoggingUtility.outputInfoToResponse( HttpStatus.BAD_REQUEST, ERROR_RELATED_COUNT.text().formatted(
+                    item.getId(), countOfParent, countOfChild, countOfOfAdjustment, countOfOrderLineItem), itemCrudBatchResponse );
+            isDeleteValid = false;
+        } else {
+            LoggingUtility.outputInfoToLog( STATUS_RELATED_COUNT.text().formatted(
+                    item.getId(), countOfParent, countOfChild, countOfOfAdjustment, countOfOrderLineItem) );
+        }
+        return isDeleteValid;
+    }
+
+    public void verifyForDelete( ItemCrudBatch itemCrudBatch, ItemCrudBatchResponse itemCrudBatchResponse ) {
+        for (Item item : itemCrudBatch.updatedRows()) {
+            isSingleItemDeleteValid(item, itemCrudBatchResponse);
+        }
+    }
+
+
     private void insertItem(Item itemCrudToBeCrud,
                             ItemCrudBatchResponse itemCrudBatchResponse) {
         String message;
@@ -133,7 +168,6 @@ private void changeItem(Item updatedItem,
         try {
             Item toBeDeletedItem = itemRepository.findById(itemCrudToBeCrud.getId());
             if (toBeDeletedItem == null) {
-
                  if ( itemCrudToBeCrud.getCrudAction() == CrudAction.DELETE) {
                     var message = "Unable to find item " + itemCrudToBeCrud.getId() + " in database.";
                     itemCrudBatchResponse.getErrors().add(new ErrorLine(1, message));
@@ -144,8 +178,10 @@ private void changeItem(Item updatedItem,
                      logger.info(message);
                  }
             } else {
-                itemRepository.deleteById(toBeDeletedItem.getId());
-                itemCrudBatchResponse.getData().add( toBeDeletedItem );
+                if ( isSingleItemDeleteValid(toBeDeletedItem, itemCrudBatchResponse) ) {
+                    itemRepository.deleteById(toBeDeletedItem.getId());
+                    itemCrudBatchResponse.getData().add(toBeDeletedItem);
+                }
             }
         } catch (Exception exception) {
             var error = translateExceptionToError(exception, itemCrudToBeCrud);
@@ -197,6 +233,25 @@ private void changeItem(Item updatedItem,
         return ResponseEntity.ok().body(itemCrudBatchResponse);
     }
 
+    @CrossOrigin
+    @RequestMapping(value = ItemCrudVerifyURL, method = RequestMethod.POST)
+    public ResponseEntity<?> itemCrudRequestVerifyForDelete(@RequestBody ItemCrudBatch itemCrudBatch) {
+
+        ItemCrudBatchResponse itemCrudBatchResponse = new ItemCrudBatchResponse();
+
+        verifyForDelete(itemCrudBatch, itemCrudBatchResponse );
+        itemCrudBatchResponse.setResponseType(ResponseType.MULTILINE );
+
+        for (ErrorLine error : itemCrudBatchResponse.getErrors()) {
+            if (error.getStatus() != HttpStatus.OK) {
+                ResponseEntity.ok().body(itemCrudBatchResponse);
+            }
+        }
+
+        return ResponseEntity.ok().body(itemCrudBatchResponse);
+    }
+
+
 
 
     public ItemCrudBatchResponse query( ItemCrudBatch itemCrudBatch, ItemCrudBatchResponse itemCrudBatchResponse ) {
@@ -233,8 +288,13 @@ private void changeItem(Item updatedItem,
     }
 
 
-    public ItemCrud( @Autowired ItemRepository itemRepository ) {
+    public ItemCrud( @Autowired ItemRepository itemRepository,
+                     @Autowired BomRepository bomRepository,
+                     @Autowired AdjustmentRepository adjustmentRepository,
+                     @Autowired OrderLineItemRepository orderLineItemRepository) {
         this.itemRepository = itemRepository;
+        this.bomRepository = bomRepository;
+        this.adjustmentRepository = adjustmentRepository;
+        this.orderLineItemRepository = orderLineItemRepository;
     }
 }
-
