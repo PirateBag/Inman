@@ -1,0 +1,15 @@
+{
+  "responseType" : "MULTILINE",
+  "errors" : [ ],
+  "data" : [ {
+    "id" : 20,
+    "crudAction" : "NONE",
+    "description" : "A deletable Item",
+    "unitCost" : 0.0,
+    "sourcing" : "PUR",
+    "maxDepth" : 0,
+    "leadTime" : 1,
+    "quantityOnHand" : 0.0,
+    "minimumOrderQuantity" : 1.0
+  } ]
+}

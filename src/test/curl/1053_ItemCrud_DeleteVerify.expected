@@ -1,0 +1,17 @@
+{
+  "responseType" : "MULTILINE",
+  "errors" : [ {
+    "key" : 0,
+    "message" : "verifyForDelete item ref (666) not found",
+    "status" : "ACCEPTED"
+  }, {
+    "key" : 0,
+    "message" : "Item   1 cannot be deleted: referenced in    7 BOM parents,    0 BOM children,    1 adjustments,    1 order line items",
+    "status" : "BAD_REQUEST"
+  }, {
+    "key" : 0,
+    "message" : "Item   3 cannot be deleted: referenced in    4 BOM parents,    1 BOM children,    0 adjustments,    3 order line items",
+    "status" : "BAD_REQUEST"
+  } ],
+  "data" : [ ]
+}

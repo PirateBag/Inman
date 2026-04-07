@@ -294,6 +294,7 @@ private void changeItem(Item updatedItem,
                      @Autowired OrderLineItemRepository orderLineItemRepository) {
         this.itemRepository = itemRepository;
         this.bomRepository = bomRepository;
+
         this.adjustmentRepository = adjustmentRepository;
         this.orderLineItemRepository = orderLineItemRepository;
     }

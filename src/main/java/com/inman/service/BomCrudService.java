@@ -96,16 +96,11 @@ public class BomCrudService {
             }
         }
 
-        logger.info("Update loop exited with " + bomResponse.getErrors().size() + " errors");
-        RuntimeException runtimeException = null;
+        outputInfoToLog("Update loop exited with " + bomResponse.getErrors().size() + " messages ");
         for (ErrorLine errorLine : bomResponse.getErrors()) {
-            logger.info("Error: " + errorLine.toString() );
             if (errorLine.getStatus() != HttpStatus.OK ) {
-                runtimeException = new RuntimeException( errorLine.getMessage() );
+                throw new RuntimeException( errorLine.getMessage() );
             }
-        }
-        if (runtimeException != null) {
-            throw  runtimeException;
         }
     }
 
