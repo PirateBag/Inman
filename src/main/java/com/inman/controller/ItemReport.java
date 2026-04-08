@@ -72,6 +72,7 @@ public class ItemReport {
         List<String> cummulativeResponse = generateItemExplosionReport(itemReportRequest.getParentId(), null, 0);
 
         TextResponse rValue = new TextResponse(cummulativeResponse.toArray(new String[0]));
+
         rValue.setResponseType(ResponseType.QUERY);
         return rValue;
     }

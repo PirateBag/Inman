@@ -9,6 +9,12 @@ public class Text extends EntityMaster{
         this.message = message;
     }
 
+    public Text(String message, long id ) {
+        this.message = message;
+        this.id = id;
+    }
+
+
     public String getMessage() {
         return this.message;
     }

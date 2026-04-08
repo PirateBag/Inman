@@ -1,18 +1,18 @@
 package com.inman.model.response;
 
 import com.inman.entity.Text;
+import org.slf4j.Logger;
 
 import java.util.Optional;
-import org.slf4j.Logger;
 
 public class TextResponse extends ResponsePackage<Text> {
     public TextResponse() {};
 
     public TextResponse(String [] messages )
     {
-
+        long id =  1;
         for ( String message : messages ) {
-            getData().add( new Text( message ) );
+            getData().add( new Text( message, id++ ) );
         }
     }
 
