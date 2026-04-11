@@ -2,7 +2,6 @@ package com.inman.service;
 
 import com.inman.entity.Item;
 import com.inman.entity.OrderLineItem;
-import com.inman.entity.Text;
 import com.inman.model.request.GenericSingleId;
 import com.inman.model.request.OrderLineItemRequest;
 import com.inman.model.response.ResponsePackage;
@@ -211,21 +210,6 @@ public class AutomatedPlanningService {
         return consolidatedOrders;
     }
 
-    private void calculateMaxDepths(TextResponse textResponse) {
-        outputInfoToResponse(HttpStatus.OK, "Resetting max depth", textResponse );
-
-        var numberOfResets = ddlRepository.resetMaxDepth();
-
-        ArrayList<Text> texts = new ArrayList<>();
-        textResponse.addText(numberOfResets + " items were reset", Optional.of(logger));
-
-        List<Item> items = itemRepository.findAll();
-
-        for (Item item : items) {
-            logger.info("Processing item {}:{}", item.getId(), item.getDescription());
-            bomLogicService.updateMaxDepthOf(item.getId(), texts);
-        }
-    }
 
     public void inventoryBalanceProjection(GenericSingleId genericSingleId, TextResponse textResponse) {
 

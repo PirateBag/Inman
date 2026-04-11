@@ -6,29 +6,32 @@ import com.inman.entity.BomPresent;
 import com.inman.entity.Item;
 import com.inman.entity.Text;
 import com.inman.model.response.ResponsePackage;
+import com.inman.model.response.TextResponse;
 import com.inman.repository.BomPresentRepository;
+import com.inman.repository.DdlRepository;
 import com.inman.repository.ItemRepository;
 import enums.SourcingType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static com.inman.controller.LoggingUtility.outputInfoToLog;
+import static com.inman.controller.LoggingUtility.outputInfoToResponse;
 
 @Service
 public class BomLogicService {
     private ItemRepository itemRepository;
     private BomPresentRepository bomPresentRepository;
+    private DdlRepository ddlRepository;
 
     @Autowired
-    public BomLogicService(ItemRepository itemRepository, BomPresentRepository bomPresentRepository) {
+    public BomLogicService(ItemRepository itemRepository, BomPresentRepository bomPresentRepository, DdlRepository ddlRepository) {
         this.itemRepository = itemRepository;
         this.bomPresentRepository = bomPresentRepository;
+        this.ddlRepository = ddlRepository;
     }
 
     /**
@@ -102,6 +105,38 @@ public class BomLogicService {
             ancestorsOf(bom.getParentId(), listOfAncestors);
         }
     }
+
+    @Transactional
+    public void calculateMaxDepths(TextResponse textResponse) {
+        var numberOfResets = ddlRepository.resetMaxDepth();
+        outputInfoToResponse(HttpStatus.OK, numberOfResets + " items were reset", textResponse );
+        List<Item> items = itemRepository.findAll();
+
+        for (Item item : items) {
+            outputInfoToResponse( HttpStatus.OK, "Processing item %d:%s".formatted( item.getId(), item.getDescription() ),
+                    textResponse );
+            calculateMaxDepthRecursively( item, textResponse, 0 );
+        }
+    }
+
+
+    private void calculateMaxDepthRecursively(Item item, TextResponse textResponse, int depth) {
+        BomPresent[] components = bomPresentRepository.findByParentId( item.getId() );
+
+        for ( BomPresent component : components ) {
+            Item child = itemRepository.findById(component.getChildId());
+            if ( child.getMaxDepth() < depth + 1 ) {
+                outputInfoToResponse( HttpStatus.OK, "%4d:%-20s is updated to %2d".formatted( child.getId(), child.getDescription(), depth+1 ) , textResponse);
+                child.setMaxDepth(depth + 1);
+                itemRepository.save(child);
+                calculateMaxDepthRecursively(child, textResponse, depth + 1);
+            } else {
+                outputInfoToResponse( HttpStatus.OK, "%4d:%-20s does not require updating.".formatted( child.getId(), child.getDescription() ) , textResponse);
+            }
+        }
+    }
+
+
 
     @Transactional
     public void updateMaxDepthOf(Long componentId, ArrayList<Text> texts) {

@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 import static com.inman.controller.Bom.UNIQUE_INDEX_OR_PRIMARY_KEY_VIOLATION;
 
@@ -40,11 +39,6 @@ public class Utility {
 
     public static void throwIfDateInvalid(String date) {
         LocalDate.parse(date, DATE_FORMATTER);
-    }
-
-    public static void xxxxoutputInfo(String message, ResponsePackage<?> responsePackage, Logger logger) {
-        logger.info(message);
-        responsePackage.getErrors().add(new ErrorLine(1, message));
     }
 
     public static void outputErrorAndThrow(String message, ResponsePackage<?> responsePackage, Logger logger) {

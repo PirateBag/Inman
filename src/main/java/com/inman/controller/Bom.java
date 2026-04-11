@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -102,17 +103,17 @@ public class Bom {
 	}
 
 	@CrossOrigin
-	@RequestMapping(value = ItemReportRequest.WHERE_USED_REPORT_URL, method = RequestMethod.POST,
+	@RequestMapping(value = ItemReportRequest.CALCULATE_MAX_DEPTH, method = RequestMethod.POST,
 			consumes = "application/json",
 			produces = "application/json")
 	private TextResponse updateMaxDepth(@RequestBody GenericSingleId itemToRefresh ) {
 		var rValue = new TextResponse();
+		LoggingUtility.outputInfoToResponse( HttpStatus.OK, "Started max depth calculations...", rValue );
+		bomLogicService.calculateMaxDepths( rValue );
+		LoggingUtility.outputInfoToResponse( HttpStatus.OK, "Max depth calculcations completed", rValue );
 
-		ArrayList<Text> texts = new ArrayList<>();
+		rValue.setData( Text.convertErrorsToData(rValue.getErrors()));
 
-		bomLogicService.updateMaxDepthOf( itemToRefresh.idToSearchFor(), texts );
-		texts.add( new Text( "Report Completed" ) );
-		rValue.setData( texts );
 		rValue.setResponseType(ResponseType.QUERY);
 		return rValue;
 	}
