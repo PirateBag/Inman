@@ -1,0 +1,10 @@
+Report on running inventory balanhce for all items.
+=== JSON ===
+===JSON===
+
+{ "rows" : [
+
+        {  "crudAction" : "NONE",  "id" : -1, "itemId" : "-1", "parentOliId" : "0", "quantityOrdered" : "0", "quantityAssigned" : "0.0",
+        "startDate" : "2025-0901", "completeDate" : "2025-0903",  "orderState" : "OPEN",
+        "orderType" : "MODET" }
+] }

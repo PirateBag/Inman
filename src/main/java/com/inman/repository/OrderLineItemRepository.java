@@ -20,7 +20,7 @@ public interface OrderLineItemRepository extends JpaRepository<OrderLineItem, Lo
     List<OrderLineItem> findByItemIdAndOrderStateOrderByCompleteDate(long id, OrderState orderState);
 
     @Query( "select oli from OrderLineItem oli order by oli.itemId, oli.completeDate, oli.parentOliId desc" )
-    List<OrderLineItem>  getOliOrderByItemIdAndCompleteDate();
+    List<OrderLineItem>  getOliOrderByItemIdAndCompleteDate(long itemId);
 
     long countByItemId(long id);
 }

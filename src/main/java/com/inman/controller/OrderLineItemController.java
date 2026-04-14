@@ -20,6 +20,7 @@ public class OrderLineItemController {
     public static final String OrderLineItem_ShowAll = "oli/showAll";
     public static final int OrderLineItem_AllOrders = -1;
     private static final String OrderLineItem_crud = "oli/crud";
+    private static final String OrderLineItem_query = "oli/query";
 
     static Logger logger = LoggerFactory.getLogger("controller: " + OrderLineItemController.class);
 
@@ -41,6 +42,18 @@ public class OrderLineItemController {
         }
         return ResponseEntity.ok().body(textResponse);
     }
+
+    @CrossOrigin
+    @RequestMapping(value = OrderLineItem_query, method = RequestMethod.POST,
+            consumes = "application/json",
+            produces = "application/json" )
+    public ResponseEntity<?> OrderLineItemQuery( @RequestBody OrderLineItemRequest orderLineItemRequest  ) {
+        ResponsePackage<OrderLineItem> orderLineItemResponse = orderLineItemService.orderReportCrud( orderLineItemRequest );
+
+        return ResponseEntity.ok().body( orderLineItemResponse );
+    }
+
+
 
     @CrossOrigin
     @RequestMapping(value = OrderLineItem_ShowAll, method = RequestMethod.GET,
@@ -65,10 +78,6 @@ public class OrderLineItemController {
     public ResponseEntity<?> orderLineItemCrud(@RequestBody OrderLineItemRequest crudBatch ) {
         ResponsePackage<OrderLineItem> responsePackage = new ResponsePackage<>();
         try {
-//            if ( Application.isTestName( "0719_oliCrud")) {
-//                logger.info( "You have arrived.");
-//            }
-
             if ( crudBatch == null ) {
                 String message = "Request message may not be JSON";
                 responsePackage.addError( new ErrorLine(1, message) );

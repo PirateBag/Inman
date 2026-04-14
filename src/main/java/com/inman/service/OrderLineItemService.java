@@ -8,6 +8,7 @@ import com.inman.entity.Item;
 import com.inman.entity.OrderLineItem;
 import com.inman.entity.Text;
 import com.inman.model.request.OrderLineItemRequest;
+import com.inman.model.response.OrderLineItemResponse;
 import com.inman.model.response.ResponsePackage;
 import com.inman.model.response.TextResponse;
 import com.inman.repository.BomPresentRepository;
@@ -407,6 +408,28 @@ public class OrderLineItemService {
         return responsePackage;
     }
 
+    public void generateRecursiveOrderReportCrudResponse(long orderId, OrderLineItemResponse orderLineItemResponsePackage, int level  ) {
+        Optional<OrderLineItem> oli = orderLineItemRepository.findById( orderId );
+
+        if (oli.isEmpty() ) {
+            outputInfoToResponse( HttpStatus.BAD_REQUEST, "Can't find order %d ".formatted( orderId ), orderLineItemResponsePackage );
+            return;
+        }
+        Item item = itemRepository.findById( oli.get().getItemId());
+        if ( item == null ) {
+            outputInfoToResponse( HttpStatus.OK, "Can't find item " + oli.get().getItemId() + " referenced by oli " + oli.get().getId(),
+                    orderLineItemResponsePackage );
+            return;
+        }
+
+       List<OrderLineItem> childOrderLineItems = orderLineItemRepository.findByParentOliId( oli.get().getId());git
+        orderLineItemResponsePackage.getData().add( oli.get() );
+        for ( OrderLineItem childOrderLineItem : childOrderLineItems ) {
+            generateRecursiveOrderReportCrudResponse( childOrderLineItem.getId(), orderLineItemResponsePackage, level+1 );
+        }
+    }
+
+
     public void generateRecursiveOrderReport( long orderId, TextResponse textResponse, int level  ) {
         String report;
         Optional<OrderLineItem> oli = orderLineItemRepository.findById( orderId );
@@ -442,11 +465,27 @@ public class OrderLineItemService {
 
     }
 
+    public ResponsePackage<OrderLineItem> orderReportCrud(OrderLineItemRequest orderLineItemRequest ) {
+        OrderLineItemResponse oliResponse = new OrderLineItemResponse();
+
+        List<OrderLineItem> reportList;
+        long itemId = orderLineItemRequest.rows()[ 0 ].getItemId();
+        if ( itemId == OrderLineItem_AllOrders ) {
+            reportList = orderLineItemRepository.findAll();
+        } else {
+            reportList =
+                orderLineItemRepository.getOliOrderByItemIdAndCompleteDate( orderLineItemRequest.rows()[ 0 ].getItemId() );
+        }
+        for (com.inman.entity.OrderLineItem orderLineItem : reportList) {
+            generateRecursiveOrderReportCrudResponse(orderLineItem.getId(), oliResponse, 0);
+        }
+        return oliResponse;
+    }
 
     public TextResponse orderReport(long orderId) {
         TextResponse textResponse = new TextResponse();
         if (orderId == OrderLineItem_AllOrders ) {
-            List<OrderLineItem> reportList = orderLineItemRepository.getOliOrderByItemIdAndCompleteDate();
+            List<OrderLineItem> reportList = orderLineItemRepository.getOliOrderByItemIdAndCompleteDate( orderId );
 
             outputInfoToLog( OrderLineItem.header);
             for (com.inman.entity.OrderLineItem orderLineItem : reportList) {
