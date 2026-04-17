@@ -1,6 +1,93 @@
 {
-  "timestamp" : "2026-04-14T12:56:53.354+00:00",
-  "status" : 400,
-  "error" : "Bad Request",
-  "path" : "/oli/query"
+  "responseType" : null,
+  "errors" : [ ],
+  "data" : [ {
+    "id" : 14,
+    "crudAction" : "NONE",
+    "itemId" : 2,
+    "quantityOrdered" : 6.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-0901",
+    "completeDate" : "2025-0903",
+    "parentOliId" : 0,
+    "orderState" : "OPEN",
+    "orderType" : "MODET"
+  }, {
+    "id" : 18,
+    "crudAction" : "NONE",
+    "itemId" : 13,
+    "quantityOrdered" : 6.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-0822",
+    "completeDate" : "2025-0901",
+    "parentOliId" : 14,
+    "orderState" : "OPEN",
+    "orderType" : "MODET"
+  }, {
+    "id" : 19,
+    "crudAction" : "NONE",
+    "itemId" : 14,
+    "quantityOrdered" : 1.5,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-0822",
+    "completeDate" : "2025-0901",
+    "parentOliId" : 14,
+    "orderState" : "OPEN",
+    "orderType" : "MODET"
+  }, {
+    "id" : 15,
+    "crudAction" : "NONE",
+    "itemId" : 5,
+    "quantityOrdered" : 9.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-0901",
+    "completeDate" : "2025-0003",
+    "parentOliId" : 0,
+    "orderState" : "OPEN",
+    "orderType" : "MODET"
+  }, {
+    "id" : 20,
+    "crudAction" : "NONE",
+    "itemId" : 17,
+    "quantityOrdered" : 13.5,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-0828",
+    "completeDate" : "2025-0901",
+    "parentOliId" : 15,
+    "orderState" : "OPEN",
+    "orderType" : "MODET"
+  }, {
+    "id" : 18,
+    "crudAction" : "NONE",
+    "itemId" : 13,
+    "quantityOrdered" : 6.0,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-0822",
+    "completeDate" : "2025-0901",
+    "parentOliId" : 14,
+    "orderState" : "OPEN",
+    "orderType" : "MODET"
+  }, {
+    "id" : 19,
+    "crudAction" : "NONE",
+    "itemId" : 14,
+    "quantityOrdered" : 1.5,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-0822",
+    "completeDate" : "2025-0901",
+    "parentOliId" : 14,
+    "orderState" : "OPEN",
+    "orderType" : "MODET"
+  }, {
+    "id" : 20,
+    "crudAction" : "NONE",
+    "itemId" : 17,
+    "quantityOrdered" : 13.5,
+    "quantityAssigned" : 0.0,
+    "startDate" : "2025-0828",
+    "completeDate" : "2025-0901",
+    "parentOliId" : 15,
+    "orderState" : "OPEN",
+    "orderType" : "MODET"
+  } ]
 }

@@ -44,10 +44,9 @@ public class OrderLineItemController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = OrderLineItem_query, method = RequestMethod.POST,
-            consumes = "application/json",
-            produces = "application/json" )
+    @RequestMapping(value = OrderLineItem_query, method = RequestMethod.POST )
     public ResponseEntity<?> OrderLineItemQuery( @RequestBody OrderLineItemRequest orderLineItemRequest  ) {
+        LoggingUtility.outputInfoToLog( "Entering OrderLineItemQuery");
         ResponsePackage<OrderLineItem> orderLineItemResponse = orderLineItemService.orderReportCrud( orderLineItemRequest );
 
         return ResponseEntity.ok().body( orderLineItemResponse );

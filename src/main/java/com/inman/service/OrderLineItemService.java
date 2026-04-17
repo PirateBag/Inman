@@ -422,7 +422,7 @@ public class OrderLineItemService {
             return;
         }
 
-       List<OrderLineItem> childOrderLineItems = orderLineItemRepository.findByParentOliId( oli.get().getId());git
+       List<OrderLineItem> childOrderLineItems = orderLineItemRepository.findByParentOliId( oli.get().getId());
         orderLineItemResponsePackage.getData().add( oli.get() );
         for ( OrderLineItem childOrderLineItem : childOrderLineItems ) {
             generateRecursiveOrderReportCrudResponse( childOrderLineItem.getId(), orderLineItemResponsePackage, level+1 );
@@ -469,7 +469,8 @@ public class OrderLineItemService {
         OrderLineItemResponse oliResponse = new OrderLineItemResponse();
 
         List<OrderLineItem> reportList;
-        long itemId = orderLineItemRequest.rows()[ 0 ].getItemId();
+        long itemId = orderLineItemRequest.rows().length > 0
+                ? orderLineItemRequest.rows()[ 0 ].getItemId() : OrderLineItem_AllOrders;
         if ( itemId == OrderLineItem_AllOrders ) {
             reportList = orderLineItemRepository.findAll();
         } else {
@@ -479,6 +480,9 @@ public class OrderLineItemService {
         for (com.inman.entity.OrderLineItem orderLineItem : reportList) {
             generateRecursiveOrderReportCrudResponse(orderLineItem.getId(), oliResponse, 0);
         }
+
+        LoggingUtility.outputInfoToLog( "OrderLineItem query had %d rows".formatted( reportList.size() ) );
+
         return oliResponse;
     }
 

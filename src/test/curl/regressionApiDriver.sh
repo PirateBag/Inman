@@ -182,12 +182,9 @@ declare -a tests=(
 
   # Run the crud flavor of the oli report.l
   "0730_oliCrudReport;oli/query"
-  "stopTesting"
 
   # Verify the date setting logic in INSERT orders.
    "0731_oliCrud;oli/crud"
-
-
 
 
 #####################  Automated Planning  ################
@@ -253,8 +250,6 @@ declare -a tests=(
     "0810_oliCrud;oli/crud"
     "0811_ap;ap/basic"
     "0813_ibp;ap/inventoryBalanceProjection"
-
-    "0851_oliReport;oli/query"
 
     # Item Balance Adjustments...
     "0901_adjust;adjustment/crud"
