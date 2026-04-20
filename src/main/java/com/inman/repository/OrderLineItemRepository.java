@@ -4,12 +4,13 @@ import com.inman.entity.OrderLineItem;
 import enums.OrderState;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface OrderLineItemRepository extends JpaRepository<OrderLineItem, Long> {
+public interface OrderLineItemRepository extends JpaRepository<OrderLineItem, Long>, JpaSpecificationExecutor<OrderLineItem> {
 
     List<OrderLineItem> findAll();
 

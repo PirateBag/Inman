@@ -180,12 +180,14 @@ declare -a tests=(
   "0727_oliCrud;oli/crud"
   "0729_oliReport;oli/showAll"
 
-  # Run the crud flavor of the oli report.l
+  # Run the crud flavor of the oli report.  Get everything.
   "0730_oliCrudReport;oli/query"
 
-  # Verify the date setting logic in INSERT orders.
-   "0731_oliCrud;oli/crud"
+  # Test query for where item 1 is the parent...
+  "0732_oliCrudReportFilterByItem;oli/query"
 
+  # Verify the date setting logic in INSERT orders.
+   "0741_oliCrud;oli/crud"
 
 #####################  Automated Planning  ################
     # Remove just the orders and reset the id to 1.
@@ -235,21 +237,30 @@ declare -a tests=(
 #   11   17       10    75.00     0.00  2025-1207  2025-1211 OPEN  MODET NONE"
 
 
-
-
-
   #Create four orders for W-003, which is slightly more complicated.
 
   "0806_oliCrud;oli/crud"
   "0807_oliReport;oli/showAll"
-  "0808_ap;ap/basic"
-  "0809_ibp;ap/inventoryBalanceProjection"
+
+  # Tests on reporting out the OLIs that have been created using the
+  # object based output.
+  "0809_oliCrudReport;oli/query"
+
+  # Just the order headers:
+  "0811_oliCrudOrderHeader;oli/query"
+
+  # The details of orderid 1
+  "0813_oliCrudOrderDetails;oli/query"
+  "stopTesting"
+
+  "0828_ap;ap/basic"
+  "0829_ibp;ap/inventoryBalanceProjection"
 
 
 #    Create one order for W-001, and look for all the cascade order creation.
-    "0810_oliCrud;oli/crud"
-    "0811_ap;ap/basic"
-    "0813_ibp;ap/inventoryBalanceProjection"
+    "0830_oliCrud;oli/crud"
+    "0831_ap;ap/basic"
+    "0833_ibp;ap/inventoryBalanceProjection"
 
     # Item Balance Adjustments...
     "0901_adjust;adjustment/crud"

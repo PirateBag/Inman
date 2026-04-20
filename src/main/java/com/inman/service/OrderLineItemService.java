@@ -20,11 +20,14 @@ import enums.OrderType;
 import enums.SourcingType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.persistence.criteria.Predicate;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -62,17 +65,17 @@ public class OrderLineItemService {
         try {
             Item item = itemRepository.findById(orderLineItem.getItemId());
 
-            LocalDate derviedStartOrCompleted ;
+            LocalDate derivedStartOrCompleted;
 
             if ( isNullOrEmpty( orderLineItem.getStartDate() ) && isNullOrEmpty( orderLineItem.getCompleteDate() ) ) {
                 LoggingUtility.outputErrorAndThrow( HttpStatus.BAD_REQUEST, "An order line item must have either startDate or completedDate", oliResponse );
             } else if ( isNullOrEmpty( orderLineItem.getStartDate()  ) ) {
-                derviedStartOrCompleted = LocalDate.parse(orderLineItem.getCompleteDate(), DATE_FORMATTER).minusDays(item.getLeadTime());
-               orderLineItem.setStartDate( derviedStartOrCompleted.format(DATE_FORMATTER));
+                derivedStartOrCompleted = LocalDate.parse(orderLineItem.getCompleteDate(), DATE_FORMATTER).minusDays(item.getLeadTime());
+               orderLineItem.setStartDate( derivedStartOrCompleted.format(DATE_FORMATTER));
                 outputInfoToLog( "Derived start from completed less lead time." );
             } if ( isNullOrEmpty( orderLineItem.getCompleteDate() ) ) {
-                derviedStartOrCompleted = LocalDate.parse(orderLineItem.getStartDate(), DATE_FORMATTER).plusDays(item.getLeadTime());
-                orderLineItem.setCompleteDate( derviedStartOrCompleted.format(DATE_FORMATTER));
+                derivedStartOrCompleted = LocalDate.parse(orderLineItem.getStartDate(), DATE_FORMATTER).plusDays(item.getLeadTime());
+                orderLineItem.setCompleteDate( derivedStartOrCompleted.format(DATE_FORMATTER));
                 outputInfoToLog("Derived completeDate from Start plus lead time." );
             }
 
@@ -338,7 +341,7 @@ public class OrderLineItemService {
     }
 
     /**
-     * Compare two orderLineItem objects.  Compare each fields, and create a map of the name of any field that changed
+     * Compare two orderLineItem objects.  Compare each field and create a map of the name of any field that changed
      * and its new value.
      *
      * @param oldOli One of the two OLIs to compare.
@@ -357,7 +360,7 @@ public class OrderLineItemService {
     }
 
     /**
-     * @param oldOli old order line item from database.
+     * @param oldOli old order line item from the database.
      * @param newOli new orderLineItem from request.
      * @param oliResponse build up our response message
      * @return count of number of changes.
@@ -424,9 +427,10 @@ public class OrderLineItemService {
 
        List<OrderLineItem> childOrderLineItems = orderLineItemRepository.findByParentOliId( oli.get().getId());
         orderLineItemResponsePackage.getData().add( oli.get() );
-        for ( OrderLineItem childOrderLineItem : childOrderLineItems ) {
-            generateRecursiveOrderReportCrudResponse( childOrderLineItem.getId(), orderLineItemResponsePackage, level+1 );
-        }
+
+//        for ( OrderLineItem childOrderLineItem : childOrderLineItems ) {
+//            generateRecursiveOrderReportCrudResponse( childOrderLineItem.getId(), orderLineItemResponsePackage, level+1 );
+//        }
     }
 
 
@@ -465,25 +469,63 @@ public class OrderLineItemService {
 
     }
 
-    public ResponsePackage<OrderLineItem> orderReportCrud(OrderLineItemRequest orderLineItemRequest ) {
+    public ResponsePackage<OrderLineItem> orderReportCrud(OrderLineItemRequest orderLineItemRequest) {
         OrderLineItemResponse oliResponse = new OrderLineItemResponse();
 
         List<OrderLineItem> reportList;
-        long itemId = orderLineItemRequest.rows().length > 0
-                ? orderLineItemRequest.rows()[ 0 ].getItemId() : OrderLineItem_AllOrders;
-        if ( itemId == OrderLineItem_AllOrders ) {
+        if (orderLineItemRequest.rows() == null || orderLineItemRequest.rows().length == 0) {
             reportList = orderLineItemRepository.findAll();
         } else {
-            reportList =
-                orderLineItemRepository.getOliOrderByItemIdAndCompleteDate( orderLineItemRequest.rows()[ 0 ].getItemId() );
+            OrderLineItem filter = orderLineItemRequest.rows()[0];
+            reportList = orderLineItemRepository.findAll(buildSpecification(filter));
         }
+
         for (com.inman.entity.OrderLineItem orderLineItem : reportList) {
             generateRecursiveOrderReportCrudResponse(orderLineItem.getId(), oliResponse, 0);
         }
-
-        LoggingUtility.outputInfoToLog( "OrderLineItem query had %d rows".formatted( reportList.size() ) );
+        LoggingUtility.outputInfoToLog("OrderLineItem query had %d rows".formatted(reportList.size()));
 
         return oliResponse;
+    }
+
+    private Specification<OrderLineItem> buildSpecification(OrderLineItem filter) {
+        return (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (filter.getId() != 0) {
+                predicates.add(criteriaBuilder.equal(root.get("id"), filter.getId()));
+            }
+            if (filter.getItemId() != 0) {
+                predicates.add(criteriaBuilder.equal(root.get("itemId"), filter.getItemId()));
+            }
+            if (filter.getQuantityOrdered() != 0.0) {
+                predicates.add(criteriaBuilder.equal(root.get("quantityOrdered"), filter.getQuantityOrdered()));
+            }
+            if (filter.getQuantityAssigned() != 0.0) {
+                predicates.add(criteriaBuilder.equal(root.get("quantityAssigned"), filter.getQuantityAssigned()));
+            }
+            if (filter.getStartDate() != null && !filter.getStartDate().isEmpty()) {
+                predicates.add(criteriaBuilder.equal(root.get("startDate"), filter.getStartDate()));
+            }
+            if (filter.getCompleteDate() != null && !filter.getCompleteDate().isEmpty()) {
+                predicates.add(criteriaBuilder.equal(root.get("completeDate"), filter.getCompleteDate()));
+            }
+            if (filter.getParentOliId() != 0) {
+                predicates.add(criteriaBuilder.equal(root.get("parentOliId"), filter.getParentOliId()));
+            }
+//            if (filter.getOrderState() != null) {
+//                predicates.add(criteriaBuilder.equal(root.get("orderState"), filter.getOrderState()));
+//            }
+            if (filter.getOrderType() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("orderType"), filter.getOrderType()));
+            }
+
+            if (filter.getCrudAction() != null && filter.getCrudAction() != enums.CrudAction.NONE) {
+                predicates.add(criteriaBuilder.equal(root.get("crudAction"), filter.getCrudAction()));
+            }
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
     }
 
     public TextResponse orderReport(long orderId) {

@@ -1,0 +1,7 @@
+Report on running inventory balanhce for all items.
+=== JSON ===
+===JSON===
+
+{ "rows" : [
+        {  "itemId" : "2", "orderType" : "MODET"  }
+] }
