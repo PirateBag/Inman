@@ -251,7 +251,6 @@ declare -a tests=(
 
   # The details of orderid 1
   "0813_oliCrudOrderDetails;oli/query"
-  "stopTesting"
 
   "0828_ap;ap/basic"
   "0829_ibp;ap/inventoryBalanceProjection"
