@@ -95,7 +95,7 @@ public class OrderLineItemController {
             return ResponseEntity.ok().body(responsePackage);
 
         } catch ( Exception exception ) {
-            logger.info( "Encountered runtime exception, check response message for details.");
+            logger.info( "Encountered runtime exception " + exception.getMessage() + ", check response message for details.");
         }
         return ResponseEntity.badRequest().body( responsePackage );
     }
