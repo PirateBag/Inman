@@ -23,4 +23,11 @@ public class TextResponse extends ResponsePackage<Text> {
         }
     }
 
+    public void assignIds()
+    {
+        long lineNumber = 1;
+        for ( Text message : getData() ) {
+            message.setId(lineNumber++);
+        }
+    }
 };

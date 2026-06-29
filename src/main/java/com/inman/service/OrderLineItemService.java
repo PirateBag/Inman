@@ -41,7 +41,7 @@ import static com.inman.controller.Utility.*;
 import static com.inman.service.ReflectionHelpers.compareObjects;
 
 @Service
-public class OrderLineItemService {
+public class  OrderLineItemService {
 
     private static final int MAX_REPORT_LINES = 5;
     private final ItemRepository itemRepository;
@@ -60,7 +60,7 @@ public class OrderLineItemService {
 
     private void insert(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse ) {
         String message;
-        OrderLineItem updatedOrderLineItem;
+
 
         try {
             Item item = itemRepository.findById(orderLineItem.getItemId());
@@ -79,7 +79,12 @@ public class OrderLineItemService {
                 outputInfoToLog("Derived completeDate from Start plus lead time." );
             }
 
+            //  Actual Id will be set with sequence at insert time...
+            orderLineItem.setId(0L);
+
             validateOrderLineItemForMOInsertion(orderLineItem, oliResponse, item);
+
+            OrderLineItem updatedOrderLineItem;
             updatedOrderLineItem = orderLineItemRepository.save(orderLineItem);
             outputInfoToLog("inserted adjusted:" + updatedOrderLineItem);
             oliResponse.getData().add(updatedOrderLineItem);

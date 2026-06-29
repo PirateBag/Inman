@@ -7,7 +7,6 @@ import com.inman.model.request.OrderLineItemRequest;
 import com.inman.model.response.ResponsePackage;
 import com.inman.model.response.TextResponse;
 import com.inman.model.rest.ErrorLine;
-import com.inman.repository.DdlRepository;
 import com.inman.repository.ItemRepository;
 import com.inman.repository.OrderLineItemRepository;
 import enums.CrudAction;
@@ -18,7 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
@@ -29,7 +27,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import static com.inman.controller.LoggingUtility.outputInfoToResponse;
 import static com.inman.controller.Messages.ITEM_REF_NOT_FOUND;
 import static com.inman.controller.Utility.normalize;
 import static com.inman.controller.Utility.outputErrorAndThrow;
@@ -41,24 +38,17 @@ public class AutomatedPlanningService {
     static Logger logger = LoggerFactory.getLogger(AutomatedPlanningService.class);
     private final ItemRepository itemRepository;
     private final OrderLineItemRepository orderLineItemRepository;
-    private final DdlRepository ddlRepository;
     private final OrderLineItemService orderLineItemService;
-    private final BomLogicService bomLogicService;
 
     @Autowired
     public AutomatedPlanningService(
                                     ItemRepository itemRepository,
                                     OrderLineItemRepository orderLineItemRepository,
-                                    OrderLineItemService orderLineItemService,
-                                    DdlRepository ddlRepository,
-                                    BomLogicService bomLogicService) {
-
-
+                                    OrderLineItemService orderLineItemService
+    ) {
         this.itemRepository = itemRepository;
         this.orderLineItemRepository = orderLineItemRepository;
         this.orderLineItemService = orderLineItemService;
-        this.ddlRepository = ddlRepository;
-        this.bomLogicService = bomLogicService;
     }
 
     @Transactional
@@ -92,6 +82,7 @@ public class AutomatedPlanningService {
                 }
             }
         }
+        textResponse.assignIds();
     }
 
     /**
@@ -232,6 +223,8 @@ public class AutomatedPlanningService {
                 textResponse.addText( "", Optional.of(logger)) ;
             }
         }
+
+        textResponse.assignIds();
     }
 }
 

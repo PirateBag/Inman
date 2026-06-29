@@ -103,9 +103,7 @@ public class Bom {
 	}
 
 	@CrossOrigin
-	@RequestMapping(value = ItemReportRequest.CALCULATE_MAX_DEPTH, method = RequestMethod.POST,
-			consumes = "application/json",
-			produces = "application/json")
+	@RequestMapping(value = ItemReportRequest.CALCULATE_MAX_DEPTH, method = RequestMethod.POST )
 	private TextResponse updateMaxDepth(@RequestBody GenericSingleId itemToRefresh ) {
 		var rValue = new TextResponse();
 		LoggingUtility.outputInfoToResponse( HttpStatus.OK, "Started max depth calculations...", rValue );
