@@ -1,22 +1,23 @@
 package com.inman.controller;
 
+import com.inman.entity.Adjustment;
 import com.inman.model.request.AdjustmentCrudRequest;
 import com.inman.model.request.GenericSingleId;
 import com.inman.model.response.AdjustmentCrudResponse;
 import com.inman.model.response.TextResponse;
 import com.inman.service.AdjustmentService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
 
 @Configuration
 @RestController
 public class AdjustmentController {
     public final static String ADJUSTEMENT_CRUDD = "adjustment/crud";
     public final static String ADJUSTEMENT_REPORT_ALL = "adjustment/reportAll";
-    Logger logger = LoggerFactory.getLogger(AdjustmentController.class);
+    public final static String ADJUSTEMENT_REPORT_QUERY = "adjustment/query";
     AdjustmentService adjustmentService;
 
     public AdjustmentController( AdjustmentService adjustmentService ) {
@@ -49,14 +50,22 @@ public class AdjustmentController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = ADJUSTEMENT_REPORT_ALL, method = RequestMethod.GET )
-    public ResponseEntity<?> adjustment_show_get (@RequestParam long idToReport   ) {
-        TextResponse textResponse = new TextResponse();
-
-        adjustmentService.reportAll(idToReport, textResponse );
-
-        return ResponseEntity.ok().body( textResponse );
+    @RequestMapping(value = ADJUSTEMENT_REPORT_QUERY, method = RequestMethod.POST )
+    public ResponseEntity<?> adjustment_query (@RequestBody AdjustmentCrudRequest adjustmentCrudRequest   ) {
+        try {
+            Collection<Adjustment> results = adjustmentService.query(adjustmentCrudRequest);
+            return ResponseEntity.ok().body( results );
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body( e.getMessage() );
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body( e.getMessage() );
+        }
     }
 
+    @CrossOrigin
+    @RequestMapping(value = "adjustment/lastQuerySql", method = RequestMethod.GET )
+    public ResponseEntity<String> getLastQuerySql() {
+        return ResponseEntity.ok().body(adjustmentService.getLastQuerySql());
+    }
 }
 

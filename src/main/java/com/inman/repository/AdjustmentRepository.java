@@ -3,12 +3,13 @@ package com.inman.repository;
 import com.inman.entity.Adjustment;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface AdjustmentRepository extends JpaRepository<Adjustment, Long> {
+public interface AdjustmentRepository extends JpaRepository<Adjustment, Long>, JpaSpecificationExecutor<Adjustment> {
 
 	Adjustment findById(long id);
 

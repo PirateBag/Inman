@@ -17,10 +17,18 @@ import enums.OrderType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import java.util.*;
 
 import static com.inman.controller.Messages.*;
@@ -34,6 +42,11 @@ public class AdjustmentService {
     private final ItemRepository itemRepository;
     private final AdjustmentRepository adjustmentRepository;
     private final OrderLineItemRepository orderLineItemRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    private String lastQuerySql = "";
 
     public static final String EXTENDED_HEADER_FORMAT =       "%8s    %-6s %-6s  %-4s  %9s  %4s  %-30s  %9s";
     public static final String EXTENDED_LINE_FORMAT =         "%8.2f  %6d  %6d   %-4s  %9s  %4s  %-30s  %9.2f";
@@ -215,5 +228,84 @@ public class AdjustmentService {
                     adjustment.getOrderType(),
                     adjustment.getEffectiveDate(), adjustment.getAdjustmentType(), item.getDescription(), item.getQuantityOnHand() ), Optional.of( logger ));
         }
+    }
+
+    public Collection<Adjustment> query(AdjustmentCrudRequest request) {
+        if (request.rows() == null) {
+            throw new IllegalArgumentException("Rows cannot be null");
+        }
+        if (request.rows().length == 0) {
+            this.lastQuerySql = "SELECT a FROM Adjustment a";
+            return adjustmentRepository.findAll();
+        }
+
+        StringBuilder hql = new StringBuilder("SELECT a FROM Adjustment a WHERE ");
+        List<String> rowConditions = new ArrayList<>();
+        Map<String, Object> parameters = new HashMap<>();
+        int paramCount = 0;
+
+        for (Adjustment filter : request.rows()) {
+            List<String> fieldConditions = new ArrayList<>();
+
+            if (filter.getId() != 0) {
+                String paramName = "p" + paramCount++;
+                fieldConditions.add("a.id = :" + paramName);
+                parameters.put(paramName, filter.getId());
+            }
+            if (filter.getItemId() != 0) {
+                String paramName = "p" + paramCount++;
+                fieldConditions.add("a.itemId = :" + paramName);
+                parameters.put(paramName, filter.getItemId());
+            }
+            if (filter.getOrderId() != 0) {
+                String paramName = "p" + paramCount++;
+                fieldConditions.add("a.orderId = :" + paramName);
+                parameters.put(paramName, filter.getOrderId());
+            }
+            if (filter.getAmount() != 0.0) {
+                String paramName = "p" + paramCount++;
+                fieldConditions.add("a.amount = :" + paramName);
+                parameters.put(paramName, filter.getAmount());
+            }
+            if (filter.getEffectiveDate() != null && !filter.getEffectiveDate().isEmpty()) {
+                String paramName = "p" + paramCount++;
+                fieldConditions.add("a.effectiveDate = :" + paramName);
+                parameters.put(paramName, filter.getEffectiveDate());
+            }
+            if (filter.getOrderType() != null && filter.getOrderType() != OrderType.NA) {
+                String paramName = "p" + paramCount++;
+                fieldConditions.add("a.orderType = :" + paramName);
+                parameters.put(paramName, filter.getOrderType());
+            }
+            if (filter.getAdjustmentType() != null) {
+                String paramName = "p" + paramCount++;
+                fieldConditions.add("a.adjustmentType = :" + paramName);
+                parameters.put(paramName, filter.getAdjustmentType());
+            }
+
+            if (!fieldConditions.isEmpty()) {
+                rowConditions.add("(" + String.join(" AND ", fieldConditions) + ")");
+            }
+        }
+
+
+        if (rowConditions.isEmpty()) {
+
+            this.lastQuerySql = "SELECT a FROM Adjustment a";
+            LoggingUtility.outputInfoToLog( SQL_VALUE.text().formatted( "No Adjustment Parameters", this.lastQuerySql ) );
+            return adjustmentRepository.findAll();
+        }
+
+        hql.append(String.join(" OR ", rowConditions));
+        this.lastQuerySql = hql.toString();
+        LoggingUtility.outputInfoToLog( SQL_VALUE.text().formatted( "With Adjustment", this.lastQuerySql ) );
+        TypedQuery<Adjustment> typedQuery = entityManager.createQuery(this.lastQuerySql, Adjustment.class);
+        parameters.forEach(typedQuery::setParameter);
+
+        return typedQuery.getResultList();
+    }
+
+    public String getLastQuerySql() {
+        return lastQuerySql;
     }
 }

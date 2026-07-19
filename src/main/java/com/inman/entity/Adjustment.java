@@ -78,6 +78,30 @@ public class Adjustment extends EntityMaster {
         return amount;
     }
 
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public void setItemId(long itemId) {
+        this.itemId = itemId;
+    }
+
+    public void setOrderId(long orderId) {
+        this.orderId = orderId;
+    }
+
+    public void setOrderType(OrderType orderType) {
+        this.orderType = orderType;
+    }
+
+    public void setEffectiveDate(String effectiveDate) {
+        this.effectiveDate = effectiveDate;
+    }
+
+    public void setAdjustmentType(AdjustmentType adjustmentType) {
+        this.adjustmentType = adjustmentType;
+    }
+
     @Override
     public EntityMaster copy(EntityMaster oldValue) {
         return null;
