@@ -288,9 +288,7 @@ public class AdjustmentService {
             }
         }
 
-
         if (rowConditions.isEmpty()) {
-
             this.lastQuerySql = "SELECT a FROM Adjustment a";
             LoggingUtility.outputInfoToLog( SQL_VALUE.text().formatted( "No Adjustment Parameters", this.lastQuerySql ) );
             return adjustmentRepository.findAll();
