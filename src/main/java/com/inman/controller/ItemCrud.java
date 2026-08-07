@@ -69,7 +69,7 @@ public class ItemCrud {
     }
 
     public ItemCrudBatchResponse go( ItemCrudBatch itemCrudBatch, ItemCrudBatchResponse itemCrudBatchResponse ) {
-        for (Item itemCrudToBeCrud : itemCrudBatch.updatedRows()) {
+        for (Item itemCrudToBeCrud : itemCrudBatch.rows()) {
             logger.info("{} on {}", itemCrudToBeCrud.getCrudAction(), itemCrudToBeCrud);
 
             validateItemBasedOnAction(itemCrudToBeCrud, itemCrudBatchResponse);
@@ -114,7 +114,7 @@ public class ItemCrud {
     }
 
     public void verifyForDelete( ItemCrudBatch itemCrudBatch, ItemCrudBatchResponse itemCrudBatchResponse ) {
-        for (Item item : itemCrudBatch.updatedRows()) {
+        for (Item item : itemCrudBatch.rows()) {
             isSingleItemDeleteValid(item, itemCrudBatchResponse);
         }
     }
@@ -256,10 +256,10 @@ private void changeItem(Item updatedItem,
 
     public ItemCrudBatchResponse query( ItemCrudBatch itemCrudBatch, ItemCrudBatchResponse itemCrudBatchResponse ) {
         ArrayList<Item> queryResults;
-        if ( itemCrudBatch.updatedRows().length == 0 ) {
+        if ( itemCrudBatch.rows().length == 0 ) {
             queryResults = (ArrayList<Item>) itemRepository.findAll();
         } else {
-            Specification<Item> dynamicQuery = ItemSpecifications.withDynamicQuery( itemCrudBatch.updatedRows()[0] );
+            Specification<Item> dynamicQuery = ItemSpecifications.withDynamicQuery( itemCrudBatch.rows()[0] );
             queryResults = itemRepository.findAll( dynamicQuery );
         }
 

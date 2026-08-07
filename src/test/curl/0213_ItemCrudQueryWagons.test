@@ -1,5 +1,5 @@
 Empty Test File
 === JSON ===
-{ "updatedRows" : [   { "description" : "wagon"  }
+{ "rows" : [   { "description" : "wagon"  }
 ] }
 

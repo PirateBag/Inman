@@ -79,7 +79,7 @@ public class Bom {
 	@CrossOrigin
 	@RequestMapping(value = BomSearchRequest.findUsingItemParameters, method = RequestMethod.POST)
 	public ResponseEntity<?> bomFindUsingItemParametersPost(@RequestBody ItemCrudBatch itemCrudBatch ) {
-		return commonFindUsingItemParameters( bomPresentRepository.findByParentId( itemCrudBatch.updatedRows()[ 0 ].getId() ) );
+		return commonFindUsingItemParameters( bomPresentRepository.findByParentId( itemCrudBatch.rows()[ 0 ].getId() ) );
 	}
 
 	private ResponseEntity<?> commonFindUsingItemParameters( BomPresent[] boms ) {

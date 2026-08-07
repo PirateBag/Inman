@@ -182,7 +182,7 @@ public class ItemReport {
         ItemReportRequest itemReportRequest = new ItemReportRequest();
         rValue.setResponseType(ResponseType.QUERY);
 
-        if ( itemQueryParameters.updatedRows().length == 0 ) {
+        if ( itemQueryParameters.rows().length == 0 ) {
             rValue.setData(itemReportService.generateAllItemReport(itemRepository));
         } else {
             rValue.addError( new ErrorLine( 0, "0", "No parameters allowed for this request." ));

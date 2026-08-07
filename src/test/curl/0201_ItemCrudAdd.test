@@ -1,7 +1,7 @@
 Add all possible items in a single batch.
 
 ===  JSON  ===
-{ "updatedRows" : [
+{ "rows" : [
   { "summaryId" : "W-001", "description" : "36 In Red Wagon",    "unitCost" : "0.0", "sourcing" : "MAN", "leadTime" :  "2", "crudAction" : "INSERT", "quantityOnHand" : "5", "minimumOrderQuantity" : "1" },
   { "summaryId" : "W-002", "description" : "Red Wagon Body",     "unitCost" : "0.0", "sourcing" : "MAN", "leadTime" : "10", "crudAction" : "INSERT", "minimumOrderQuantity" : "1" },
   { "summaryId" : "W-003", "description" : "Front Wheel Asmbly", "unitCost" : "0.0", "sourcing" : "MAN", "leadTime" : "1", "crudAction" : "INSERT", "minimumOrderQuantity" : "1" },
