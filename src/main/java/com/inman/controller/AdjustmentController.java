@@ -10,14 +10,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
+import java.util.ArrayList;
 
 @Configuration
 @RestController
 public class AdjustmentController {
-    public final static String ADJUSTEMENT_CRUDD = "adjustment/crud";
-    public final static String ADJUSTEMENT_REPORT_ALL = "adjustment/reportAll";
-    public final static String ADJUSTEMENT_REPORT_QUERY = "adjustment/query";
+    public final static String ADJUSTMENT_CRUDD = "adjustment/crud";
+    public final static String ADJUSTMENT_REPORT_ALL = "adjustment/reportAll";
+    public final static String ADJUSTMENT_REPORT_QUERY = "adjustment/query";
     AdjustmentService adjustmentService;
 
     public AdjustmentController( AdjustmentService adjustmentService ) {
@@ -25,7 +25,7 @@ public class AdjustmentController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = ADJUSTEMENT_CRUDD, method = RequestMethod.POST)
+    @RequestMapping(value = ADJUSTMENT_CRUDD, method = RequestMethod.POST)
     public ResponseEntity<?> adjustment_show_post (@RequestBody AdjustmentCrudRequest adjustmentCrudRequest  ) {
         AdjustmentCrudResponse responsePackage = new AdjustmentCrudResponse();
 
@@ -40,7 +40,7 @@ public class AdjustmentController {
 
 
     @CrossOrigin
-    @RequestMapping(value = ADJUSTEMENT_REPORT_ALL, method = RequestMethod.POST )
+    @RequestMapping(value = ADJUSTMENT_REPORT_ALL, method = RequestMethod.POST )
     public ResponseEntity<?> adjustment_show_put (@RequestBody GenericSingleId genericSingleId ) {
         TextResponse textResponse = new TextResponse();
 
@@ -50,11 +50,12 @@ public class AdjustmentController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = ADJUSTEMENT_REPORT_QUERY, method = RequestMethod.POST )
+    @RequestMapping(value = ADJUSTMENT_REPORT_QUERY, method = RequestMethod.POST )
     public ResponseEntity<?> adjustment_query (@RequestBody AdjustmentCrudRequest adjustmentCrudRequest   ) {
         try {
-            Collection<Adjustment> results = adjustmentService.query(adjustmentCrudRequest);
-            return ResponseEntity.ok().body( results );
+            AdjustmentCrudResponse adjustmentCrudResponse = new AdjustmentCrudResponse();
+            adjustmentCrudResponse.setData((ArrayList<Adjustment>) adjustmentService.query(adjustmentCrudRequest));
+            return ResponseEntity.ok().body( adjustmentCrudResponse );
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body( e.getMessage() );
         } catch (Exception e) {
