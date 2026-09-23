@@ -8,16 +8,16 @@ public class BomCrudBatch {
 	public static final String BOM_RECURSION_CHECK_URL = "bomRecursionCheck";
 	public static final String bomRefreshDepth = "bomRefreshDepth";
 
-	BomPresent[] updatedRows;
+	BomPresent[] rows;
 
 	public BomCrudBatch(BomPresent[] xUpdatedRows ) {
-		this.updatedRows = xUpdatedRows;
+		this.rows = xUpdatedRows;
 	}
 
 	public BomCrudBatch() {} ;
 
-	public void setUpdatedRows( BomPresent[] xUpdatedRows ) {
-		this.updatedRows = xUpdatedRows;
+	public void setRows( BomPresent[] xUpdatedRows ) {
+		this.rows = xUpdatedRows;
 	}
-	public BomPresent[] getUpdatedRows() { return this.updatedRows; }
+	public BomPresent[] getRows() { return this.rows; }
 }

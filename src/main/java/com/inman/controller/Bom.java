@@ -94,7 +94,7 @@ public class Bom {
 	public ResponseEntity<BomResponse> bomUpdateArray(@RequestBody BomCrudBatch bomCrudBatch) {
 		BomResponse responsePackage = new BomResponse();
     	try {
-			bomCrudService.applyBomUpdates( responsePackage, bomCrudBatch.getUpdatedRows());
+			bomCrudService.applyBomUpdates( responsePackage, bomCrudBatch.getRows());
 		} catch ( RuntimeException runtimeException ) {
 			logger.error( "Encountered RuntimeException " + runtimeException + "look for rollback.");
             return ResponseEntity.badRequest().body(responsePackage);

@@ -5,7 +5,7 @@ Prior tests (BomCrudTx3) added the following bill of material lines to W-001.:
 Add all remaining bill of material lines.  Subsequent tests will verify the correct explosion and MaxDepth.
 ===JSON===
 
-{ "updatedRows" : [
+{ "rows" : [
 
   { "parentId" :  "1", "childId" :  "4", "quantityPer" :  "1.00", "crudAction" :  "INSERT" },
   { "parentId" :  "1", "childId" :  "6", "quantityPer" :  "2.00", "crudAction" :  "INSERT" },

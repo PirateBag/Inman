@@ -1,7 +1,7 @@
 Attempt to modify a BOM row that does not exit.
 
 === JSON ===
-{ "updatedRows" : [
+{ "rows" : [
     { "id" : "9", "parentId" :  "1", "childId" :  "9",  "quantityPer" :  "4.00", "crudAction" :  "DELETE" }
   ] }
 
