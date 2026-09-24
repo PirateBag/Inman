@@ -1,5 +1,7 @@
 
 ===  JSON  ===
-{ "userName" : "fred-PuPuHead",
-  "password" : "dilban"
+{
+    "rows" : [ { "userName" : "fred-PuPuHead",
+                "password" : "dilban" } ]
 }
+

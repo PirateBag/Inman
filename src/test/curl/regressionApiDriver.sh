@@ -6,8 +6,8 @@ declare stopTesting="stopTesting"
 declare -a tests=(
   "0100_ClearAllData;clearAllData"
 
-  "0105_LoginPositive;verifyCredentials"
-  #  "0107_LoginFailv;verifyCredentials"
+  "0105_LoginPositive;credentials"
+  "0107_LoginFail;credentials"
 
   #Add Items and verify with reports on picklist and all items.
   "0201_ItemCrudAdd;item/crud"
