@@ -39,6 +39,7 @@ import static com.inman.controller.Messages.*;
 import static com.inman.controller.OrderLineItemController.OrderLineItem_AllOrders;
 import static com.inman.controller.Utility.*;
 import static com.inman.service.ReflectionHelpers.compareObjects;
+import static enums.OrderType.PO;
 
 @Service
 public class  OrderLineItemService {
@@ -61,7 +62,6 @@ public class  OrderLineItemService {
     private void insert(OrderLineItem orderLineItem, ResponsePackage<OrderLineItem> oliResponse ) {
         String message;
 
-
         try {
             Item item = itemRepository.findById(orderLineItem.getItemId());
 
@@ -82,6 +82,8 @@ public class  OrderLineItemService {
             //  Actual Id will be set with sequence at insert time...
             orderLineItem.setId(0L);
 
+            orderLineItem.setOrderType( orderTypeFromItemSourcing( item ) );
+
             validateOrderLineItemForMOInsertion(orderLineItem, oliResponse, item);
 
             OrderLineItem updatedOrderLineItem;
@@ -100,6 +102,21 @@ public class  OrderLineItemService {
             outputErrorAndThrow( HttpStatus.BAD_REQUEST, "Unable to insert " + orderLineItem + ":" + runtimeException.getMessage(), oliResponse);
         }  */
 
+    }
+
+    /** return the order type based on the item sourcing.  */
+    private OrderType orderTypeFromItemSourcing(Item item) {
+        switch (item.getSourcing()) {
+            case MAN ->  {
+                return OrderType.MOHEAD;
+            }
+            case PUR -> {
+                return PO;
+            }
+            default -> {
+                return OrderType.NA;
+            }
+        }
     }
 
     /**
@@ -145,7 +162,7 @@ public class  OrderLineItemService {
         oli.setQuantityAssigned(0.0);
         oli.setCrudAction(parentOli.getCrudAction());
         oli.setOrderState(parentOli.getOrderState());
-        oli.setOrderType(item.getSourcing() == SourcingType.MAN ? OrderType.MODET : OrderType.PO);
+        oli.setOrderType(item.getSourcing() == SourcingType.MAN ? OrderType.MODET : PO);
         return oli;
     }
 
@@ -331,7 +348,7 @@ public class  OrderLineItemService {
             }
 
             //  Or purchased items in a PO...
-            if (item.getSourcing() == SourcingType.PUR && orderLineItem.getOrderType() != OrderType.PO) {
+            if (item.getSourcing() == SourcingType.PUR && orderLineItem.getOrderType() != PO) {
                 outputErrorAndThrow( HttpStatus.BAD_REQUEST, ITEM_PURCHASED.formatted( item.getDescription() ), oliResponse );
             }
         }
