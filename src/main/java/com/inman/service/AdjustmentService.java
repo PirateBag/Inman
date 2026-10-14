@@ -65,9 +65,12 @@ public class AdjustmentService {
     @Transactional
     public void  crud ( AdjustmentCrudRequest adjustmentCrudRequest, AdjustmentCrudResponse response ) {
 
+
+
         for ( Adjustment adjustment : adjustmentCrudRequest.rows() ) {
             logger.info("Adjustment {} ", adjustment.toString() );
             if (Objects.requireNonNull(adjustment.getCrudAction()) == CrudAction.INSERT) {
+                adjustment.setId( 0L );
                 insert(adjustment, response);
             } else {
                 outputErrorAndThrow("Crud Action " + adjustment.getCrudAction() + " not supported",
@@ -199,7 +202,7 @@ public class AdjustmentService {
         orderLineItem.get().setQuantityAssigned( newQuantityAssigned );
         itemRepository.save( item );
         orderLineItemRepository.save( orderLineItem.get() );
-        adjustmentRepository.save( adjustment );
+        adjustmentRepository.save(adjustment);
     }
 
     public void reportAll(long id, TextResponse textResponse ) {
