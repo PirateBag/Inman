@@ -12,14 +12,14 @@
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "  18   13       14     6.00     0.00  2025-0822  2025-0901 OPEN  MODET NONE"
+    "message" : "  18   13       14     6.00     0.00  2025-0812  2025-0901 OPEN  MODET NONE"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "  19   14       14     1.50     0.00  2025-0822  2025-0901 OPEN  MODET NONE"
+    "message" : "  19   14       14     1.50     0.00  2025-0827  2025-0901 OPEN  MODET NONE"
   }, {
     "id" : 0,
     "crudAction" : "NONE",
-    "message" : "  20   17       15    13.50     0.00  2025-0828  2025-0901 OPEN  MODET NONE"
+    "message" : "  20   17       15    13.50     0.00  2025-0827  2025-0901 OPEN  MODET NONE"
   } ]
 }

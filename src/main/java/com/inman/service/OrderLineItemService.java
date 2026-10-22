@@ -135,7 +135,7 @@ public class  OrderLineItemService {
         for (BomPresent bomPresent : childrenOfItem) {
             assert item != null;
 
-            OrderLineItem oli = createOrderLineItem(parentOli, bomPresent, item );
+            OrderLineItem oli = createOrderLineItem(parentOli, bomPresent, oliResponse );
             OrderLineItem updatedOli = orderLineItemRepository.save(oli);
             outputInfoToLog(  "Added OLI " + updatedOli.toString() + " to order " + parentOli.getId() );
             numberOfAddedItems++;
@@ -151,18 +151,25 @@ public class  OrderLineItemService {
      * @param item       the item corresponding to the parentOli itemId.
      * @return a new OrderLineItem created from the given parameters.
      */
-    private OrderLineItem createOrderLineItem(OrderLineItem parentOli, BomPresent bomPresent, Item item) {
+    private OrderLineItem createOrderLineItem(OrderLineItem parentOli, BomPresent bomPresent,
+                                              ResponsePackage<OrderLineItem> orderLineItemResponseItem ) {
+
+        Item childItem = itemRepository.findById(bomPresent.getChildId());
+        if (childItem == null ) {
+            outputErrorAndThrow(HttpStatus.BAD_REQUEST,ITEM_REF_NOT_FOUND.formatted("createOrderLineItem", bomPresent.getChildId() ), orderLineItemResponseItem);
+        }
+
         OrderLineItem oli = new OrderLineItem();
         oli.setItemId(bomPresent.getChildId());
         oli.setQuantityOrdered(parentOli.getQuantityOrdered() * bomPresent.getQuantityPer());
         oli.setCompleteDate(parentOli.getStartDate());
-        LocalDate derivedStart = LocalDate.parse(parentOli.getStartDate(), DATE_FORMATTER).minusDays(item.getLeadTime());
+        LocalDate derivedStart = LocalDate.parse(parentOli.getStartDate(), DATE_FORMATTER).minusDays(childItem.getLeadTime());
         oli.setStartDate(derivedStart.format(DATE_FORMATTER));
         oli.setParentOliId(parentOli.getId());
         oli.setQuantityAssigned(0.0);
         oli.setCrudAction(parentOli.getCrudAction());
         oli.setOrderState(parentOli.getOrderState());
-        oli.setOrderType(item.getSourcing() == SourcingType.MAN ? OrderType.MODET : PO);
+        oli.setOrderType( OrderType.MODET );
         return oli;
     }
 
