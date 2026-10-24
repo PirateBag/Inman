@@ -1,14 +1,12 @@
 package com.inman.controller;
 
-import com.inman.repository.*;
-import com.inman.service.*;
 import com.inman.entity.Item;
-import com.inman.entity.Text;
-import com.inman.model.request.GenericSingleId;
 import com.inman.model.response.ItemResponse;
 import com.inman.model.response.ResponsePackage;
 import com.inman.model.response.ResponseType;
 import com.inman.model.rest.*;
+import com.inman.repository.*;
+import com.inman.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class ItemAndStatus {
 	static Logger dividerLogger = LoggerFactory.getLogger(" ");
-	public static final String CLEAR_ALL_DATA = "clearAllData";
 
 	@Autowired
 	private ItemRepository itemRepository;
@@ -170,62 +167,5 @@ public class ItemAndStatus {
     	return responsePackage;
     }
 
-	@CrossOrigin
-	@RequestMapping( value = ItemAndStatus.CLEAR_ALL_DATA, method=RequestMethod.POST )
-	public ResponsePackage<Text> clearAllData(@RequestBody GenericSingleId genericSingleId )
-	{
-		ResponsePackage<Text> responsePackage;
-
-		if ( genericSingleId.idToSearchFor() == 1L ) {
-			responsePackage = clearAllData(itemRepository);
-		} else 	if ( genericSingleId.idToSearchFor() == 2L ) {
-			responsePackage = clearAllOrders(itemRepository);
-		} else {
-			responsePackage = new ResponsePackage<>();
-			responsePackage.addError( new ErrorLine( 1, "Id must be 1 for all, 2 for orders only.") );
-		}
-		return responsePackage;
-	}
-
-	private ResponsePackage<Text> clearAllOrders(ItemRepository itemRepository) {
-		var rValue = new ResponsePackage<Text>();
-		orderLineItemRepository.deleteAllInBatch();
-		rValue.getData().add( new Text( "OrdereLineItems deleted" ) );
-
-		ddlRepository.resetIdForTable( "order_line_item" );
-		rValue.getData().add( new Text( "Order Line Items PK reset" ) );
-
-		return rValue;
-	}
-
-
-	public ResponsePackage<Text> clearAllData( ItemRepository itemRepository ){
-		itemRepository.deleteAllInBatch();
-		var rValue = new ResponsePackage<Text>();
-		rValue.getData().add( new Text( "Items deleted" ) );
-
-		bomRepository.deleteAllInBatch();
-		rValue.getData().add( new Text( "BOMs deleted" ) );
-
-		orderLineItemRepository.deleteAllInBatch();
-		rValue.getData().add( new Text( "OrdereLineItems deleted" ) );
-
-		adjustmentRepository.deleteAllInBatch();
-		rValue.getData().add( new Text( "Adjustments deleted" ) );
-
-		ddlRepository.resetIdForTable( "Item" );
-		rValue.getData().add( new Text( "Items PK Reset" ) );
-
-		ddlRepository.resetIdForTable( "Bom" );
-		rValue.getData().add( new Text( "BOMs PK Reset" ) );
-
-		ddlRepository.resetIdForTable( "order_line_item" );
-		rValue.getData().add( new Text( "Order Line Items PK reset" ) );
-
-		ddlRepository.resetIdForTable( "adjustment" );
-		rValue.getData().add( new Text( "Adjustment PK reset" ) );
-
-		return rValue;
-	}
 }
 

@@ -302,6 +302,10 @@ declare -a tests=(
     # Make sure everything is back to original state.
     "1054_ItemCrud_Cleanup;item/crud"
     "1055_ItemMaster;itemReport/showAllItems"
+
+    # Clear the item balances
+    "1057_clearItemBalance;clear/itemBalances"
+    "1059_ItemMaster;itemReport/showAllItems"
    )
 #   "stopTesting"
 declare -i passed=0
@@ -317,7 +321,7 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 if [ -n "$1" ]; then
   echo Parameter passed "$1"
-  # shellcheck disable=SC2206
+  # shellcheck disable=SC2206c
   tests=( ${1} )
 fi
 

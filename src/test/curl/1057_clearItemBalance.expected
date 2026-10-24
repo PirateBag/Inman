@@ -1,0 +1,9 @@
+{
+  "responseType" : null,
+  "errors" : [ ],
+  "data" : [ {
+    "id" : 0,
+    "crudAction" : "NONE",
+    "message" : "5 Items cleared"
+  } ]
+}

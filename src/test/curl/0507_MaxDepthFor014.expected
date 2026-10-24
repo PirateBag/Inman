@@ -6,7 +6,7 @@
     "status" : "OK"
   }, {
     "key" : 0,
-    "message" : "18 items were reset",
+    "message" : "3 items were reset",
     "status" : "OK"
   }, {
     "key" : 0,
@@ -108,7 +108,7 @@
   }, {
     "id" : 2,
     "crudAction" : "NONE",
-    "message" : "18 items were reset"
+    "message" : "3 items were reset"
   }, {
     "id" : 3,
     "crudAction" : "NONE",

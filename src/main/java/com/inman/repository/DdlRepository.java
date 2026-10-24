@@ -24,8 +24,16 @@ public class DdlRepository {
     }
 
     @Transactional
+    public int resetItemBalances() {
+        String sqlCommand = "UPDATE ITEM SET QUANTITY_ON_HAND =0 WHERE QUANTITY_ON_HAND != 0";
+        logger.info(sqlCommand);
+        return entityManager.createNativeQuery(sqlCommand).executeUpdate();
+    }
+
+
+    @Transactional
     public int resetMaxDepth() {
-        String sqlCommand = "UPDATE ITEM SET max_depth=0";
+        String sqlCommand = "UPDATE ITEM SET max_depth=0 WHERE MAX_DEPTH != 0";
         logger.info(sqlCommand);
         return entityManager.createNativeQuery(sqlCommand).executeUpdate();
     }
